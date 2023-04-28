@@ -284,6 +284,18 @@ export function strFill<T = NumberOrStringType> (value: T, count: number): strin
 }
 
 /**
+ * Searches for the shortest string in the array and returns its length
+ *
+ * Ищет самую короткую строку в массиве и возвращает её длину
+ * @param data array with values / массив с значениями
+ */
+export function minListLength (data: AssociativeOrArrayType<string>): number {
+  return forEach<string, number, number>(data, item => item.length)
+    ?.sort()
+    ?.[0]
+}
+
+/**
  * Searches for the longest string in the array and returns its length
  *
  * Ищет самую длинную строку в массиве и возвращает её длину
