@@ -66,3 +66,20 @@ export function isIntegerBetween (value: number, between: number): boolean {
   const floor = Math.floor(between)
   return value >= floor && value < floor + 1
 }
+
+/**
+ * Checks if value is in the array selected or if value equals selected, if selected is a string
+ *
+ * Проверяет, есть ли value в массиве selected или равен ли value selected, если selected - строка
+ * @param value value / значение
+ * @param selected array or string for comparison / массив или строка для сравнения
+ */
+export function isSelected<T = any> (value: T, selected: T | T[]): boolean {
+  if (isNull(value)) {
+    return false
+  } else if (Array.isArray(selected)) {
+    return selected.indexOf(value) !== -1
+  } else {
+    return value === selected
+  }
+}
