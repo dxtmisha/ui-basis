@@ -1,4 +1,4 @@
-import { EmptyType, UndefinedType } from '../constructors/types'
+import { AssociativeOrArrayType, EmptyType, NumberOrStringType, UndefinedType } from '../constructors/types'
 
 /**
  * Is the variable equal to null or undefined
@@ -120,4 +120,53 @@ export function getExp (
   const data = value.replace(/([[\]\\^$.?*+()])/ig, '\\$1')
 
   return new RegExp(pattern.replace(':value', data), flags)
+}
+
+/**
+ * Return the values from a single column in the input array
+ *
+ * Возвращает массив из значений одного столбца входного массива
+ * @param array a one array or an array of objects from which to pull a column of values
+ * from / многомерный массив или массив объектов, из которого будет производиться
+ * выборка значений
+ * @param column ключ столбца, значения которого нужно вернуть / the column of values to return
+ */
+export function getColumn<T = any> (array: AssociativeOrArrayType, column: string): T[] {
+  return forEach(array, item => item?.[column])
+}
+
+/**
+ * The function performs the specified function once for each element in the object. And returns
+ * an array with the results of executing the function
+ *
+ * Функция выполняет указанную функцию один раз для каждого элемента в объекте. И возвращает
+ * массив с результатами выполнения функции
+ * @param data object for iteration / объект для перебора
+ * @param callback a function to execute for each element in the array / функция,
+ * которая будет вызвана для каждого элемента
+ * @param filterUndefined removal of all records with the value undefined / удаление
+ * всех записей со значением undefined
+ */
+export function forEach<T, K = NumberOrStringType, R = undefined> (
+  data: AssociativeOrArrayType<T>,
+  callback: (item: T, key: K, data: AssociativeOrArrayType<T>) => R,
+  filterUndefined?: boolean
+): Array<R> {
+  if (data && typeof data === 'object') {
+    const returnData = [] as Array<R>
+
+    if (Array.isArray(data)) {
+      data.forEach((item, key) => returnData.push(callback(item, key as K, data)))
+    } else {
+      Object.entries(data).forEach(([key, item]) => returnData.push(callback(item, key as K, data)))
+    }
+
+    if (filterUndefined) {
+      return returnData.filter((item: R | undefined) => item !== undefined)
+    } else {
+      return returnData
+    }
+  } else {
+    return []
+  }
 }
