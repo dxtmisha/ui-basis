@@ -271,3 +271,14 @@ export function replaceRecursive<T = any> (
 export function arrFill<T = any> (value: T, count: number): T[] {
   return Array(count).fill(value)
 }
+
+/**
+ * The method creates a string of length count, consisting of the characters value
+ *
+ * Метод создает строку длиной count, состоящую из символов value
+ * @param value character for filling / символ для заполнения
+ * @param count length of the string / длина строки
+ */
+export function strFill<T = NumberOrStringType> (value: T, count: number): string {
+  return arrFill(value, count).join('')
+}
