@@ -1,4 +1,4 @@
-import { isSelected, isSelectedByList } from '../../../../functions/data'
+import { isSelectedByList } from '../../../../functions/data'
 
 describe('functions/data/isSelectedByList', () => {
   const selected = [1, 2, 'string']
