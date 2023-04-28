@@ -282,3 +282,15 @@ export function arrFill<T = any> (value: T, count: number): T[] {
 export function strFill<T = NumberOrStringType> (value: T, count: number): string {
   return arrFill(value, count).join('')
 }
+
+/**
+ * Searches for the longest string in the array and returns its length
+ *
+ * Ищет самую длинную строку в массиве и возвращает её длину
+ * @param data array with values / массив с значениями
+ */
+export function maxListLength (data: AssociativeOrArrayType<string>): number {
+  return forEach<string, number, number>(data, item => item.length)
+    ?.sort((a: number, b: number) => a > b ? -1 : 1)
+    ?.[0]
+}
