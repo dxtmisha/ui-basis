@@ -54,3 +54,15 @@ export function isFilled<T = any> (value: T): value is Exclude<T, EmptyType> {
 export function isFunction<T = any> (callback: T | (() => T)): callback is (() => T) {
   return callback instanceof Function || typeof callback === 'function'
 }
+
+/**
+ * Checks if the value is between integers
+ *
+ * Проверяет, лежит ли значение между целыми числами
+ * @param value value / значение
+ * @param between value for rounding / значение для округления
+ */
+export function isIntegerBetween (value: number, between: number): boolean {
+  const floor = Math.floor(between)
+  return value >= floor && value < floor + 1
+}
