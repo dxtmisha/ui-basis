@@ -83,3 +83,18 @@ export function isSelected<T = any> (value: T, selected: T | T[]): boolean {
     return value === selected
   }
 }
+
+/**
+ * Testing isSelected property for the entire list of values
+ *
+ * Проверка свойства isSelected для всех значений списка
+ * @param values list of values for comparison / список значений для сравнения
+ * @param selected array or string for comparison / массив или строка для сравнения
+ */
+export function isSelectedByList (values: any | any[], selected: any | any[]): boolean {
+  if (Array.isArray(values)) {
+    return values.reduce((accumulator, value) => accumulator && isSelected(value, selected), true)
+  } else {
+    return isSelected(values, selected)
+  }
+}
