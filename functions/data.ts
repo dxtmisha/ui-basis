@@ -1,4 +1,10 @@
-import { AssociativeOrArrayType, EmptyType, NumberOrStringType, UndefinedType } from '../constructors/types'
+import {
+  AssociativeOrArrayType,
+  AssociativeType,
+  EmptyType,
+  NumberOrStringType,
+  UndefinedType
+} from '../constructors/types'
 
 /**
  * Is the variable equal to null or undefined
@@ -123,9 +129,9 @@ export function getExp (
 }
 
 /**
- * Return the values from a single column in the input array
+ * Returns an array of values for a specific column in the input array
  *
- * Возвращает массив из значений одного столбца входного массива
+ * Возвращает массив значений для определенного столбца входного массива
  * @param array a one array or an array of objects from which to pull a column of values
  * from / многомерный массив или массив объектов, из которого будет производиться
  * выборка значений
@@ -133,6 +139,32 @@ export function getExp (
  */
 export function getColumn<T = any> (array: AssociativeOrArrayType, column: string): T[] {
   return forEach(array, item => item?.[column])
+}
+
+/**
+ * The method retrieves drag data (as a string) for the specified type.
+ * If the drag operation does not include data, this method returns an empty string
+ *
+ * Метод извлекает данные перетаскивания (в виде строки) для указанного типа
+ * @param event the ClipboardEvent interface represents events providing information
+ * related to modification of the clipboard, that is cut, copy, and paste events /
+ * интерфейс ClipboardEvent представляет события, предоставляющие информацию, связанную
+ * с изменением буфера обмена, этими события являются cut, copy и paste.
+ */
+export async function getClipboardData (event: ClipboardEvent): Promise<string> {
+  return event?.clipboardData?.getData('text') || await navigator.clipboard.readText() || ''
+}
+
+/**
+ * The function is executed and returns its result. Or returns the
+ * input data, if it is not a function
+ *
+ * Выполняется функция и возвращает ее результат. Или возвращает входные
+ * данные, если это не функция
+ * @param callback function or any value / функция или любое значение
+ */
+export function executeFunction<T> (callback: T | (() => T)): T {
+  return isFunction(callback) ? callback() : callback
 }
 
 /**
@@ -169,4 +201,62 @@ export function forEach<T, K = NumberOrStringType, R = undefined> (
   } else {
     return []
   }
+}
+
+/**
+ * Merge one or more arrays recursively
+ *
+ * Рекурсивное слияние одного или более массивов
+ * @param array the array in which elements are replaced / массив, элементы которого
+ * будут заменены
+ * @param replacement arrays from which elements will be extracted / массивы, из которых
+ * будут браться элементы для замены
+ * @param isMerge merge one or more arrays / сливает один или большее количество массивов
+ */
+export function replaceRecursive<T = any> (
+  array: AssociativeType<T>,
+  replacement?: AssociativeOrArrayType<T>,
+  isMerge = true as boolean
+): AssociativeType<T> {
+  if (
+    typeof array === 'object' &&
+    isFilled(replacement)
+  ) {
+    forEach(replacement, (item, index) => {
+      const data = array?.[index] as T
+
+      if (
+        data &&
+        item &&
+        typeof data === 'object' &&
+        typeof item === 'object'
+      ) {
+        if (
+          isMerge &&
+          Array.isArray(data) &&
+          Array.isArray(item)
+        ) {
+          data.push(...item)
+        } else if (Array.isArray(data)) {
+          array[index] = replaceRecursive<T>(
+            replaceRecursive<T>({}, data),
+            item
+          ) as T
+        } else {
+          replaceRecursive<T>(
+            data as AssociativeType<T>,
+            item
+          )
+        }
+      } else {
+        if (Array.isArray(item)) {
+          array[index] = [...item] as T
+        } else {
+          array[index] = typeof item === 'object' ? JSON.parse(JSON.stringify(item)) : item
+        }
+      }
+    })
+  }
+
+  return array
 }
