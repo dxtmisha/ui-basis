@@ -12,6 +12,20 @@ export type BooleanOrNumberOrStringType = boolean | NumberOrStringType
 export type NumberOrStringOrDateType = NumberOrStringType | Date
 
 /**
+ * Types of functions
+ *
+ * Типы функций
+ */
+export type CallbackType<T = any, R = any> = (value: T) => R
+export type CallbackVoidType<T = any> = (value: T) => void
+export type CallbackNullType<R = void> = () => R
+
+export type CallbackOrAnyType<R = any> = CallbackNullType<R> | R
+export type CallbackOrBooleanType = CallbackOrAnyType<boolean>
+export type CallbackOrNumberType = CallbackOrAnyType<number>
+export type CallbackOrStringType = CallbackOrAnyType<string>
+
+/**
  * Associative array
  *
  * Ассоциативный массив
@@ -25,3 +39,17 @@ export type AssociativeStringType = AssociativeType<string>
 export type AssociativeOrAnyType<T = any> = AssociativeType<T> | T
 export type AssociativeOrArrayType<T = any> = T[] | AssociativeType<T> | object
 export type AssociativeOrStringType = AssociativeOrAnyType<string>
+
+/**
+ * Types for working with home elements
+ *
+ * Типы для работы с элементами дома
+ */
+export type ElementType = Window | HTMLElement | Element
+export type ElementOrUndefinedType = ElementType | UndefinedType
+export type ElementOrStringType = ElementType | string
+export type ElementOptionsItemType = CallbackOrStringType
+export type ElementOptionsType =
+  CallbackVoidType<ElementType>
+  | AssociativeType<ElementOptionsItemType>
+  | undefined
