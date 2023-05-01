@@ -10,5 +10,6 @@ export type RefType<T = any> = ComputedRef<T> | Ref<T>
 export type RefAssociativeType<T = any> = AssociativeType<Ref<T>>
 export type RefOrNormalType<T = any> = RefType<T> | T
 export type RefOrCallbackType<T = any> = RefType<T> | CallbackNullType<T>
+export type RefOrCallbackOrNormalType<T = any> = RefOrCallbackType<T> | T
 export type RefOrStringType = RefOrNormalType<string>
 export type RefOrElementType<T = ElementType> = RefOrNormalType<T>
