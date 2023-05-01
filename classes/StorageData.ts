@@ -1,16 +1,13 @@
-import { ref, Ref, watch } from 'vue'
-import { Env } from './Env'
+import { ref, watch } from 'vue'
 import { isNull } from '../functions/data'
+
+import { Env } from './Env'
+
 import { AnyOrUndefinedType } from '../constructors/types'
 
-export declare interface StorageItemType<T = any> {
-  key: string
-  item: Ref<T>
+export interface StorageItemType<T = any> {
+  item: AnyOrUndefinedType<T>
   date: number
-}
-
-export declare interface StorageType<T = any> {
-  [key: string]: StorageItemType<T>
 }
 
 export const prefix = Env.prefix()
@@ -22,8 +19,16 @@ export const cacheAgeDefault = Env.cache()
  * Объект, используемый для хранения данных
  */
 export class StorageData<T = any> {
+  /**
+   * Storage index
+   *
+   * Хранилище индексов
+   * @private
+   */
+  private readonly index: string
+
   private readonly item = ref<AnyOrUndefinedType<T>>()
-  private readonly date: number
+  private date?: number
 
   /**
    * @param key key / ключ
@@ -32,130 +37,112 @@ export class StorageData<T = any> {
    * @param method class, with which we will work / класс, с которым будем работать
    */
   constructor (
-    private readonly name: string,
-    private readonly key: string,
-    private readonly method?: Storage
-  ) {
-    const index = this.getIndex()
-
-    if (objects.has(index)) {
-      return objects.get(index)
-    }
-  }
-
-  /**
-   * Returns the index in the record
-   *
-   * Возвращает индекс в записи
-   * @private
-   */
-  private getIndex (): string {
-    return `${this.name}-${this.key}`
-  }
-
-  /**
-   * Returns an index for a storage
-   *
-   * Возвращает индекс для хранилища
-   * @private
-   */
-  private getStorageIndex (): string {
-    return `${prefix}-${this.getIndex()}`
-  }
-
-  /**
-   * Getting saved data
-   *
-   * Получение сохраненных данных
-   * @param key key / ключ
-   * @param name group of records, from which we get data / группа записей, по которой
-   * получаем данные
-   * @param method class, with which we will work / класс, с которым будем работать
-   */
-  static get (
     name: string,
     key: string,
-    method?: Storage
-  ): StorageItemType {
-    const indexData = this.getIndex(name, key)
+    private readonly method?: Storage
+  ) {
+    this.index = `${prefix}-${name}-${key}`
 
-    if (!(indexData in this.data)) {
-      const indexStorage = this.getStorageIndex(indexData)
-      const data = this.getItem(
-        key,
-        method?.getItem(indexStorage)
-      )
+    if (objects.has(this.index)) {
+      return objects.get(this.index) as StorageData<T>
+    } else {
+      const item = this.getItem()
 
-      this.data[indexData] = data
+      this.item.value = item.item
+      this.date = item.date
 
-      if (method) {
-        watch(data.item, value => {
-          const date = new Date().getTime()
-
-          if (isNull(value)) {
-            method?.removeItem(indexStorage)
-          } else {
-            method?.setItem(indexStorage, JSON.stringify({
-              key,
-              item: value,
-              date
-            }))
-          }
-
-          data.date = date
-        })
-      }
+      this.watch()
+      objects.set(this.index, this)
     }
+  }
 
-    return this.data[indexData]
+  get (): AnyOrUndefinedType<T> {
+    return this.item.value
+  }
+
+  set (value: T): this {
+    this.item.value = value
+    return this
   }
 
   /**
-   * The method returns a new object for further processing
+   * The method of Date instances returns the number of milliseconds
+   * for this date since the epoch
    *
-   * Метод возвращает новый объект для дальнейшей работы
-   * @param key key / ключ
-   * @param item stored data / сохраненный данный
+   * Метод возвращает числовое значение, соответствующее указанной дате по
+   * всемирному координированному времени
    * @private
    */
-  private static getItem (key: string, item: any): StorageItemType {
-    if (item) {
-      try {
-        const json = JSON.parse(item)
+  private getDate (): number {
+    return new Date().getTime()
+  }
 
-        return {
-          ...json,
-          item: ref(json.item)
-        }
+  /**
+   * The method of the Storage interface, when passed a key name,
+   * will return that key's value
+   *
+   * Метод вернёт значение, лежащее в хранилище по указанному ключу
+   * @private
+   */
+  private getItem (): StorageItemType<T> {
+    const read = this.method?.getItem(this.index)
+
+    if (read) {
+      try {
+        return JSON.parse(read)
       } catch (e) {
       }
     }
 
     return {
-      key,
-      item: ref(undefined),
-      date: new Date().getTime()
+      item: undefined,
+      date: this.getDate()
     }
   }
 
-  private static initWatch (data: StorageItemType): void {
-    watch(data.item, value => {
-      const date = new Date().getTime()
+  /**
+   * The method of the Storage interface, when passed a key name and value,
+   * will add that key to the given Storage object
+   *
+   * Если методу интерфейса Storage передать ключ и значение,
+   * то в хранилище будет добавлено соответствующее ключу значение
+   * @private
+   */
+  private setItem (): this {
+    this.method?.setItem(this.index, JSON.stringify({
+      item: this.item.value,
+      date: this.getDate()
+    }))
+
+    return this
+  }
+
+  /**
+   * The method of the Storage interface, when passed a key name, will
+   * remove that key from the given Storage object if it exists
+   *
+   * Если методу интерфейса Storage передать ключ, то из хранилища будет удалён
+   * элемент с указанным ключом
+   * @private
+   */
+  private removeItem (): this {
+    this.method?.removeItem(this.index)
+    return this
+  }
+
+  private watch (): this {
+    watch(this.item, value => {
+      this.date = this.getDate()
 
       if (isNull(value)) {
-        method?.removeItem(indexStorage)
+        this.removeItem()
       } else {
-        method?.setItem(indexStorage, JSON.stringify({
-          key,
-          item: value,
-          date
-        }))
+        this.setItem()
       }
-
-      data.date = date
     })
+
+    return this
   }
 }
 
-const data = new Map<string, StorageItemType>()
 const objects = new Map<string, StorageData>()
