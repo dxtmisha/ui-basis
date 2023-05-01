@@ -1,9 +1,11 @@
-import { executeFunction, forEach, isFilled } from './data'
+import { executeFunction, forEach, isFilled, random } from './data'
 
 import {
+  ElementOptionsItemType,
   ElementOptionsType,
   ElementOrStringType,
-  ElementOrUndefinedType
+  ElementOrUndefinedType,
+  NumberOrStringType
 } from '../constructors/types'
 
 /**
@@ -21,7 +23,7 @@ export function getElement (element?: ElementOrStringType): ElementOrUndefinedTy
  *
  * Счетчик генератор номера ID элемента
  */
-let ids = 1 as number
+export let ids = random(100000, 900000) as number
 
 /**
  * Returns the identifier (ID) of the element or creates it if the element has no ID
@@ -39,6 +41,55 @@ export function getIdElement (element?: HTMLElement, selector?: string): string 
     return selector ? `#${element.id}${selector}`.trim() : element.id
   } else {
     return (ids++).toString()
+  }
+}
+
+/**
+ * Returns the value of an element by its key
+ *
+ * Возвращает значение элемента по его ключу
+ * @param element checked element / проверяемый элемент
+ * @param index index at which we retrieve values / индекс, по которому получаем значения
+ * @param defaultValue returns this parameter if the value is missing / возвращает этот параметр,
+ * если значение отсутствует
+ */
+export function getItemElementByIndex<T = any> (
+  element: HTMLElement,
+  index: NumberOrStringType,
+  defaultValue?: T
+): T {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  return element?.[index] || defaultValue
+}
+
+/**
+ * Modifies the value of an element identified by its key
+ *
+ * Изменяет значение элемента, определенного ключом
+ * @param element checked element / проверяемый элемент
+ * @param index index at which we retrieve values / индекс, по которому получаем значения
+ * @param value new value / новое значение
+ */
+export function setItemElementByIndex (
+  element: HTMLElement,
+  index: NumberOrStringType,
+  value: ElementOptionsItemType
+): void {
+  const data = getItemElementByIndex(element, index)
+
+  if (
+    data &&
+    typeof data === 'object' &&
+    typeof value === 'object'
+  ) {
+    forEach(value, (item, key) => {
+      data[key] = executeFunction(item)
+    })
+  } else {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    element[index] = executeFunction(value)
   }
 }
 
@@ -66,11 +117,7 @@ export function createElement<T = HTMLElement> (
     options(element)
   } else if (typeof options === 'object') {
     forEach(options, (value, key) => {
-      if (isFilled(value)) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        element[key] = executeFunction(value)
-      }
+      setItemElementByIndex(element, key, value)
     })
   }
 

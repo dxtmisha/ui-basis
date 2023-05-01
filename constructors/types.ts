@@ -48,7 +48,7 @@ export type AssociativeOrStringType = AssociativeOrAnyType<string>
 export type ElementType = Window | HTMLElement | Element
 export type ElementOrUndefinedType = ElementType | UndefinedType
 export type ElementOrStringType = ElementType | string
-export type ElementOptionsItemType = CallbackOrStringType
+export type ElementOptionsItemType = CallbackOrAnyType
 export type ElementOptionsType =
   CallbackVoidType<ElementType>
   | AssociativeType<ElementOptionsItemType>
