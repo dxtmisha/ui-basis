@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { Ref, ref, watch } from 'vue'
 import { isNull } from '../functions/data'
 
 import { Env } from './Env'
@@ -31,9 +31,10 @@ export class StorageData<T = any> {
   private date?: number
 
   /**
-   * @param key key / ключ
+   * Constructor
    * @param name group of records, from which we get data / группа записей, по которой
    * получаем данные
+   * @param key key / ключ
    * @param method class, with which we will work / класс, с которым будем работать
    */
   constructor (
@@ -46,7 +47,7 @@ export class StorageData<T = any> {
     if (objects.has(this.index)) {
       return objects.get(this.index) as StorageData<T>
     } else {
-      const item = this.getItem()
+      const item = this.getObject()
 
       this.item.value = item.item
       this.date = item.date
@@ -56,8 +57,22 @@ export class StorageData<T = any> {
     }
   }
 
+  /**
+   * Is the value old relative to age
+   *
+   * Является ли значение старым относительно возраста
+   * @param age age being checked / возраст, который проверяется
+   */
+  isOld (age?: number): boolean {
+    return (this.date || 0) + ((age || cacheAgeDefault) * 1000) < new Date().getTime()
+  }
+
   get (): AnyOrUndefinedType<T> {
     return this.item.value
+  }
+
+  getItem (): Ref<AnyOrUndefinedType<T>> {
+    return this.item
   }
 
   set (value: T): this {
@@ -84,7 +99,7 @@ export class StorageData<T = any> {
    * Метод вернёт значение, лежащее в хранилище по указанному ключу
    * @private
    */
-  private getItem (): StorageItemType<T> {
+  private getObject (): StorageItemType<T> {
     const read = this.method?.getItem(this.index)
 
     if (read) {
@@ -96,7 +111,7 @@ export class StorageData<T = any> {
 
     return {
       item: undefined,
-      date: this.getDate()
+      date: 0
     }
   }
 
