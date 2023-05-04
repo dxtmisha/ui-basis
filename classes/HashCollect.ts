@@ -12,7 +12,7 @@ export class HashCollect {
   public static readonly data = new Map<string, HashItemType>()
 
   static get (key: string): HashItemType {
-    return this.data.get(key) || this.newItem(key)
+    return this.data.has(key) ? (this.data.get(key) as HashItemType) : this.newItem(key)
   }
 
   static set (key: string, value?: string) {
