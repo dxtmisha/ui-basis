@@ -1,5 +1,5 @@
 import {
-  AssociativeOrArrayType,
+  AssociativeOrArrayType, AssociativeOrMapOrArrayType,
   AssociativeType,
   EmptyType,
   NumberOrStringType,
@@ -180,14 +180,17 @@ export function executeFunction<T> (callback: T | (() => T)): T {
  * всех записей со значением undefined
  */
 export function forEach<T, K = NumberOrStringType, R = undefined> (
-  data: AssociativeOrArrayType<T>,
+  data: AssociativeOrMapOrArrayType<T>,
   callback: (item: T, key: K, data: AssociativeOrArrayType<T>) => R,
   filterUndefined?: boolean
 ): Array<R> {
   if (data && typeof data === 'object') {
     const returnData = [] as Array<R>
 
-    if (Array.isArray(data)) {
+    if (
+      Array.isArray(data) ||
+      data instanceof Map
+    ) {
       data.forEach((item, key) => returnData.push(callback(item, key as K, data)))
     } else {
       Object.entries(data).forEach(([key, item]) => returnData.push(callback(item, key as K, data)))

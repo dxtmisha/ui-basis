@@ -1,5 +1,5 @@
 import { computed, ComputedRef, isRef, Ref } from 'vue'
-import { isFunction, isNull } from '../functions/data'
+import { isFilled, isFunction, isNull } from '../functions/data'
 
 import { AnyOrUndefinedType, CallbackNullType } from '../constructors/types'
 import { RefOrCallbackOrNormalType } from '../constructors/typesRef'
@@ -12,8 +12,18 @@ import { RefOrCallbackOrNormalType } from '../constructors/typesRef'
 export abstract class StorageAbstract<T = any> {
   // eslint-disable-next-line no-useless-constructor
   protected constructor (
+    protected readonly key: string,
     protected readonly value: Ref<AnyOrUndefinedType<T>>
   ) {
+  }
+
+  /**
+   * Is the value filled
+   *
+   * Заполнено ли значение
+   */
+  is (): boolean {
+    return isFilled<AnyOrUndefinedType<T>>(this.value.value)
   }
 
   /**
@@ -51,6 +61,10 @@ export abstract class StorageAbstract<T = any> {
     } else {
       return valueCallback
     }
+  }
+
+  getKey (): string {
+    return this.key
   }
 
   /**

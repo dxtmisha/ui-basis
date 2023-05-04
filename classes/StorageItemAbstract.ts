@@ -28,7 +28,7 @@ export abstract class StorageItemAbstract<T = any> extends StorageAbstract<T> {
   ) {
     const item = new StorageData<T>(name, key, method)
 
-    super(item.getItem())
+    super(key, item.getItem())
 
     this.item = new StorageData<T>(name, key, method)
   }

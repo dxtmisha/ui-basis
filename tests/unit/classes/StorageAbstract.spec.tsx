@@ -9,7 +9,7 @@ describe('classes/StorageAbstract', () => {
     constructor (
       value: Ref<AnyOrUndefinedType<T>>
     ) {
-      super(value)
+      super('test', value)
     }
   }
 
