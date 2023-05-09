@@ -38,6 +38,15 @@ export class Env {
   }
 
   /**
+   * Returns LANGUAGE
+   *
+   * Возвращает LANGUAGE
+   */
+  static language (): string {
+    return this.get('LANGUAGE', 'en-GB')
+  }
+
+  /**
    * Returns PREFIX
    *
    * Возвращает PREFIX
