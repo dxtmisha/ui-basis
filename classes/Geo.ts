@@ -1,10 +1,13 @@
 import { computed, ref } from 'vue'
+import { isFilled } from '../functions/data'
 import { Env } from './Env'
 import { StorageItem } from './StorageItem'
 
 import * as geo from '../constructors/geo.json'
-import { isFilled } from '../functions/data'
 
+import { RefOrNormalType } from '../constructors/typesRef'
+
+export type GeoCodeType = RefOrNormalType<string>
 export type GeoDateType = 'datetime' | 'date' | 'month' | 'time' | 'second'
 export type GeoFirstDayType = 1 | 6 | 0
 export type GeoHoursType = '12' | '24'
