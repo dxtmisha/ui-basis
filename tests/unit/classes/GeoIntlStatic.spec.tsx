@@ -38,6 +38,8 @@ describe('classes/GeoIntlStatic', () => {
   })
 
   it('percentStatic/percentStaticBy100', () => {
+    Geo.set('GB')
+
     expect(item.percentStatic(0.05)).toBe('5%')
     expect(item.percentStatic(0.5)).toBe('50%')
     expect(item.percentStatic(1)).toBe('100%')

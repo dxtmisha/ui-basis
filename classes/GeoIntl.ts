@@ -1,10 +1,15 @@
 import { computed, ComputedRef } from 'vue'
 import { getRef } from '../functions/ref'
 
+import { GeoDateType } from './Geo'
 import { GeoIntlStatic } from './GeoIntlStatic'
 
-import { GeoDateType, ItemType } from '../constructors/types'
-import { IntlDateType, IntlNumberType, IntlStringType } from '../constructors/typesRef'
+import { ItemType, NumberOrStringOrDateType, NumberOrStringType } from '../constructors/types'
+import { RefOrNormalType } from '../constructors/typesRef'
+
+export type IntlNumberType = RefOrNormalType<NumberOrStringType>
+export type IntlStringType = RefOrNormalType<string>
+export type IntlDateType = RefOrNormalType<NumberOrStringOrDateType>
 
 /**
  * The Intl namespace object contains several constructors as well as functionality common
@@ -159,20 +164,30 @@ export class GeoIntl extends GeoIntlStatic {
 
   relative (value: IntlDateType): ComputedRef<string>
   relative (value: IntlDateType, style: Intl.RelativeTimeFormatStyle): ComputedRef<string>
+  relative (value: IntlDateType, todayValue?: Date): ComputedRef<string>
   relative (value: IntlDateType, options: Intl.RelativeTimeFormatOptions): ComputedRef<string>
+  relative (value: IntlDateType, options: Intl.RelativeTimeFormatOptions, todayValue?: Date): ComputedRef<string>
   /**
    * Enables language-sensitive relative time formatting
    *
    * Включает форматирование относительного времени с учетом языка
    * @param value a number, bigint, or string, to format / число для форматирования
-   * @param styleOptions the length of the internationalized message / длина
+   * @param styleTodayOptions the length of the internationalized message / длина
    * интернационализированного сообщения
+   * @param todayValue current day / текущий день
    */
   relative (
     value: IntlDateType,
-    styleOptions?: Intl.RelativeTimeFormatStyle | Intl.RelativeTimeFormatOptions
+    styleTodayOptions?: Date | Intl.RelativeTimeFormatStyle | Intl.RelativeTimeFormatOptions,
+    todayValue?: Date
   ): ComputedRef<string> {
-    return computed(() => this.relativeStatic(getRef(value), styleOptions))
+    return computed(() => {
+      if (styleTodayOptions instanceof Date) {
+        return this.relativeStatic(getRef(value), undefined, styleTodayOptions)
+      } else {
+        return this.relativeStatic(getRef(value), styleTodayOptions, todayValue)
+      }
+    })
   }
 
   date (value: IntlDateType): ComputedRef<string>
