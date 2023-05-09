@@ -41,6 +41,11 @@ export type AssociativeOrArrayType<T = any> = T[] | AssociativeType<T> | object
 export type AssociativeOrMapOrArrayType<T = any> = T[] | Map<T, string> | AssociativeType<T> | object
 export type AssociativeOrStringType = AssociativeOrAnyType<string>
 
+export interface ItemType<T = any> {
+  text: string
+  value: T
+}
+
 /**
  * Types for working with home elements
  *
