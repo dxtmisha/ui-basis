@@ -1,17 +1,11 @@
 import { computed, ComputedRef, ref, Ref, watch } from 'vue'
 import { To } from './To'
 
+import { GeoCodeType, GeoDateType, GeoFirstDayType, GeoHoursType, GeoTimeZoneStyleType } from './Geo'
 import { GeoAbstract } from './GeoAbstract'
 import { GeoIntl } from './GeoIntl'
 
-import {
-  GeoDateType,
-  GeoFirstDayType,
-  GeoHoursType,
-  GeoTimeZoneStyleType,
-  NumberOrStringOrDateType
-} from '../constructors/types'
-import { GeoCodeType } from '../constructors/typesRef'
+import { NumberOrStringOrDateType } from '../constructors/types'
 
 /**
  * A class for working with dates
