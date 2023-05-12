@@ -1,30 +1,23 @@
 <template>
   <div class="p-6">
-    {{ value }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { GeoPhone } from '../../classes/GeoPhone'
+import { defineComponent, ref } from 'vue'
+import { ElementItem } from '../../classes/ElementItem'
 
 export default defineComponent({
   name: 'HomeView',
   components: {},
   setup () {
-    const item = new GeoPhone('ru-RU')
+    console.log('1', new ElementItem().get())
+    console.log('2', new ElementItem('#app').get())
+    console.log('3', new ElementItem(document.querySelector('#app')).get())
+    console.log('4', new ElementItem(ref('#app')).get())
+    console.log('5', new ElementItem(ref(document.querySelector('#app'))).get())
 
-    item.set('+79023343333')
-    console.log('getItemByPhone', GeoPhone.getItemByPhone('+123456789'))
-    console.log('getObjectByPhone', GeoPhone.getObjectByPhone('+79023343333').toMask().value)
-
-    console.log('item', item.getInfo().value)
-    console.log('item', item.getMask().value)
-    console.log('item', item.toMask().value)
-
-    return {
-      value: item.getInfo()
-    }
+    return {}
   }
 })
 </script>
