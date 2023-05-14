@@ -1,23 +1,57 @@
 <template>
   <div class="p-6">
+    <button v-if="edit" ref="button">test1</button>
+    <button v-else ref="button">test2</button>
+    <div v-if="isDom" ref="dom"/>
+    {{ dom }}
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { ElementItem } from '../../classes/ElementItem'
+import { EventItem } from '../../classes/EventItem'
 
 export default defineComponent({
   name: 'HomeView',
   components: {},
   setup () {
-    console.log('1', new ElementItem().get())
-    console.log('2', new ElementItem('#app').get())
-    console.log('3', new ElementItem(document.querySelector('#app')).get())
-    console.log('4', new ElementItem(ref('#app')).get())
-    console.log('5', new ElementItem(ref(document.querySelector('#app'))).get())
+    const edit = ref(false)
+    const isDom = ref(true)
+    const button = ref()
+    const dom = ref()
 
-    return {}
+    const item = new EventItem(button, (event) => {
+      console.log(event)
+
+      edit.value = !edit.value
+    })
+
+    item.setDom(dom)
+    item.setDetail({
+      a: 1,
+      b: 2
+    })
+    item.go()
+
+    setTimeout(() => {
+      console.log('stop')
+      isDom.value = false
+    }, 5000)
+
+    setTimeout(() => {
+      console.log('dispatch')
+      item.dispatch({
+        c: 3
+      })
+    }, 1000)
+
+    return {
+      edit,
+      isDom,
+
+      button,
+      dom
+    }
   }
 })
 </script>

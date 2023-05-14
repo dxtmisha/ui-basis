@@ -59,3 +59,8 @@ export type ElementOptionsType =
   CallbackVoidType<ElementType>
   | AssociativeType<ElementOptionsItemType>
   | undefined
+
+export interface coordinatorType {
+  x: number,
+  y: number
+}
