@@ -1,56 +1,47 @@
 <template>
   <div class="p-6">
-    <button v-if="edit" ref="button">test1</button>
-    <button v-else ref="button">test2</button>
-    <div v-if="isDom" ref="dom"/>
-    {{ dom }}
+    <div
+      v-if="isDom"
+      ref="div"
+      :style="{width:`${width}px`}"
+      class="h-8 bg-amber-600"
+    />
+    <button ref="button" @click="onClick">test1</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { EventItem } from '../../classes/EventItem'
+import { EventResize } from '../../classes/EventResize'
 
 export default defineComponent({
   name: 'HomeView',
   components: {},
   setup () {
-    const edit = ref(false)
+    const div = ref()
+
     const isDom = ref(true)
-    const button = ref()
-    const dom = ref()
+    const width = ref(100)
 
-    const item = new EventItem(button, (event) => {
-      console.log(event)
-
-      edit.value = !edit.value
+    const event = new EventResize(div, () => {
+      console.log('event')
     })
 
-    item.setDom(dom)
-    item.setDetail({
-      a: 1,
-      b: 2
-    })
-    item.go()
+    event.go()
 
     setTimeout(() => {
-      console.log('stop')
       isDom.value = false
-    }, 5000)
-
-    setTimeout(() => {
-      console.log('dispatch')
-      item.dispatch({
-        c: 3
-      })
-    }, 1000)
+    }, 15000)
 
     return {
-      edit,
-      isDom,
+      div,
 
-      button,
-      dom
+      isDom,
+      width,
+
+      onClick () {
+        width.value += 100
+      }
     }
   }
 })

@@ -7,6 +7,7 @@ import { AssociativeType, coordinatorType, ElementType } from '../constructors/t
 
 export type EventCallbackType<R = any, E = Event> = ((event?: E) => R) & EventListener
 export type EventCallbackRequiredType<R = any, E = Event> = (event: E) => R
+export type EventCallbackVoidType = () => void | undefined
 export type EventOptionsType = AddEventListenerOptions | boolean | undefined
 
 /**
