@@ -106,7 +106,7 @@ export class To {
   static camelCase (value: NumberOrStringType): string {
     return value
       .toString()
-      .replace(/[-.]([a-zA-Z])/ig, (all, char) => `${char.toUpperCase()}`)
+      .replace(/[-.]([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
       .replace(/^([A-Z])/g, (all, char) => `${char.toLowerCase()}`)
   }
 
@@ -119,8 +119,8 @@ export class To {
   static kebabCase (value: NumberOrStringType): string {
     return value
       .toString()
-      .replace(/[A-Z]/ig, all => `-${all.toLowerCase()}`)
-      .replace(/^[A-Z]/ig, all => all.toLowerCase())
+      .replace(/[A-Z]/g, all => `-${all.toLowerCase()}`)
+      .replace(/^[A-Z]/g, all => all.toLowerCase())
   }
 
   /**
