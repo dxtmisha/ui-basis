@@ -1,9 +1,11 @@
+const { replaceRecursive } = require('../../functions/data')
 const { To } = require('../To')
 
 const PropertiesCache = require('./PropertiesCache')
 const PropertiesFiles = require('./PropertiesFiles')
 
 const FILE_NAME = 'properties.json'
+const FILE_COMPONENT_MAIN = 'components-main'
 const FILE_COMPONENT_INFO = 'components-info'
 const FILE_COMPONENT_PROPERTIES = 'components-properties'
 
@@ -13,8 +15,14 @@ const FILE_COMPONENT_PROPERTIES = 'components-properties'
  * Класс для работы с содержимым файла
  */
 module.exports = class PropertiesStructure {
+  designsCache = []
+
+  /**
+   * @param {string[]} designs
+   * @param {boolean} cache
+   */
   constructor (designs, cache = true) {
-    this.designs = designs
+    this.designs = ['d', ...designs]
     this.cache = cache
   }
 
@@ -25,23 +33,51 @@ module.exports = class PropertiesStructure {
    * @returns {{design:string,paths:string[]}[]}
    */
   getFullPath () {
-    if (Array.isArray(this.designs)) {
-      const designs = []
-
+    if (this.designsCache.length > 0) {
+      return this.designsCache
+    } else if (Array.isArray(this.designs)) {
       this.designs.forEach(design => {
-        designs.push({
+        this.designsCache.push({
           design,
           paths: [
-            [__dirname, '..', '..', design],
-            [__dirname, '..', '..', '..', '..', design]
+            [__dirname, '..', '..', this.__getDesignPath(design)],
+            [__dirname, '..', '..', '..', '..', this.__getDesignPath(design)]
           ]
         })
       })
 
-      return designs
+      return this.designsCache
     } else {
       return []
     }
+  }
+
+  /**
+   * Returns all main tokens
+   *
+   * Возвращает все основные токены
+   * @return {Object<string, *>|*[]}
+   */
+  getMain () {
+    return this.__getByCache(FILE_COMPONENT_MAIN, () => {
+      const list = this.getFullPath()
+      const data = []
+
+      list.forEach(item => {
+        const properties = {}
+
+        item.paths.forEach(
+          path => replaceRecursive(properties, PropertiesFiles.readFile([...path, FILE_NAME]) || {})
+        )
+
+        data.push({
+          design: item.design,
+          properties
+        })
+      })
+
+      return data
+    })
   }
 
   /**
@@ -108,6 +144,18 @@ module.exports = class PropertiesStructure {
     } else {
       return callback()
     }
+  }
+
+  /**
+   * Returns the path to a file by design name
+   *
+   * Возвращает путь к файлу по названию дизайна
+   * @param {string} name Design name / Название дизайна
+   * @return {string}
+   * @private
+   */
+  __getDesignPath (name) {
+    return name === 'd' ? 'constructors' : name
   }
 
   /**
