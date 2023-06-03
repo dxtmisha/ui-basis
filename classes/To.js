@@ -101,6 +101,20 @@ class To {
   }
 
   /**
+     * Convert a String to Camel Case (+ first letter)
+     *
+     * Преобразование строки в Camel Case (+ первая буква)
+     * @param value value / значения
+     */
+  static camelCaseFirst (value) {
+    return value
+      .toString()
+      .trim()
+      .replace(/[-.]([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
+      .replace(/^([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
+  }
+
+  /**
      * Convert a string to kebab case
      *
      * Преобразование строки в kebab case

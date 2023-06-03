@@ -113,11 +113,22 @@ module.exports = class PropertiesFiles {
     this.createDir(paths)
 
     requireFs.writeFileSync(
-      this.joinPath([...paths, `${To.kebabCase(name)}.json`]),
+      this.joinPath([...paths, this.getFileName(name)]),
       JSON.stringify(value)
     )
 
     return this
+  }
+
+  /**
+   * Returns the file name
+   *
+   * Возвращает имя файла
+   * @param {string} name
+   * @return {string}
+   */
+  static getFileName (name) {
+    return `${To.kebabCase(name)}.json`
   }
 
   /**
