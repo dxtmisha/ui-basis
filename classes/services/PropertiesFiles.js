@@ -152,28 +152,4 @@ module.exports = class PropertiesFiles {
       )
     })
   }
-
-  /**
-   * Transforms an array into the required data structure
-   *
-   * Преобразует массив в нужную структуру
-   * @param {Object<string,string|Object<string,string>>} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
-   */
-  toStandard (properties) {
-    const data = {}
-    forEach(properties, (value, key) => {
-      const index = To.kebabCase(key)
-      if (typeof value !== 'object') {
-        data[index] = { value }
-      } else if ('value' in value) {
-        data[index] = value
-      } else if (Object.keys(value).length === 0) {
-        data[index] = { __none: true }
-      } else if (isFilled(value)) {
-        data[index] = this.toStandard(value)
-      }
-    })
-    return data
-  }
 }

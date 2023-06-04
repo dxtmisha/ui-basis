@@ -1,3 +1,6 @@
 {
-  "color": "red"
+  "var|test": "asd",
+  "test2": "asd2",
+  "color": "red",
+  "@link": "{checkbox.toLink}"
 }

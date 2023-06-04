@@ -2,6 +2,7 @@ const { To } = require('../To')
 
 const PropertiesFiles = require('./PropertiesFiles')
 
+const CACHE_STATUS = false
 const DIR_CACHE = ['..', '..', 'cache']
 
 /**
@@ -32,12 +33,13 @@ module.exports = class PropertiesCache {
    * @return {Object<string, *>|*[]}
    */
   static get (paths, name, callback = undefined) {
-    if (this.is(paths, name)) {
+    if (CACHE_STATUS && this.is(paths, name)) {
       const path = this.__getPath([...To.array(paths), PropertiesFiles.getFileName(name)])
       return PropertiesFiles.readFile(path)
     } else if (callback) {
-      this.create(paths, name, callback())
-      return this.get(paths, name)
+      const value = callback()
+      this.create(paths, name, value)
+      return value
     } else {
       return {}
     }
