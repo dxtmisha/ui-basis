@@ -10,6 +10,8 @@ const PropertiesFiles = require('./PropertiesFiles')
 const PropertiesVariable = require('./PropertiesVariable')
 
 const FILE_NAME = 'properties.json'
+
+const FILE_PROPERTIES = 'properties'
 const FILE_MAIN = 'main'
 const FILE_MAIN_PROPERTIES_ALL = 'main-properties-all'
 const FILE_COMPONENT_INFO = 'components-info'
@@ -22,6 +24,7 @@ const FILE_COMPONENT_PROPERTIES = 'components-properties'
  */
 module.exports = class PropertiesStructure {
   designsCache = []
+  properties = undefined
 
   /**
    * @param {string[]} designs
@@ -30,6 +33,22 @@ module.exports = class PropertiesStructure {
   constructor (designs, cache = true) {
     this.designs = ['d', ...designs]
     this.cache = cache
+  }
+
+  /**
+   * Getting the complete processed list
+   *
+   * Получение полного обработанного списка
+   * @return {Object<string, *>}
+   */
+  get () {
+    return this.__getByCache(FILE_PROPERTIES, () => {
+      const data = this.__getProperties()
+
+      this.__toLink(data)
+
+      return data
+    })
   }
 
   /**
@@ -167,6 +186,36 @@ module.exports = class PropertiesStructure {
   }
 
   /**
+   * Checks if there is a link in the child elements
+   *
+   * Проверяет, есть ли ссылка у дочерних элементов
+   * @param {Object<string,*>} properties
+   * @return {boolean}
+   * @private
+   */
+  __isLinkForProperties (properties) {
+    let is = false
+
+    forEach(properties, item => {
+      if (!is) {
+        switch (item?.[PropertiesVariable.getVariableName()]) {
+          case 'link':
+            is = true
+
+            break
+          case 'var':
+            break
+          default:
+            is = this.__isLinkForProperties(item)
+            break
+        }
+      }
+    })
+
+    return is
+  }
+
+  /**
    * Returns caching information
    *
    * Возвращает информацию по кэшированию
@@ -194,6 +243,51 @@ module.exports = class PropertiesStructure {
    */
   __getDesignPath (name) {
     return name === 'd' ? 'constructors' : name
+  }
+
+  /**
+   * Returns all records of the link type
+   *
+   * Возвращает все записи типа ссылка
+   * @param {Object<string,*>} properties
+   * @param {string} design
+   * @param {string} component
+   * @return {{name:string,design:string,component:string,link:string,item:Object<string,*>,properties:Object<string,*>,edit:boolean}[]}
+   * @private
+   */
+  __getLinkForProperties (
+    properties,
+    design = undefined,
+    component = undefined
+  ) {
+    const data = []
+
+    forEach(properties, (item, name) => {
+      const itemDesign = design || name
+      const itemComponent = design ? (component || name) : undefined
+
+      switch (item?.[PropertiesVariable.getVariableName()]) {
+        case 'link':
+          data.push({
+            name,
+            design: itemDesign,
+            component: itemComponent,
+            link: item.value,
+            item,
+            properties,
+            edit: false
+          })
+
+          break
+        case 'var':
+          break
+        default:
+          data.push(...this.__getLinkForProperties(item, itemDesign, itemComponent))
+          break
+      }
+    })
+
+    return data
   }
 
   /**
@@ -237,11 +331,55 @@ module.exports = class PropertiesStructure {
   }
 
   /**
+   * Useful record for processing
+   *
+   * Полезная запись для обработки
+   * @return {Object<string, *>}
+   * @private
+   */
+  __getProperties () {
+    if (!this.properties) {
+      this.properties = this.getMainAll() || {}
+    }
+
+    return this.properties
+  }
+
+  /**
+   * Getting data by reference
+   *
+   * Получение данных по ссылке
+   * @param {string[]} paths
+   * @return {Object<string, *>|undefined}
+   * @private
+   */
+  __getProperty (paths) {
+    let data = this.__getProperties()
+    let find = true
+
+    paths.forEach(path => {
+      if (path in data) {
+        data = data[path]
+      } else {
+        find = false
+      }
+    })
+
+    if (find) {
+      return data
+    } else {
+      return undefined
+    }
+  }
+
+  /**
    * Transforms an array into the required data structure
    *
    * Преобразует массив в нужную структуру
    * @param {Object<string,string|Object<string,string>>} properties An array that needs to be
    * transformed / Массив, который нужно преобразовать
+   * @return {Object<string,Object<string,*>>}
+   * @private
    */
   __toStandard (properties) {
     const data = {}
@@ -264,5 +402,63 @@ module.exports = class PropertiesStructure {
     })
 
     return data
+  }
+
+  /**
+   * Updating all links
+   *
+   * Обновление всех ссылок
+   * @param {Object<string,Object<string,*>>} properties
+   * @private
+   */
+  __toLink (properties) {
+    const data = this.__getLinkForProperties(properties)
+    let max = 100
+    let update = true
+
+    while (update && max-- > 0) {
+      update = false
+
+      data.forEach(item => {
+        if (
+          !item.edit &&
+          this.__addDateByLink(item)
+        ) {
+          update = true
+          item.edit = true
+        }
+      })
+    }
+  }
+
+  /**
+   * Adding a property by reference
+   *
+   * Добавление свойства по ссылке
+   * @param {{name:string,design:string,component:string,link:string,item:Object<string,*>,properties:Object<string,*>,edit:boolean}} item
+   * @return {boolean}
+   * @private
+   */
+  __addDateByLink (item) {
+    const paths = PropertiesVariable.getLinkByStandard(
+      item.link,
+      item.design,
+      item.component
+    )
+
+    const properties = this.__getProperty(paths)
+
+    if (properties && !this.__isLinkForProperties(properties)) {
+      forEach(properties, (property, name) => {
+        if (!PropertiesVariable.isSpecialist(name)) {
+          item.properties[name] = property
+        }
+      })
+
+      delete item.properties[item.name]
+      return true
+    } else {
+      return false
+    }
   }
 }
