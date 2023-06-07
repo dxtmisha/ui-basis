@@ -2,6 +2,7 @@
   "var|test": "asd",
   "test2": "asd2",
   "test3": "{??test2}",
+  "test31": "{##test2}",
   "test4": "{test2}",
   "test5": "{?checkbox.color}",
   "test6": "{{?checkbox.color}}",

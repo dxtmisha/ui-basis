@@ -10,9 +10,9 @@ const PropertiesFiles = require('./PropertiesFiles')
 
 const FILE_NAME = 'properties.json'
 const FILE_CACHE_READ = 'properties-read'
-const FILE_CACHE_MAIN = 'properties-main'
-const FILE_CACHE_INFORMATION = 'properties-information'
-const FILE_CACHE_COMPONENTS = 'properties-components'
+const FILE_CACHE_MAIN = 'properties-read-main'
+const FILE_CACHE_INFORMATION = 'properties-read-information'
+const FILE_CACHE_COMPONENTS = 'properties-read-components'
 
 /**
  * Reading all files and returning a merged object

@@ -1,0 +1,8 @@
+{
+  "color": "red",
+  "toLink": {
+    "@link": "{rounded.standard}",
+    "h": "100",
+    "w": "100"
+  }
+}
