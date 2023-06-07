@@ -1,10 +1,5 @@
 const { To } = require('../To')
 
-const {
-  forEach,
-  isFilled
-} = require('../../functions/data')
-
 const requireFs = require('fs')
 const requirePath = require('path')
 
@@ -129,6 +124,17 @@ module.exports = class PropertiesFiles {
    */
   static getFileName (name) {
     return `${To.kebabCase(name)}.json`
+  }
+
+  /**
+   * Returns the file name for styles
+   *
+   * Возвращает имя файла для стилей
+   * @param {string} name
+   * @return {string}
+   */
+  static getFileStyle (name) {
+    return `${To.kebabCase(name)}.scss`
   }
 
   /**

@@ -1,13 +1,28 @@
-const PropertiesStructure = require('./PropertiesStructure')
+const PropertiesRead = require('./PropertiesRead')
 
 module.exports = class Properties {
-  constructor (designs) {
-    this.structure = new PropertiesStructure(designs)
+  /**
+   * @type {Object.<string, PropertiesItem>}
+   */
+  items = {}
 
-    console.log('structure.get', this.structure.get())
+  constructor (designs) {
+    this.read = new PropertiesRead(designs)
+
+    this.read.get()
+
+    this.__init()
   }
 
   getScss () {
     return ''
+  }
+
+  __init () {
+    // Close
+  }
+
+  __initItems () {
+    // Close
   }
 }
