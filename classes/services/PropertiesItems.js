@@ -2,6 +2,7 @@ const { To } = require('../To')
 const { forEach } = require('../../functions/data')
 
 const PropertiesCache = require('./PropertiesCache')
+const PropertiesTool = require('./PropertiesTool')
 
 const FILE_CACHE_VALUE = 'properties-items-value'
 const FILE_CACHE_VALUE_FIX = 'properties-items-value-fix'
@@ -18,6 +19,9 @@ module.exports = class PropertiesItems {
    */
   designs = undefined
 
+  /**
+   * @param {Object<string,*>} properties
+   */
   constructor (properties) {
     this.properties = properties
   }
@@ -40,13 +44,15 @@ module.exports = class PropertiesItems {
    * Recursively applies a custom function to each element of the property
    *
    * Рекурсивно применяет пользовательскую функцию к каждому элементу свойства
-   * @param {(item: Object<string,*>, itemDesign: string,itemComponent: string, properties: Object<string,*>) => *[]} callback
+   * @param {({item: Object<string,*>, name: string, design: string, component: string, properties: Object<string,*>}) => *[]} callback
    * @param {Object.<string,*>} properties
+   * @param {{isValue?: boolean}} options
    * @param {string|undefined} design
    * @param {string|undefined} component
    */
   each (
     callback,
+    options = {},
     properties = this.properties,
     design = undefined,
     component = undefined
@@ -54,26 +60,50 @@ module.exports = class PropertiesItems {
     const data = []
 
     forEach(properties, (item, name) => {
-      const itemDesign = design || To.kebabCase(name)
-      const itemComponent = design ? (component || To.kebabCase(name)) : undefined
+      if (!PropertiesTool.isSpecial(name)) {
+        const itemDesign = design || To.kebabCase(name)
+        const itemComponent = design ? (component || To.kebabCase(name)) : undefined
 
-      if ('value' in item) {
-        const value = callback(
-          item,
-          itemDesign,
-          itemComponent,
-          properties
-        )
+        if (!('value' in item)) {
+          data.push(...this.each(callback, options, item, itemDesign, itemComponent))
+        } else {
+          const isObject = typeof item.value === 'object'
+          const argumentsFn = {
+            item,
+            name,
+            design: itemDesign,
+            component: itemComponent,
+            properties
+          }
 
-        if (value !== undefined) {
-          data.push(value)
+          const value = (!options?.isValue || !isObject) ? callback(argumentsFn) : undefined
+
+          if (isObject) {
+            data.push(...this.each(callback, options, item.value, itemDesign, itemComponent))
+          }
+
+          if (value !== undefined) {
+            data.push(value)
+          }
         }
-      } else {
-        data.push(...this.each(callback, item, itemDesign, itemComponent))
       }
     })
 
     return data
+  }
+
+  /**
+   * Caching the result
+   *
+   * Сохранение результата в кеш
+   * @param {string} name
+   * @param {Object<string,*>} data
+   * @return {PropertiesItems}
+   */
+  cache (name, data = this.properties) {
+    PropertiesCache.create([], name, data)
+
+    return this
   }
 
   /**
@@ -112,11 +142,15 @@ module.exports = class PropertiesItems {
    */
   toFullValueByDesign () {
     const designs = this.getDesigns()
-    const data = this.each((item, design, component) => {
+    const data = this.each(({
+      item,
+      design,
+      component
+    }) => {
       let isValue = false
 
       item.value = item.value
-        .replace(/(?<=\{)[^.{}]+/, (name) => {
+        ?.replace(/(?<=\{)[^.{}]+/, name => {
           if (designs.indexOf(name) === -1) {
             isValue = true
             return `${design}.${name}`
@@ -132,9 +166,9 @@ module.exports = class PropertiesItems {
           component
         }
       }
-    })
+    }, { isValue: true })
 
-    PropertiesCache.create([], FILE_CACHE_VALUE_DESIGN, data)
+    this.cache(FILE_CACHE_VALUE_DESIGN, data)
 
     return this
   }
@@ -154,7 +188,11 @@ module.exports = class PropertiesItems {
     designSymbol,
     componentSymbol
   ) {
-    const data = this.each((item, design, component) => {
+    const data = this.each(({
+      item,
+      design,
+      component
+    }) => {
       const isValue = !!item.value?.match(designSymbol)
 
       if (isValue) {
@@ -172,9 +210,9 @@ module.exports = class PropertiesItems {
           component
         }
       }
-    })
+    }, { isValue: true })
 
-    PropertiesCache.create([], cache, data)
+    this.cache(cache, data)
 
     return this
   }

@@ -7,6 +7,7 @@ const {
 
 const PropertiesCache = require('./PropertiesCache')
 const PropertiesFiles = require('./PropertiesFiles')
+const PropertiesTool = require('./PropertiesTool')
 
 const FILE_NAME = 'properties.json'
 const FILE_CACHE_READ = 'properties-read'
@@ -57,7 +58,7 @@ module.exports = class PropertiesRead {
     } else if (Array.isArray(this.designs)) {
       this.designs.forEach(design => {
         this.designsPaths.push({
-          design,
+          design: To.kebabCase(design),
           paths: this.__getDesignPath(design)
         })
       })
@@ -173,7 +174,7 @@ module.exports = class PropertiesRead {
 
     return {
       design,
-      component: To.camelCase(name),
+      component: To.kebabCase(name),
       code: To.camelCaseFirst(`${design}-${name}`),
       path,
       properties: this.__toStandard(PropertiesFiles.readFile([path, FILE_NAME]) || {})
@@ -192,18 +193,80 @@ module.exports = class PropertiesRead {
   __toStandard (properties) {
     const data = {}
 
-    forEach(properties, (value, name) => {
-      if (typeof value !== 'object') {
-        data[name] = { value }
-      } else if ('value' in value) {
-        data[name] = value
-      } else if (Object.keys(value).length === 0) {
-        data[name] = {}
-      } else if (isFilled(value)) {
-        data[name] = this.__toStandard(value)
+    forEach(properties, (item, name) => {
+      const key = PropertiesTool.getName(name)
+      const variable = PropertiesTool.getVariableInName(name)
+      const value = this.__toStandardByItem(item, key)
+
+      if (key in data) {
+        data[key] = replaceRecursive(data[key], value)
+      } else {
+        data[key] = value
+      }
+
+      if (variable) {
+        data[key][PropertiesTool.getKeyVariable()] = variable
       }
     })
 
     return data
+  }
+
+  /**
+   * Transform the property value into the required format
+   *
+   * Преобразовать значение свойства в необходимый формат
+   * @param {Object<string, *>|string|number} value
+   * @param {string} name
+   * @return {Object<string, *>}
+   * @private
+   */
+  __toStandardByItem (value, name) {
+    if (PropertiesTool.isSpecial(name)) {
+      return value
+    } else if (typeof value !== 'object') {
+      return { value }
+    } else if ('value' in value) {
+      if (typeof value.value === 'object') {
+        return {
+          ...value,
+          value: this.__toStandard(value.value)
+        }
+      } else {
+        return value
+      }
+    } else if (Object.keys(value).length === 0) {
+      return {}
+    } else if (isFilled(value)) {
+      return this.__toSeparate(this.__toStandard(value))
+    } else {
+      return {}
+    }
+  }
+
+  /**
+   * Separate a special property from regular values
+   *
+   * Разделить специальное свойство от обычных значений
+   * @param {Object<string,*>} properties
+   * @return {Object<string,*>}
+   * @private
+   */
+  __toSeparate (properties) {
+    const value = {}
+    const special = {}
+
+    forEach(this.__toStandard(properties), (item, name) => {
+      if (PropertiesTool.isSpecial(name)) {
+        special[name] = item
+      } else {
+        value[name] = item
+      }
+    })
+
+    return {
+      value,
+      ...special
+    }
   }
 }

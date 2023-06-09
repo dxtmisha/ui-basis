@@ -3,6 +3,7 @@
   "toLink": {
     "@link": "{rounded.standard}",
     "h": "100",
-    "w": "100"
+    "w": "100",
+    "color": "blue"
   }
 }

@@ -9,5 +9,14 @@
   "test7": "{is_{?checkbox.color}}",
   "test8": "{is_{?checkbox.color}_end}",
   "color": "red",
+  "border": {
+    "value": "red",
+    "__variable": "var"
+  },
+  "border-color": {
+    "color1": "red",
+    "color2": "blue",
+    "__variable": "var"
+  },
   "@link": "{checkbox.toLink}"
 }

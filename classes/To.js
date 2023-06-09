@@ -123,8 +123,8 @@ class To {
   static kebabCase (value) {
     return value
       .toString()
-      .replace(/[A-Z]/g, all => `-${all.toLowerCase()}`)
       .replace(/^[A-Z]/g, all => all.toLowerCase())
+      .replace(/[A-Z]/g, all => `-${all.toLowerCase()}`)
   }
 
   /**
