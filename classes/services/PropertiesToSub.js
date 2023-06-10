@@ -1,6 +1,7 @@
 // const PropertiesItems = require('./PropertiesItems')
 
 const PropertiesTool = require('./PropertiesTool')
+const { splice } = require('../../functions/data')
 const FILE_CACHE_SUB = 'properties-sub'
 const FILE_CACHE_SUB_LINK = 'properties-sub-link'
 
@@ -129,8 +130,7 @@ module.exports = class PropertiesToSub {
       designs
     ) + '}').replace(/^\{|}$/ig, '')
 
-    property.properties[name] = property.item
-    delete property.properties[property.name]
+    splice(property.properties?.value, { [name]: property.item }, property.name, true)
   }
 
   /**

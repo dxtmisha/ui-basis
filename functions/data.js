@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.replaceRecursive = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isFilled = exports.isNull = void 0
+exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isFilled = exports.isNull = void 0
 /**
  * Is the variable equal to null or undefined
  *
@@ -187,6 +187,41 @@ function forEach (data, callback, filterUndefined) {
   }
 }
 exports.forEach = forEach
+/**
+ * This method is used to copy the values of all enumerable own properties from one
+ * source object to a target object
+ *
+ * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой
+ * @param data The target object / Целевой объект
+ * @param item The source object / Исходные объекты
+ * @param start Index at which to start changing the array / Индекс, по которому начинает изменять массив
+ * @param isDelete Removing the initial value of start / Удаление начального значения start
+ */
+function splice (data, item, start, isDelete) {
+  if (typeof data === 'object' &&
+        typeof item === 'object') {
+    if (start) {
+      let init = false
+      forEach(Object.assign({}, data), (value, index) => {
+        if (start === index ||
+                    start === value) {
+          init = true
+          Object.assign(data, item)
+          if (isDelete) {
+            delete data[index]
+          }
+        } else if (init) {
+          delete data[index]
+          data[index] = value
+        }
+      })
+    } else {
+      Object.assign(data, item)
+    }
+  }
+  return data || {}
+}
+exports.splice = splice
 /**
  * Merge one or more arrays recursively
  *

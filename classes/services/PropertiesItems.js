@@ -44,7 +44,26 @@ module.exports = class PropertiesItems {
    * @return {string[]}
    */
   getKeys (index) {
-    return To.kebabCase(index).split('.')
+    return To.kebabCase(
+      index.replace(/^\{|}$/ig, '')
+    )
+      .split('.')
+  }
+
+  /**
+   * Returns link properties as a string
+   *
+   * Возвращает свойства ссылки в виде строки
+   * @param {string} value
+   * @return {Array<{name: string, property: Object<string,*>}>}
+   */
+  getItemByValue (value) {
+    return forEach(PropertiesTool.getLinkByValue(value), name => {
+      return {
+        name,
+        property: this.getItemByIndex(name)
+      }
+    })
   }
 
   /**

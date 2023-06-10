@@ -1,5 +1,6 @@
 import {
-  AssociativeOrArrayType, AssociativeOrMapOrArrayType,
+  AssociativeOrArrayType,
+  AssociativeOrMapOrArrayType,
   AssociativeType,
   EmptyType,
   NumberOrStringType,
@@ -204,6 +205,53 @@ export function forEach<T, K = NumberOrStringType, R = undefined> (
   } else {
     return []
   }
+}
+
+/**
+ * This method is used to copy the values of all enumerable own properties from one
+ * source object to a target object
+ *
+ * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой
+ * @param data The target object / Целевой объект
+ * @param item The source object / Исходные объекты
+ * @param start Index at which to start changing the array / Индекс, по которому начинает изменять массив
+ * @param isDelete Removing the initial value of start / Удаление начального значения start
+ */
+export function splice<T = any> (
+  data?: AssociativeType<T>,
+  item?: T,
+  start?: NumberOrStringType | T,
+  isDelete?: boolean
+): AssociativeType<T> {
+  if (
+    typeof data === 'object' &&
+    typeof item === 'object'
+  ) {
+    if (start) {
+      let init = false
+
+      forEach(Object.assign({}, data), (value, index) => {
+        if (
+          start === index ||
+          start === value
+        ) {
+          init = true
+          Object.assign(data, item)
+
+          if (isDelete) {
+            delete data[index]
+          }
+        } else if (init) {
+          delete data[index]
+          data[index] = value
+        }
+      })
+    } else {
+      Object.assign(data, item)
+    }
+  }
+
+  return data || {}
 }
 
 /**

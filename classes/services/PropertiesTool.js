@@ -73,6 +73,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Returns a list of link values
+   *
+   * Возвращает список значений ссылок
+   * @param {string} value
+   * @return {string[]}
+   */
+  static getLinkByValue (value) {
+    return value.match(/{[^{}]+}/ig)
+  }
+
+  /**
    * Replaces labels with design and component names
    *
    * Заменяет метки на названия дизайна и компонента
