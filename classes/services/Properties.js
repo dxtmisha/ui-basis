@@ -1,21 +1,30 @@
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
-const PropertiesVariable = require('./PropertiesVariable')
+
+const PropertiesToFull = require('./PropertiesToFull')
+const PropertiesToLink = require('./PropertiesToLink')
+const PropertiesToSub = require('./PropertiesToSub')
+const PropertiesToVariable = require('./PropertiesToVariable')
 
 module.exports = class Properties {
   constructor (designs) {
     const read = new PropertiesRead(designs)
+    const items = new PropertiesItems(read.get())
 
-    this.items = new PropertiesItems(read.get())
-    this.items.toFullValueFix()
+    const full = new PropertiesToFull(items)
+    const sub = new PropertiesToSub(items)
+    const variable = new PropertiesToVariable(items)
 
-    this.variable = new PropertiesVariable(this.items)
-    this.variable.to()
+    full.toFullValueFix()
+    variable.to()
+    sub.toByLink()
 
-    this.items.toFullValue()
-    this.items.toFullValueByDesign()
+    new PropertiesToLink(items).to()
 
-    console.log('getDesigns', this.items.getDesigns())
+    sub.to()
+    variable.toByVar()
+    full.toFullValue()
+    full.toFullValueByDesign()
 
     this.__init()
   }

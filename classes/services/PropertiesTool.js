@@ -71,4 +71,43 @@ module.exports = class PropertiesTool {
   static getKeyVariable () {
     return KEY_VARIABLE
   }
+
+  /**
+   * Replaces labels with design and component names
+   *
+   * Заменяет метки на названия дизайна и компонента
+   * @param {string} value
+   * @param {string} design
+   * @param {string} component
+   * @param {string[]} designs
+   * @return {string}
+   */
+  static toFull (value, design, component, designs) {
+    if (value.match(/(?<=\{)\?/)) {
+      return value
+        .replace(/(?<=\{)\?\?/g, `${design}.${component}.`)
+        .replace(/(?<=\{)\?/g, `${design}.`)
+    } else {
+      return this.toFullByDesigns(value, design, designs)
+    }
+  }
+
+  /**
+   * Adds the name of the design at the beginning if it is missing
+   *
+   * Добавляет название дизайна в начало, если его нет
+   * @param {string} value
+   * @param {string} design
+   * @param {string[]} designs
+   * @returns {*}
+   */
+  static toFullByDesigns (value, design, designs) {
+    return value?.replace(/(?<=\{)[^.{}]+/, name => {
+      if (designs.indexOf(name) === -1) {
+        return `${design}.${name}`
+      } else {
+        return name
+      }
+    })
+  }
 }

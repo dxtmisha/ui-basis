@@ -20,7 +20,13 @@ const SYMBOLS = {
 }
 
 const FILE_CACHE_VARIABLE = 'properties-variable'
+const FILE_CACHE_VARIABLE_VAR = 'properties-variable-var'
 
+/**
+ * Class for performing data type conversions
+ *
+ * Класс для выполнения преобразования типов данных
+ */
 module.exports = class PropertiesVariable {
   /**
    * @param {PropertiesItems} items
@@ -39,31 +45,57 @@ module.exports = class PropertiesVariable {
 
     this.items.each(({
       item,
-      name
+      name,
+      design,
+      component
     }) => {
-      const property = this.__getProperty(item, name)
-      const variable = this.__getVariable(item, name)
-
-      if (variable in SYMBOLS) {
-        item[key] = SYMBOLS[variable]
-      } else if (css.indexOf(property) !== -1) {
-        item[key] = 'property'
-      } else if (cssSelector.indexOf(property) !== -1) {
-        item[key] = 'selector'
-      } else if (cssVirtual.indexOf(property) !== -1) {
-        item[key] = 'virtual'
-      } else if ('value' in item) {
-        item[key] = 'var'
+      if (name === design) {
+        item[key] = 'design'
+      } else if (name === component) {
+        item[key] = 'component'
+      } else if (Object.keys(item?.value).length === 0) {
+        item[key] = 'subclass'
       } else {
-        item[key] = 'section'
+        const property = this.__getProperty(item, name)
+        const variable = this.__getVariable(item, name)
+
+        if (variable in SYMBOLS) {
+          item[key] = SYMBOLS[variable]
+        } else if (css.indexOf(property) !== -1) {
+          item[key] = 'property'
+        } else if (cssSelector.indexOf(property) !== -1) {
+          item[key] = 'selector'
+        } else if (cssVirtual.indexOf(property) !== -1) {
+          item[key] = 'virtual'
+        } else if ('value' in item) {
+          item[key] = 'var'
+        } else {
+          item[key] = 'section'
+        }
       }
     })
 
     this.items.cache(FILE_CACHE_VARIABLE)
   }
 
+  /**
+   * Updating all property types to 'var' if their ancestor had type 'var'
+   *
+   * Обновление всех типов свойств на 'var', если у его предка был тип 'var'
+   */
   toByVar () {
-    // Close
+    const key = PropertiesTool.getKeyVariable()
+
+    this.items.each(({
+      item,
+      properties
+    }) => {
+      if (properties?.[key] === 'var') {
+        item[key] = 'var'
+      }
+    })
+
+    this.items.cache(FILE_CACHE_VARIABLE_VAR)
   }
 
   /**

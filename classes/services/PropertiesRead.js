@@ -81,9 +81,9 @@ module.exports = class PropertiesRead {
 
     list.forEach(item => {
       return item.paths.forEach(path => {
-        return replaceRecursive(data, {
-          [item.design]: this.__toStandard(PropertiesFiles.readFile([...path, FILE_NAME]) || {})
-        })
+        return replaceRecursive(data, this.__toStandard({
+          [item.design]: PropertiesFiles.readFile([...path, FILE_NAME]) || {}
+        }))
       })
     })
 
@@ -104,9 +104,9 @@ module.exports = class PropertiesRead {
 
     info.forEach(item => {
       if (item.properties) {
-        replaceRecursive(data, {
-          [item.design]: { [item.component]: this.__toStandard(item.properties) }
-        })
+        replaceRecursive(data, this.__toStandard({
+          [item.design]: { [item.component]: item.properties }
+        }))
       }
     })
 
@@ -236,11 +236,11 @@ module.exports = class PropertiesRead {
         return value
       }
     } else if (Object.keys(value).length === 0) {
-      return {}
+      return { value: {} }
     } else if (isFilled(value)) {
       return this.__toSeparate(this.__toStandard(value))
     } else {
-      return {}
+      return { value: {} }
     }
   }
 
