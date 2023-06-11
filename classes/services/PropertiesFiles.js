@@ -30,7 +30,7 @@ module.exports = class PropertiesFiles {
    * Checks whether it is a directory
    *
    * Проверяет, является ли это директорией
-   * @param {string} name
+   * @param {string} name Name of the element being checked / Название проверяемого элемента
    * @return {boolean}
    */
   static isDir (name) {
@@ -55,7 +55,7 @@ module.exports = class PropertiesFiles {
    * Reads the contents of the directory
    *
    * Читает содержимое директории
-   * @param {string|string[]} paths
+   * @param {string|string[]} paths Path to the directory / Путь к директории
    * @returns {string[]}
    */
   static readDir (paths) {
@@ -79,7 +79,7 @@ module.exports = class PropertiesFiles {
    * Synchronously creates a directory
    *
    * Синхронно создает директорию
-   * @param {string[]} paths
+   * @param {string[]} paths Path to the directory / Путь к директории
    * @returns {PropertiesFiles}
    */
   static createDir (paths) {
@@ -99,9 +99,9 @@ module.exports = class PropertiesFiles {
    * Writing data to a file
    *
    * Запись данных в файл
-   * @param {string|string[]} paths
-   * @param {string} name
-   * @param {Object<string,*>|*[]} value
+   * @param {string|string[]} paths Path to the file / Путь к файлу
+   * @param {string} name File name / Название файла
+   * @param {Object<string,*>|*[]} value Values for storage / Значения для хранения
    * @return {PropertiesFiles}
    */
   static createFile (paths, name, value) {
@@ -119,7 +119,7 @@ module.exports = class PropertiesFiles {
    * Returns the file name
    *
    * Возвращает имя файла
-   * @param {string} name
+   * @param {string} name Element name / Название элемента
    * @return {string}
    */
   static getFileName (name) {
@@ -130,7 +130,7 @@ module.exports = class PropertiesFiles {
    * Returns the file name for styles
    *
    * Возвращает имя файла для стилей
-   * @param {string} name
+   * @param {string} name Element name / Название элемента
    * @return {string}
    */
   static getFileStyle (name) {
@@ -141,7 +141,7 @@ module.exports = class PropertiesFiles {
    * Getting information about the file
    *
    * Получение информации о файле
-   * @param {string|string[]} paths
+   * @param {string|string[]} paths Path to the file / Путь к файлу
    * @return {Promise<{mtime: number}>}
    */
   static stat (paths) {

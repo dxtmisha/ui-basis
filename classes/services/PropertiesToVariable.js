@@ -102,8 +102,8 @@ module.exports = class PropertiesVariable {
    * Returns the name of a property for an element
    *
    * Возвращает название свойства у элемента
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item Object with data / Объект с данными
+   * @param {string} name Key name / Название ключа
    * @return {string}
    * @private
    */
@@ -121,8 +121,8 @@ module.exports = class PropertiesVariable {
    * Returns the type of property of an element
    *
    * Возвращает тип свойства у элемента
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item Object with data / Объект с данными
+   * @param {string} name Key name / Название ключа
    * @return {string}
    * @private
    */

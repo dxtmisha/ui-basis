@@ -46,7 +46,7 @@ module.exports = class PropertiesToLink {
    * Checks if a sub-element is a link
    *
    * Проверяет, является ли под-элемент ссылкой
-   * @param {Object<string,*>} properties
+   * @param {Object<string,*>} properties Object for checking / Объект для проверки
    * @return {boolean}
    * @private
    */
@@ -63,7 +63,13 @@ module.exports = class PropertiesToLink {
    * Returns a list of all links
    *
    * Возвращает список всех ссылок
-   * @return {{item?: Object<string,*>, name?: string, design?: string, component?: string, properties?: Object<string,*>}[]}
+   * @return {{
+   *   item?: Object<string,*>,
+   *   name?: string,
+   *   design?: string,
+   *   component?: string,
+   *   properties?: Object<string,*>
+   * }[]}
    * @private
    */
   __getList () {
@@ -78,7 +84,14 @@ module.exports = class PropertiesToLink {
 
   /**
    * Преобразования
-   * @param {{item?: Object<string,*>, name?: string, design?: string, component?: string, properties?: Object<string,*>}} property
+   * @param {{
+   *   item?: Object<string,*>,
+   *   name?: string,
+   *   design?: string,
+   *   component?: string,
+   *   properties?:
+   *   Object<string,*>
+   * }} property Object for conversion / Объект для преобразования
    * @return {boolean}
    * @private
    */

@@ -15,8 +15,8 @@ module.exports = class PropertiesCache {
    * Checks if there are files to read
    *
    * Проверяет наличие файлов для чтения
-   * @param {string|string[]} paths
-   * @param {string} name
+   * @param {string|string[]} paths Path to the file / Путь к файлу
+   * @param {string} name File name / Название файла
    * @return {boolean}
    */
   static is (paths, name) {
@@ -27,9 +27,11 @@ module.exports = class PropertiesCache {
    * Reads the content of the file
    *
    * Читает содержимое файла
-   * @param {string|string[]} paths
-   * @param {string} name
-   * @param {Function} callback
+   * @param {string|string[]} paths Path to the file / Путь к файлу
+   * @param {string} name File name / Название файла
+   * @param {Function} callback If the file is not found, the callback function is called and
+   * its result is saved in the current file / Если файл не найден, вызывается функция
+   * обратного вызова (callback) и её результат сохраняется в текущем файле
    * @return {Object<string, *>|*[]}
    */
   static get (paths, name, callback = undefined) {
@@ -49,9 +51,9 @@ module.exports = class PropertiesCache {
    * Writing data to a file
    *
    * Запись данных в файл
-   * @param {string|string[]} paths
-   * @param {string} name
-   * @param {Object<string,*>|*[]} value
+   * @param {string|string[]} paths Path to the file / Путь к файлу
+   * @param {string} name File name / Название файла
+   * @param {Object<string,*>|*[]} value Values for storage / Значения для хранения
    * @return {PropertiesFiles}
    */
   static create (paths, name, value) {
@@ -63,7 +65,7 @@ module.exports = class PropertiesCache {
    * Returns the path to the file
    *
    * Возвращает путь к файлу
-   * @param {string|string[]} path
+   * @param {string|string[]} path Path to the file / Путь к файлу
    * @returns {string[]}
    * @private
    */

@@ -96,7 +96,15 @@ module.exports = class PropertiesToSub {
    * Returns values with sub-values
    *
    * Возвращает значения с под-значениями
-   * @return {{item:{value:string,__variable:string},name:string,design:string,component:string,properties:Object<string,*>,isName:boolean,isValue:boolean}[]}
+   * @return {{
+   *   item: {value:string,__variable:string},
+   *   name: string,
+   *   design: string,
+   *   component: string,
+   *   properties: Object<string,*>,
+   *   isName: boolean,
+   *   isValue: boolean
+   * }[]}
    * @private
    */
   __getList () {
@@ -118,7 +126,15 @@ module.exports = class PropertiesToSub {
    * Converting all indices to values for a field of names
    *
    * Преобразование всех индексов в значения для поля названий
-   * @param {{item:{value:string,__variable:string},name:string,design:string,component:string,properties:Object<string,*>,isName:boolean,isValue:boolean}} property
+   * @param {{
+   *   item: {value:string,__variable:string},
+   *   name: string,
+   *   design: string,
+   *   component: string,
+   *   properties: Object<string,*>,
+   *   isName: boolean,
+   *   isValue: boolean
+   * }} property Object for conversion / Объект для преобразования
    * @private
    */
   __toName (property) {
@@ -137,7 +153,15 @@ module.exports = class PropertiesToSub {
    * Converting all indices to values for a field of values
    *
    * Преобразование всех индексов в значения для поля значения
-   * @param {{item:{value:string,__variable:string},name:string,design:string,component:string,properties:Object<string,*>,isName:boolean,isValue:boolean}} property
+   * @param {{
+   *   item: {value:string,__variable:string},
+   *   name: string,
+   *   design: string,
+   *   component: string,
+   *   properties: Object<string,*>,
+   *   isName: boolean,
+   *   isValue: boolean
+   * }} property Object for conversion / Объект для преобразования
    * @private
    */
   __toValue (property) {

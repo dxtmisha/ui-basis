@@ -19,18 +19,18 @@ module.exports = class PropertiesTool {
    * Checks if the variable is a special value
    *
    * Проверяет, является ли переменная специальным значением
-   * @param {string} variable
+   * @param {string} name Key name / Название ключа
    * @return {boolean}
    */
-  static isSpecial (variable) {
-    return KEYS_SPECIAL.indexOf(variable) !== -1
+  static isSpecial (name) {
+    return KEYS_SPECIAL.indexOf(name) !== -1
   }
 
   /**
    * Returns the property name, discarding its prefix
    *
    * Возвращает имя свойства, отбрасывая его префикс
-   * @param {string} name
+   * @param {string} name Key name / Название ключа
    * @return {*}
    */
   static getName (name) {
@@ -43,7 +43,7 @@ module.exports = class PropertiesTool {
    * Returns the variable type name from the property name
    *
    * Возвращает название типа переменной из названия свойства
-   * @param {string} name
+   * @param {string} name Key name / Название ключа
    * @return {*}
    */
   static getVariableInName (name) {
@@ -88,9 +88,9 @@ module.exports = class PropertiesTool {
    *
    * Заменяет метки на названия дизайна и компонента
    * @param {string} value
-   * @param {string} design
-   * @param {string} component
-   * @param {string[]} designs
+   * @param {string} design Design name / Название дизайна
+   * @param {string} component Component name / Название компонента
+   * @param {string[]} designs List of design names / Список названий дизайнов
    * @return {string}
    */
   static toFull (value, design, component, designs) {
@@ -108,9 +108,9 @@ module.exports = class PropertiesTool {
    *
    * Добавляет название дизайна в начало, если его нет
    * @param {string} value
-   * @param {string} design
-   * @param {string[]} designs
-   * @returns {*}
+   * @param {string} design Design name / Название дизайна
+   * @param {string[]} designs List of design names / Список названий дизайнов
+   * @returns {string}
    */
   static toFullByDesigns (value, design, designs) {
     return value?.replace(/(?<=\{)[^.{}]+/, name => {

@@ -163,10 +163,16 @@ module.exports = class PropertiesRead {
    * Getting data
    *
    * Получение данных
-   * @param {string} design
-   * @param {string} paths
-   * @param {string} name
-   * @return {{design: string, component: string, code: string, path: string, properties: Object<string,Object<string,*>>}}
+   * @param {string} design Design name / Название дизайна
+   * @param {string} paths Path to the file / Путь к файлу
+   * @param {string} name File name / Название файла
+   * @return {{
+   *   design: string,
+   *   component: string,
+   *   code: string,
+   *   path: string,
+   *   properties: Object<string,Object<string,*>>
+   * }}
    * @property
    */
   __getComponent (design, paths, name) {
@@ -216,8 +222,8 @@ module.exports = class PropertiesRead {
    * Transform the property value into the required format
    *
    * Преобразовать значение свойства в необходимый формат
-   * @param {Object<string, *>|string|number} value
-   * @param {string} name
+   * @param {Object<string, *>|string|number} value Values for conversion / Значения для преобразования
+   * @param {string} name Property name / Название свойства
    * @return {Object<string, *>}
    * @private
    */
@@ -248,7 +254,8 @@ module.exports = class PropertiesRead {
    * Separate a special property from regular values
    *
    * Разделить специальное свойство от обычных значений
-   * @param {Object<string,*>} properties
+   * @param {Object<string,*>} properties An array that needs to be
+   * transformed / Массив, который нужно преобразовать
    * @return {Object<string,*>}
    * @private
    */

@@ -82,9 +82,9 @@ module.exports = class PropertiesToFull {
    * Converts special characters to the full path
    *
    * Преобразовывает специальные символы в полный путь
-   * @param {string} cache
-   * @param {RegExp} designSymbol
-   * @param {RegExp} componentSymbol
+   * @param {string} cache Cache file name / Название файла кеша
+   * @param {RegExp} designSymbol Regular expression for design / Регулярное выражение для дизайна
+   * @param {RegExp} componentSymbol Regular expression for component / Регулярное выражение для компонента
    * @return {this}
    * @private
    */

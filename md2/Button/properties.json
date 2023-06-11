@@ -19,6 +19,11 @@
     "color2": "blue",
     "__variable": "var"
   },
+  "background-color": {
+    "a": "red",
+    "b": "blue",
+    "c": "green"
+  },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
   "@link2": "{checkbox.{??linkName}}"
