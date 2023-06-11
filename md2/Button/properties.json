@@ -25,7 +25,8 @@
   "background-color": {
     "a": "red",
     "b": "blue",
-    "c": "green"
+    "c": "green",
+    "__rename": "background-image"
   },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",

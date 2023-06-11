@@ -4,6 +4,11 @@ const { forEach } = require('../../functions/data')
 
 const FILE_CACHE_MULTI = 'properties-multi'
 
+/**
+ * Class for converting properties with multiple values
+ *
+ * Класс для преобразования свойств с множеством значений
+ */
 module.exports = class PropertiesToMulti {
   /**
    * @param {PropertiesItems} items
@@ -12,24 +17,67 @@ module.exports = class PropertiesToMulti {
     this.items = items
   }
 
+  /**
+   * Converts property records with multiple types
+   *
+   * Преобразует записи свойств со множеством типов
+   * @return {this}
+   */
   to () {
     const key = PropertiesTool.getKeyVariable()
 
-    this.items.each(({
+    this.__getList().forEach(({
       item,
-      name
+      name,
+      value
     }) => {
-      if (
-        item?.[key] === 'property' &&
-        typeof item?.value === 'object'
-      ) {
-        this.__toGo(name, item.value)
-      }
+      item[key] = 'section'
+      this.__toGo(name, value)
     })
 
     this.items.cache(FILE_CACHE_MULTI)
+
+    return this
   }
 
+  /**
+   * Returns a list of properties with multiple values
+   *
+   * Возвращает список свойств с множеством значений
+   * @return {{
+   *   item: Object<string,*>,
+   *   name: string,
+   *   value: Object<string,*>
+   * }[]}
+   * @private
+   */
+  __getList () {
+    const keyName = PropertiesTool.getKeyName()
+    const keyVariable = PropertiesTool.getKeyVariable()
+
+    return this.items.each(({ item }) => {
+      if (
+        item?.[keyVariable] === 'property' &&
+        typeof item?.value === 'object'
+      ) {
+        return {
+          item,
+          name: item?.[keyName],
+          value: item.value
+        }
+      }
+    })
+  }
+
+  /**
+   * Transformation for the element
+   *
+   * Преобразование для элемента
+   * @param {string} name Property name / Название свойства
+   * @param {Object<string,*>} properties An array that needs to be
+   * transformed / Массив, который нужно преобразовать
+   * @private
+   */
   __toGo (name, properties) {
     forEach(properties, item => {
       if (

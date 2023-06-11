@@ -3,6 +3,7 @@ const PropertiesRead = require('./PropertiesRead')
 
 const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
+const PropertiesToMulti = require('./PropertiesToMulti')
 const PropertiesToRename = require('./PropertiesToRename')
 const PropertiesToSub = require('./PropertiesToSub')
 const PropertiesToVariable = require('./PropertiesToVariable')
@@ -27,6 +28,7 @@ module.exports = class Properties {
     full.toFullValueByDesign()
 
     new PropertiesToRename(items).to()
+    new PropertiesToMulti(items).to()
 
     this.__init()
   }
