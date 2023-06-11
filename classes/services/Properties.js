@@ -3,6 +3,7 @@ const PropertiesRead = require('./PropertiesRead')
 
 const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
+const PropertiesToRename = require('./PropertiesToRename')
 const PropertiesToSub = require('./PropertiesToSub')
 const PropertiesToVariable = require('./PropertiesToVariable')
 
@@ -18,13 +19,14 @@ module.exports = class Properties {
     full.toFullValueFix()
     variable.to()
     sub.toByLink()
-
     new PropertiesToLink(items).to()
 
     sub.to()
     variable.toByVar()
     full.toFullValue()
     full.toFullValueByDesign()
+
+    new PropertiesToRename(items).to()
 
     this.__init()
   }

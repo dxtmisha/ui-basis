@@ -1,6 +1,7 @@
+const { splice } = require('../../functions/data')
+
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
-const { splice } = require('../../functions/data')
 
 const FILE_CACHE_LINK = 'properties-link'
 

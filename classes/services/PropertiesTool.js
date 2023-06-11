@@ -2,6 +2,7 @@ const { To } = require('../To')
 
 const SYMBOL_AVAILABLE = '[\\w-??]+'
 
+const KEY_NAME = '__name'
 const KEY_DEFAULT = '__default'
 const KEY_RENAME = '__rename'
 const KEY_VARIABLE = '__variable'
@@ -50,6 +51,16 @@ module.exports = class PropertiesTool {
     return To.kebabCase(
       name.replace(new RegExp(`^(.*?)[|]?${SYMBOL_AVAILABLE}$`), '$1')
     )
+  }
+
+  /**
+   * Returns a key for the property name
+   *
+   * Возвращает ключ для названия свойства
+   * @return {string}
+   */
+  static getKeyName () {
+    return KEY_NAME
   }
 
   /**

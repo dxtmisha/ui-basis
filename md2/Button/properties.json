@@ -14,10 +14,13 @@
     "value": "red",
     "__variable": "var"
   },
+  "var|cursor": {
+    "value": "value-cursor"
+  },
   "border-color": {
     "color1": "red",
     "color2": "blue",
-    "__variable": "var"
+    "__rename": "var|border"
   },
   "background-color": {
     "a": "red",

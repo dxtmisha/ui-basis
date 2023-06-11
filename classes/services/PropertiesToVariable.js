@@ -7,6 +7,22 @@ const css = require('../../constructors/propertiesListCss.json')
 const cssSelector = require('../../constructors/propertiesListCssSelector.json')
 const cssVirtual = require('../../constructors/propertiesListCssVirtual.json')
 
+const TYPE = [
+  'design',
+  'component',
+  'var',
+  'property',
+  'selector',
+  'virtual',
+  'media',
+  'link',
+  'link-class',
+  'section',
+  'subclass',
+  'scss',
+  'none'
+]
+
 const SYMBOLS = {
   '--': 'none',
   $: 'var',
@@ -61,6 +77,8 @@ module.exports = class PropertiesVariable {
 
         if (variable in SYMBOLS) {
           item[key] = SYMBOLS[variable]
+        } else if (TYPE.indexOf(variable) !== -1) {
+          item[key] = variable
         } else if (css.indexOf(property) !== -1) {
           item[key] = 'property'
         } else if (cssSelector.indexOf(property) !== -1) {
