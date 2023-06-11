@@ -6,6 +6,8 @@ const KEY_NAME = '__name'
 const KEY_DEFAULT = '__default'
 const KEY_RENAME = '__rename'
 const KEY_VARIABLE = '__variable'
+const KEY_CSS = '__css'
+const KEY_FIX = '__fix'
 
 const KEYS_SPECIAL = [
   'value',
@@ -81,6 +83,26 @@ module.exports = class PropertiesTool {
    */
   static getKeyVariable () {
     return KEY_VARIABLE
+  }
+
+  /**
+   * Returns a key for the CSS value
+   *
+   * Возвращает ключ для значения CSS
+   * @return {string}
+   */
+  static getKeyCss () {
+    return KEY_CSS
+  }
+
+  /**
+   * Returns a key that determines if the value is fixed
+   *
+   * Возвращает ключ, который определяет, является ли значение фиксированным
+   * @return {string}
+   */
+  static getKeyFix () {
+    return KEY_FIX
   }
 
   /**

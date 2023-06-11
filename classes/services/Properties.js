@@ -6,6 +6,7 @@ const PropertiesToLink = require('./PropertiesToLink')
 const PropertiesToMulti = require('./PropertiesToMulti')
 const PropertiesToRename = require('./PropertiesToRename')
 const PropertiesToSub = require('./PropertiesToSub')
+const PropertiesToVar = require('./PropertiesToVar')
 const PropertiesToVariable = require('./PropertiesToVariable')
 
 module.exports = class Properties {
@@ -29,6 +30,7 @@ module.exports = class Properties {
 
     new PropertiesToRename(items).to()
     new PropertiesToMulti(items).to()
+    new PropertiesToVar(items).to()
 
     this.__init()
   }

@@ -20,6 +20,7 @@ const TYPE = [
   'section',
   'subclass',
   'scss',
+  'mixin',
   'none'
 ]
 

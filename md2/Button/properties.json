@@ -5,7 +5,10 @@
   "test31": "{##test2}",
   "test4": "{test2}",
   "test5": "{?checkbox.color}",
-  "test6": "{{?checkbox.color}}",
+  "test6": {
+    "value": "{{?checkbox.color}}",
+    "__fix": true
+  },
   "test7": "{is_{?checkbox.color}}",
   "test8": "{is_{?checkbox.color}_end}",
   "color": "red",
