@@ -79,15 +79,18 @@ module.exports = class PropertiesToMulti {
    * @private
    */
   __toGo (name, properties) {
+    const keyVariable = PropertiesTool.getKeyVariable()
+
     forEach(properties, item => {
       if (
         typeof item?.value !== 'object'
       ) {
+        item[keyVariable] = 'section'
         item.value = {
           [name]: {
             value: item.value,
             [PropertiesTool.getKeyName()]: name,
-            [PropertiesTool.getKeyVariable()]: 'property'
+            [keyVariable]: 'property'
           }
         }
       }

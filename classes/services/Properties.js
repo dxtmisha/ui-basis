@@ -29,8 +29,8 @@ module.exports = class Properties {
     full.toFullValue()
     full.toFullValueByDesign()
 
-    new PropertiesToRename(items).to()
     new PropertiesToMulti(items).to()
+    new PropertiesToRename(items).to()
     new PropertiesToVar(items).to()
 
     this.__init()

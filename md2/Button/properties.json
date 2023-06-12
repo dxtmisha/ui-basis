@@ -28,8 +28,13 @@
   "background-color": {
     "a": "red",
     "b": "blue",
+    "c": "green"
+  },
+  "height": {
+    "a": "red",
+    "b": "blue",
     "c": "green",
-    "__rename": "background-image"
+    "__rename": "min-height"
   },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
