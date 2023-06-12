@@ -2,6 +2,7 @@ const { splice } = require('../../functions/data')
 
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
+const { To } = require('../To')
 
 const FILE_CACHE_LINK = 'properties-link'
 
@@ -116,7 +117,7 @@ module.exports = class PropertiesToLink {
 
         splice(
           property.properties.value,
-          item.property.value,
+          To.copy(item.property.value),
           property.name,
           true
         )

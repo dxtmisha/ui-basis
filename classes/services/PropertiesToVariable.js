@@ -19,6 +19,7 @@ const TYPE = [
   'link-class',
   'section',
   'subclass',
+  'class',
   'scss',
   'mixin',
   'none'

@@ -19,6 +19,16 @@ class To {
   }
 
   /**
+     * Creates a copy of the object
+     *
+     * Создает копию объекта
+     * @param value Object for copying / Объект для копирования
+     */
+  static copy (value) {
+    return JSON.parse(JSON.stringify(value))
+  }
+
+  /**
      * Conversion to Date object
      *
      * Преобразование в объект Date

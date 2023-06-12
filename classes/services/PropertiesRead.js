@@ -213,6 +213,10 @@ module.exports = class PropertiesRead {
       if (variable) {
         data[key][PropertiesTool.getKeyVariable()] = variable
       }
+
+      if (PropertiesTool.isFull(name)) {
+        data[key][PropertiesTool.getKeyFull()] = true
+      }
     })
 
     return data

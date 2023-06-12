@@ -3,8 +3,10 @@ const { To } = require('../To')
 const SYMBOL_AVAILABLE = '[\\w-??]+'
 
 const KEY_NAME = '__name'
+const KEY_CATEGORY = '__category'
 const KEY_DEFAULT = '__default'
 const KEY_RENAME = '__rename'
+const KEY_FULL = '__full'
 const KEY_VARIABLE = '__variable'
 const KEY_CSS = '__css'
 const KEY_FIX = '__fix'
@@ -27,6 +29,17 @@ module.exports = class PropertiesTool {
    */
   static isSpecial (name) {
     return KEYS_SPECIAL.indexOf(name) !== -1
+  }
+
+  /**
+   * Checks whether the name is complete
+   *
+   * Проверяет, является ли название полным
+   * @param {string} name Key name / Название ключа
+   * @return {boolean}
+   */
+  static isFull (name) {
+    return !!name.match(/^=|\|=/)
   }
 
   /**
@@ -66,6 +79,16 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Returns a key for the category
+   *
+   * Возвращает ключ для категории
+   * @return {string}
+   */
+  static getKeyCategory () {
+    return KEY_CATEGORY
+  }
+
+  /**
    * Returns a key for renaming a value
    *
    * Возвращает ключ для переименования значения
@@ -73,6 +96,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyRename () {
     return KEY_RENAME
+  }
+
+  /**
+   * Returns a key for determining if the name is useful
+   *
+   * Возвращает ключ для определения, является ли имя полезным
+   * @return {string}
+   */
+  static getKeyFull () {
+    return KEY_FULL
   }
 
   /**

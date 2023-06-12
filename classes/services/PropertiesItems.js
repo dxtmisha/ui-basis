@@ -97,7 +97,8 @@ module.exports = class PropertiesItems {
    *   design?: string,
    *   component?: string,
    *   properties?: Object<string,*>,
-   *   options?: Object<string,*>
+   *   options?: Object<string,*>,
+   *   parents?: {name:string, item: Object<string,*>}[]
    * }) => *[]} callback The callback function is executed for each element / Выполняется функция
    * обратного вызова (callback) для каждого элемента
    * @param {{isValue?: boolean, options?: Object<string,*>}} options Additional parameters / Дополнительные параметры
@@ -105,6 +106,7 @@ module.exports = class PropertiesItems {
    * @param {Object.<string,*>|undefined} parent Ancestor element / Элемент-предок
    * @param {string|undefined} design Design name / Название дизайна
    * @param {string|undefined} component Component name / Название компонента
+   * @param {string[]} parents List of ancestor names / Список названий предков
    * @returns {*[]}
    */
   each (
@@ -113,7 +115,8 @@ module.exports = class PropertiesItems {
     properties = this.properties,
     parent = undefined,
     design = undefined,
-    component = undefined
+    component = undefined,
+    parents = []
   ) {
     const data = []
 
@@ -125,9 +128,23 @@ module.exports = class PropertiesItems {
       if (!PropertiesTool.isSpecial(name)) {
         const itemDesign = design || To.kebabCase(name)
         const itemComponent = design ? (component || To.kebabCase(name)) : undefined
+        const itemParent = {
+          name,
+          item
+        }
 
         if (!('value' in item)) {
-          data.push(...this.each(callback, options, item, item, itemDesign, itemComponent))
+          data.push(
+            ...this.each(
+              callback,
+              options,
+              item,
+              item,
+              itemDesign,
+              itemComponent,
+              [...parents, itemParent]
+            )
+          )
         } else {
           const isObject = typeof item.value === 'object'
           const argumentsFn = {
@@ -136,13 +153,24 @@ module.exports = class PropertiesItems {
             design: itemDesign,
             component: itemComponent,
             properties: parent,
-            options: options.options
+            options: options.options,
+            parents
           }
 
           const value = (!options?.isValue || !isObject) ? callback(argumentsFn) : undefined
 
           if (isObject) {
-            data.push(...this.each(callback, options, item.value, item, itemDesign, itemComponent))
+            data.push(
+              ...this.each(
+                callback,
+                options,
+                item.value,
+                item,
+                itemDesign,
+                itemComponent,
+                [...parents, itemParent]
+              )
+            )
           }
 
           if (value !== undefined) {

@@ -21,6 +21,7 @@ module.exports = class Properties {
     full.toFullValueFix()
     variable.to()
     sub.toByLink()
+
     new PropertiesToLink(items).to()
 
     sub.to()
