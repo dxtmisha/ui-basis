@@ -449,8 +449,8 @@
         "blackLight": "#212121"
       }
     },
-    "__variable": "var",
-    "__category": "root"
+    "_variable": "var",
+    "_category": "root"
   },
   "sys": {
     "value": {
@@ -692,8 +692,8 @@
         }
       }
     },
-    "__variable": "var",
-    "__category": "root"
+    "_variable": "var",
+    "_category": "root"
   },
   "elevation": {
     "value": {
@@ -748,8 +748,8 @@
         "zIndex": "{sys.elevation.index.24}"
       }
     },
-    "__variable": "section",
-    "__category": "class"
+    "_variable": "section",
+    "_category": "class"
   },
   "grid": {
     "value": {
@@ -772,8 +772,8 @@
         "columnGap": "{ref.gap.xl}"
       }
     },
-    "__variable": "section",
-    "__category": "class"
+    "_variable": "section",
+    "_category": "class"
   },
   "rounded": {
     "value": {
@@ -799,8 +799,8 @@
         "border-radius": "{sys.rounded.full}"
       }
     },
-    "__variable": "section",
-    "__category": "class"
+    "_variable": "section",
+    "_category": "class"
   },
   "font": {
     "value": {
@@ -917,8 +917,8 @@
         "textTransform": "none"
       }
     },
-    "__variable": "section",
-    "__category": "class"
+    "_variable": "section",
+    "_category": "class"
   },
   "palette": {
     "value": {

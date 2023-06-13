@@ -101,15 +101,21 @@ module.exports = class PropertiesFiles {
    * Запись данных в файл
    * @param {string|string[]} paths Path to the file / Путь к файлу
    * @param {string} name File name / Название файла
-   * @param {Object<string,*>|*[]} value Values for storage / Значения для хранения
+   * @param {Object<string,*>|*[]|string} value Values for storage / Значения для хранения
+   * @param {string} extension
    * @return {PropertiesFiles}
    */
-  static createFile (paths, name, value) {
+  static createFile (
+    paths,
+    name,
+    value,
+    extension = 'json'
+  ) {
     this.createDir(paths)
 
     requireFs.writeFileSync(
-      this.joinPath([...paths, this.getFileName(name)]),
-      JSON.stringify(value)
+      this.joinPath([...paths, this.getFileName(name, extension)]),
+      typeof value === 'object' ? JSON.stringify(value) : value
     )
 
     return this
@@ -120,21 +126,11 @@ module.exports = class PropertiesFiles {
    *
    * Возвращает имя файла
    * @param {string} name Element name / Название элемента
+   * @param {string} extension
    * @return {string}
    */
-  static getFileName (name) {
-    return `${To.kebabCase(name)}.json`
-  }
-
-  /**
-   * Returns the file name for styles
-   *
-   * Возвращает имя файла для стилей
-   * @param {string} name Element name / Название элемента
-   * @return {string}
-   */
-  static getFileStyle (name) {
-    return `${To.kebabCase(name)}.scss`
+  static getFileName (name, extension = 'json') {
+    return `${To.kebabCase(name)}.${extension}`
   }
 
   /**

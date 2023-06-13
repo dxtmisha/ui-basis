@@ -4,6 +4,7 @@ const { forEach } = require('../../functions/data')
 const PropertiesTool = require('./PropertiesTool')
 
 const FILE_CACHE_RENAME = 'properties-rename'
+const FILE_CACHE_RENAME_VAR = 'properties-rename-var'
 
 /**
  * Class for working with the property name
@@ -26,6 +27,27 @@ module.exports = class PropertiesToRename {
    */
   to () {
     const key = PropertiesTool.getKeyName()
+
+    this.items.each(({
+      item,
+      name
+    }) => {
+      item[key] = this.__getName(item, name)
+    })
+
+    this.items.cache(FILE_CACHE_RENAME)
+
+    return this
+  }
+
+  /**
+   * Adds full property name to var type property
+   *
+   * Добавляет полное название свойства типу var
+   * @return {this}
+   */
+  toByVar () {
+    const key = PropertiesTool.getKeyName()
     const keyVariable = PropertiesTool.getKeyVariable()
 
     this.items.each(({
@@ -33,17 +55,15 @@ module.exports = class PropertiesToRename {
       name,
       parents
     }) => {
-      switch (item?.[keyVariable]) {
-        case 'var':
-          item[key] = this.__toNameForVar(parents, item, name)
-          break
-        default:
-          item[key] = this.__getName(item, name)
-          break
+      if (
+        item?.[keyVariable] === 'var' &&
+        typeof item?.value !== 'object'
+      ) {
+        item[key] = this.__toNameForVar(parents, item, name)
       }
     })
 
-    this.items.cache(FILE_CACHE_RENAME)
+    this.items.cache(FILE_CACHE_RENAME_VAR)
 
     return this
   }

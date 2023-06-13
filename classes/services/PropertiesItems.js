@@ -23,6 +23,16 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Getting full structure property
+   *
+   * Получение полной структуры свойства
+   * @return {Object<string, *>}
+   */
+  get () {
+    return this.properties
+  }
+
+  /**
    * Returns a list of design names
    *
    * Возвращает список названий дизайнов
@@ -99,7 +109,7 @@ module.exports = class PropertiesItems {
    *   properties?: Object<string,*>,
    *   options?: Object<string,*>,
    *   parents?: {name:string, item: Object<string,*>}[]
-   * }) => *[]} callback The callback function is executed for each element / Выполняется функция
+   * }) => *} callback The callback function is executed for each element / Выполняется функция
    * обратного вызова (callback) для каждого элемента
    * @param {{isValue?: boolean, options?: Object<string,*>}} options Additional parameters / Дополнительные параметры
    * @param {Object.<string,*>} properties Object for traversal / Объект для обхода
@@ -188,11 +198,12 @@ module.exports = class PropertiesItems {
    *
    * Сохранение результата в кеш
    * @param {string} name Cache name / Название кеша
-   * @param {Object<string,*>} data Data for storage / Данные для хранения
+   * @param {Object<string,*>|string} data Data for storage / Данные для хранения
+   * @param {string} extension
    * @return {PropertiesItems}
    */
-  cache (name, data = this.properties) {
-    PropertiesCache.create([], name, data)
+  cache (name, data = this.properties, extension = 'json') {
+    PropertiesCache.create([], name, data, extension)
 
     return this
   }

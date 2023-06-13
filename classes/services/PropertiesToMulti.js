@@ -1,6 +1,7 @@
+const { forEach } = require('../../functions/data')
+
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
-const { forEach } = require('../../functions/data')
 
 const FILE_CACHE_MULTI = 'properties-multi'
 

@@ -53,11 +53,17 @@ module.exports = class PropertiesCache {
    * Запись данных в файл
    * @param {string|string[]} paths Path to the file / Путь к файлу
    * @param {string} name File name / Название файла
-   * @param {Object<string,*>|*[]} value Values for storage / Значения для хранения
+   * @param {Object<string,*>|*[]|string} value Values for storage / Значения для хранения
+   * @param {string} extension
    * @return {PropertiesFiles}
    */
-  static create (paths, name, value) {
-    PropertiesFiles.createFile(this.__getPath(paths), name, value)
+  static create (
+    paths,
+    name,
+    value,
+    extension = 'json'
+  ) {
+    PropertiesFiles.createFile(this.__getPath(paths), name, value, extension)
     return this
   }
 

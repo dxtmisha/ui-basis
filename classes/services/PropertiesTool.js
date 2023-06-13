@@ -2,14 +2,14 @@ const { To } = require('../To')
 
 const SYMBOL_AVAILABLE = '[\\w-??]+'
 
-const KEY_NAME = '__name'
-const KEY_CATEGORY = '__category'
-const KEY_DEFAULT = '__default'
-const KEY_RENAME = '__rename'
-const KEY_FULL = '__full'
-const KEY_VARIABLE = '__variable'
-const KEY_CSS = '__css'
-const KEY_FIX = '__fix'
+const KEY_NAME = '_name'
+const KEY_CATEGORY = '_category'
+const KEY_DEFAULT = '_default'
+const KEY_RENAME = '_rename'
+const KEY_VARIABLE = '_variable'
+const KEY_CSS = '_css'
+const KEY_FULL = '_fullName'
+const KEY_FULL_VALUE = '_fullValue'
 
 const KEYS_SPECIAL = [
   'value',
@@ -99,16 +99,6 @@ module.exports = class PropertiesTool {
   }
 
   /**
-   * Returns a key for determining if the name is useful
-   *
-   * Возвращает ключ для определения, является ли имя полезным
-   * @return {string}
-   */
-  static getKeyFull () {
-    return KEY_FULL
-  }
-
-  /**
    * Returns a key for storing the property type
    *
    * Возвращает ключ для хранения типа свойства
@@ -129,13 +119,23 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Returns a key to determine if the name is full
+   *
+   * Возвращает ключ для определения, является ли имя полным
+   * @return {string}
+   */
+  static getKeyFull () {
+    return KEY_FULL
+  }
+
+  /**
    * Returns a key that determines if the value is fixed
    *
    * Возвращает ключ, который определяет, является ли значение фиксированным
    * @return {string}
    */
-  static getKeyFix () {
-    return KEY_FIX
+  static getKeyFullValue () {
+    return KEY_FULL_VALUE
   }
 
   /**

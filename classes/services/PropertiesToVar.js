@@ -45,7 +45,7 @@ module.exports = class PropertiesToVar {
    * @private
    */
   __getList () {
-    const keyFix = PropertiesTool.getKeyFix()
+    const keyFix = PropertiesTool.getKeyFullValue()
 
     return this.items.each(({ item }) => {
       if (

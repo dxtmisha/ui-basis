@@ -7,15 +7,18 @@
   "test5": "{?checkbox.color}",
   "test6": {
     "value": "{{?checkbox.color}}",
-    "__fix": true
+    "_fullValue": true
   },
-  "test7": "{is_{?checkbox.color}}",
+  "test7": {
+    "value": "{is_{?checkbox.color}}",
+    "_fullName": true
+  },
   "test8": "{is_{?checkbox.color}_end}",
   "color": "red",
   "color{??test2}-{??test}": "red",
   "border": {
     "value": "red",
-    "__variable": "var"
+    "_variable": "var"
   },
   "var|cursor": {
     "value": "value-cursor"
@@ -23,7 +26,7 @@
   "border-color": {
     "color1": "red",
     "color2": "blue",
-    "__rename": "var|border"
+    "_rename": "var|border"
   },
   "background-color": {
     "a": "red",
@@ -34,7 +37,7 @@
     "a": "red",
     "b": "blue",
     "c": "green",
-    "__rename": "min-height"
+    "_rename": "min-height"
   },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
