@@ -67,12 +67,18 @@ module.exports = class PropertiesFiles {
    *
    * Возвращает содержимое пути
    * @param {string|string[]} paths filename / имя файла
-   * @returns {Object<string,*>}
+   * @returns {Object<string,*>|string}
    */
   static readFile (paths) {
-    return this.is(paths)
-      ? JSON.parse(requireFs.readFileSync(this.joinPath(paths)) || '{}')
-      : {}
+    if (this.is(paths)) {
+      const data = requireFs.readFileSync(this.joinPath(paths))
+
+      return data.toString().match(/^[{[]/)
+        ? JSON.parse(data || '{}')
+        : data
+    } else {
+      return {}
+    }
   }
 
   /**

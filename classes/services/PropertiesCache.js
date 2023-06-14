@@ -17,10 +17,11 @@ module.exports = class PropertiesCache {
    * Проверяет наличие файлов для чтения
    * @param {string|string[]} paths Path to the file / Путь к файлу
    * @param {string} name File name / Название файла
+   * @param {string} extension
    * @return {boolean}
    */
-  static is (paths, name) {
-    return PropertiesFiles.is(this.__getPath([...paths, PropertiesFiles.getFileName(name)]))
+  static is (paths, name, extension = 'json') {
+    return PropertiesFiles.is(this.__getPath([...paths, PropertiesFiles.getFileName(name, extension)]))
   }
 
   /**
@@ -41,7 +42,7 @@ module.exports = class PropertiesCache {
     callback = undefined,
     extension = 'json'
   ) {
-    if (CACHE_STATUS && this.is(paths, name)) {
+    if (CACHE_STATUS && this.is(paths, name, extension)) {
       const path = this.__getPath([...To.array(paths), PropertiesFiles.getFileName(name, extension)])
       return PropertiesFiles.readFile(path)
     } else if (callback) {

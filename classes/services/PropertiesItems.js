@@ -137,7 +137,7 @@ module.exports = class PropertiesItems {
    * @param {Object.<string,*>|undefined} parent Ancestor element / Элемент-предок
    * @param {string|undefined} design Design name / Название дизайна
    * @param {string|undefined} component Component name / Название компонента
-   * @param {string[]} parents List of ancestor names / Список названий предков
+   * @param {{name:string, item: Object<string,*>}[]} parents List of ancestor names / Список названий предков
    * @returns {*[]}
    */
   each (

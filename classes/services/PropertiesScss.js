@@ -1,4 +1,7 @@
-const { forEach } = require('../../functions/data')
+const {
+  forEach,
+  getColumn
+} = require('../../functions/data')
 
 const PropertiesTool = require('./PropertiesTool')
 
@@ -28,10 +31,30 @@ module.exports = class PropertiesScss {
       FILE_CACHE_SCSS,
       () => {
         console.info('PropertiesScss: init')
-        return `$designsProperties: (${this.__toGo(this.items.get())});`
+        return `${this.getRoot()}\r\n${this.getProperties()}`
       },
       'scss'
     )
+  }
+
+  /**
+   * Returns a list of properties
+   *
+   * Возвращает список свойств
+   * @return {string}
+   */
+  getRoot () {
+    return `$designsRoot: (${this.__toRoot()});`
+  }
+
+  /**
+   * Returns a list of properties
+   *
+   * Возвращает список свойств
+   * @return {string}
+   */
+  getProperties () {
+    return `$designsProperties: (${this.__toGo(this.items.get())});`
   }
 
   /**
@@ -113,7 +136,7 @@ module.exports = class PropertiesScss {
   /**
    * Method for iterating over all properties and converting them to a SCSS structure
    *
-   * "Метод для обхода всех свойств и преобразования их в структуру SCSS
+   * Метод для обхода всех свойств и преобразования их в структуру SCSS
    * @param {Object<string,*>} properties list of properties / свойств
    * @param space пробелы
    * @return {string}
@@ -131,5 +154,29 @@ module.exports = class PropertiesScss {
     })
 
     return data
+  }
+
+  /**
+   * The method searches for all properties for the root and returns their path
+   *
+   * Метод ищет все свойства для корневого элемента и возвращает их путь
+   * @return {string}
+   * @private
+   */
+  __toRoot () {
+    const key = PropertiesTool.getKeyCategory()
+    const data = []
+
+    this.items.each(({
+      item,
+      name,
+      parents
+    }) => {
+      if (item?.[key] === 'root') {
+        data.push(`'${getColumn(parents, 'name').join('.')}.${name}',`)
+      }
+    })
+
+    return data.join('')
   }
 }
