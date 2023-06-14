@@ -1,0 +1,25 @@
+@import "dir";
+
+@mixin textAlign($value) {
+  @if ($value == 'left') {
+    text-align: dirLeft();
+  } @else if ($value == 'right') {
+    text-align: dirRight();
+  } @else {
+    text-align: #{$value};
+  }
+}
+
+@mixin textSelectNone {
+  touch-callout: none;
+  user-select: none;
+}
+
+@mixin clamp($clamp) {
+  display: -webkit-box;
+  overflow: hidden;
+  white-space: pre-wrap;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $clamp;
+}
