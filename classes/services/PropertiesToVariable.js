@@ -119,6 +119,15 @@ module.exports = class PropertiesVariable {
   }
 
   /**
+   * Updating all property types to 'link' if the value is pointing to an object
+   *
+   * Обновление всех типов свойств на 'link', если значение указывается на объект
+   */
+  toByLink () {
+    // Close
+  }
+
+  /**
    * Returns the name of a property for an element
    *
    * Возвращает название свойства у элемента

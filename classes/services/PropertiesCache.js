@@ -2,7 +2,7 @@ const { To } = require('../To')
 
 const PropertiesFiles = require('./PropertiesFiles')
 
-const CACHE_STATUS = false
+const CACHE_STATUS = true
 const DIR_CACHE = ['..', '..', 'cache']
 
 /**
@@ -32,15 +32,21 @@ module.exports = class PropertiesCache {
    * @param {Function} callback If the file is not found, the callback function is called and
    * its result is saved in the current file / Если файл не найден, вызывается функция
    * обратного вызова (callback) и её результат сохраняется в текущем файле
+   * @param {string} extension
    * @return {Object<string, *>|*[]}
    */
-  static get (paths, name, callback = undefined) {
+  static get (
+    paths,
+    name,
+    callback = undefined,
+    extension = 'json'
+  ) {
     if (CACHE_STATUS && this.is(paths, name)) {
-      const path = this.__getPath([...To.array(paths), PropertiesFiles.getFileName(name)])
+      const path = this.__getPath([...To.array(paths), PropertiesFiles.getFileName(name, extension)])
       return PropertiesFiles.readFile(path)
     } else if (callback) {
       const value = callback()
-      this.create(paths, name, value)
+      this.create(paths, name, value, extension)
       return value
     } else {
       return {}

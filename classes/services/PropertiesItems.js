@@ -94,7 +94,28 @@ module.exports = class PropertiesItems {
       }
     })
 
+    if (data === undefined) {
+      console.error(`PropertiesItems: [no item] ${index}`)
+    }
+
     return data
+  }
+
+  /**
+   * Caching the result
+   *
+   * Читает результата из кеш
+   * @param {string} name Cache name / Название кеша
+   * @param {Function} callback If the file is not found, the callback function is called and
+   * its result is saved in the current file / Если файл не найден, вызывается функция
+   * обратного вызова (callback) и её результат сохраняется в текущем файле
+   * @param {string} extension
+   * @return {PropertiesItems}
+   */
+  getCache (name, callback, extension = 'json') {
+    PropertiesCache.get([], name, callback, extension)
+
+    return this
   }
 
   /**

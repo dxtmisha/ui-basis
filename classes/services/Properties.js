@@ -1,3 +1,4 @@
+const PropertiesCache = require('./PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
 
@@ -15,44 +16,44 @@ const FILE_CACHE = 'properties'
 
 module.exports = class Properties {
   constructor (designs) {
-    const read = new PropertiesRead(designs)
-    const items = new PropertiesItems(read.get())
-
-    const full = new PropertiesToFull(items)
-    const rename = new PropertiesToRename(items)
-    const sub = new PropertiesToSub(items)
-    const variable = new PropertiesToVariable(items)
-
-    full.toFullValueFix()
-    variable.to()
-    sub.toByLink()
-
-    new PropertiesToLink(items).to()
-
-    sub.to()
-    variable.toByVar()
-    full.toFullValue()
-    full.toFullValueByDesign()
-
-    rename.to()
-    new PropertiesToMulti(items).to()
-
-    rename.toByVar()
-    new PropertiesToVar(items).to()
-
-    this.items = items
-    this.items.cache(FILE_CACHE)
+    this.items = new PropertiesItems(this.__init(designs))
   }
 
   getScss () {
     return new PropertiesScss(this.items).get()
   }
 
-  __init () {
-    // Close
-  }
+  __init (designs) {
+    return PropertiesCache.get([], FILE_CACHE, () => {
+      console.info('Properties: init')
 
-  __initItems () {
-    // Close
+      const read = new PropertiesRead(designs)
+      const items = new PropertiesItems(read.get())
+
+      const full = new PropertiesToFull(items)
+      const rename = new PropertiesToRename(items)
+      const sub = new PropertiesToSub(items)
+      const variable = new PropertiesToVariable(items)
+
+      full.toFullValueFix()
+      variable.to()
+      variable.toByLink()
+      sub.toByLink()
+
+      new PropertiesToLink(items).to()
+
+      full.toFullValue()
+      full.toFullValueByDesign()
+      variable.toByVar()
+      sub.to()
+
+      rename.to()
+      new PropertiesToMulti(items).to()
+
+      rename.toByVar()
+      new PropertiesToVar(items).to()
+
+      return items.get()
+    })
   }
 }

@@ -1,0 +1,25 @@
+@mixin dirInit {
+  html {
+    --d-dir: 1;
+    --d-dir-left: 1;
+    --d-dir-right: 0;
+    --d-dir-auto: auto;
+    --d-dir-justify-start: flex-start;
+    --d-dir-justify-end: flex-end;
+    --d-dir-text-left: left;
+    --d-dir-text-right: right;
+
+    &[dir="rtl"] {
+      --d-dir: -1;
+      --d-dir-left: 0;
+      --d-dir-right: 1;
+      --d-dir-auto: unset;
+      --d-dir-auto-rtl: auto;
+      --d-dir-justify-start: flex-end;
+      --d-dir-justify-end: flex-start;
+      --d-dir-text-left: right;
+      --d-dir-text-right: left;
+      direction: rtl;
+    }
+  }
+}

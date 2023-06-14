@@ -24,11 +24,14 @@ module.exports = class PropertiesScss {
    * @return {string}
    */
   get () {
-    const data = `$designsProperties: (${this.__toGo(this.items.get())});`
-
-    this.items.cache(FILE_CACHE_SCSS, data, 'scss')
-
-    return data
+    this.items.getCache(
+      FILE_CACHE_SCSS,
+      () => {
+        console.info('PropertiesScss: init')
+        return `$designsProperties: (${this.__toGo(this.items.get())});`
+      },
+      'scss'
+    )
   }
 
   /**
@@ -68,7 +71,6 @@ module.exports = class PropertiesScss {
    * @private
    */
   __getValue (property, space) {
-    const keyCss = PropertiesTool.getKeyCss()
     const keyVariable = PropertiesTool.getKeyVariable()
 
     if (
@@ -79,10 +81,32 @@ module.exports = class PropertiesScss {
       if (typeof property.value === 'object') {
         return `value: (${this.__toGo(property.value, `${space}    `)}\r\n${space}  ),`
       } else {
-        return `value: '${property?.[keyCss] || property.value}',`
+        return `value: ${this.__getValueItem(property)},`
       }
     } else {
       return 'value: null,'
+    }
+  }
+
+  /**
+   * Возвращает значение свойства
+   * @param {Object<string,*>} property property value / значение свойства
+   * @return {string}
+   * @private
+   */
+  __getValueItem (property) {
+    /**
+     * @type {string}
+     */
+    const value = property?.[PropertiesTool.getKeyCss()] || property.value
+
+    if (
+      value.match(/^#[a-zA-Z0-9]+$/) ||
+      value.match(/^([0-9]+|([0-9]+\.[0-9]+))(px|em|rem|vw|vh|%|)$/)
+    ) {
+      return `${value}`
+    } else {
+      return `'${value}'`
     }
   }
 

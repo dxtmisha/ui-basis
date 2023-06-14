@@ -179,7 +179,7 @@ module.exports = class PropertiesTool {
    * @returns {string}
    */
   static toFullByDesigns (value, design, designs) {
-    return value?.replace(/(?<=\{)[^.{}]+/, name => {
+    return value?.replace(/(?<=\{)[^.{}]+/g, name => {
       if (designs.indexOf(name) === -1) {
         return `${design}.${name}`
       } else {
