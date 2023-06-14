@@ -1,0 +1,78 @@
+@use "sass:string";
+
+/// Returns width based on aspect ratio values
+///
+/// Возвращает ширину на основе значений соотношения сторон
+/// @param {string} $value
+/// @return {string}
+@function getWidthByRatio($value) {
+  $separator: string.index($value, '/');
+  @return string.slice($value, 0, $separator - 1);
+}
+
+/// Returns width based on aspect ratio values
+///
+/// Возвращает ширину на основе значений соотношения сторон
+/// @param {string} $value
+/// @return {string}
+@function getHeightByRatio($value) {
+  $separator: string.index($value, '/');
+  @return string.slice($value, $separator + 1);
+}
+
+@mixin width($value) {
+  --sys-width: #{$value};
+  width: var(--sys-width);
+}
+
+@mixin height($value) {
+  --sys-height: #{$value};
+  height: var(--sys-height);
+}
+
+@mixin widthBasis($value) {
+  @include width($value);
+  flex-basis: var(--sys-width);
+  max-width: 100%;
+}
+
+@mixin heightBasis($value) {
+  @include height($value);
+  flex-basis: var(--sys-height);
+  max-height: 100%;
+}
+
+@mixin aspectRatio($value) {
+  aspect-ratio: #{$value};
+
+  @supports not (aspect-ratio: #{$value}) {
+    @content;
+  }
+}
+
+@mixin aspectRatioByWidth($value) {
+  @include aspectRatio($value) {
+    height: calc(var(--sys-width) * #{getHeightByRatio($value)} / #{getWidthByRatio($value)});
+    @content;
+  }
+}
+
+@mixin aspectRatioByHeight($value) {
+  @include aspectRatio($value) {
+    width: calc(var(--sys-height) * #{getWidthByRatio($value)} / #{getHeightByRatio($value)});
+    @content;
+  }
+}
+
+@mixin squared($value) {
+  @include widthBasis($value);
+  @include aspectRatio(#{1/1}) {
+    @include height($value);
+    @content;
+  }
+}
+
+@mixin circle($value) {
+  @include squared($value);
+  border-radius: 100%;
+}
