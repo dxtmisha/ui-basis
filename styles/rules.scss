@@ -1,0 +1,82 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+
+/// Finding a value in a tree-like array
+///
+/// Поиск значения в древовидном массиве
+/// @param {map} $map Input array / Массив входных данных
+/// @param {list} $index List of keys to traverse / Список ключей для обхода
+/// @param {*} $default Default values if not found / Значения по умолчанию, если не было найдено
+/// @return {*}
+@function getMapItem(
+  $map,
+  $index,
+  $default: null
+) {
+  @if (meta.type-of($index) == list) {
+    $data: $map;
+
+    @each $key in $index {
+      $data: getMapItem($data, $key, $default);
+    }
+
+    @return $data
+  } @else if (
+          meta.type-of($map) == map and
+          map.has-key($map, $index)
+  ) {
+    @return map.get($map, $index);
+  } @else {
+    @return $default;
+  }
+}
+
+/// Changes values in an array
+///
+/// Меняет значения в массиве
+/// @param {map} $map Input array / Массив входных данных
+/// @param {string} $index
+/// @param {*} $value Values to be saved / Значения для сохранения
+/// @return {*}
+@function setMapItem($map, $index, $value) {
+  @return map.merge($map, (#{$index}: $value));
+}
+
+/// Split a string by a string
+///
+/// Разбивает строку с помощью разделителя
+/// @param {string} $value The input string / Входная строка
+/// @param {string} $separator The boundary string / Разделитель
+/// @return {string}
+@function strToList($value, $separator: '.') {
+  $index: string.index($value, $separator);
+
+  @if ($index != null) {
+    @return list.join((string.slice($value, 1, $index - 1)), strToList(string.slice($value, $index + 1), $separator))
+  } @else {
+    @return $value
+  }
+}
+
+/// Replace all occurrences of the search string with the replacement string
+///
+/// Заменяет все вхождения строки поиска на строку замены
+/// @param {string} $value The string or array being searched and replaced on / Строка в котором
+/// производится поиск и замена
+/// @param {string} $pattern The value being searched / Искомое значение
+/// @param {string} $replacement The replacement value that replaces found search values / Значение замены
+/// @return {string}
+@function strReplace($value, $pattern, $replacement) {
+  $index: string.index($value, $pattern);
+
+  @if ($index != null) {
+    $leftText: string.slice($value, 1, $index - 1);
+    $rightText: strReplace(string.slice($value, $index + string.length($pattern)), $pattern, $replacement);
+
+    @return #{$leftText}#{$replacement}#{$rightText}
+  } @else {
+    @return $value
+  }
+}

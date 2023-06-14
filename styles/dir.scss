@@ -23,3 +23,67 @@
     }
   }
 }
+
+/// Is the position on the left
+///
+/// Является ли расположение слева
+/// @return bool
+@function isDirLeft() {
+  @return var(--d-dir-left);
+}
+
+/// Is the position on the right
+///
+/// Является ли расположение справа
+/// @return bool
+@function isDirRight() {
+  @return var(--d-dir-right);
+}
+
+/// Returns the values on the left
+///
+/// Возвращает значения слева
+/// @return string
+@function dirLeft() {
+  @return var(--d-dir-text-left);
+}
+
+/// Returns the values on the right
+///
+/// Возвращает значения справа
+/// @return string
+@function dirRight() {
+  @return var(--d-dir-text-right);
+}
+
+/// Returns the values on the left (flex)
+///
+/// Возвращает значения слева (flex)
+/// @return string
+@function dirFlexLeft() {
+  @return var(--d-dir-justify-start);
+}
+
+/// Returns the values on the right (flex)
+///
+/// Возвращает значения справа (flex)
+/// @return string
+@function dirFlexRight() {
+  @return var(--d-dir-justify-end);
+}
+
+/// Returns a string for transitioning from left to right position
+///
+/// Возвращает строку для перехода из левого положения в правое
+/// @return string
+@function dirToLeft($left, $right) {
+  @return calc((isDirLeft() * var($left)) + (isDirRight() * var($right)));
+}
+
+/// Returns a string for transitioning from right to left position
+///
+/// Возвращает строку для перехода из правого положения в левое
+/// @return string
+@function dirToRight($left, $right) {
+  @return calc((isDirLeft() * var($right)) + (isDirRight() * var($left)));
+}

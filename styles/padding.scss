@@ -1,0 +1,38 @@
+@import "dir";
+
+@mixin padding($value) {
+  padding: $value;
+}
+
+@mixin paddingX($value) {
+  padding-left: $value;
+  padding-right: $value;
+}
+
+@mixin paddingY($value) {
+  padding-bottom: $value;
+  padding-top: $value;
+}
+
+@mixin paddingLeft($value) {
+  @include __paddingDir;
+  --sys-padding-left: #{$value};
+}
+
+@mixin paddingRight($value) {
+  @include __paddingDir;
+  --sys-padding-right: #{$value};
+}
+
+@mixin __paddingDir() {
+  padding-left: dirToLeft(--sys-padding-left, --sys-padding-right);
+  padding-right: dirToRight(--sys-padding-left, --sys-padding-right);
+}
+
+@mixin paddingTop($value) {
+  padding-top: $value;
+}
+
+@mixin paddingBottom($value) {
+  padding-bottom: $value;
+}
