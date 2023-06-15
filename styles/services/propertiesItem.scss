@@ -1,0 +1,41 @@
+@use "sass:map";
+@use "sass:meta";
+
+$designsProperties: () !default;
+
+@import "../rules";
+
+/// Getting a list of properties by its key
+///
+/// Получение списка свойств по его ключу
+/// @param {list} $index List of keys to traverse / Список ключей для обхода
+/// @return {map|null}
+@function getProperties($index: null) {
+  @if $index == null {
+    @return $designsProperties;
+  } @else {
+    $data: $designsProperties;
+
+    @each $key in strToList($index) {
+      @if ($data != null) {
+        $data: getMapItem($data, ($key, 'value'));
+      }
+    }
+
+    @return $data;
+  }
+}
+
+@mixin initProperties($properties) {
+  @each $property in $properties {
+    $name: map-get($property, 'name');
+    $type: map-get($property, 'type');
+    $value: map-get($property, 'value');
+
+    @if (meta.type-of($value) == map) {
+
+    } @else {
+
+    }
+  }
+}

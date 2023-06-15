@@ -34,7 +34,7 @@ module.exports = class PropertiesCache {
    * its result is saved in the current file / Если файл не найден, вызывается функция
    * обратного вызова (callback) и её результат сохраняется в текущем файле
    * @param {string} extension
-   * @return {Object<string, *>|*[]}
+   * @return {Object<string, *>|*[]|string}
    */
   static get (
     paths,

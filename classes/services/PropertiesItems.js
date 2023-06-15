@@ -110,12 +110,10 @@ module.exports = class PropertiesItems {
    * its result is saved in the current file / Если файл не найден, вызывается функция
    * обратного вызова (callback) и её результат сохраняется в текущем файле
    * @param {string} extension
-   * @return {PropertiesItems}
+   * @return {Object<string,*>|string}
    */
   getCache (name, callback, extension = 'json') {
-    PropertiesCache.get([], name, callback, extension)
-
-    return this
+    return PropertiesCache.get([], name, callback, extension)
   }
 
   /**

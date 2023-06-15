@@ -1,0 +1,16 @@
+$designsRoot: () !default;
+
+@import "propertiesItem";
+@import "propertiesVar";
+
+@mixin initMain {
+  @include initRoot;
+}
+
+@mixin initRoot {
+  :root {
+    @each $index in $designsRoot {
+      @include initVars(getProperties($index));
+    }
+  }
+}

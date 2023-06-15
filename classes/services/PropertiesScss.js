@@ -27,7 +27,7 @@ module.exports = class PropertiesScss {
    * @return {string}
    */
   get () {
-    this.items.getCache(
+    return this.items.getCache(
       FILE_CACHE_SCSS,
       () => {
         console.info('PropertiesScss: init')

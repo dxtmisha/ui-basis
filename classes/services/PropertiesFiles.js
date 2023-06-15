@@ -71,9 +71,9 @@ module.exports = class PropertiesFiles {
    */
   static readFile (paths) {
     if (this.is(paths)) {
-      const data = requireFs.readFileSync(this.joinPath(paths))
+      const data = requireFs.readFileSync(this.joinPath(paths)).toString()
 
-      return data.toString().match(/^[{[]/)
+      return data.match(/^[{[]/)
         ? JSON.parse(data || '{}')
         : data
     } else {

@@ -1,0 +1,15 @@
+@use "sass:map";
+@use "sass:meta";
+
+@mixin initVars($properties) {
+  @each $index, $property in $properties {
+    $name: map.get($property, 'name');
+    $value: map.get($property, 'value');
+
+    @if (meta.type-of($value) == map) {
+      @include initVars($value);
+    } @else {
+      #{$name}: #{$value};
+    }
+  }
+}
