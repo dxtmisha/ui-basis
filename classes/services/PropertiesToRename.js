@@ -5,6 +5,7 @@ const PropertiesTool = require('./PropertiesTool')
 
 const FILE_CACHE_RENAME = 'properties-rename'
 const FILE_CACHE_RENAME_VAR = 'properties-rename-var'
+const FILE_CACHE_RENAME_COMPONENT = 'properties-rename-component'
 
 /**
  * Class for working with the property name
@@ -69,6 +70,34 @@ module.exports = class PropertiesToRename {
   }
 
   /**
+   * Adds full property name to component type property
+   *
+   * Добавляет полное название свойства типу component
+   * @return {this}
+   */
+  toByComponent () {
+    const key = PropertiesTool.getKeyName()
+    const keyVariable = PropertiesTool.getKeyVariable()
+
+    this.items.each(({
+      item,
+      name,
+      parents
+    }) => {
+      if (
+        item?.[keyVariable] === 'component' &&
+        typeof item?.value === 'object'
+      ) {
+        item[key] = this.__toNameForComponent(parents, item, name)
+      }
+    })
+
+    this.items.cache(FILE_CACHE_RENAME_COMPONENT)
+
+    return this
+  }
+
+  /**
    * Returns the standard name
    *
    * Возвращает стандартное имя
@@ -116,6 +145,26 @@ module.exports = class PropertiesToRename {
       return `--${value}`
     } else {
       return `--${this.__getParentsName(parents).join('-')}-${this.__getName(item, name)}`
+    }
+  }
+
+  /**
+   * Name transformation for the var type
+   *
+   * Преобразование имени для типа var
+   * @param {Object<string,*>} parents
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForComponent (parents, item, name) {
+    const value = this.__getName(item, name)
+
+    if (item?.[PropertiesTool.getKeyFull()]) {
+      return `${value}`
+    } else {
+      return `${this.__getParentsName(parents).join('-')}-${this.__getName(item, name)}`
     }
   }
 }

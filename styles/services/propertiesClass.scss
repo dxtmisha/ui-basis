@@ -1,0 +1,11 @@
+@use "sass:map";
+
+@mixin initSection($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+
+    &--#{$name} {
+      @content;
+    }
+  }
+}

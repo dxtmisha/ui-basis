@@ -5,9 +5,13 @@ $designsProperties: () !default;
 
 @import "../rules";
 
-/// Getting a list of properties by its key
+@import "propertiesVar";
+@import "propertiesClass";
+@import "propertiesProperty";
+
+/// Getting a property by its key
 ///
-/// Получение списка свойств по его ключу
+/// Получение свойства по его ключу
 /// @param {list} $index List of keys to traverse / Список ключей для обхода
 /// @return {map|null}
 @function getProperties($index: null) {
@@ -18,7 +22,7 @@ $designsProperties: () !default;
 
     @each $key in strToList($index) {
       @if ($data != null) {
-        $data: getMapItem($data, ($key, 'value'));
+        $data: getMapItem(getMapItem($data, 'value', $data), $key);
       }
     }
 
@@ -26,16 +30,41 @@ $designsProperties: () !default;
   }
 }
 
+/// Getting a list of properties by its key
+///
+/// Получение списка свойств по его ключу
+/// @param {list} $index List of keys to traverse / Список ключей для обхода
+/// @return {map|null}
+@function getPropertiesValue($index: null) {
+  $data: getProperties($index);
+  @return getMapItem($data, 'value', $data);
+}
+
 @mixin initProperties($properties) {
-  @each $property in $properties {
+  @each $index, $property in $properties {
     $name: map-get($property, 'name');
     $type: map-get($property, 'type');
     $value: map-get($property, 'value');
 
-    @if (meta.type-of($value) == map) {
+    @if ($type == 'var') {
+      @include initVar($property);
+    } @else if ($type == 'section') {
+      @include initSection($property) {
+        @include initProperties($value);
+      }
+    } @else if ($type == 'property') {
+      @include initProperty($property);
+    }
+  }
+}
 
-    } @else {
+@mixin initClass($property) {
+  @if ($property != null) {
+    $name: map-get($property, 'name');
+    $value: map-get($property, 'value');
 
+    .#{$name} {
+      @include initProperties($value);
     }
   }
 }

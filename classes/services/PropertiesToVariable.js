@@ -90,7 +90,7 @@ module.exports = class PropertiesVariable {
           item[key] = 'selector'
         } else if (cssVirtual.indexOf(property) !== -1) {
           item[key] = 'virtual'
-        } else if ('value' in item) {
+        } else if (typeof item?.value !== 'object') {
           item[key] = 'var'
         } else {
           item[key] = 'section'

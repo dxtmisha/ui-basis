@@ -1,15 +1,29 @@
 @use "sass:map";
 @use "sass:meta";
 
-@mixin initVars($properties) {
-  @each $index, $property in $properties {
-    $name: map.get($property, 'name');
-    $value: map.get($property, 'value');
+/// Mixin for adding variables
+///
+/// Миксин для добавления переменных
+/// @param {map} $properties
+@mixin initVar($property) {
+  $name: map.get($property, 'name');
+  $value: map.get($property, 'value');
 
-    @if (meta.type-of($value) == map) {
-      @include initVars($value);
-    } @else {
-      #{$name}: #{$value};
+  @if (meta.type-of($value) == map) {
+    @include initVars($value);
+  } @else {
+    #{$name}: #{$value};
+  }
+}
+
+/// A method for generating all with variables
+///
+/// Метод для генерации всех с переменными
+/// @param {map} $properties
+@mixin initVars($properties) {
+  @if ($properties != null) {
+    @each $index, $property in $properties {
+      @include initVar($property);
     }
   }
 }

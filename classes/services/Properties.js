@@ -53,6 +53,8 @@ module.exports = class Properties {
       rename.toByVar()
       new PropertiesToVar(items).to()
 
+      rename.toByComponent()
+
       return items.get()
     })
   }

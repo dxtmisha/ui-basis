@@ -1,0 +1,10 @@
+@use "sass:map";
+
+@mixin initProperty($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+    $value: map-get($property, 'value');
+
+    #{$name}: #{$value};
+  }
+}

@@ -1,6 +1,6 @@
 const { To } = require('../To')
 
-const SYMBOL_AVAILABLE = '[\\w-??]+'
+const SYMBOL_AVAILABLE = '[\\w-?]+'
 
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
@@ -64,7 +64,7 @@ module.exports = class PropertiesTool {
    */
   static getVariableInName (name) {
     return To.kebabCase(
-      name.replace(new RegExp(`^(.*?)[|]?${SYMBOL_AVAILABLE}$`), '$1')
+      name.replace(new RegExp(`^(.*?)([|].*?$|${SYMBOL_AVAILABLE}$)`), '$1')
     )
   }
 

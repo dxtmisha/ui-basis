@@ -31,7 +31,7 @@ module.exports = class PropertiesScss {
       FILE_CACHE_SCSS,
       () => {
         console.info('PropertiesScss: init')
-        return `${this.getRoot()}\r\n${this.getProperties()}`
+        return `${this.getRoot()}\r\n${this.getClasses()}\r\n${this.getProperties()}`
       },
       'scss'
     )
@@ -44,7 +44,17 @@ module.exports = class PropertiesScss {
    * @return {string}
    */
   getRoot () {
-    return `$designsRoot: (${this.__toRoot()});`
+    return `$designsRoot: (${this.__getByCategory('root')});`
+  }
+
+  /**
+   * Returns a list of properties
+   *
+   * Возвращает список свойств
+   * @return {string}
+   */
+  getClasses () {
+    return `$designsClasses: (${this.__getByCategory('class')});`
   }
 
   /**
@@ -82,6 +92,31 @@ module.exports = class PropertiesScss {
    */
   __getType (property) {
     return `type: '${property?.[PropertiesTool.getKeyVariable()]}',`
+  }
+
+  /**
+   * Returns a list of all records with the selected type
+   *
+   * Возвращает список всех записей с выбранным типом
+   * @param {string} category Category names / Названия категорий
+   * @return {string}
+   * @private
+   */
+  __getByCategory (category) {
+    const key = PropertiesTool.getKeyCategory()
+    const data = []
+
+    this.items.each(({
+      item,
+      name,
+      parents
+    }) => {
+      if (item?.[key] === category) {
+        data.push(`'${getColumn(parents, 'name').join('.')}.${name}',`)
+      }
+    })
+
+    return data.join('')
   }
 
   /**
@@ -154,29 +189,5 @@ module.exports = class PropertiesScss {
     })
 
     return data
-  }
-
-  /**
-   * The method searches for all properties for the root and returns their path
-   *
-   * Метод ищет все свойства для корневого элемента и возвращает их путь
-   * @return {string}
-   * @private
-   */
-  __toRoot () {
-    const key = PropertiesTool.getKeyCategory()
-    const data = []
-
-    this.items.each(({
-      item,
-      name,
-      parents
-    }) => {
-      if (item?.[key] === 'root') {
-        data.push(`'${getColumn(parents, 'name').join('.')}.${name}',`)
-      }
-    })
-
-    return data.join('')
   }
 }

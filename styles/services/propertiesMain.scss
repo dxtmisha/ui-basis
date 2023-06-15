@@ -1,16 +1,28 @@
 $designsRoot: () !default;
+$designsClasses: () !default;
 
 @import "propertiesItem";
 @import "propertiesVar";
+@import "propertiesClass";
 
 @mixin initMain {
-  @include initRoot;
+  @include readClasses;
+  @include readRoot;
 }
 
-@mixin initRoot {
+@mixin readClasses {
+  @each $class in $designsClasses {
+    @include initClass(getProperties($class));
+  }
+}
+
+/// Generation of all properties
+///
+/// Генерация всех свойств
+@mixin readRoot {
   :root {
     @each $index in $designsRoot {
-      @include initVars(getProperties($index));
+      @include initVars(getPropertiesValue($index));
     }
   }
 }
