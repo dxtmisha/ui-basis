@@ -9,7 +9,13 @@
     $name: map.get($property, 'name');
 
     &#{'::'}#{$name} {
-      content: " ";
+      @if (
+              $name == 'after' or
+              $name == 'before'
+      ) {
+        content: ' ';
+      }
+
       @content;
     }
   }
