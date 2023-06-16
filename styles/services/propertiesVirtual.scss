@@ -1,0 +1,16 @@
+@use "sass:map";
+
+/// Mixin for generating properties for a sub-element. Automatically adds content: " " (space)
+///
+/// Миксин для генерации свойств под элемент. Автоматически добавляет content: " " (пробел)
+/// @param {Map} $property
+@mixin initVirtual($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+
+    &#{'::'}#{$name} {
+      content: " ";
+      @content;
+    }
+  }
+}

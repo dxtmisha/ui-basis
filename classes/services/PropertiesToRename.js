@@ -239,4 +239,17 @@ module.exports = class PropertiesToRename {
       return `&--${name}`
     }
   }
+
+  /**
+   * Name transformation for the virtual type
+   *
+   * Преобразование имени для типа virtual
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForVirtual (item, name) {
+    return `&::${this.__getName(item, name)}`
+  }
 }

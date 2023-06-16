@@ -5,9 +5,10 @@ $designsProperties: () !default;
 
 @import "../rules";
 
-@import "propertiesVar";
 @import "propertiesClass";
 @import "propertiesProperty";
+@import "propertiesVar";
+@import "propertiesVirtual";
 
 /// Getting a property by its key
 ///
@@ -50,6 +51,10 @@ $designsProperties: () !default;
       @include initVar($property);
     } @else if ($type == 'section') {
       @include initSection($property) {
+        @include initProperties($value);
+      }
+    } @else if ($type == 'virtual') {
+      @include initVirtual($property) {
         @include initProperties($value);
       }
     } @else if ($type == 'property') {
