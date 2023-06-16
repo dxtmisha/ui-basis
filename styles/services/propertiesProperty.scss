@@ -1,10 +1,147 @@
 @use "sass:map";
 
+@import "../color";
+@import "../dimension";
+@import "../flex";
+@import "../font";
+@import "../margin";
+@import "../padding";
+@import "../position";
+
+/// Generating value
+///
+/// Генерация значения
 @mixin initProperty($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
     $value: map-get($property, 'value');
 
+    @include initPropertyValue($name, $value);
+  }
+}
+
+/// Generating value for property
+///
+/// Генерация значения для свойства
+@mixin initPropertyValue($name, $value) {
+  @if (
+    /* Flex */
+          $name == 'justify-content'
+  ) {
+    @include justifyContent(#{$value});
+  } @else if ($name == 'flex-dynamic') {
+    @include flexDynamic(#{$value});
+  } @else if (
+    /* Position */
+          $name == 'inset'
+  ) {
+    @include inset(#{$value});
+  } @else if ($name == 'horizon') {
+    @include horizon(#{$value});
+  } @else if ($name == 'vertically') {
+    @include vertically(#{$value});
+  } @else if ($name == 'left') {
+    @include left(#{$value});
+  } @else if ($name == 'right') {
+    @include right(#{$value});
+  } @else if ($name == 'absolute') {
+    @include absolute(#{$value});
+  } @else if ($name == 'absoluteAfter') {
+    @include absoluteAfter(#{$value});
+  } @else if (
+    /* Padding */
+          $name == 'padding-x'
+  ) {
+    @include paddingX(#{$value});
+  } @else if ($name == 'padding-y') {
+    @include paddingY(#{$value});
+  } @else if ($name == 'padding-left') {
+    @include paddingLeft(#{$value});
+  } @else if ($name == 'padding-right') {
+    @include paddingRight(#{$value});
+  } @else if (
+    /* Margin */
+          $name == 'margin-x'
+  ) {
+    @include marginX(#{$value});
+  } @else if ($name == 'margin-y') {
+    @include marginY(#{$value});
+  } @else if ($name == 'margin-left') {
+    @include marginLeft(#{$value});
+  } @else if ($name == 'margin-right') {
+    @include marginRight(#{$value});
+  } @else if (
+    /* Dimension */
+          $name == 'width'
+  ) {
+    @include width(#{$value});
+  } @else if ($name == 'height') {
+    @include height(#{$value});
+  } @else if ($name == 'width-basis') {
+    @include widthBasis(#{$value});
+  } @else if ($name == 'height-basis') {
+    @include heightBasis(#{$value});
+  } @else if ($name == 'aspect-ratio') {
+    @include aspectRatio(#{$value});
+  } @else if ($name == 'aspect-ratio-width') {
+    @include aspectRatioByWidth(#{$value});
+  } @else if ($name == 'aspect-ratio-height') {
+    @include aspectRatioByHeight(#{$value});
+  } @else if ($name == 'squared') {
+    @include squared(#{$value});
+  } @else if ($name == 'circle') {
+    @include circle(#{$value});
+  } @else if (
+    /* Font */
+          $name == 'text-align'
+  ) {
+    @include textAlign(#{$value});
+  } @else if ($name == 'clamp') {
+    @include clamp(#{$value});
+  } @else if ($name == 'text-select-none') {
+    @include textSelectNone(#{$value});
+  } @else if (
+    /* Color */
+          $name == 'palette'
+  ) {
+    @include palette(#{$value});
+  } @else if ($name == 'palette-color') {
+    @include paletteColor(#{$value});
+  } @else if ($name == 'palette-stroke') {
+    @include paletteStroke(#{$value});
+  } @else if ($name == 'palette-background') {
+    @include paletteBackground(#{$value});
+  } @else if ($name == 'palette-fill') {
+    @include paletteFill(#{$value});
+  } @else if ($name == 'palette-gradient') {
+    @include paletteGradient(#{$value});
+  } @else if ($name == 'palette-border') {
+    @include paletteBorder(#{$value});
+  } @else if ($name == 'color') {
+    @include color(#{$value});
+  } @else if ($name == 'color-opacity') {
+    @include colorOpacity(#{$value});
+  } @else if ($name == 'stroke') {
+    @include stroke(#{$value});
+  } @else if ($name == 'stroke-opacity') {
+    @include strokeOpacity(#{$value});
+  } @else if ($name == 'background-color') {
+    @include background(#{$value});
+  } @else if ($name == 'background-opacity') {
+    @include backgroundOpacity(#{$value});
+  } @else if ($name == 'fill') {
+    @include fill(#{$value});
+  } @else if ($name == 'fill-opacity') {
+    @include fillOpacity(#{$value});
+  } @else if ($name == 'gradient') {
+    @include gradient(#{$value});
+  } @else if ($name == 'gradient-opacity') {
+    @include gradientOpacity(#{$value});
+  } @else if ($name == 'border-color') {
+    @include border(#{$value});
+  } @else if ($name == 'border-opacity') {
+    @include borderOpacity(#{$value});
+  } @else {
     #{$name}: #{$value};
   }
 }

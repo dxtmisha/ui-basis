@@ -10,11 +10,6 @@
   }
 }
 
-@mixin textSelectNone {
-  touch-callout: none;
-  user-select: none;
-}
-
 @mixin clamp($clamp) {
   display: -webkit-box;
   overflow: hidden;
@@ -22,4 +17,9 @@
 
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $clamp;
+}
+
+@mixin textSelectNone {
+  touch-callout: none;
+  user-select: none;
 }

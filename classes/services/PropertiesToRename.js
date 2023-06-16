@@ -97,11 +97,15 @@ module.exports = class PropertiesToRename {
       name,
       parents
     }) => {
-      if (
-        item?.[keyVariable] === 'component' &&
-        typeof item?.value === 'object'
-      ) {
-        item[key] = this.__toNameForComponent(parents, item, name)
+      switch (item?.[keyVariable]) {
+        case 'component':
+          if (typeof item?.value === 'object') {
+            item[key] = this.__toNameForComponent(parents, item, name)
+          }
+          break
+        case 'section':
+          item[key] = this.__toNameForSection(item, name)
+          break
       }
     })
 
@@ -163,11 +167,24 @@ module.exports = class PropertiesToRename {
    *
    * Возвращает имена предков
    * @param {Object<string,*>} parents
+   * @param {string[]} variable
    * @return {string[]}
    * @private
    */
-  __getParentsName (parents) {
-    return forEach(parents, parent => parent.name)
+  __getParentsName (parents, variable = undefined) {
+    const key = PropertiesTool.getKeyVariable()
+
+    return forEach(parents, parent => {
+      if (
+        !variable ||
+        ['design', 'component'].indexOf(parent.item?.[key]) !== -1 ||
+        variable.indexOf(parent.item?.[key]) !== -1
+      ) {
+        return parent.name
+      } else {
+        return undefined
+      }
+    }, true)
   }
 
   /**
@@ -184,14 +201,14 @@ module.exports = class PropertiesToRename {
     if (item?.[PropertiesTool.getKeyFull()]) {
       return `--${name}`
     } else {
-      return `--${this.__getParentsName(parents).join('-')}-${name}`
+      return `--${this.__getParentsName(parents, ['var']).join('-')}-${name}`
     }
   }
 
   /**
-   * Name transformation for the var type
+   * Name transformation for the component type
    *
-   * Преобразование имени для типа var
+   * Преобразование имени для типа component
    * @param {Object<string,*>} parents
    * @param {Object<string,*>} item
    * @param {string} name
@@ -203,6 +220,23 @@ module.exports = class PropertiesToRename {
       return `${name}`
     } else {
       return `${this.__getParentsName(parents).join('-')}-${name}`
+    }
+  }
+
+  /**
+   * Name transformation for the section type
+   *
+   * Преобразование имени для типа section
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForSection (item, name) {
+    if (item?.[PropertiesTool.getKeyFull()]) {
+      return `&.${name}`
+    } else {
+      return `&--${name}`
     }
   }
 }

@@ -42,6 +42,13 @@
   "test8": "{is_{?checkbox.color}_end}",
   "=??test9": "is-n",
   "??test91": "is-n",
+  "=test10": {
+    "a": {
+      "value": "v1",
+      "_rename": "=??a"
+    },
+    "b": "v2"
+  },
   "color": "red",
   "color{??test2}-{??test}": "red",
   "border": {

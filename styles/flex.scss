@@ -1,11 +1,5 @@
 @import "dir";
 
-@mixin flexDynamic() {
-  flex-basis: 1px;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
 @mixin justifyContent($value) {
   @if ($value == 'flex-start') {
     justify-content: dirFlexLeft();
@@ -14,4 +8,10 @@
   } @else {
     justify-content: #{$value};
   }
+}
+
+@mixin flexDynamic() {
+  flex-basis: 1px;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
