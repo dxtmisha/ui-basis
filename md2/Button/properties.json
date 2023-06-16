@@ -3,7 +3,33 @@
   "test2": "asd2",
   "test3": "{??test2}",
   "test31": "{##test2}",
-  "test4": "{test2}",
+  "test4": {
+    "color": {
+      "value": "blue",
+      "_rename": "background-color"
+    },
+    "isVar": {
+      "value": "blue",
+      "_rename": "toVar"
+    },
+    "isVar2": {
+      "value": "blue",
+      "_rename": "toVar2"
+    },
+    "border-color": {
+      "value": "blue",
+      "_rename": "var|border"
+    },
+    "update": {
+      "color": "green",
+      "isVar": "green",
+      "isVar2": {
+        "value": "green",
+        "_rename": "toVar3"
+      },
+      "border-color": "green"
+    }
+  },
   "test5": "{?checkbox.color}",
   "test6": {
     "value": "{{?checkbox.color}}",
@@ -14,6 +40,8 @@
     "_fullName": true
   },
   "test8": "{is_{?checkbox.color}_end}",
+  "=??test9": "is-n",
+  "??test91": "is-n",
   "color": "red",
   "color{??test2}-{??test}": "red",
   "border": {
@@ -41,5 +69,6 @@
   },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
-  "@link2": "{checkbox.{??linkName}}"
+  "@link2": "{checkbox.{??linkName}}",
+  "_category": "class"
 }

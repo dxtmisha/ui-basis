@@ -2,9 +2,9 @@
 
 @mixin initSection($property) {
   @if ($property != null) {
-    $name: map.get($property, 'name');
+    $index: map.get($property, 'index');
 
-    &--#{$name} {
+    &--#{$index} {
       @content;
     }
   }

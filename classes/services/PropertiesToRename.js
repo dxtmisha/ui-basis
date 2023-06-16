@@ -6,6 +6,7 @@ const PropertiesTool = require('./PropertiesTool')
 const FILE_CACHE_RENAME = 'properties-rename'
 const FILE_CACHE_RENAME_VAR = 'properties-rename-var'
 const FILE_CACHE_RENAME_COMPONENT = 'properties-rename-component'
+const FILE_CACHE_RENAME_SIMILAR = 'properties-rename-similar'
 
 /**
  * Class for working with the property name
@@ -31,9 +32,15 @@ module.exports = class PropertiesToRename {
 
     this.items.each(({
       item,
-      name
+      name,
+      design,
+      component
     }) => {
-      item[key] = this.__getName(item, name)
+      item[key] = PropertiesTool.toFullForName(
+        this.__getName(item, name),
+        design,
+        component
+      )
     })
 
     this.items.cache(FILE_CACHE_RENAME)
@@ -54,13 +61,19 @@ module.exports = class PropertiesToRename {
     this.items.each(({
       item,
       name,
+      design,
+      component,
       parents
     }) => {
       if (
         item?.[keyVariable] === 'var' &&
         typeof item?.value !== 'object'
       ) {
-        item[key] = this.__toNameForVar(parents, item, name)
+        item[key] = PropertiesTool.toFullForName(
+          this.__toNameForVar(parents, item, name),
+          design,
+          component
+        )
       }
     })
 
@@ -98,6 +111,32 @@ module.exports = class PropertiesToRename {
   }
 
   /**
+   * Finding similar data for editing
+   *
+   * Поиск похожих данных для редактирования
+   * @return {this}
+   */
+  toBySimilar () {
+    const key = PropertiesTool.getKeyName()
+
+    this.items.each(({
+      item,
+      name,
+      parents
+    }) => {
+      const similar = PropertiesTool.getSimilarParent(item, name, parents)
+
+      if (similar) {
+        item[key] = this.__getName(similar, name)
+      }
+    })
+
+    this.items.cache(FILE_CACHE_RENAME_SIMILAR)
+
+    return this
+  }
+
+  /**
    * Returns the standard name
    *
    * Возвращает стандартное имя
@@ -107,9 +146,12 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __getName (item, name) {
+    const keyName = PropertiesTool.getKeyName()
     const keyRename = PropertiesTool.getKeyRename()
 
-    if (item?.[keyRename]) {
+    if (item?.[keyName]) {
+      return item[keyName]
+    } else if (item?.[keyRename]) {
       return PropertiesTool.getName(item?.[keyRename])
     } else {
       return PropertiesTool.getName(name)
@@ -125,7 +167,7 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __getParentsName (parents) {
-    return forEach(parents, parent => this.__getName(parent.items, parent.name))
+    return forEach(parents, parent => parent.name)
   }
 
   /**
@@ -139,12 +181,10 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __toNameForVar (parents, item, name) {
-    const value = this.__getName(item, name)
-
     if (item?.[PropertiesTool.getKeyFull()]) {
-      return `--${value}`
+      return `--${name}`
     } else {
-      return `--${this.__getParentsName(parents).join('-')}-${this.__getName(item, name)}`
+      return `--${this.__getParentsName(parents).join('-')}-${name}`
     }
   }
 
@@ -159,12 +199,10 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __toNameForComponent (parents, item, name) {
-    const value = this.__getName(item, name)
-
     if (item?.[PropertiesTool.getKeyFull()]) {
-      return `${value}`
+      return `${name}`
     } else {
-      return `${this.__getParentsName(parents).join('-')}-${this.__getName(item, name)}`
+      return `${this.__getParentsName(parents).join('-')}-${name}`
     }
   }
 }

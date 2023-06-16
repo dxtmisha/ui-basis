@@ -1,7 +1,8 @@
-// const PropertiesItems = require('./PropertiesItems')
-
-const PropertiesTool = require('./PropertiesTool')
 const { splice } = require('../../functions/data')
+
+// const PropertiesItems = require('./PropertiesItems')
+const PropertiesTool = require('./PropertiesTool')
+
 const FILE_CACHE_SUB = 'properties-sub'
 const FILE_CACHE_SUB_LINK = 'properties-sub-link'
 
@@ -166,6 +167,7 @@ module.exports = class PropertiesToSub {
    */
   __toValue (property) {
     const designs = this.items.getDesigns()
+    const ketFull = PropertiesTool.getKeyFullValue()
 
     property.item.value = this.__toGo(
       PropertiesTool.toFull(
@@ -175,6 +177,10 @@ module.exports = class PropertiesToSub {
         designs
       )
     )
+
+    if (property.item?.[ketFull]) {
+      property.item.value = property.item.value.replace(/[{}]/g, '')
+    }
   }
 
   /**
@@ -190,10 +196,11 @@ module.exports = class PropertiesToSub {
 
     while (update && max-- > 0) {
       update = false
-      value = value.replace(REG_SUB, (all, index) => {
-        update = true
-        return this.items.getItemByIndex(index)?.value || index
-      })
+      value = value
+        .replace(REG_SUB, (all, index) => {
+          update = true
+          return this.items.getItemByIndex(index)?.value || index
+        })
     }
 
     return value.trim()

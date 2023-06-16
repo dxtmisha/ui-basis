@@ -68,6 +68,18 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns the property index to form the path of the class name
+   *
+   * Возвращает индекс свойства для формирования пути имени класса
+   * @param {string} name Name of the property / Название свойства
+   * @return {string}
+   * @private
+   */
+  __getIndex (name) {
+    return `index: '${name}',`
+  }
+
+  /**
    * Returns the name of the property
    *
    * Возвращает название свойства
@@ -182,6 +194,7 @@ module.exports = class PropertiesScss {
 
     forEach(properties, (property, name) => {
       data += `\r\n${space}'${name}':(`
+      data += `\r\n${space}  ${this.__getIndex(name)}`
       data += `\r\n${space}  ${this.__getName(property, name)}`
       data += `\r\n${space}  ${this.__getType(property)}`
       data += `\r\n${space}  ${this.__getValue(property, space)}`

@@ -14,9 +14,14 @@ const KEY_FULL_VALUE = '_fullValue'
 const KEYS_SPECIAL = [
   'value',
   'type',
+  KEY_NAME,
+  KEY_CATEGORY,
   KEY_DEFAULT,
   KEY_RENAME,
-  KEY_VARIABLE
+  KEY_VARIABLE,
+  KEY_CSS,
+  KEY_FULL,
+  KEY_FULL_VALUE
 ]
 
 module.exports = class PropertiesTool {
@@ -53,6 +58,34 @@ module.exports = class PropertiesTool {
     return To.kebabCase(
       name.replace(new RegExp(`^(.*?)(${SYMBOL_AVAILABLE})$`), '$2')
     )
+  }
+
+  /**
+   * Returns similar values by its name
+   *
+   * Возвращает похожие значения по его имени
+   * @param {Object<string,*>} item Object for checking / Объект для проверки
+   * @param {string} name Name of the name / Название имени
+   * @param {Object<string,*>} parents
+   * @return {Object<string,*>}
+   */
+  static getSimilarParent (
+    item,
+    name,
+    parents = undefined
+  ) {
+    const keyRename = this.getKeyRename()
+    const keyVariable = this.getKeyVariable()
+
+    if (
+      !item?.[keyRename] &&
+      parents &&
+      parents?.[parents.length - 1]?.item?.[keyVariable] === 'section'
+    ) {
+      return parents?.[parents.length - 2]?.item?.value?.[name]
+    } else {
+      return undefined
+    }
   }
 
   /**
@@ -166,6 +199,25 @@ module.exports = class PropertiesTool {
         .replace(/(?<=\{)\?/g, `${design}.`)
     } else {
       return this.toFullByDesigns(value, design, designs)
+    }
+  }
+
+  /**
+   * Replaces labels with design and component names
+   *
+   * Заменяет метки на названия дизайна и компонента
+   * @param {string} value
+   * @param {string} design Design name / Название дизайна
+   * @param {string} component Component name / Название компонента
+   * @return {string}
+   */
+  static toFullForName (value, design, component) {
+    if (value.match(/\?/)) {
+      return value
+        .replace(/\?\?/g, `${design}-${component}-`)
+        .replace(/\?/g, `${design}-`)
+    } else {
+      return value
     }
   }
 

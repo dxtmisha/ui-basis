@@ -54,6 +54,7 @@ module.exports = class Properties {
       new PropertiesToVar(items).to()
 
       rename.toByComponent()
+      rename.toBySimilar()
 
       return items.get()
     })

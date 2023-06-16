@@ -1,6 +1,7 @@
+const { To } = require('../To')
+
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
-const { To } = require('../To')
 
 const REG_VAR = /\{([^{}]+)}/ig
 
