@@ -37,6 +37,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Checks whether a value is a reference
+   *
+   * Проверяет, является ли значение ссылкой
+   * @param {string} value
+   * @return {boolean}
+   */
+  static isLink (value) {
+    return typeof value === 'string' && !!value.match(/^{[^{}]+}$/)
+  }
+
+  /**
    * Checks whether the name is complete
    *
    * Проверяет, является ли название полным

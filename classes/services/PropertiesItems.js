@@ -81,9 +81,10 @@ module.exports = class PropertiesItems {
    *
    * Возвращает значения по индексу
    * @param {string} index Index for splitting / Индекс для разделения
+   * @param {boolean} check Is this a simple check / Является ли это простой проверкой
    * @return {Object<string, *>|undefined}
    */
-  getItemByIndex (index) {
+  getItemByIndex (index, check = false) {
     const keys = this.getKeys(index)
     let data = this.properties
 
@@ -94,7 +95,7 @@ module.exports = class PropertiesItems {
       }
     })
 
-    if (data === undefined) {
+    if (!check && data === undefined) {
       console.error(`PropertiesItems: [no item] ${index}`)
     }
 

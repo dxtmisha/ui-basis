@@ -754,22 +754,22 @@
   "grid": {
     "value": {
       "gridTemplateColumns": "repeat({ref.grid.xs}, minmax(0, 1fr))",
-      "columnGap": "{ref.gap.xs}",
+      "columnGap": "{sys.gap.xs}",
       "media|{ref.screen.sm}": {
         "gridTemplateColumns": "repeat({ref.grid.sm}, minmax(0, 1fr))",
-        "columnGap": "{ref.gap.sm}"
+        "columnGap": "{sys.gap.sm}"
       },
       "media|{ref.screen.md}": {
         "gridTemplateColumns": "repeat({ref.grid.md}, minmax(0, 1fr))",
-        "columnGap": "{ref.gap.md}"
+        "columnGap": "{sys.gap.md}"
       },
       "media|{ref.screen.lg}": {
         "gridTemplateColumns": "repeat({ref.grid.lg}, minmax(0, 1fr))",
-        "columnGap": "{ref.gap.lg}"
+        "columnGap": "{sys.gap.lg}"
       },
       "media|{ref.screen.xl}": {
         "gridTemplateColumns": "repeat({ref.grid.xl}, minmax(0, 1fr))",
-        "columnGap": "{ref.gap.xl}"
+        "columnGap": "{sys.gap.xl}"
       }
     },
     "_variable": "state",

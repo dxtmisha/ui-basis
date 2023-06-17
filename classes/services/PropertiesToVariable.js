@@ -41,6 +41,7 @@ const SYMBOLS = {
 
 const FILE_CACHE_VARIABLE = 'properties-variable'
 const FILE_CACHE_VARIABLE_VAR = 'properties-variable-var'
+const FILE_CACHE_VARIABLE_LINK = 'properties-variable-link'
 
 /**
  * Class for performing data type conversions
@@ -129,7 +130,48 @@ module.exports = class PropertiesVariable {
    * Обновление всех типов свойств на 'link', если значение указывается на объект
    */
   toByLink () {
-    // Close
+    const key = PropertiesTool.getKeyVariable()
+
+    this.items.each(({
+      item,
+      design,
+      component
+    }) => {
+      if (
+        ['var', 'property'].indexOf(item?.[key]) !== -1 &&
+        PropertiesTool.isLink(item?.value) &&
+        this.__isLink(item, design, component)
+      ) {
+        item[key] = 'link'
+      }
+    })
+
+    this.items.cache(FILE_CACHE_VARIABLE_LINK)
+  }
+
+  /**
+   * Checks whether a reference points to the specified object
+   *
+   * Проверяет, указывает ли ссылка на указанный объект
+   * @param {Object<string,*>} item
+   * @param {string} design
+   * @param {string} component
+   * @return {boolean}
+   * @private
+   */
+  __isLink (
+    item,
+    design,
+    component
+  ) {
+    const index = PropertiesTool.toFull(
+      item?.value,
+      design,
+      component,
+      this.items.getDesigns()
+    )
+
+    return typeof this.items.getItemByIndex(index)?.value === 'object'
   }
 
   /**
