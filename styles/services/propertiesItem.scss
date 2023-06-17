@@ -1,13 +1,32 @@
+@use "sass:list";
 @use "sass:map";
 @use "sass:meta";
 
 $designsProperties: () !default;
+
+/// List of types that belong to additions and are used for separating class names
+///
+/// Список типов, которые относятся к дополнениям и используются для разделения имени класса
+$designsAuxiliary: (
+        'selector',
+        'virtual'
+) !default;
+
+/// List of types that belong to basic properties and do not extend the class of a property
+///
+/// Список типов, которые относятся к базовым свойствам и не расширяют класс свойства
+$designsBasic: (
+        'var',
+        'property',
+        'scss'
+) !default;
 
 @import "../rules";
 
 @import "propertiesClass";
 @import "propertiesMedia";
 @import "propertiesProperty";
+@import "propertiesSelector";
 @import "propertiesVar";
 @import "propertiesVirtual";
 
@@ -17,8 +36,8 @@ $designsProperties: () !default;
 /// @param {map} $property
 @mixin initClass($property) {
   @if ($property != null) {
-    $name: map-get($property, 'name');
-    $value: map-get($property, 'value');
+    $name: map.get($property, 'name');
+    $value: map.get($property, 'value');
 
     .#{$name} {
       @include initProperties($value);
@@ -29,7 +48,7 @@ $designsProperties: () !default;
 /// Getting a property by its key
 ///
 /// Получение свойства по его ключу
-/// @param {list} $index List of keys to traverse / Список ключей для обхода
+/// @param {String|null} $index List of keys to traverse / Список ключей для обхода
 /// @return {map|null}
 @function getProperties($index: null) {
   @if $index == null {
@@ -50,35 +69,92 @@ $designsProperties: () !default;
 /// Getting a list of properties by its key
 ///
 /// Получение списка свойств по его ключу
-/// @param {list} $index List of keys to traverse / Список ключей для обхода
+/// @param {String|null} $index List of keys to traverse / Список ключей для обхода
 /// @return {map|null}
 @function getPropertiesValue($index: null) {
   $data: getProperties($index);
   @return getMapItem($data, 'value', $data);
 }
 
-@mixin initProperties($properties) {
+/// Entry point - mixin for starting processing an array with properties
+///
+/// Точка входа - миксин для начала обработки массива со свойствами
+/// @param {Map} $properties
+/// @param {Map} $parent Auxiliary variable for iteration / Вспомогательная переменная для обхода
+/// @param {String} $this Auxiliary variable for iteration / Вспомогательная переменная для обхода
+@mixin initProperties(
+  $properties,
+  $parent: null,
+  $this: null
+) {
   @each $index, $property in $properties {
-    $name: map-get($property, 'name');
-    $type: map-get($property, 'type');
-    $value: map-get($property, 'value');
+    @if (__isSelector($parent)) {
+      @include __toBySelector($property, $this);
+    } @else {
+      @include __to($property);
+    }
+  }
+}
 
-    @if ($type == 'var') {
-      @include initVar($property);
-    } @else if ($type == 'property') {
-      @include initProperty($property);
-    } @else if ($type == 'state') {
-      @include initState($property) {
-        @include initProperties($value);
-      }
-    } @else if ($type == 'virtual') {
-      @include initVirtual($property) {
-        @include initProperties($value);
-      }
-    } @else if ($type == 'media' or $type == 'media-max') {
-      @include initMedia($property) {
-        @include initProperties($value);
-      }
+/// Checks whether the type of property is basic
+///
+/// Проверяет, является ли тип свойства базовым
+@function __isBasic($property) {
+  @return list.index($designsBasic, map.get($property, 'type')) != null;
+}
+
+/// Checks whether the ancestor is of the type 'addition'
+///
+/// Проверяет, является ли предок типа дополнения
+@function __isSelector($parent) {
+  @return $parent and list.index($designsAuxiliary, map.get($parent, 'type')) != null;
+}
+
+/// Processing a property
+///
+/// Обработка свойства
+/// @param {Map} $property
+@mixin __to($property) {
+  $type: map.get($property, 'type');
+  $value: map.get($property, 'value');
+  $this: &;
+
+  @if ($type =='var') {
+    @include initVar($property);
+  } @else if ($type =='property') {
+    @include initProperty($property);
+  } @else if ($type =='selector') {
+    @include initSelector($property) {
+      @include initProperties($value, $property, $this);
+    }
+  } @else if ($type =='state') {
+    @include initState($property) {
+      @include initProperties($value, $property, $this);
+    }
+  } @else if ($type =='virtual') {
+    @include initVirtual($property) {
+      @include initProperties($value, $property, $this);
+    }
+  } @else if (
+          $type =='media' or
+          $type =='media-max'
+  ) {
+    @include initMedia($property) {
+      @include initProperties($value, $property, $this);
+    }
+  }
+}
+
+/// Processing an auxiliary element
+///
+/// Обработка вспомогательного элемента
+/// @param {Map} $property
+@mixin __toBySelector($property, $this) {
+  @if (__isBasic($property)) {
+    @include __to($property);
+  } @else {
+    #{$this} {
+      @include __to($property);
     }
   }
 }

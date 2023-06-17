@@ -10,18 +10,18 @@ const cssVirtual = require('../../constructors/propertiesListCssVirtual.json')
 const TYPE = [
   'design',
   'component',
+  'class',
   'var',
   'property',
   'selector',
+  'state',
   'virtual',
+  'subclass',
+  'scss',
   'media',
   'media-max',
   'link',
   'link-class',
-  'state',
-  'subclass',
-  'class',
-  'scss',
   'mixin',
   'none'
 ]

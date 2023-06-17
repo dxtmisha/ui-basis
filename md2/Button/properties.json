@@ -1,4 +1,22 @@
 {
+  "after": {
+    "color": "blue",
+    "toGo": {
+      "color": "red"
+    }
+  },
+  "hover": {
+    "color": "blue",
+    "toGo": {
+      "color": "red",
+      "toGo2": {
+        "color": "green",
+        "focus": {
+          "border-color": "blue"
+        }
+      }
+    }
+  },
   "media|{ref.screen.sm}": {
     "color": "green"
   },
@@ -86,8 +104,5 @@
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
   "@link2": "{checkbox.{??linkName}}",
-  "after": {
-    "color": "blue"
-  },
   "_category": "class"
 }

@@ -1,3 +1,5 @@
+@use "sass:selector";
+
 $designsRoot: () !default;
 $designsClasses: () !default;
 
@@ -6,6 +8,18 @@ $designsClasses: () !default;
 @import "propertiesClass";
 
 @mixin initMain {
+  .a {
+    #{selector.unify(&, '.d')} {
+      color: cyan;
+    }
+    .b {
+      color: blue;
+      @at-root .c {
+        color: red;
+      }
+    }
+  }
+
   @include readClasses;
   @include readRoot;
 }

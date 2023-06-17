@@ -3,12 +3,12 @@
 /// Mixin for generating a media
 ///
 /// Миксин для генерации media
-/// @param {map} $property
-@mixin initMedia($property) {
+/// @param {Map} $property
+@mixin initSelector($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
 
-    @media screen and #{$name} {
+    &#{':'}#{$name} {
       @content;
     }
   }
