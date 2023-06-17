@@ -1,4 +1,18 @@
 {
+  "#text": {
+    "color": "white",
+    "font-size": "16px",
+    "hover": {
+      "color": "black"
+    }
+  },
+  "isSt": {
+    "color": "white",
+    "font-size": "16px",
+    "hover": {
+      "color": "black"
+    }
+  },
   "after": {
     "color": "blue",
     "toGo": {
@@ -17,7 +31,7 @@
       }
     }
   },
-  "empty": {
+  "first-child": {
     "color": "blue",
     "toGo": {
       "color": "red",

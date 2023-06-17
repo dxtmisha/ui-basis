@@ -1,5 +1,8 @@
+@use "sass:list";
 @use "sass:selector";
 @use "sass:string";
+
+@import "rules";
 
 /// Accepts a selector
 ///
@@ -20,12 +23,25 @@
 ///
 /// Принимает активные элементы
 @mixin enabled($parent: &) {
+  $first: getFirstSelector(&);
+  $separator: ' ';
+
   @if (__isEnabled()) {
     @content;
-  } @else {
+  } @else if ($first == #{$parent}) {
     @at-root
     #{selector.replace(&, $parent, #{$parent}#{':enabled'})},
     #{selector.replace(&, $parent, #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'})} {
+      @content;
+    }
+  } @else {
+    @if (string.index($first, #{$parent}#{'--'})) {
+      $separator: '';
+    }
+
+    @at-root
+    #{$parent}#{':enabled'}#{$separator}#{&},
+    #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'}#{$separator}#{&} {
       @content;
     }
   }

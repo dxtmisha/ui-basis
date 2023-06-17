@@ -13,3 +13,17 @@
     }
   }
 }
+
+/// Mixin for generating an element state
+///
+/// Миксин для генерации саб-класс элемента
+/// @param {map} $property
+@mixin initSubclass($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+
+    #{$name} {
+      @content;
+    }
+  }
+}

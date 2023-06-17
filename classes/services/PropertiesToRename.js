@@ -106,6 +106,9 @@ module.exports = class PropertiesToRename {
         case 'state':
           item[key] = this.__toNameForState(item, name)
           break
+        case 'subclass':
+          item[key] = this.__toNameForSubclass(item, name)
+          break
         case 'media':
         case 'media-max':
           item[key] = this.__toNameForMedia(item, name)
@@ -255,6 +258,23 @@ module.exports = class PropertiesToRename {
    */
   __toNameForVirtual (item, name) {
     return `&::${this.__getName(item, name)}`
+  }
+
+  /**
+   * Name transformation for the subclass type
+   *
+   * Преобразование имени для типа subclass
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForSubclass (item, name) {
+    if (item?.[PropertiesTool.getKeyFull()]) {
+      return `& .${name}`
+    } else {
+      return `&__${name}`
+    }
   }
 
   /**

@@ -20,6 +20,7 @@ const TYPE = [
   'scss',
   'media',
   'media-max',
+  'animate',
   'link',
   'link-class',
   'mixin',

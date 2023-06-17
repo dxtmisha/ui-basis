@@ -1,6 +1,7 @@
 @use "sass:list";
 @use "sass:map";
 @use "sass:meta";
+@use "sass:selector";
 @use "sass:string";
 
 /// Finding a value in a tree-like array
@@ -42,6 +43,14 @@
 /// @return {*}
 @function setMapItem($map, $index, $value) {
   @return map.merge($map, (#{$index}: $value));
+}
+
+/// Returns the name of the first selector
+///
+/// Возвращает название первого селектора
+/// @param {List} $selector
+@function getFirstSelector($selector: &) {
+  @return list.nth(selector.simple-selectors(list.nth(strToList(#{$selector}, ' '), 1)), 1);
 }
 
 /// Split a string by a string

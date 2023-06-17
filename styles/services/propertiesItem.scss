@@ -138,6 +138,10 @@ $designsInitClassName: null !default;
     @include initVirtual($property) {
       @include initProperties($value, $property, $this);
     }
+  } @else if ($type =='subclass') {
+    @include initSubclass($property) {
+      @include initProperties($value, $property, $this);
+    }
   } @else if (
           $type =='media' or
           $type =='media-max'
