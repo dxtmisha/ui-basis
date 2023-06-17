@@ -748,7 +748,7 @@
         "zIndex": "{sys.elevation.index.24}"
       }
     },
-    "_variable": "section",
+    "_variable": "state",
     "_category": "class"
   },
   "grid": {
@@ -772,7 +772,7 @@
         "columnGap": "{ref.gap.xl}"
       }
     },
-    "_variable": "section",
+    "_variable": "state",
     "_category": "class"
   },
   "rounded": {
@@ -799,7 +799,7 @@
         "border-radius": "{sys.rounded.full}"
       }
     },
-    "_variable": "section",
+    "_variable": "state",
     "_category": "class"
   },
   "font": {
@@ -917,7 +917,7 @@
         "textTransform": "none"
       }
     },
-    "_variable": "section",
+    "_variable": "state",
     "_category": "class"
   },
   "palette": {

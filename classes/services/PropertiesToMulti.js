@@ -32,7 +32,7 @@ module.exports = class PropertiesToMulti {
       name,
       value
     }) => {
-      item[key] = 'section'
+      item[key] = 'state'
       this.__toGo(name, value)
     })
 
@@ -86,7 +86,7 @@ module.exports = class PropertiesToMulti {
       if (
         typeof item?.value !== 'object'
       ) {
-        item[keyVariable] = 'section'
+        item[keyVariable] = 'state'
         item.value = {
           [name]: {
             value: item.value,

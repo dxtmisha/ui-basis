@@ -1,6 +1,6 @@
 const { To } = require('../To')
 
-const SYMBOL_AVAILABLE = '[\\w-?]+'
+const SYMBOL_AVAILABLE = '[\\w-?{}.,]+'
 
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
@@ -80,7 +80,7 @@ module.exports = class PropertiesTool {
     if (
       !item?.[keyRename] &&
       parents &&
-      parents?.[parents.length - 1]?.item?.[keyVariable] === 'section'
+      parents?.[parents.length - 1]?.item?.[keyVariable] === 'state'
     ) {
       return parents?.[parents.length - 2]?.item?.value?.[name]
     } else {

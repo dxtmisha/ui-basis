@@ -11,6 +11,7 @@
 /// Generating value
 ///
 /// Генерация значения
+/// @param {map} $property
 @mixin initProperty($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
@@ -23,6 +24,8 @@
 /// Generating value for property
 ///
 /// Генерация значения для свойства
+/// @param {String} $name
+/// @param {String} $value
 @mixin initPropertyValue($name, $value) {
   @if (
     /* Flex */

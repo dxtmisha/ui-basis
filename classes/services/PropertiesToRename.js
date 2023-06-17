@@ -103,8 +103,12 @@ module.exports = class PropertiesToRename {
             item[key] = this.__toNameForComponent(parents, item, name)
           }
           break
-        case 'section':
-          item[key] = this.__toNameForSection(item, name)
+        case 'state':
+          item[key] = this.__toNameForState(item, name)
+          break
+        case 'media':
+        case 'media-max':
+          item[key] = this.__toNameForMedia(item, name)
           break
       }
     })
@@ -224,15 +228,15 @@ module.exports = class PropertiesToRename {
   }
 
   /**
-   * Name transformation for the section type
+   * Name transformation for the state type
    *
-   * Преобразование имени для типа section
+   * Преобразование имени для типа state
    * @param {Object<string,*>} item
    * @param {string} name
    * @return {string}
    * @private
    */
-  __toNameForSection (item, name) {
+  __toNameForState (item, name) {
     if (item?.[PropertiesTool.getKeyFull()]) {
       return `&.${name}`
     } else {
@@ -251,5 +255,26 @@ module.exports = class PropertiesToRename {
    */
   __toNameForVirtual (item, name) {
     return `&::${this.__getName(item, name)}`
+  }
+
+  /**
+   * Name transformation for the media, media-max type
+   *
+   * Преобразование имени для типа media, media-max
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForMedia (item, name) {
+    const values = this.__getName(item, name).split(',')
+
+    if (values.length > 1) {
+      return `(min-width: ${values?.[0] || '0px'}) and (max-width: calc(${values?.[1] || '1980px'} - 1px))`
+    } else if (item?.[PropertiesTool.getKeyVariable()] === 'media-max') {
+      return `(max-width: calc(${values?.[0] || '1980px'} - 1px))`
+    } else {
+      return `(min-width: ${values?.[0] || '0px'})`
+    }
   }
 }

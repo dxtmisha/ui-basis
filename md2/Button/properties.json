@@ -1,4 +1,13 @@
 {
+  "media|{ref.screen.sm}": {
+    "color": "green"
+  },
+  "media-max|{ref.screen.md}": {
+    "color": "blue"
+  },
+  "media|{ref.screen.sm},{ref.screen.md}": {
+    "color": "red"
+  },
   "var|test": "asd",
   "test2": "asd2",
   "test3": "{??test2}",

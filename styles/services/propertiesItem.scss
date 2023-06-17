@@ -11,6 +11,21 @@ $designsProperties: () !default;
 @import "propertiesVar";
 @import "propertiesVirtual";
 
+/// Mixin for generating a class
+///
+/// Миксин для генерации класса
+/// @param {map} $property
+@mixin initClass($property) {
+  @if ($property != null) {
+    $name: map-get($property, 'name');
+    $value: map-get($property, 'value');
+
+    .#{$name} {
+      @include initProperties($value);
+    }
+  }
+}
+
 /// Getting a property by its key
 ///
 /// Получение свойства по его ключу
@@ -50,27 +65,20 @@ $designsProperties: () !default;
 
     @if ($type == 'var') {
       @include initVar($property);
-    } @else if ($type == 'section') {
-      @include initSection($property) {
+    } @else if ($type == 'property') {
+      @include initProperty($property);
+    } @else if ($type == 'state') {
+      @include initState($property) {
         @include initProperties($value);
       }
     } @else if ($type == 'virtual') {
       @include initVirtual($property) {
         @include initProperties($value);
       }
-    } @else if ($type == 'property') {
-      @include initProperty($property);
-    }
-  }
-}
-
-@mixin initClass($property) {
-  @if ($property != null) {
-    $name: map-get($property, 'name');
-    $value: map-get($property, 'value');
-
-    .#{$name} {
-      @include initProperties($value);
+    } @else if ($type == 'media' or $type == 'media-max') {
+      @include initMedia($property) {
+        @include initProperties($value);
+      }
     }
   }
 }

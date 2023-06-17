@@ -15,9 +15,10 @@ const TYPE = [
   'selector',
   'virtual',
   'media',
+  'media-max',
   'link',
   'link-class',
-  'section',
+  'state',
   'subclass',
   'class',
   'scss',
@@ -32,7 +33,7 @@ const SYMBOLS = {
   '@@': 'link-class',
   ':': 'selector',
   '::': 'virtual',
-  '~': 'section',
+  '~': 'state',
   '#': 'subclass',
   '&': 'scss'
 }
@@ -93,7 +94,7 @@ module.exports = class PropertiesVariable {
         } else if (typeof item?.value !== 'object') {
           item[key] = 'var'
         } else {
-          item[key] = 'section'
+          item[key] = 'state'
         }
       }
     })

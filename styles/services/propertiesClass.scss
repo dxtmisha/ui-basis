@@ -1,10 +1,10 @@
 @use "sass:map";
 
+/// Mixin for generating an element state
 ///
-///
-/// Микс ге
-/// @param {map} $properties
-@mixin initSection($property) {
+/// Миксин для генерации состояния элемента
+/// @param {map} $property
+@mixin initState($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
 

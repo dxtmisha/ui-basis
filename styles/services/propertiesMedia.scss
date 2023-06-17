@@ -1,0 +1,14 @@
+/// Mixin for generating a media
+///
+/// Миксин для генерации media
+/// @param {map} $property
+@mixin initMedia($property) {
+  @if ($property != null) {
+    $name: map-get($property, 'name');
+    $value: map-get($property, 'value');
+
+    @media screen and #{$name} {
+      @content;
+    }
+  }
+}
