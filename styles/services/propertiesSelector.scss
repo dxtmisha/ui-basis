@@ -1,15 +1,52 @@
+@use "sass:list";
 @use "sass:map";
+@use "sass:selector";
+
+@import "../selector";
+
+/// List of types that belong to additions and are used for separating class names
+///
+/// Список типов, которые относятся к дополнениям и используются для разделения имени класса
+$designsActive: (
+        'active',
+        'focus',
+        'hover'
+) !default;
 
 /// Mixin for generating a media
 ///
 /// Миксин для генерации media
 /// @param {Map} $property
-@mixin initSelector($property) {
+/// @param {Map} $parent
+@mixin initSelector($property, $parent: null) {
   @if ($property != null) {
     $name: map.get($property, 'name');
 
-    &#{':'}#{$name} {
-      @content;
+    @if ($name == 'disabled') {
+      @include disabled($parent) {
+        @content;
+      }
+    } @else if ($name == 'readonly') {
+      @include readonly($parent) {
+        @content;
+      }
+    } @else if (__isActive($property)) {
+      @include enabledSelector($name, $parent) {
+        @content;
+      }
+    } @else {
+      &#{':'}#{$name} {
+        @content;
+      }
     }
   }
+}
+
+/// Checks whether the type of the property is active
+///
+/// Проверяет, является ли тип свойства активным
+/// @param {Map} $property
+/// @param {Map} $parent
+@function __isActive($property, $parent: null) {
+  @return list.index($designsActive, map.get($property, 'name')) != null;
 }

@@ -1,0 +1,75 @@
+@use "sass:selector";
+@use "sass:string";
+
+/// Accepts a selector
+///
+/// Принимает селектор
+@mixin selector($name, $parent: &) {
+  @if ($name == 'focus') {
+    &:focus, &:focus-within, &#{$parent}--focus {
+      @content;
+    }
+  } @else {
+    &#{':'}#{$name} {
+      @content;
+    }
+  }
+}
+
+/// Accepts active elements
+///
+/// Принимает активные элементы
+@mixin enabled($parent: &) {
+  @if (__isEnabled()) {
+    @content;
+  } @else {
+    @at-root
+    #{selector.replace(&, $parent, #{$parent}#{':enabled'})},
+    #{selector.replace(&, $parent, #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'})} {
+      @content;
+    }
+  }
+}
+
+/// Accepts a selector for active elements
+///
+/// Принимает селектор для активных элементов
+@mixin enabledSelector($name, $parent: &) {
+  @include enabled($parent) {
+    @include selector($name, $parent) {
+      @content;
+    }
+  }
+}
+
+@mixin hover($parent: &) {
+  @include enabledSelector('hover', $parent);
+}
+
+@mixin active($parent: &) {
+  @include enabledSelector('active', $parent);
+}
+
+@mixin focus($parent: &) {
+  @include enabledSelector('focus', $parent);
+}
+
+@mixin disabled($parent: &) {
+  &:disabled, &#{$parent}--disabled {
+    @content;
+  }
+}
+
+@mixin readonly($parent: &) {
+  &:read-only, &#{$parent}--readonly {
+    @content;
+  }
+}
+
+/// Checks whether the current element is a child element
+///
+/// Проверяет, является ли текущий элемент дочерним элементом
+/// @return bool
+@function __isEnabled() {
+  @return string.index(#{&}, 'enabled') or string.index(#{&}, '--disabled');
+}

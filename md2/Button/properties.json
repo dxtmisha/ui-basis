@@ -17,6 +17,30 @@
       }
     }
   },
+  "empty": {
+    "color": "blue",
+    "toGo": {
+      "color": "red",
+      "toGo2": {
+        "color": "green",
+        "focus": {
+          "border-color": "blue"
+        }
+      }
+    }
+  },
+  "disabled": {
+    "color": "blue",
+    "toGo": {
+      "color": "red",
+      "toGo2": {
+        "color": "green",
+        "focus": {
+          "border-color": "blue"
+        }
+      }
+    }
+  },
   "media|{ref.screen.sm}": {
     "color": "green"
   },

@@ -21,6 +21,8 @@ $designsBasic: (
         'scss'
 ) !default;
 
+$designsInitClassName: null !default;
+
 @import "../rules";
 
 @import "propertiesClass";
@@ -40,6 +42,7 @@ $designsBasic: (
     $value: map.get($property, 'value');
 
     .#{$name} {
+      $designsInitClassName: & !global;
       @include initProperties($value);
     }
   }
@@ -124,7 +127,7 @@ $designsBasic: (
   } @else if ($type =='property') {
     @include initProperty($property);
   } @else if ($type =='selector') {
-    @include initSelector($property) {
+    @include initSelector($property, $designsInitClassName) {
       @include initProperties($value, $property, $this);
     }
   } @else if ($type =='state') {
