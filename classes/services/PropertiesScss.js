@@ -134,7 +134,7 @@ module.exports = class PropertiesScss {
 
     this.items.findCategory(category)
       .forEach(property => {
-        data.push(`'${property.index}',`)
+        data.push(`\r\n  '${property.index}',`)
       })
 
     return data.join('')
@@ -244,7 +244,7 @@ module.exports = class PropertiesScss {
     let data = ''
 
     forEach(this.__getMediaList(), (item, name) => {
-      data += `${name}:${this.__getValueItem(item)},`
+      data += `\r\n  ${name}:${this.__getValueItem(item)},`
     })
 
     return data
