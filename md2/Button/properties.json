@@ -148,6 +148,9 @@
     },
     "b": "v2"
   },
+  "not(.asd)": {
+    "color": "black"
+  },
   "color": "red",
   "color{??test2}-{??test}": "red",
   "border": {

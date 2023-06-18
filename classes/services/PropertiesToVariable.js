@@ -186,11 +186,9 @@ module.exports = class PropertiesVariable {
   __getProperty (item, name) {
     const key = PropertiesTool.getKeyRename()
 
-    if (key in item) {
-      return PropertiesTool.getName(item?.[key])
-    } else {
-      return name
-    }
+    return (
+      key in item ? PropertiesTool.getName(item?.[key]) : name
+    ).replace(/\(.*?$/, '')
   }
 
   /**

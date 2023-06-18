@@ -1,7 +1,6 @@
 const { To } = require('../To')
-const { getColumn } = require('../../functions/data')
 
-const SYMBOL_AVAILABLE = '[\\w-?{}.,]+'
+const SYMBOL_AVAILABLE = '[\\w-?{}.,()]+'
 
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
