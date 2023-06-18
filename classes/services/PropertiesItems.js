@@ -1,4 +1,7 @@
-const { forEach } = require('../../functions/data')
+const {
+  forEach,
+  getColumn
+} = require('../../functions/data')
 const { To } = require('../To')
 
 const PropertiesCache = require('./PropertiesCache')
@@ -115,6 +118,33 @@ module.exports = class PropertiesItems {
    */
   getCache (name, callback, extension = 'json') {
     return PropertiesCache.get([], name, callback, extension)
+  }
+
+  /**
+   * Searching for records with selected categories
+   *
+   * Поиск записей с выделенными категориями
+   * @param {string} category Names of categories / Названия категорий
+   * @return {{index:string,item:Object<string,*>}[]}
+   */
+  findCategory (category) {
+    const key = PropertiesTool.getKeyCategory()
+    const data = []
+
+    this.each(({
+      item,
+      name,
+      parents
+    }) => {
+      if (item?.[key] === category) {
+        data.push({
+          index: `${getColumn(parents, 'name').join('.')}.${name}`,
+          item
+        })
+      }
+    })
+
+    return data
   }
 
   /**

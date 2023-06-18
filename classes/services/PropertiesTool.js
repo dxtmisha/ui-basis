@@ -1,4 +1,5 @@
 const { To } = require('../To')
+const { getColumn } = require('../../functions/data')
 
 const SYMBOL_AVAILABLE = '[\\w-?{}.,]+'
 
@@ -94,7 +95,6 @@ module.exports = class PropertiesTool {
       if (data === undefined) {
         if (
           [
-            'component',
             'class',
             'subclass'
           ].indexOf(parent.item?.[keyVariable]) !== -1

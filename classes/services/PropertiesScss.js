@@ -1,7 +1,4 @@
-const {
-  forEach,
-  getColumn
-} = require('../../functions/data')
+const { forEach } = require('../../functions/data')
 
 const PropertiesTool = require('./PropertiesTool')
 
@@ -30,8 +27,16 @@ module.exports = class PropertiesScss {
     return this.items.getCache(
       FILE_CACHE_SCSS,
       () => {
+        let data = ''
+
         console.info('PropertiesScss: init')
-        return `${this.getRoot()}\r\n${this.getClasses()}\r\n${this.getProperties()}`
+
+        data += `${this.getRoot()}\r\n`
+        data += `${this.getMedia()}\r\n`
+        data += `${this.getClasses()}\r\n`
+        data += `${this.getProperties()}\r\n`
+
+        return data
       },
       'scss'
     )
@@ -55,6 +60,16 @@ module.exports = class PropertiesScss {
    */
   getClasses () {
     return `$designsClasses: (${this.__getByCategory('class')});`
+  }
+
+  /**
+   * Returns a list of properties
+   *
+   * Возвращает список свойств
+   * @return {string}
+   */
+  getMedia () {
+    return `$designsMedia: (${this.__toMedia()});`
   }
 
   /**
@@ -115,18 +130,12 @@ module.exports = class PropertiesScss {
    * @private
    */
   __getByCategory (category) {
-    const key = PropertiesTool.getKeyCategory()
     const data = []
 
-    this.items.each(({
-      item,
-      name,
-      parents
-    }) => {
-      if (item?.[key] === category) {
-        data.push(`'${getColumn(parents, 'name').join('.')}.${name}',`)
-      }
-    })
+    this.items.findCategory(category)
+      .forEach(property => {
+        data.push(`'${property.index}',`)
+      })
 
     return data.join('')
   }
@@ -181,6 +190,26 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns a list of information about media file list
+   *
+   * Возвращает список информации о списках медиафайлов
+   * @return {Object<string,Object<string,*>>}
+   * @private
+   */
+  __getMediaList () {
+    const data = {}
+
+    this.items.findCategory('media')
+      .forEach(property => {
+        if (typeof property.item?.value === 'object') {
+          Object.assign(data, property.item.value)
+        }
+      })
+
+    return data
+  }
+
+  /**
    * Method for iterating over all properties and converting them to a SCSS structure
    *
    * Метод для обхода всех свойств и преобразования их в структуру SCSS
@@ -199,6 +228,23 @@ module.exports = class PropertiesScss {
       data += `\r\n${space}  ${this.__getType(property)}`
       data += `\r\n${space}  ${this.__getValue(property, space)}`
       data += `\r\n${space}),`
+    })
+
+    return data
+  }
+
+  /**
+   * Method for converting data for media
+   *
+   * Метод преобразования данных для медиа
+   * @return {string}
+   * @private
+   */
+  __toMedia () {
+    let data = ''
+
+    forEach(this.__getMediaList(), (item, name) => {
+      data += `${name}:${this.__getValueItem(item)},`
     })
 
     return data
