@@ -11,7 +11,7 @@
 /// Generating value
 ///
 /// Генерация значения
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initProperty($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');

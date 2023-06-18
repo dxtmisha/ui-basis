@@ -3,7 +3,7 @@
 /// Mixin for generating a media
 ///
 /// Миксин для генерации media
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initMedia($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');

@@ -19,7 +19,7 @@
 /// Возвращает значение цвета по его коду
 /// @param {color} $color
 /// @param {number} $opacity
-/// @param {boll} $gradient If true, returns as an image / Если true, возвращает в виде изображения
+/// @param {bool} $gradient If true, returns as an image / Если true, возвращает в виде изображения
 /// @return {string}
 @function getColor(
   $color,
@@ -245,6 +245,7 @@
 }
 
 /* As */
+
 @mixin backgroundAsColor() {
   @include background(var(--sys-color), var(--sys-color-opacity));
 }

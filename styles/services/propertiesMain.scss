@@ -7,23 +7,17 @@ $designsClasses: () !default;
 @import "propertiesVar";
 @import "propertiesClass";
 
+/// Entry point for generating all data
+///
+/// Точка входа для генерации всех данных
 @mixin initMain {
-  .a {
-    #{selector.unify(&, '.d')} {
-      color: cyan;
-    }
-    .b {
-      color: blue;
-      @at-root .c {
-        color: red;
-      }
-    }
-  }
-
   @include readClasses;
   @include readRoot;
 }
 
+/// Generating all classes
+///
+/// Генерация всех классов
 @mixin readClasses {
   @each $class in $designsClasses {
     @include initClass(getProperties($class));

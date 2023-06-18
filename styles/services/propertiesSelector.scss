@@ -47,6 +47,7 @@ $designsActive: (
 /// Проверяет, является ли тип свойства активным
 /// @param {Map} $property
 /// @param {Map} $parent
+/// @return {bool}
 @function __isActive($property, $parent: null) {
   @return list.index($designsActive, map.get($property, 'name')) != null;
 }

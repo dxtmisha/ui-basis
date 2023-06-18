@@ -4,7 +4,7 @@
 /// Mixin for adding variables
 ///
 /// Миксин для добавления переменных
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initVar($property) {
   $name: map.get($property, 'name');
   $value: map.get($property, 'value');
@@ -19,7 +19,7 @@
 /// A method for generating all with variables
 ///
 /// Метод для генерации всех с переменными
-/// @param {map} $properties
+/// @param {Map} $properties
 @mixin initVars($properties) {
   @if ($properties != null) {
     @each $index, $property in $properties {

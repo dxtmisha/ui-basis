@@ -32,27 +32,11 @@ $designsInitClassName: null !default;
 @import "propertiesVar";
 @import "propertiesVirtual";
 
-/// Mixin for generating a class
-///
-/// Миксин для генерации класса
-/// @param {map} $property
-@mixin initClass($property) {
-  @if ($property != null) {
-    $name: map.get($property, 'name');
-    $value: map.get($property, 'value');
-
-    .#{$name} {
-      $designsInitClassName: & !global;
-      @include initProperties($value);
-    }
-  }
-}
-
 /// Getting a property by its key
 ///
 /// Получение свойства по его ключу
-/// @param {String|null} $index List of keys to traverse / Список ключей для обхода
-/// @return {map|null}
+/// @param {String|null} $index
+/// @return {Map}
 @function getProperties($index: null) {
   @if $index == null {
     @return $designsProperties;
@@ -72,11 +56,27 @@ $designsInitClassName: null !default;
 /// Getting a list of properties by its key
 ///
 /// Получение списка свойств по его ключу
-/// @param {String|null} $index List of keys to traverse / Список ключей для обхода
-/// @return {map|null}
+/// @param {String|null} $index
+/// @return {Map|null}
 @function getPropertiesValue($index: null) {
   $data: getProperties($index);
   @return getMapItem($data, 'value', $data);
+}
+
+/// Mixin for generating a class
+///
+/// Миксин для генерации класса
+/// @param {Map} $property
+@mixin initClass($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+    $value: map.get($property, 'value');
+
+    .#{$name} {
+      $designsInitClassName: & !global;
+      @include initProperties($value);
+    }
+  }
 }
 
 /// Entry point - mixin for starting processing an array with properties
@@ -102,6 +102,8 @@ $designsInitClassName: null !default;
 /// Checks whether the type of property is basic
 ///
 /// Проверяет, является ли тип свойства базовым
+/// @param {Map} $property
+/// @return bool
 @function __isBasic($property) {
   @return list.index($designsBasic, map.get($property, 'type')) != null;
 }
@@ -109,6 +111,8 @@ $designsInitClassName: null !default;
 /// Checks whether the ancestor is of the type 'addition'
 ///
 /// Проверяет, является ли предок типа дополнения
+/// @param {Map} $parent
+/// @return bool
 @function __isSelector($parent) {
   @return $parent and list.index($designsAuxiliary, map.get($parent, 'type')) != null;
 }
