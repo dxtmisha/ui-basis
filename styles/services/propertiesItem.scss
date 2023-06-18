@@ -25,6 +25,7 @@ $designsInitClassName: null !default;
 
 @import "../rules";
 
+@import "propertiesAnimate";
 @import "propertiesClass";
 @import "propertiesMedia";
 @import "propertiesProperty";
@@ -152,6 +153,10 @@ $designsInitClassName: null !default;
   ) {
     @include initMedia($property) {
       @include initProperties($value, $property, $this);
+    }
+  } @else if ($type =='animate') {
+    @include initAnimate($property) using($item) {
+      @include initProperties($item, $property, $this);
     }
   }
 }

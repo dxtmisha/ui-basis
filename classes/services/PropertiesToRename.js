@@ -113,6 +113,9 @@ module.exports = class PropertiesToRename {
         case 'media-max':
           item[key] = this.__toNameForMedia(item, name)
           break
+        case 'animate':
+          item[key] = this.__toNameForAnimate(parents, item, name)
+          break
       }
     })
 
@@ -295,6 +298,24 @@ module.exports = class PropertiesToRename {
       return `(max-width: calc(${values?.[0] || '1980px'} - 1px))`
     } else {
       return `(min-width: ${values?.[0] || '0px'})`
+    }
+  }
+
+  /**
+   * Name transformation for the animate type
+   *
+   * Преобразование имени для типа animate
+   * @param {Object<string,*>} parents
+   * @param {Object<string,*>} item
+   * @param {string} name
+   * @return {string}
+   * @private
+   */
+  __toNameForAnimate (parents, item, name) {
+    if (item?.[PropertiesTool.getKeyFull()]) {
+      return name
+    } else {
+      return `${this.__getParentsName(parents).join('-')}-${name}`
     }
   }
 }
