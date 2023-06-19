@@ -14,11 +14,25 @@
   }
 }
 
-/// Mixin for generating an element state
+/// Mixin for generating an element subclass
 ///
 /// Миксин для генерации саб-класс элемента
 /// @param {map} $property
 @mixin initSubclass($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+
+    #{$name} {
+      @content;
+    }
+  }
+}
+
+/// Mixin for generating an element scss
+///
+/// Миксин для генерации scss элемента
+/// @param {map} $property
+@mixin initScss($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
 

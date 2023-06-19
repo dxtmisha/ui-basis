@@ -123,9 +123,20 @@ $designsClassName: 'class' !default;
 /// Обработка свойства
 /// @param {Map} $property
 @mixin __to($property) {
-  $type: map.get($property, 'type');
-  $value: map.get($property, 'value');
   $this: &;
+
+  @include __toGo($property) using($value) {
+    @include initProperties($value, $property, $this);
+  }
+}
+
+/// Processing a property
+///
+/// Обработка свойства, подбор действия по типа
+/// @param {Map} $property
+@mixin __toGo($property) {
+  $value: map.get($property, 'value');
+  $type: map.get($property, 'type');
 
   @if ($type =='var') {
     @include initVar($property);
@@ -133,30 +144,34 @@ $designsClassName: 'class' !default;
     @include initProperty($property);
   } @else if ($type =='selector') {
     @include initSelector($property, $designsClassName) {
-      @include initProperties($value, $property, $this);
+      @content($value);
     }
   } @else if ($type =='state') {
     @include initState($property) {
-      @include initProperties($value, $property, $this);
+      @content($value);
     }
   } @else if ($type =='virtual') {
     @include initVirtual($property) {
-      @include initProperties($value, $property, $this);
+      @content($value);
     }
   } @else if ($type =='subclass') {
     @include initSubclass($property) {
-      @include initProperties($value, $property, $this);
+      @content($value);
     }
   } @else if (
           $type =='media' or
           $type =='media-max'
   ) {
     @include initMedia($property) {
-      @include initProperties($value, $property, $this);
+      @content($value);
     }
   } @else if ($type =='animate') {
     @include initAnimate($property) using($item) {
-      @include initProperties($item, $property, $this);
+      @content($item);
+    }
+  } @else if ($type =='scss') {
+    @include initScss($property) {
+      @content($value);
     }
   }
 }
