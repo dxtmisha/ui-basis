@@ -13,5 +13,7 @@ export default defineComponent({
 <style lang="scss">
 @import "../../styles/properties";
 
-@include initDesign('md2.button');
+@include initDesign('md2.button') {
+
+}
 </style>

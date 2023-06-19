@@ -1,4 +1,13 @@
 {
+  "&.is-test": {
+    "color": "red"
+  },
+  "& .??-test": {
+    "color": "blue"
+  },
+  "& .?-test": {
+    "color": "white"
+  },
   "animate": {
     "animate|go1": {
       "0%": {

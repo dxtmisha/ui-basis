@@ -30,7 +30,6 @@
     @content;
   } @else if ($first == #{$parent}) {
     @at-root
-    #{selector.replace(&, $parent, #{$parent}#{':enabled'})},
     #{selector.replace(&, $parent, #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'})} {
       @content;
     }
@@ -40,7 +39,6 @@
     }
 
     @at-root
-    #{$parent}#{':enabled'}#{$separator}#{&},
     #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'}#{$separator}#{&} {
       @content;
     }

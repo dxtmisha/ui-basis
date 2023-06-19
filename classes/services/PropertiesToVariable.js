@@ -95,6 +95,8 @@ module.exports = class PropertiesVariable {
           item[key] = 'virtual'
         } else if (typeof item?.value !== 'object') {
           item[key] = 'var'
+        } else if (name.match(/^&/)) {
+          item[key] = 'scss'
         } else {
           item[key] = 'state'
         }

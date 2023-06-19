@@ -50,7 +50,10 @@
 /// Возвращает название первого селектора
 /// @param {List} $selector
 @function getFirstSelector($selector: &) {
-  @return list.nth(selector.simple-selectors(list.nth(strToList(#{$selector}, ' '), 1)), 1);
+  $value: strToList(#{$selector}, ' ');
+  $value: strToList(#{$value}, ':');
+
+  @return list.nth(selector.simple-selectors(list.nth($value, 1)), 1);
 }
 
 /// Split a string by a string
