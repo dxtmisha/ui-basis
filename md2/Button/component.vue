@@ -19,6 +19,10 @@ export default defineComponent({
     #{i('is-index2')}: v('?is-value');
     #{i('is-index3')}: v('??is-value');
     #{i('is-index4')}: v('??is-value', v('??-is-def'));
+
+    .a-asd {
+      @include initByLink('?font.body1');
+    }
   }
 }
 </style>

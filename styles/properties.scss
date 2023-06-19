@@ -4,8 +4,8 @@
 $designsDesigns: ('design') !default;
 $designsDesign: 'design' !default;
 $designsComponent: 'component' !default;
+$designsValues: () !default;
 $designsClassName: 'class' !default;
-$designsProperties: () !default;
 $designsInit: false !default;
 
 @import "./rules";
@@ -28,21 +28,23 @@ $designsInit: false !default;
 ///
 /// Генерация стилей для компонента
 @mixin initDesign($component) {
-  $designsProperties: getProperties($component) !global;
+  $designsValues: getProperties($component) !global;
   $designsInit: false !global;
 
-  $designsDesign: __getDesign() !global;
-  $designsComponent: __getComponent() !global;
-  @warn $designsDesign;
-  $name: map.get($designsProperties, 'name');
+  @if ($designsValues != null) {
+    $designsDesign: __getDesign() !global;
+    $designsComponent: __getComponent() !global;
 
-  #{'.'}#{$name} {
-    $designsClassName: & !global;
+    $name: map.get($designsValues, 'name');
 
-    @content;
+    #{'.'}#{$name} {
+      $designsClassName: & !global;
 
-    @if ($designsInit == false) {
-      @include initPropertiesComponent;
+      @content;
+
+      @if ($designsInit == false) {
+        @include initPropertiesComponent;
+      }
     }
   }
 }
@@ -51,16 +53,29 @@ $designsInit: false !default;
 ///
 /// Генерация всех свойств
 @mixin initPropertiesComponent {
-  $value: map.get($designsProperties, 'value');
+  $value: map.get($designsValues, 'value');
   $designsInit: true !global;
   @include initProperties($value);
+}
+
+/// Generating all properties by reference
+///
+/// Генерация всех свойств по ссылке
+/// @param {String} $link
+@mixin initByLink($link) {
+  $property: getProperties(__toByValue($link));
+
+  @if ($property != null) {
+    $value: map.get($property, 'value');
+    @include initProperties($value);
+  }
 }
 
 /// Returns the name of the design
 ///
 /// Возвращает название дизайна
 @function __getDesign() {
-  $component: map.get($designsProperties, 'name');
+  $component: map.get($designsValues, 'name');
 
   @each $design in $designsDesigns {
     @if (string.index($component, #{$design}#{'-'})) {
@@ -75,5 +90,5 @@ $designsInit: false !default;
 ///
 /// Возвращает название компонента
 @function __getComponent() {
-  @return map.get($designsProperties, 'index');
+  @return map.get($designsValues, 'index');
 }
