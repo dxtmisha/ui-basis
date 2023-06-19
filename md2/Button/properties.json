@@ -101,8 +101,20 @@
     "color": "red"
   },
   "var|test": "asd",
-  "test2": "asd2",
-  "test3": "{??test2}",
+  "test2": {
+    "value": "asd2",
+    "_default": "asd8",
+    "_important": true
+  },
+  "test3": {
+    "value": "{??test2}",
+    "_default": "{??test9}"
+  },
+  "test30": {
+    "value": "{??test2}",
+    "_default": "test9",
+    "_important": true
+  },
   "test31": "{##test2}",
   "test4": {
     "color": {

@@ -54,6 +54,7 @@ module.exports = class PropertiesToFull {
    */
   toFullValueByDesign () {
     const designs = this.items.getDesigns()
+    const keyDefault = PropertiesTool.getKeyDefault()
 
     this.items.each(({
       item,
@@ -61,6 +62,10 @@ module.exports = class PropertiesToFull {
       component
     }) => {
       const value = PropertiesTool.toFullByDesigns(item.value, design, designs)
+
+      if (item[keyDefault]) {
+        item[keyDefault] = PropertiesTool.toFullByDesigns(item[keyDefault], design, designs)
+      }
 
       if (item.value !== value) {
         item.value = value
@@ -79,6 +84,36 @@ module.exports = class PropertiesToFull {
   }
 
   /**
+   * Returns a formatted string with the addition of the property name and component
+   *
+   * Возвращает отформатированную строку с добавлением названия свойства и компонента
+   * @param {string} value
+   * @param {RegExp} designSymbol Regular expression for design / Регулярное выражение для дизайна
+   * @param {RegExp} componentSymbol Regular expression for component / Регулярное выражение для компонента
+   * @param {string} design Design name / Название дизайна
+   * @param {string} component Component name / Название компонента
+   * @return {*}
+   * @private
+   */
+  __getFullValue (
+    value,
+    designSymbol,
+    componentSymbol,
+    design,
+    component
+  ) {
+    if (componentSymbol) {
+      value = value
+        .replace(componentSymbol, `${design}.${component}.`)
+    }
+
+    value = value
+      .replace(designSymbol, `${design}.`)
+
+    return value
+  }
+
+  /**
    * Converts special characters to the full path
    *
    * Преобразовывает специальные символы в полный путь
@@ -93,21 +128,31 @@ module.exports = class PropertiesToFull {
     designSymbol,
     componentSymbol
   ) {
+    const keyDefault = PropertiesTool.getKeyDefault()
+
     this.items.each(({
       item,
       design,
       component
     }) => {
-      const isValue = !!item.value?.match(designSymbol)
+      if (item[keyDefault]?.match(designSymbol)) {
+        item[keyDefault] = this.__getFullValue(
+          item[keyDefault],
+          designSymbol,
+          componentSymbol,
+          design,
+          component
+        )
+      }
 
-      if (isValue) {
-        if (componentSymbol) {
-          item.value = item.value
-            .replace(componentSymbol, `${design}.${component}.`)
-        }
-
-        item.value = item.value
-          .replace(designSymbol, `${design}.`)
+      if (item.value?.match(designSymbol)) {
+        item.value = this.__getFullValue(
+          item.value,
+          designSymbol,
+          componentSymbol,
+          design,
+          component
+        )
 
         return {
           item,

@@ -6,6 +6,7 @@ const PropertiesTool = require('./PropertiesTool')
 const REG_VAR = /\{([^{}]+)}/ig
 
 const FILE_CACHE_VAR = 'properties-var'
+const FILE_CACHE_VAR_IMPORTANT = 'properties-var-important'
 
 /**
  * Class for working with values in CSS
@@ -27,13 +28,35 @@ module.exports = class PropertiesToVar {
    * @return {this}
    */
   to () {
+    const keyCss = PropertiesTool.getKeyCss()
+    const keyDefault = PropertiesTool.getKeyDefault()
+
     this.__getList().forEach(item => {
-      item[PropertiesTool.getKeyCss()] = this.__toValue(
-        this.__toCalculator(item.value)
-      )
+      item[keyCss] = this.__toValue(this.__toCalculator(item.value), item[keyDefault])
     })
 
     this.items.cache(FILE_CACHE_VAR)
+
+    return this
+  }
+
+  /**
+   * Converts all values for use in CSS
+   *
+   * Добавляет в значения important
+   * @return {this}
+   */
+  toImportant () {
+    const keyCss = PropertiesTool.getKeyCss()
+    const keyImportant = PropertiesTool.getKeyImportant()
+
+    this.items.each(({ item }) => {
+      if (item[keyImportant]) {
+        item[keyCss] = `${item[keyCss] || item.value} !important`
+      }
+    })
+
+    this.items.cache(FILE_CACHE_VAR_IMPORTANT)
 
     return this
   }
@@ -78,11 +101,18 @@ module.exports = class PropertiesToVar {
    *
    * Преобразование в свойство CSS
    * @param {string} value
+   * @param {string} defaultValue
    * @return {string}
    * @private
    */
-  __toValue (value) {
-    return value.replace(REG_VAR, (all, index) => `var(--${this.__getValue(index)})`)
+  __toValue (value, defaultValue = undefined) {
+    return value.replace(REG_VAR, (all, index) => {
+      if (defaultValue) {
+        return `var(--${this.__getValue(index)}, ${this.__toValue(this.__toCalculator(defaultValue))})`
+      } else {
+        return `var(--${this.__getValue(index)})`
+      }
+    })
   }
 
   /**

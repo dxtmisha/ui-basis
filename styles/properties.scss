@@ -33,7 +33,7 @@ $designsInit: false !default;
 
   $designsDesign: __getDesign() !global;
   $designsComponent: __getComponent() !global;
-
+  @warn $designsDesign;
   $name: map.get($designsProperties, 'name');
 
   #{'.'}#{$name} {
@@ -63,7 +63,7 @@ $designsInit: false !default;
   $component: map.get($designsProperties, 'name');
 
   @each $design in $designsDesigns {
-    @if (string.index($component, #{$design}#{'.'})) {
+    @if (string.index($component, #{$design}#{'-'})) {
       @return $design;
     }
   }

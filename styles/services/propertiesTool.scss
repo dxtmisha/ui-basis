@@ -1,0 +1,63 @@
+@use "sass:string";
+
+$designsDesign: 'design' !default;
+$designsComponent: 'component' !default;
+$designsClassName: 'class' !default;
+
+@import "../rules";
+
+/// Returns the class name
+///
+/// Возвращает название класса
+/// @param {String} $name
+/// @return {String}
+@function c($name) {
+  @return #{'.'}#{__toByName($name)};
+}
+
+/// Returns the variable name
+///
+/// Возвращает название переменной
+/// @param {String} $name
+/// @return {String}
+@function i($name) {
+  @return --#{__toByName($name)};
+}
+
+/// Returns the variable name
+///
+/// Возвращает название переменной
+/// @param {String} $name
+/// @param {String} $default default values / значения по умолчанию
+/// @return {String}
+@function v($name, $default: null) {
+  @if ($default) {
+    @return #{var(#{i($name)}, #{$default})}
+  } @else {
+    @return #{var(#{i($name)})}
+  }
+}
+
+/// Transforming a name string, changing it to full format
+///
+/// Преобразование строки названия, изменяющей ее на полный формат
+/// @param {String} $name
+/// @return {String}
+@function __toFullName($name) {
+  @if (string.index($name, '??') == 1) {
+    @return #{$designsDesign}#{'.'}#{$designsComponent}#{'.'}#{string.slice($name, 3)};
+  } @else if (string.index($name, '?') == 1) {
+    @return #{$designsDesign}#{'.'}#{string.slice($name, 2)};
+  } @else {
+    @return $name;
+  }
+}
+
+/// Returns a formatted string for the name
+///
+/// Возвращает отформатированную строку для названия
+/// @param {String} $name
+/// @return {String}
+@function __toByName($name) {
+  @return strReplace(__toFullName($name), '.', '-');
+}

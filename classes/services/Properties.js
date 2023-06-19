@@ -33,6 +33,7 @@ module.exports = class Properties {
       const full = new PropertiesToFull(items)
       const rename = new PropertiesToRename(items)
       const sub = new PropertiesToSub(items)
+      const value = new PropertiesToVar(items)
       const variable = new PropertiesToVariable(items)
 
       full.toFullValueFix()
@@ -51,7 +52,8 @@ module.exports = class Properties {
       new PropertiesToMulti(items).to()
 
       rename.toByVar()
-      new PropertiesToVar(items).to()
+      value.to()
+      value.toImportant()
 
       rename.toByComponent()
       rename.toBySimilar()

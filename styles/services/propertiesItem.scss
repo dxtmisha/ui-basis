@@ -130,9 +130,9 @@ $designsClassName: 'class' !default;
   }
 }
 
-/// Processing a property
+/// Processing properties, selecting action based on type
 ///
-/// Обработка свойства, подбор действия по типа
+/// Обработка свойств, выбор действия в зависимости от типа
 /// @param {Map} $property
 @mixin __toGo($property) {
   $value: map.get($property, 'value');

@@ -5,6 +5,7 @@ const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
 const KEY_DEFAULT = '_default'
+const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
 const KEY_VARIABLE = '_variable'
 const KEY_CSS = '_css'
@@ -17,6 +18,7 @@ const KEYS_SPECIAL = [
   KEY_NAME,
   KEY_CATEGORY,
   KEY_DEFAULT,
+  KEY_IMPORTANT,
   KEY_RENAME,
   KEY_VARIABLE,
   KEY_CSS,
@@ -139,6 +141,26 @@ module.exports = class PropertiesTool {
    */
   static getKeyCategory () {
     return KEY_CATEGORY
+  }
+
+  /**
+   * Returns the key for the default property
+   *
+   * Возвращает ключ для свойства по умолчанию
+   * @return {string}
+   */
+  static getKeyDefault () {
+    return KEY_DEFAULT
+  }
+
+  /**
+   * Returns the key for the 'important' property
+   *
+   * Возвращает ключ для свойства important
+   * @return {string}
+   */
+  static getKeyImportant () {
+    return KEY_IMPORTANT
   }
 
   /**
