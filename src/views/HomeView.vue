@@ -1,5 +1,8 @@
 <template>
   <div class="p-6">
+    <md2-button/>
+  </div>
+  <div class="p-6">
     <div
       v-if="isDom"
       ref="div"
@@ -13,10 +16,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { EventResize } from '../../classes/EventResize'
+import Md2Button from '../../md2/Button/component.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: {},
+  components: { Md2Button },
   setup () {
     const div = ref()
 

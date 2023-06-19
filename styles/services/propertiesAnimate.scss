@@ -9,7 +9,11 @@
     $name: map.get($property, 'name');
     $value: map.get($property, 'value');
 
-    --#{$name}: #{$name};
+    @at-root {
+      :root {
+        --#{$name}: #{$name};
+      }
+    }
 
     @keyframes #{$name} {
       @each $frame, $item in $value {

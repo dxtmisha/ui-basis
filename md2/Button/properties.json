@@ -178,6 +178,5 @@
   },
   "var|linkName": "toLink",
   "@link1": "{checkbox.toLink}",
-  "@link2": "{checkbox.{??linkName}}",
-  "_category": "class"
+  "@link2": "{checkbox.{??linkName}}"
 }

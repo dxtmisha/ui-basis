@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'component'
+  name: 'Md2Button'
 })
 </script>
 
@@ -10,6 +10,8 @@ export default defineComponent({
   <div></div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+@import "../../styles/properties";
 
+@include initDesign('md2.button');
 </style>

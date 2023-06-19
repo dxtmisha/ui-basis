@@ -1,0 +1,78 @@
+@use "sass:map";
+@use "sass:string";
+
+$designsDesigns: ('design') !default;
+$designsDesign: 'design' !default;
+$designsComponent: 'component' !default;
+$designsClassName: 'class' !default;
+$designsProperties: () !default;
+$designsInit: false !default;
+
+@import "./rules";
+
+@import "./color";
+@import "./dimension";
+@import "./dir";
+@import "./flex";
+@import "./font";
+@import "./margin";
+@import "./media";
+@import "./padding";
+@import "./position";
+@import "./selector";
+
+@import "./services/propertiesItem";
+
+/// Generating styles for the component
+///
+/// Генерация стилей для компонента
+@mixin initDesign($component) {
+  $designsProperties: getProperties($component) !global;
+  $designsInit: false !global;
+
+  $designsDesign: __getDesign() !global;
+  $designsComponent: __getComponent() !global;
+
+  $name: map.get($designsProperties, 'name');
+
+  #{'.'}#{$name} {
+    $designsClassName: & !global;
+
+    @content;
+
+    @if ($designsInit == false) {
+      @include initPropertiesComponent;
+    }
+  }
+}
+
+/// Generating all properties
+///
+/// Генерация всех свойств
+@mixin initPropertiesComponent {
+  $value: map.get($designsProperties, 'value');
+  $designsInit: true !global;
+  @include initProperties($value);
+}
+
+/// Returns the name of the design
+///
+/// Возвращает название дизайна
+@function __getDesign() {
+  $component: map.get($designsProperties, 'name');
+
+  @each $design in $designsDesigns {
+    @if (string.index($component, #{$design}#{'.'})) {
+      @return $design;
+    }
+  }
+
+  @return null;
+}
+
+/// Returns the component name
+///
+/// Возвращает название компонента
+@function __getComponent() {
+  @return map.get($designsProperties, 'index');
+}

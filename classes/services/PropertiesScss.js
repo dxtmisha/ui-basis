@@ -33,6 +33,7 @@ module.exports = class PropertiesScss {
 
         data += `${this.getRoot()}\r\n`
         data += `${this.getMedia()}\r\n`
+        data += `${this.getDesigns()}\r\n`
         data += `${this.getClasses()}\r\n`
         data += `${this.getProperties()}\r\n`
 
@@ -50,6 +51,17 @@ module.exports = class PropertiesScss {
    */
   getRoot () {
     return `$designsRoot: (${this.__getByCategory('root')});`
+  }
+
+  /**
+   * Returns a list of properties
+   *
+   * Возвращает список свойств
+   * @return {string}
+   */
+  getDesigns () {
+    const designs = forEach(this.items.getDesigns(), design => `\r\n  '${design}',`)
+    return `$designsDesigns: (${designs.join('')});`
   }
 
   /**
