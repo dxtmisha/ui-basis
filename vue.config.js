@@ -1,13 +1,3 @@
-const { defineConfig } = require('@vue/cli-service')
-const Properties = require('./classes/services/Properties')
+const uiConfig = require('./functions/uiConfig')
 
-module.exports = defineConfig({
-  transpileDependencies: true,
-  css: {
-    loaderOptions: {
-      scss: {
-        additionalData: (new Properties(['md2'])).getScss()
-      }
-    }
-  }
-})
+module.exports = uiConfig({})
