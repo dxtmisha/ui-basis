@@ -61,12 +61,3 @@ $designsClassName: 'class' !default;
 @function __toByName($name) {
   @return strReplace(__toFullName($name), '.', '-');
 }
-
-/// Returns a formatted string for the link
-///
-/// Возвращает отформатированную строку для ссылка
-/// @param {String} $name
-/// @return {String}
-@function __toByValue($name) {
-  @return strReplace(__toFullName($name), '-', '.');
-}

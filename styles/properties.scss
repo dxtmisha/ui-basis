@@ -63,11 +63,19 @@ $designsInit: false !default;
 /// Генерация всех свойств по ссылке
 /// @param {String} $link
 @mixin initByLink($link) {
-  $property: getProperties(__toByValue($link));
+  $property: getProperties(__toFullName($link));
 
   @if ($property != null) {
     $value: map.get($property, 'value');
-    @include initProperties($value);
+    $type: map.get($property, 'type');
+
+    @if ($type =='var') {
+      @include initVar($property);
+    } @else if ($type =='property') {
+      @include initProperty($property);
+    } @else {
+      @include initProperties($value);
+    }
   }
 }
 

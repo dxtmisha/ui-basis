@@ -23,6 +23,10 @@ export default defineComponent({
     .a-asd {
       @include initByLink('?font.body1');
     }
+
+    .a-font-2 {
+      @include initByLink('?font.body1.font-weight');
+    }
   }
 }
 </style>
