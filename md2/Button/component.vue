@@ -25,8 +25,17 @@ export default defineComponent({
     }
 
     .a-font-2 {
+      color: inherit;
       @include initByLink('?font.body1.font-weight');
     }
+
+    .a-font-3 {
+      background-color: inherit;
+      color: l('?font.body1.font-weight');
+    }
+
+    @include initByCustom('asd', 'test-asd');
+    @include initByCustomVar('asd', '??test.asd');
   }
 }
 </style>

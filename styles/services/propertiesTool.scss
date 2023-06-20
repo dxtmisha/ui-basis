@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "sass:string";
 
 $designsDesign: 'design' !default;
@@ -5,6 +6,8 @@ $designsComponent: 'component' !default;
 $designsClassName: 'class' !default;
 
 @import "../rules";
+
+@import "./propertiesItem";
 
 /// Returns the class name
 ///
@@ -38,6 +41,24 @@ $designsClassName: 'class' !default;
   }
 }
 
+/// Returns property values by reference
+///
+/// Возвращает значения свойства по ссылке
+/// @param {String} $link
+@function l($link) {
+  $property: getProperties(__toFullName($link));
+
+  @if ($property != null) {
+    $type: map.get($property, 'type');
+
+    @if ($type =='var' or $type =='property') {
+      @return string.unquote(map.get($property, 'value'));
+    }
+  }
+
+  @return 'inherit';
+}
+
 /// Transforming a name string, changing it to full format
 ///
 /// Преобразование строки названия, изменяющей ее на полный формат
@@ -60,4 +81,38 @@ $designsClassName: 'class' !default;
 /// @return {String}
 @function __toByName($name) {
   @return strReplace(__toFullName($name), '.', '-');
+}
+
+/// Mixin for generating properties
+///
+/// Миксин для генерации свойств
+/// @param {String} $name Property names / Названия свойств
+/// @param {String} $value Property values / Значения свойства
+/// @param {Bool} $important High priority / Высокий приоритет
+@mixin __toProperty(
+  $name,
+  $value,
+  $important: false
+) {
+  @if ($important) {
+    #{i($name)}: $value !important;
+  } @else {
+    #{i($name)}: $value;
+  }
+}
+
+/// Mixin for generating properties
+///
+/// Миксин для генерации свойств со значения типа var
+/// @param {String} $name Property names / Названия свойств
+/// @param {String} $value Property values / Значения свойства
+/// @param {String} $default default values / значения по умолчанию
+/// @param {Bool} $important High priority / Высокий приоритет
+@mixin __toPropertyVar(
+  $name,
+  $value,
+  $default: null,
+  $important: false
+) {
+  @include __toProperty($name, v($value, $default), $important);
 }

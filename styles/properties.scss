@@ -27,6 +27,7 @@ $designsInit: false !default;
 /// Generating styles for the component
 ///
 /// Генерация стилей для компонента
+/// @param {String} $component
 @mixin initDesign($component) {
   $designsValues: getProperties($component) !global;
   $designsInit: false !global;
@@ -79,9 +80,40 @@ $designsInit: false !default;
   }
 }
 
+/// Mixin for generating custom properties
+///
+/// Миксин для генерации пользовательских свойств
+/// @param {String} $name Property names / Названия свойств
+/// @param {String} $value Property values / Значения свойства
+/// @param {Bool} $important High priority / Высокий приоритет
+@mixin initByCustom(
+  $name,
+  $value,
+  $important: false
+) {
+  @include __toProperty(#{'??'}#{$name}, $value, $important);
+}
+
+/// Mixin for generating custom properties with 'var' value type
+///
+/// Миксин для генерации пользовательских свойств с типом значений 'var'
+/// @param {String} $name Property names / Названия свойств
+/// @param {String} $value Property values / Значения свойства
+/// @param {String} $default default values / значения по умолчанию
+/// @param {Bool} $important High priority / Высокий приоритет
+@mixin initByCustomVar(
+  $name,
+  $value,
+  $default: null,
+  $important: false
+) {
+  @include __toPropertyVar(#{'??'}#{$name}, $value, $default, $important);
+}
+
 /// Returns the name of the design
 ///
 /// Возвращает название дизайна
+/// @return {String}
 @function __getDesign() {
   $component: map.get($designsValues, 'name');
 
@@ -97,6 +129,7 @@ $designsInit: false !default;
 /// Returns the component name
 ///
 /// Возвращает название компонента
+/// @return {String}
 @function __getComponent() {
   @return map.get($designsValues, 'index');
 }
