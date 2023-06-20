@@ -87,6 +87,13 @@ export class To {
     }
   }
 
+  /**
+   * Method for processing a number
+   *
+   * Метод для обработки числа
+   * @param value the value to parse / текстовая строка
+   * @private
+   */
   private static numberReplace (value: string): number {
     let number = value.replace(/[^\d., ]+/ig, '')
 

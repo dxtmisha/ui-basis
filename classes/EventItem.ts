@@ -246,7 +246,7 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Toggling event handler state
    *
    * Переключение состояния работы события
-   * @param activity Event activation / Активация события
+   * @param activity event activation / активация события
    */
   toggle (activity?: boolean): this {
     if (activity === undefined) {
@@ -281,9 +281,9 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Attaching an event to the current element
    *
    * Подключение события к текущему элементу
-   * @param type A case-sensitive string representing the event type to listen for /
-   * Чувствительная к регистру строка, представляющая тип обрабатываемого события
-   * @param element Element for event registration / Элемент для регистрации события
+   * @param type a case-sensitive string representing the event type to listen for /
+   * чувствительная к регистру строка, представляющая тип обрабатываемого события
+   * @param element element for event registration / элемент для регистрации события
    * @private
    */
   private addEvent (type: string, element?: ElementType): this {
@@ -295,9 +295,9 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Removing an event from the current element
    *
    * Удаление события у текущего элемента
-   * @param type A case-sensitive string representing the event type to listen for /
-   * Чувствительная к регистру строка, представляющая тип обрабатываемого события
-   * @param element Element to remove an event from / Элемент для удаления события
+   * @param type a case-sensitive string representing the event type to listen for /
+   * чувствительная к регистру строка, представляющая тип обрабатываемого события
+   * @param element element to remove an event from / элемент для удаления события
    * @private
    */
   private removeEvent (type: string, element?: ElementType): this {
@@ -318,7 +318,7 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Returns the position of the mouse cursor or the location of the click
    *
    * Возвращает позицию курсора мыши или место нажатия
-   * @param event Event object / Объект события
+   * @param event event object / объект события
    */
   static client (event: MouseEvent & TouchEvent): coordinatorType {
     return {
@@ -331,7 +331,7 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Returns the position of the mouse cursor or the location of the click (X)
    *
    * Возвращает позицию курсора мыши или место нажатия (X)
-   * @param event Event object / Объект события
+   * @param event event object / объект события
    */
   static clientX (event: MouseEvent & TouchEvent): number {
     return event?.clientX || event?.targetTouches?.[0].clientX || event?.touches?.[0].clientX || 0
@@ -341,7 +341,7 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Returns the position of the mouse cursor or the location of the click (Y)
    *
    * Возвращает позицию курсора мыши или место нажатия (Y)
-   * @param event Event object / Объект события
+   * @param event event object / объект события
    */
   static clientY (event: MouseEvent & TouchEvent): number {
     return event?.clientY || event?.targetTouches?.[0].clientY || event?.touches?.[0].clientY || 0

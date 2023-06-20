@@ -264,6 +264,10 @@ class GeoFlag extends GeoAbstract_1.GeoAbstract {
   }
 
   intl
+  /**
+     * Constructor
+     * @param code country and language code / код страны и языка
+     */
   constructor (code) {
     super(code)
     this.intl = new GeoIntl_1.GeoIntl(this.code)

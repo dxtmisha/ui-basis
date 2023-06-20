@@ -31,6 +31,11 @@ class ElementItem {
     }
   }
 
+  /**
+     * Returning an element
+     *
+     * Возвращение элемента
+     */
   get () {
     return this.item.value
   }
@@ -59,6 +64,12 @@ class ElementItem {
     return (typeof element === 'string' ? document.querySelector(element) : element)
   }
 
+  /**
+     * Returns a default element
+     *
+     * Возвращает элемент по умолчанию
+     * @private
+     */
   getBody () {
     return this.elementDefault
   }

@@ -276,6 +276,10 @@ export class GeoFlag extends GeoAbstract {
 
   protected readonly intl: GeoIntl
 
+  /**
+   * Constructor
+   * @param code country and language code / код страны и языка
+   */
   constructor (code?: GeoCodeType) {
     super(code)
     this.intl = new GeoIntl(this.code)

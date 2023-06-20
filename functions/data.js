@@ -192,10 +192,10 @@ exports.forEach = forEach
  * source object to a target object
  *
  * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой
- * @param data The target object / Целевой объект
- * @param item The source object / Исходные объекты
- * @param start Index at which to start changing the array / Индекс, по которому начинает изменять массив
- * @param isDelete Removing the initial value of start / Удаление начального значения start
+ * @param data the target object / целевой объект
+ * @param item the source object / исходные объекты
+ * @param start index at which to start changing the array / индекс, по которому начинает изменять массив
+ * @param isDelete removing the initial value of start / удаление начального значения start
  */
 function splice (data, item, start, isDelete) {
   if (typeof data === 'object' &&

@@ -115,7 +115,7 @@ class EventResize {
      * Attaching an event listener
      *
      * Подключение прослушивания события
-     * @param element Element to listen to / Элемент для прослушивания
+     * @param element element to listen to / элемент для прослушивания
      * @private
      */
   addEvent (element) {

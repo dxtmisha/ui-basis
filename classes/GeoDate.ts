@@ -26,6 +26,12 @@ export class GeoDate extends GeoAbstract {
 
   protected intl: GeoIntl
 
+  /**
+   * Constructor
+   * @param date date for processing / дата для обработки
+   * @param type type of date format for output / тип формата даты вывода
+   * @param code country and language code / код страны и языка
+   */
   constructor (
     date?: NumberOrStringOrDateType,
     type?: GeoDateType,

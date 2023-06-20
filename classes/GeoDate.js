@@ -21,6 +21,12 @@ class GeoDate extends GeoAbstract_1.GeoAbstract {
   month = (0, vue_1.ref)(0)
   year = (0, vue_1.ref)(0)
   intl
+  /**
+     * Constructor
+     * @param date date for processing / дата для обработки
+     * @param type type of date format for output / тип формата даты вывода
+     * @param code country and language code / код страны и языка
+     */
   constructor (date, type, code) {
     super(code)
     this.date = (0, vue_1.ref)(To_1.To.date(date))

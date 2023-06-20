@@ -38,6 +38,11 @@ export class GeoPhone extends GeoAbstract {
   public readonly item = ref<GeoPhoneMapType | undefined>(undefined)
   public readonly phone = ref<string>('')
 
+  /**
+   * Constructor
+   * @param code country and language code / код страны и языка
+   * @param phone phone number / номер телефона
+   */
   constructor (
     code?: GeoCodeType,
     phone?: string
@@ -67,6 +72,11 @@ export class GeoPhone extends GeoAbstract {
     return GeoPhone.list.value.find(item => this.country.value === item.value)
   }
 
+  /**
+   * Returns a mask
+   *
+   * Возвращает маску
+   */
   getMask (): ComputedRef<string[] | undefined> {
     return computed(() => this.getMaskStatic())
   }
@@ -158,6 +168,12 @@ export class GeoPhone extends GeoAbstract {
     }
   }
 
+  /**
+   * Returns an instance of the GeoPhone class for the specified phone number
+   *
+   * Возвращает экземпляр класса GeoPhone для указанного номера телефона
+   * @param phone phone number / номер телефона
+   */
   static getObjectByPhone (phone: string): GeoPhone {
     const data = this.getItemByPhone(phone)
 

@@ -24,10 +24,23 @@ export class CookieCollect {
   public static readonly data = new Map<string, CookieItemType>()
   public static readonly block = new StorageItem('cookie-block')
 
+  /**
+   * Getting a cookie value by its key
+   *
+   * Получение значения cookie по его ключу
+   * @param key key name / названия ключа
+   */
   static get (key: string): CookieItemType {
     return this.data.has(key) ? (this.data.get(key) as CookieItemType) : this.newItem(key)
   }
 
+  /**
+   * Updating a cookie value by its key
+   *
+   * Изменение значения cookie по его ключу
+   * @param key key name / названия ключа
+   * @param value new values / новые значения
+   */
   static set (key: string, value?: string) {
     if (value) {
       if (this.data.has(key)) {
@@ -41,15 +54,27 @@ export class CookieCollect {
     }
   }
 
-  static setBlock (value: boolean): void {
-    this.block.set(value ? '1' : undefined)
-  }
-
+  /**
+   * Deleting a cookie entry
+   *
+   * Удаление записи в куке
+   * @param key key name / названия ключа
+   */
   static remove (key: string) {
     if (this.data.has(key)) {
       this.data.delete(key)
       this.update(key)
     }
+  }
+
+  /**
+   * Enabling or disabling cookie saving block
+   *
+   * Включение или отключение блокировки сохранения cookie
+   * @param value values to be modified / значения для изменения
+   */
+  static setBlock (value: boolean): void {
+    this.block.set(value ? '1' : undefined)
   }
 
   /**

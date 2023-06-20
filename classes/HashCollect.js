@@ -10,10 +10,23 @@ const data_1 = require('../functions/data')
  */
 class HashCollect {
   static data = new Map()
+  /**
+     * Getting a value by its key
+     *
+     * Получение значения по его ключу
+     * @param key key name / названия ключа
+     */
   static get (key) {
     return this.data.has(key) ? this.data.get(key) : this.newItem(key)
   }
 
+  /**
+     * Changing a value by its key
+     *
+     * Изменение значения по его ключу
+     * @param key key name / названия ключа
+     * @param value new values / новые значения
+     */
   static set (key, value) {
     if (value) {
       if (this.data.has(key)) {
@@ -27,6 +40,12 @@ class HashCollect {
     }
   }
 
+  /**
+     * Deleting a record
+     *
+     * Удаление записи
+     * @param key key name / названия ключа
+     */
   static remove (key) {
     if (this.data.has(key)) {
       this.data.delete(key)
@@ -38,8 +57,8 @@ class HashCollect {
      * Creating a new entry in a Map
      *
      * Создание новой записи в Map
-     * @param key
-     * @param value
+     * @param key key name / названия ключа
+     * @param value new values / новые значения
      * @private
      */
   static newItem (key, value) {
@@ -63,6 +82,11 @@ class HashCollect {
     }
   }
 
+  /**
+     * Translation: "Processing a hash string to obtain data
+     *
+     * Обработка строки hash для получения данных
+     */
   static init () {
     location.hash.replace(/([\w-]+)[:=]([^;]+)/ig, (all, key, value) => {
       this.newItem(key, value)

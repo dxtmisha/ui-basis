@@ -8,6 +8,11 @@ const StorageItemAbstract_1 = require('./StorageItemAbstract')
  * Класс для работы с sessionStorage
  */
 class SessionItem extends StorageItemAbstract_1.StorageItemAbstract {
+  /**
+     * Constructor
+     * @param key key name / названия ключа
+     * @param defaultValue default values / значения по умолчанию
+     */
   constructor (key, defaultValue) {
     super('session', key, defaultValue, window?.sessionStorage)
   }

@@ -8,6 +8,11 @@ const StorageItemAbstract_1 = require('./StorageItemAbstract')
  * Класс для работы с localStorage
  */
 class StorageItem extends StorageItemAbstract_1.StorageItemAbstract {
+  /**
+     * Constructor
+     * @param key key name / названия ключа
+     * @param defaultValue default values / значения по умолчанию
+     */
   constructor (key, defaultValue) {
     super('local', key, defaultValue, window?.localStorage)
   }

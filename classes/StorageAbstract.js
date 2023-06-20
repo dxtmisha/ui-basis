@@ -14,7 +14,7 @@ class StorageAbstract {
   /**
      * Constructor
      * @param key key / ключ
-     * @param value
+     * @param value values / значения
      * @param defaultValue default values / значения по умолчанию
      * @protected
      */
@@ -39,8 +39,8 @@ class StorageAbstract {
      * Data retrieval
      *
      * Получение данных
-     * @param valueCallback If you pass a function, it will execute when there is no value
-     * and save the values / Если вы передадите функцию, она выполнится при отсутствии
+     * @param valueCallback if you pass a function, it will execute when there is no value
+     * and save the values / если вы передадите функцию, она выполнится при отсутствии
      * значения и сохранит значения
      */
   get (valueCallback) {
@@ -51,8 +51,8 @@ class StorageAbstract {
      * Data retrieval
      *
      * Получение данных
-     * @param valueCallback If you pass a function, it will execute when there is no value
-     * and save the values / Если вы передадите функцию, она выполнится при отсутствии
+     * @param valueCallback if you pass a function, it will execute when there is no value
+     * and save the values / если вы передадите функцию, она выполнится при отсутствии
      * значения и сохранит значения
      */
   getStatic (valueCallback) {
@@ -68,6 +68,11 @@ class StorageAbstract {
     }
   }
 
+  /**
+     * Returns a key
+     *
+     * Возвращает ключ
+     */
   getKey () {
     return this.key
   }

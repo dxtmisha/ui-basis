@@ -38,6 +38,11 @@ export class ElementItem<E = ElementType> {
     }
   }
 
+  /**
+   * Returning an element
+   *
+   * Возвращение элемента
+   */
   get (): ElementItemType<E> {
     return this.item.value
   }
@@ -66,6 +71,12 @@ export class ElementItem<E = ElementType> {
     return (typeof element === 'string' ? document.querySelector(element) as ElementItemType<E> : element)
   }
 
+  /**
+   * Returns a default element
+   *
+   * Возвращает элемент по умолчанию
+   * @private
+   */
   private getBody (): ElementItemType<E> {
     return this.elementDefault
   }

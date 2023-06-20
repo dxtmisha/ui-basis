@@ -29,7 +29,7 @@ export let ids = random(100000, 900000) as number
  * Returns the identifier (ID) of the element or creates it if the element has no ID
  *
  * Возвращает идентификатор (ID) элемента или создает его, если у элемента нет ID
- * @param element Element
+ * @param element element from which you obtain an ID / элемент, с которого получаете ID
  * @param selector selectors for matching / селекторов для сопоставления
  */
 export function getIdElement (element?: HTMLElement, selector?: string): string {

@@ -16,6 +16,11 @@ class GeoPhone extends GeoAbstract_1.GeoAbstract {
   static map
   item = (0, vue_1.ref)(undefined)
   phone = (0, vue_1.ref)('')
+  /**
+     * Constructor
+     * @param code country and language code / код страны и языка
+     * @param phone phone number / номер телефона
+     */
   constructor (code, phone) {
     super(code)
     if (phone) {
@@ -41,6 +46,11 @@ class GeoPhone extends GeoAbstract_1.GeoAbstract {
     return GeoPhone.list.value.find(item => this.country.value === item.value)
   }
 
+  /**
+     * Returns a mask
+     *
+     * Возвращает маску
+     */
   getMask () {
     return (0, vue_1.computed)(() => this.getMaskStatic())
   }
@@ -122,6 +132,12 @@ class GeoPhone extends GeoAbstract_1.GeoAbstract {
     }
   }
 
+  /**
+     * Returns an instance of the GeoPhone class for the specified phone number
+     *
+     * Возвращает экземпляр класса GeoPhone для указанного номера телефона
+     * @param phone phone number / номер телефона
+     */
   static getObjectByPhone (phone) {
     const data = this.getItemByPhone(phone)
     return new GeoPhone(data.item?.code, phone)

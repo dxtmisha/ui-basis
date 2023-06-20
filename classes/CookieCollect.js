@@ -14,10 +14,23 @@ exports.cacheAgeDefault = Env_1.Env.cache()
 class CookieCollect {
   static data = new Map()
   static block = new StorageItem_1.StorageItem('cookie-block')
+  /**
+     * Getting a cookie value by its key
+     *
+     * Получение значения cookie по его ключу
+     * @param key key name / названия ключа
+     */
   static get (key) {
     return this.data.has(key) ? this.data.get(key) : this.newItem(key)
   }
 
+  /**
+     * Updating a cookie value by its key
+     *
+     * Изменение значения cookie по его ключу
+     * @param key key name / названия ключа
+     * @param value new values / новые значения
+     */
   static set (key, value) {
     if (value) {
       if (this.data.has(key)) {
@@ -31,15 +44,27 @@ class CookieCollect {
     }
   }
 
-  static setBlock (value) {
-    this.block.set(value ? '1' : undefined)
-  }
-
+  /**
+     * Deleting a cookie entry
+     *
+     * Удаление записи в куке
+     * @param key key name / названия ключа
+     */
   static remove (key) {
     if (this.data.has(key)) {
       this.data.delete(key)
       this.update(key)
     }
+  }
+
+  /**
+     * Enabling or disabling cookie saving block
+     *
+     * Включение или отключение блокировки сохранения cookie
+     * @param value values to be modified / значения для изменения
+     */
+  static setBlock (value) {
+    this.block.set(value ? '1' : undefined)
   }
 
   /**

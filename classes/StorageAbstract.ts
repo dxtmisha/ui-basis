@@ -13,7 +13,7 @@ export abstract class StorageAbstract<T = any> {
   /**
    * Constructor
    * @param key key / ключ
-   * @param value
+   * @param value values / значения
    * @param defaultValue default values / значения по умолчанию
    * @protected
    */
@@ -40,8 +40,8 @@ export abstract class StorageAbstract<T = any> {
    * Data retrieval
    *
    * Получение данных
-   * @param valueCallback If you pass a function, it will execute when there is no value
-   * and save the values / Если вы передадите функцию, она выполнится при отсутствии
+   * @param valueCallback if you pass a function, it will execute when there is no value
+   * and save the values / если вы передадите функцию, она выполнится при отсутствии
    * значения и сохранит значения
    */
   get (
@@ -54,8 +54,8 @@ export abstract class StorageAbstract<T = any> {
    * Data retrieval
    *
    * Получение данных
-   * @param valueCallback If you pass a function, it will execute when there is no value
-   * and save the values / Если вы передадите функцию, она выполнится при отсутствии
+   * @param valueCallback if you pass a function, it will execute when there is no value
+   * and save the values / если вы передадите функцию, она выполнится при отсутствии
    * значения и сохранит значения
    */
   getStatic (
@@ -73,6 +73,11 @@ export abstract class StorageAbstract<T = any> {
     }
   }
 
+  /**
+   * Returns a key
+   *
+   * Возвращает ключ
+   */
   getKey (): string {
     return this.key
   }

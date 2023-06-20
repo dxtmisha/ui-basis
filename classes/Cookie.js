@@ -10,6 +10,11 @@ const CookieCollect_1 = require('./CookieCollect')
  */
 class Cookie extends StorageAbstract_1.StorageAbstract {
   item
+  /**
+     * Constructor
+     * @param key key name / названия ключа
+     * @param defaultValue default values / значения по умолчанию
+     */
   constructor (key, defaultValue) {
     const item = CookieCollect_1.CookieCollect.get(key)
     super(key, item.item, defaultValue)
@@ -23,14 +28,14 @@ class Cookie extends StorageAbstract_1.StorageAbstract {
      * Send a cookie
      *
      * Отправляет cookie
-     * @param value The value of the cookie / Значение cookie
-     * @param age The time the cookie expires / Время, когда срок действия
+     * @param value the value of the cookie / значение cookie
+     * @param age the time the cookie expires / время, когда срок действия
      * cookie истекает
-     * @param sameSite The value of the sameSite element should be either None,
-     * Lax or Strict / Значение элемента sameSite должно быть либо None, либо Lax,
+     * @param sameSite the value of the sameSite element should be either None,
+     * Lax or Strict / значение элемента sameSite должно быть либо None, либо Lax,
      * либо Strict
-     * @param argument An associative array which may have any of the keys expires,
-     * path, domain, secure, httponly and sameSite / Ассоциативный массив (array), который
+     * @param argument an associative array which may have any of the keys expires,
+     * path, domain, secure, httponly and sameSite / ассоциативный массив (array), который
      * может иметь любой из ключей: expires, path, domain, secure, httponly и sameSite
      */
   set (value, age, sameSite, argument) {
@@ -45,7 +50,7 @@ class Cookie extends StorageAbstract_1.StorageAbstract {
      * The time the cookie expires
      *
      * Время, когда срок действия cookie истекает
-     * @param value
+     * @param value new values / новые значения
      * @private
      */
   setAge (value) {
@@ -61,7 +66,7 @@ class Cookie extends StorageAbstract_1.StorageAbstract {
      *
      * Не позволяет браузеру отправлять этот файл cookie вместе с межсайтовыми запросами.
      * Возможные значения флага: lax или strict.
-     * @param value
+     * @param value new values / новые значения
      * @private
      */
   setSameSite (value) {
@@ -75,7 +80,7 @@ class Cookie extends StorageAbstract_1.StorageAbstract {
      * Changes of properties of the writing cookie
      *
      * Изменения свойств записывающего cookie
-     * @param value
+     * @param value new values / новые значения
      * @private
      */
   setArgument (value) {

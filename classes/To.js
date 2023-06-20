@@ -79,6 +79,13 @@ class To {
     }
   }
 
+  /**
+     * Method for processing a number
+     *
+     * Метод для обработки числа
+     * @param value the value to parse / текстовая строка
+     * @private
+     */
   static numberReplace (value) {
     let number = value.replace(/[^\d., ]+/ig, '')
     if (number.match(/( [0-9]{3}[ ,.]|[0-9] [0-9])/ig)) {

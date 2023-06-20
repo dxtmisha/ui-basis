@@ -11,10 +11,23 @@ export type HashItemType = Ref<string>
 export class HashCollect {
   public static readonly data = new Map<string, HashItemType>()
 
+  /**
+   * Getting a value by its key
+   *
+   * Получение значения по его ключу
+   * @param key key name / названия ключа
+   */
   static get (key: string): HashItemType {
     return this.data.has(key) ? (this.data.get(key) as HashItemType) : this.newItem(key)
   }
 
+  /**
+   * Changing a value by its key
+   *
+   * Изменение значения по его ключу
+   * @param key key name / названия ключа
+   * @param value new values / новые значения
+   */
   static set (key: string, value?: string) {
     if (value) {
       if (this.data.has(key)) {
@@ -28,6 +41,12 @@ export class HashCollect {
     }
   }
 
+  /**
+   * Deleting a record
+   *
+   * Удаление записи
+   * @param key key name / названия ключа
+   */
   static remove (key: string) {
     if (this.data.has(key)) {
       this.data.delete(key)
@@ -39,8 +58,8 @@ export class HashCollect {
    * Creating a new entry in a Map
    *
    * Создание новой записи в Map
-   * @param key
-   * @param value
+   * @param key key name / названия ключа
+   * @param value new values / новые значения
    * @private
    */
   private static newItem (key: string, value?: string): HashItemType {
@@ -69,6 +88,11 @@ export class HashCollect {
     }
   }
 
+  /**
+   * Translation: "Processing a hash string to obtain data
+   *
+   * Обработка строки hash для получения данных
+   */
   static init () {
     location.hash.replace(
       /([\w-]+)[:=]([^;]+)/ig,
