@@ -3,8 +3,8 @@
 /// Returns width based on aspect ratio values
 ///
 /// Возвращает ширину на основе значений соотношения сторон
-/// @param {string} $value
-/// @return {string}
+/// @param {String} $value
+/// @return {String}
 @function getWidthByRatio($value) {
   $separator: string.index($value, '/');
   @return string.slice($value, 0, $separator - 1);
@@ -13,8 +13,8 @@
 /// Returns width based on aspect ratio values
 ///
 /// Возвращает ширину на основе значений соотношения сторон
-/// @param {string} $value
-/// @return {string}
+/// @param {String} $value
+/// @return {String}
 @function getHeightByRatio($value) {
   $separator: string.index($value, '/');
   @return string.slice($value, $separator + 1);

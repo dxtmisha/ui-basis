@@ -3,7 +3,7 @@
 /// Mixin for generating an element state
 ///
 /// Миксин для генерации анимация
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initAnimate($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');

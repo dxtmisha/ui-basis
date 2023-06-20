@@ -7,6 +7,8 @@
 /// Accepts a selector
 ///
 /// Принимает селектор
+/// @param {String} $name
+/// @param {List} $parent
 @mixin selector($name, $parent: &) {
   @if ($name == 'focus') {
     &:focus, &:focus-within, &#{$parent}--focus {
@@ -22,6 +24,7 @@
 /// Accepts active elements
 ///
 /// Принимает активные элементы
+/// @param {List} $parent
 @mixin enabled($parent: &) {
   $first: getFirstSelector(&);
   $separator: ' ';
@@ -48,6 +51,8 @@
 /// Accepts a selector for active elements
 ///
 /// Принимает селектор для активных элементов
+/// @param {String} $name
+/// @param {List} $parent
 @mixin enabledSelector($name, $parent: &) {
   @include enabled($parent) {
     @include selector($name, $parent) {
@@ -83,7 +88,7 @@
 /// Checks whether the current element is a child element
 ///
 /// Проверяет, является ли текущий элемент дочерним элементом
-/// @return bool
+/// @return {Boolean}
 @function __isEnabled() {
   @return string.index(#{&}, 'enabled') or string.index(#{&}, '--disabled');
 }

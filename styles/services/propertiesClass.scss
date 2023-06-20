@@ -3,7 +3,7 @@
 /// Mixin for generating an element state
 ///
 /// Миксин для генерации состояния элемента
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initState($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
@@ -17,7 +17,7 @@
 /// Mixin for generating an element subclass
 ///
 /// Миксин для генерации саб-класс элемента
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initSubclass($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');
@@ -31,7 +31,7 @@
 /// Mixin for generating an element scss
 ///
 /// Миксин для генерации scss элемента
-/// @param {map} $property
+/// @param {Map} $property
 @mixin initScss($property) {
   @if ($property != null) {
     $name: map.get($property, 'name');

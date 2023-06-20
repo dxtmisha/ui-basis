@@ -7,9 +7,9 @@
 /// Finding a value in a tree-like array
 ///
 /// Поиск значения в древовидном массиве
-/// @param {map} $map Input array / Массив входных данных
-/// @param {list} $index List of keys to traverse / Список ключей для обхода
-/// @param {*} $default Default values if not found / Значения по умолчанию, если не было найдено
+/// @param {Map} $map input array / массив входных данных
+/// @param {List} $index list of keys to traverse / список ключей для обхода
+/// @param {*} $default default values if not found / значения по умолчанию, если не было найдено
 /// @return {*}
 @function getMapItem(
   $map,
@@ -37,9 +37,9 @@
 /// Changes values in an array
 ///
 /// Меняет значения в массиве
-/// @param {map} $map Input array / Массив входных данных
-/// @param {string} $index
-/// @param {*} $value Values to be saved / Значения для сохранения
+/// @param {Map} $map input array / массив входных данных
+/// @param {String} $index
+/// @param {*} $value values to be saved / значения для сохранения
 /// @return {*}
 @function setMapItem($map, $index, $value) {
   @return map.merge($map, (#{$index}: $value));
@@ -49,6 +49,7 @@
 ///
 /// Возвращает название первого селектора
 /// @param {List} $selector
+/// @return {String}
 @function getFirstSelector($selector: &) {
   $value: strToList(#{$selector}, ' ');
   $value: strToList(#{$value}, ':');
@@ -59,9 +60,9 @@
 /// Split a string by a string
 ///
 /// Разбивает строку с помощью разделителя
-/// @param {string} $value The input string / Входная строка
-/// @param {string} $separator The boundary string / Разделитель
-/// @return {string}
+/// @param {String} $value the input string / входная строка
+/// @param {String} $separator the boundary string / разделитель
+/// @return {String}
 @function strToList($value, $separator: '.') {
   $index: string.index($value, $separator);
 
@@ -75,11 +76,11 @@
 /// Replace all occurrences of the search string with the replacement string
 ///
 /// Заменяет все вхождения строки поиска на строку замены
-/// @param {string} $value The string or array being searched and replaced on / Строка в котором
+/// @param {String} $value the string or array being searched and replaced on / строка в котором
 /// производится поиск и замена
-/// @param {string} $pattern The value being searched / Искомое значение
-/// @param {string} $replacement The replacement value that replaces found search values / Значение замены
-/// @return {string}
+/// @param {String} $pattern the value being searched / искомое значение
+/// @param {String} $replacement the replacement value that replaces found search values / значение замены
+/// @return {String}
 @function strReplace($value, $pattern, $replacement) {
   $index: string.index($value, $pattern);
 

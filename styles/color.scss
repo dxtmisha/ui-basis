@@ -3,8 +3,8 @@
 /// Checks if a value is a color
 ///
 /// Проверяет, является ли значение цветом
-/// @param {color} $color
-/// @return {bool}
+/// @param {Color} $color
+/// @return {Boolean}
 @function isColorRbgOrVar($color) {
   @return meta.type-of($color) == color or (
     $color != 'none' and
@@ -17,10 +17,10 @@
 /// Returns color value by its code
 ///
 /// Возвращает значение цвета по его коду
-/// @param {color} $color
-/// @param {number} $opacity
-/// @param {bool} $gradient If true, returns as an image / Если true, возвращает в виде изображения
-/// @return {string}
+/// @param {Color} $color
+/// @param {Number} $opacity
+/// @param {Boolean} $gradient if true, returns as an image / если true, возвращает в виде изображения
+/// @return {String}
 @function getColor(
   $color,
   $opacity: 1,
@@ -42,8 +42,8 @@
 /// Returns value for palette
 ///
 /// Возвращает значение для палитры
-/// @param {color} $color
-/// @return {string}
+/// @param {Color} $color
+/// @return {String}
 @function getPalette($color) {
   @return #{var(--sys-palette, #{toColorRbg($color)})}
 }
@@ -51,8 +51,8 @@
 /// Color conversion to rgb type
 ///
 /// Преобразование цвета в тип RGB
-/// @param {color} $color
-/// @return {string}
+/// @param {Color} $color
+/// @return {String}
 @function toColorRbg($color) {
   @if (meta.type-of($color) == color) {
     @return red($color) + ', ' + green($color) + ', ' + blue($color);
@@ -64,8 +64,8 @@
 /// Conversion of color into images for working with background-image
 ///
 /// Преобразование цвета в изображения для работы с background-image
-/// @param {color} $color
-/// @return {string}
+/// @param {Color} $color
+/// @return {String}
 @function toGradient($color) {
   @return linear-gradient(0deg, #{$color}, #{$color});
 }

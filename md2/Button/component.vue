@@ -32,6 +32,14 @@ export default defineComponent({
     .a-font-3 {
       background-color: inherit;
       color: l('?font.body1.font-weight');
+
+      @include state('state') {
+        width: 100px;
+      }
+
+      @include subclass('subclass') {
+        width: 120px;
+      }
     }
 
     @include initByCustom('asd', 'test-asd');

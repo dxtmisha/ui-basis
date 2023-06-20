@@ -77,15 +77,17 @@ $designsInit: false !default;
     } @else {
       @include initProperties($value);
     }
+  } @else {
+    @warn #{'[initByLink] not link: '}#{$link};
   }
 }
 
 /// Mixin for generating custom properties
 ///
 /// Миксин для генерации пользовательских свойств
-/// @param {String} $name Property names / Названия свойств
-/// @param {String} $value Property values / Значения свойства
-/// @param {Bool} $important High priority / Высокий приоритет
+/// @param {String} $name property names / названия свойств
+/// @param {String} $value property values / значения свойства
+/// @param {Bool} $important high priority / высокий приоритет
 @mixin initByCustom(
   $name,
   $value,
@@ -97,10 +99,10 @@ $designsInit: false !default;
 /// Mixin for generating custom properties with 'var' value type
 ///
 /// Миксин для генерации пользовательских свойств с типом значений 'var'
-/// @param {String} $name Property names / Названия свойств
-/// @param {String} $value Property values / Значения свойства
+/// @param {String} $name property names / названия свойств
+/// @param {String} $value property values / значения свойства
 /// @param {String} $default default values / значения по умолчанию
-/// @param {Bool} $important High priority / Высокий приоритет
+/// @param {Boolean} $important high priority / высокий приоритет
 @mixin initByCustomVar(
   $name,
   $value,
@@ -108,6 +110,26 @@ $designsInit: false !default;
   $important: false
 ) {
   @include __toPropertyVar(#{'??'}#{$name}, $value, $default, $important);
+}
+
+/// Mixin for generating a sub-class
+///
+/// Миксин для генерации класса статуса
+/// @param {String} $name status names / названия статуса
+@mixin state($name) {
+  &#{$designsClassName}--#{$name} {
+    @content;
+  }
+}
+
+/// Mixin for generating status class
+///
+/// Миксин для генерации саб класса
+/// @param {String} $name
+@mixin subclass($name) {
+  #{$designsClassName}__#{$name} {
+    @content;
+  }
 }
 
 /// Returns the name of the design

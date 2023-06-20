@@ -45,7 +45,8 @@ $designsClassName: 'class' !default;
 ///
 /// Возвращает значения свойства по ссылке
 /// @param {String} $link
-@function l($link) {
+/// @return {String}
+@function l($link, $default: null) {
   $property: getProperties(__toFullName($link));
 
   @if ($property != null) {
@@ -54,9 +55,11 @@ $designsClassName: 'class' !default;
     @if ($type =='var' or $type =='property') {
       @return string.unquote(map.get($property, 'value'));
     }
+  } @else {
+    @warn #{'[l] not link: '}#{$link};
   }
 
-  @return 'inherit';
+  @return $default;
 }
 
 /// Transforming a name string, changing it to full format
@@ -86,9 +89,9 @@ $designsClassName: 'class' !default;
 /// Mixin for generating properties
 ///
 /// Миксин для генерации свойств
-/// @param {String} $name Property names / Названия свойств
-/// @param {String} $value Property values / Значения свойства
-/// @param {Bool} $important High priority / Высокий приоритет
+/// @param {String} $name property names / названия свойств
+/// @param {String} $value property values / значения свойства
+/// @param {Boolean} $important high priority / высокий приоритет
 @mixin __toProperty(
   $name,
   $value,
@@ -104,10 +107,10 @@ $designsClassName: 'class' !default;
 /// Mixin for generating properties
 ///
 /// Миксин для генерации свойств со значения типа var
-/// @param {String} $name Property names / Названия свойств
-/// @param {String} $value Property values / Значения свойства
+/// @param {String} $name property names / названия свойств
+/// @param {String} $value property values / значения свойства
 /// @param {String} $default default values / значения по умолчанию
-/// @param {Bool} $important High priority / Высокий приоритет
+/// @param {Boolean} $important high priority / высокий приоритет
 @mixin __toPropertyVar(
   $name,
   $value,

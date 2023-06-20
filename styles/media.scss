@@ -13,6 +13,8 @@ $designsMedia: (
 /// Returns values for media files
 ///
 /// Возвращает значения для медиафайлов
+/// @param {String} $width size name / название размера
+/// @return {String}
 @function media($width) {
   @return map.get($designsMedia, $width);
 }

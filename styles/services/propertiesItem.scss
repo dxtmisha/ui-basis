@@ -36,7 +36,7 @@ $designsClassName: 'class' !default;
 /// Getting a property by its key
 ///
 /// Получение свойства по его ключу
-/// @param {String|null} $index
+/// @param {String} $index
 /// @return {Map}
 @function getProperties($index: null) {
   @if $index == null {
@@ -57,8 +57,8 @@ $designsClassName: 'class' !default;
 /// Getting a list of properties by its key
 ///
 /// Получение списка свойств по его ключу
-/// @param {String|null} $index
-/// @return {Map|null}
+/// @param {String} $index
+/// @return {Map}
 @function getPropertiesValue($index: null) {
   $data: getProperties($index);
   @return getMapItem($data, 'value', $data);
@@ -84,8 +84,8 @@ $designsClassName: 'class' !default;
 ///
 /// Точка входа - миксин для начала обработки массива со свойствами
 /// @param {Map} $properties
-/// @param {Map} $parent Auxiliary variable for iteration / Вспомогательная переменная для обхода
-/// @param {String} $this Auxiliary variable for iteration / Вспомогательная переменная для обхода
+/// @param {Map} $parent
+/// @param {String} $this
 @mixin initProperties(
   $properties,
   $parent: null,
@@ -104,7 +104,7 @@ $designsClassName: 'class' !default;
 ///
 /// Проверяет, является ли тип свойства базовым
 /// @param {Map} $property
-/// @return bool
+/// @return {Boolean}
 @function __isBasic($property) {
   @return list.index($designsBasic, map.get($property, 'type')) != null;
 }
@@ -113,7 +113,7 @@ $designsClassName: 'class' !default;
 ///
 /// Проверяет, является ли предок типа дополнения
 /// @param {Map} $parent
-/// @return bool
+/// @return {Boolean}
 @function __isSelector($parent) {
   @return $parent and list.index($designsAuxiliary, map.get($parent, 'type')) != null;
 }
@@ -180,6 +180,7 @@ $designsClassName: 'class' !default;
 ///
 /// Обработка вспомогательного элемента
 /// @param {Map} $property
+/// @param {List} $this
 @mixin __toBySelector($property, $this) {
   @if (__isBasic($property)) {
     @include __to($property);
