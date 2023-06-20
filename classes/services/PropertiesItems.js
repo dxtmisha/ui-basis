@@ -19,7 +19,7 @@ module.exports = class PropertiesItems {
   designs = undefined
 
   /**
-   * @param {Object<string,*>} properties
+   * @param {Object<string,*>} properties array with all property records / массив со всеми записями свойств
    */
   constructor (properties) {
     this.properties = properties
@@ -53,7 +53,7 @@ module.exports = class PropertiesItems {
    * Divides an index into sections
    *
    * Разделяет индекс на разделы
-   * @param {string} index Index for splitting / Индекс для разделения
+   * @param {string} index index for splitting / индекс для разделения
    * @return {string[]}
    */
   getKeys (index) {
@@ -67,7 +67,7 @@ module.exports = class PropertiesItems {
    * Returns link properties as a string
    *
    * Возвращает свойства ссылки в виде строки
-   * @param {string} value
+   * @param {string} value values to search for / значения, по которым будет производиться поиск
    * @return {{name: string, property: Object<string,*>}[]}
    */
   getItemByValue (value) {
@@ -83,8 +83,8 @@ module.exports = class PropertiesItems {
    * Returns values by index
    *
    * Возвращает значения по индексу
-   * @param {string} index Index for splitting / Индекс для разделения
-   * @param {boolean} check Is this a simple check / Является ли это простой проверкой
+   * @param {string} index index for splitting / индекс для разделения
+   * @param {boolean} check is this a simple check / является ли это простой проверкой
    * @return {Object<string, *>|undefined}
    */
   getItemByIndex (index, check = false) {
@@ -109,11 +109,11 @@ module.exports = class PropertiesItems {
    * Caching the result
    *
    * Читает результата из кеш
-   * @param {string} name Cache name / Название кеша
-   * @param {Function} callback If the file is not found, the callback function is called and
-   * its result is saved in the current file / Если файл не найден, вызывается функция
+   * @param {string} name cache name / название кеша
+   * @param {Function} callback if the file is not found, the callback function is called and
+   * its result is saved in the current file / если файл не найден, вызывается функция
    * обратного вызова (callback) и её результат сохраняется в текущем файле
-   * @param {string} extension
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {Object<string,*>|string}
    */
   getCache (name, callback, extension = 'json') {
@@ -124,7 +124,7 @@ module.exports = class PropertiesItems {
    * Searching for records with selected categories
    *
    * Поиск записей с выделенными категориями
-   * @param {string} category Names of categories / Названия категорий
+   * @param {string} category names of categories / названия категорий
    * @return {{index:string,item:Object<string,*>}[]}
    */
   findCategory (category) {
@@ -159,14 +159,14 @@ module.exports = class PropertiesItems {
    *   properties?: Object<string,*>,
    *   options?: Object<string,*>,
    *   parents?: {name:string, item: Object<string,*>}[]
-   * }) => *} callback The callback function is executed for each element / Выполняется функция
+   * }) => *} callback the callback function is executed for each element / выполняется функция
    * обратного вызова (callback) для каждого элемента
-   * @param {{isValue?: boolean, options?: Object<string,*>}} options Additional parameters / Дополнительные параметры
-   * @param {Object.<string,*>} properties Object for traversal / Объект для обхода
-   * @param {Object.<string,*>|undefined} parent Ancestor element / Элемент-предок
-   * @param {string|undefined} design Design name / Название дизайна
-   * @param {string|undefined} component Component name / Название компонента
-   * @param {{name:string, item: Object<string,*>}[]} parents List of ancestor names / Список названий предков
+   * @param {{isValue?: boolean, options?: Object<string,*>}} options additional parameters / дополнительные параметры
+   * @param {Object.<string,*>} properties object for traversal / объект для обхода
+   * @param {Object.<string,*>|undefined} parent ancestor element / элемент-предок
+   * @param {string|undefined} design design name / название дизайна
+   * @param {string|undefined} component component name / название компонента
+   * @param {{name:string, item: Object<string,*>}[]} parents list of ancestor names / список названий предков
    * @returns {*[]}
    */
   each (
@@ -247,9 +247,9 @@ module.exports = class PropertiesItems {
    * Caching the result
    *
    * Сохранение результата в кеш
-   * @param {string} name Cache name / Название кеша
-   * @param {Object<string,*>|string} data Data for storage / Данные для хранения
-   * @param {string} extension
+   * @param {string} name cache name / название кеша
+   * @param {Object<string,*>|string} data data for storage / данные для хранения
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {PropertiesItems}
    */
   cache (name, data = this.properties, extension = 'json') {

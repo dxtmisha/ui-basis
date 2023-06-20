@@ -48,7 +48,7 @@ module.exports = class PropertiesToLink {
    * Checks if a sub-element is a link
    *
    * Проверяет, является ли под-элемент ссылкой
-   * @param {Object<string,*>} properties Object for checking / Объект для проверки
+   * @param {Object<string,*>} properties object for checking / объект для проверки
    * @return {boolean}
    * @private
    */
@@ -93,7 +93,7 @@ module.exports = class PropertiesToLink {
    *   component?: string,
    *   properties?:
    *   Object<string,*>
-   * }} property Object for conversion / Объект для преобразования
+   * }} property object for conversion / объект для преобразования
    * @return {boolean}
    * @private
    */

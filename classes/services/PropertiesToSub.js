@@ -73,7 +73,7 @@ module.exports = class PropertiesToSub {
    * Checks if a value is part of the name
    *
    * Проверяет, является ли значение частью имени
-   * @param {string} name
+   * @param {string} name base property name / базовое название свойства
    * @return {boolean}
    * @private
    */
@@ -85,7 +85,7 @@ module.exports = class PropertiesToSub {
    * Checks if a value has a sub-value
    *
    * Проверяет, есть ли у значения под-значения
-   * @param {string} value
+   * @param {string} value values of properties from the value field / значения свойств из поля value
    * @return {boolean}
    * @private
    */
@@ -135,7 +135,7 @@ module.exports = class PropertiesToSub {
    *   properties: Object<string,*>,
    *   isName: boolean,
    *   isValue: boolean
-   * }} property Object for conversion / Объект для преобразования
+   * }} property object for conversion / объект для преобразования
    * @private
    */
   __toName (property) {
@@ -162,7 +162,7 @@ module.exports = class PropertiesToSub {
    *   properties: Object<string,*>,
    *   isName: boolean,
    *   isValue: boolean
-   * }} property Object for conversion / Объект для преобразования
+   * }} property object for conversion / объект для преобразования
    * @private
    */
   __toValue (property) {
@@ -187,7 +187,7 @@ module.exports = class PropertiesToSub {
    * Converting all indices to values
    *
    * Преобразование всех индексов в значения
-   * @param {string} value
+   * @param {string} value values of properties from the value field / значения свойств из поля value
    * @private
    */
   __toGo (value) {

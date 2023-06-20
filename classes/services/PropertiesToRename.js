@@ -154,8 +154,8 @@ module.exports = class PropertiesToRename {
    * Returns the standard name
    *
    * Возвращает стандартное имя
-   * @param {Object<string,*>} item Object for checking / Объект для проверки
-   * @param {string} name Name of the name / Название имени
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @param {string} name name of the name / название имени
    * @return {string}
    * @private
    */
@@ -176,8 +176,10 @@ module.exports = class PropertiesToRename {
    * Returns ancestor names
    *
    * Возвращает имена предков
-   * @param {Object<string,*>} parents
-   * @param {string[]} variable
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {string[]} variable list of types to exclude, such types are ignored / список типов
+   * для исключения, такие типы игнорируются
    * @return {string[]}
    * @private
    */
@@ -201,9 +203,10 @@ module.exports = class PropertiesToRename {
    * Name transformation for the var type
    *
    * Преобразование имени для типа var
-   * @param {Object<string,*>} parents
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -219,9 +222,10 @@ module.exports = class PropertiesToRename {
    * Name transformation for the component type
    *
    * Преобразование имени для типа component
-   * @param {Object<string,*>} parents
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -237,8 +241,8 @@ module.exports = class PropertiesToRename {
    * Name transformation for the state type
    *
    * Преобразование имени для типа state
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -254,8 +258,8 @@ module.exports = class PropertiesToRename {
    * Name transformation for the virtual type
    *
    * Преобразование имени для типа virtual
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -267,8 +271,8 @@ module.exports = class PropertiesToRename {
    * Name transformation for the subclass type
    *
    * Преобразование имени для типа subclass
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -284,8 +288,8 @@ module.exports = class PropertiesToRename {
    * Name transformation for the media, media-max type
    *
    * Преобразование имени для типа media, media-max
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
@@ -305,9 +309,10 @@ module.exports = class PropertiesToRename {
    * Name transformation for the animate type
    *
    * Преобразование имени для типа animate
-   * @param {Object<string,*>} parents
-   * @param {Object<string,*>} item
-   * @param {string} name
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */

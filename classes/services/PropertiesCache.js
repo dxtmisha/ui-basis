@@ -15,9 +15,9 @@ module.exports = class PropertiesCache {
    * Checks if there are files to read
    *
    * Проверяет наличие файлов для чтения
-   * @param {string|string[]} paths Path to the file / Путь к файлу
-   * @param {string} name File name / Название файла
-   * @param {string} extension
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {boolean}
    */
   static is (paths, name, extension = 'json') {
@@ -28,12 +28,12 @@ module.exports = class PropertiesCache {
    * Reads the content of the file
    *
    * Читает содержимое файла
-   * @param {string|string[]} paths Path to the file / Путь к файлу
-   * @param {string} name File name / Название файла
-   * @param {Function} callback If the file is not found, the callback function is called and
-   * its result is saved in the current file / Если файл не найден, вызывается функция
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {Function} callback if the file is not found, the callback function is called and
+   * its result is saved in the current file / если файл не найден, вызывается функция
    * обратного вызова (callback) и её результат сохраняется в текущем файле
-   * @param {string} extension
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {Object<string, *>|*[]|string}
    */
   static get (
@@ -58,10 +58,10 @@ module.exports = class PropertiesCache {
    * Writing data to a file
    *
    * Запись данных в файл
-   * @param {string|string[]} paths Path to the file / Путь к файлу
-   * @param {string} name File name / Название файла
-   * @param {Object<string,*>|*[]|string} value Values for storage / Значения для хранения
-   * @param {string} extension
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {Object<string,*>|*[]|string} value values for storage / значения для хранения
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {PropertiesFiles}
    */
   static create (
@@ -78,7 +78,7 @@ module.exports = class PropertiesCache {
    * Returns the path to the file
    *
    * Возвращает путь к файлу
-   * @param {string|string[]} path Path to the file / Путь к файлу
+   * @param {string|string[]} path path to the file / путь к файлу
    * @returns {string[]}
    * @private
    */

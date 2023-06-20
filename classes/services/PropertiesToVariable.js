@@ -155,9 +155,9 @@ module.exports = class PropertiesVariable {
    * Checks whether a reference points to the specified object
    *
    * Проверяет, указывает ли ссылка на указанный объект
-   * @param {Object<string,*>} item
-   * @param {string} design
-   * @param {string} component
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
    * @return {boolean}
    * @private
    */
@@ -180,8 +180,8 @@ module.exports = class PropertiesVariable {
    * Returns the name of a property for an element
    *
    * Возвращает название свойства у элемента
-   * @param {Object<string,*>} item Object with data / Объект с данными
-   * @param {string} name Key name / Название ключа
+   * @param {Object<string,*>} item object with data / объект с данными
+   * @param {string} name key name / название ключа
    * @return {string}
    * @private
    */
@@ -197,8 +197,8 @@ module.exports = class PropertiesVariable {
    * Returns the type of property of an element
    *
    * Возвращает тип свойства у элемента
-   * @param {Object<string,*>} item Object with data / Объект с данными
-   * @param {string} name Key name / Название ключа
+   * @param {Object<string,*>} item object with data / объект с данными
+   * @param {string} name key name / название ключа
    * @return {string}
    * @private
    */

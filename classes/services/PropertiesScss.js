@@ -44,9 +44,9 @@ module.exports = class PropertiesScss {
   }
 
   /**
-   * Returns a list of properties
+   * Returns a list of properties for the root
    *
-   * Возвращает список свойств
+   * Возвращает список свойств для root
    * @return {string}
    */
   getRoot () {
@@ -54,9 +54,9 @@ module.exports = class PropertiesScss {
   }
 
   /**
-   * Returns a list of properties
+   * Returns a list of connected designs
    *
-   * Возвращает список свойств
+   * Возвращает список подключенных дизайнов
    * @return {string}
    */
   getDesigns () {
@@ -65,9 +65,9 @@ module.exports = class PropertiesScss {
   }
 
   /**
-   * Returns a list of properties
+   * Returns a list of all classes for generation
    *
-   * Возвращает список свойств
+   * Возвращает список всех классов для генерации
    * @return {string}
    */
   getClasses () {
@@ -75,9 +75,9 @@ module.exports = class PropertiesScss {
   }
 
   /**
-   * Returns a list of properties
+   * Returns a list of device sizes
    *
-   * Возвращает список свойств
+   * Возвращает список размеров устройства
    * @return {string}
    */
   getMedia () {
@@ -98,7 +98,7 @@ module.exports = class PropertiesScss {
    * Returns the property index to form the path of the class name
    *
    * Возвращает индекс свойства для формирования пути имени класса
-   * @param {string} name Name of the property / Название свойства
+   * @param {string} name name of the property / название свойства
    * @return {string}
    * @private
    */
@@ -111,7 +111,7 @@ module.exports = class PropertiesScss {
    *
    * Возвращает название свойства
    * @param {Object<string,*>} property property value / значение свойства
-   * @param {string} name Name of the property / Название свойства
+   * @param {string} name name of the property / название свойства
    * @return {string}
    * @private
    */
@@ -137,7 +137,7 @@ module.exports = class PropertiesScss {
    * Returns a list of all records with the selected type
    *
    * Возвращает список всех записей с выбранным типом
-   * @param {string} category Category names / Названия категорий
+   * @param {string} category category names / названия категорий
    * @return {string}
    * @private
    */

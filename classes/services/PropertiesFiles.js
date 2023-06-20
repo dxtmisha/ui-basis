@@ -17,7 +17,7 @@ module.exports = class PropertiesFiles {
    * Метод fs.existsSync() используется для синхронной проверки наличия файла в
    * указанном пути. Он возвращает логическое значение, которое указывает на
    * наличие файла
-   * @param {string|string[]} path It holds the path of the file that has to be checked / Это
+   * @param {string|string[]} path it holds the path of the file that has to be checked / это
    * содержит путь к файлу, который необходимо проверить
    * @returns {boolean}
    * @public
@@ -30,7 +30,7 @@ module.exports = class PropertiesFiles {
    * Checks whether it is a directory
    *
    * Проверяет, является ли это директорией
-   * @param {string} name Name of the element being checked / Название проверяемого элемента
+   * @param {string} name name of the element being checked / название проверяемого элемента
    * @return {boolean}
    */
   static isDir (name) {
@@ -44,7 +44,7 @@ module.exports = class PropertiesFiles {
    * Метод path.joinPath() объединяет все указанные сегменты пути с использованием
    * специфического для платформы разделителя в качестве разделителя, а затем
    * нормализует полученный путь
-   * @param {string|string[]} paths A sequence of path segments / Последовательность сегментов пути
+   * @param {string|string[]} paths a sequence of path segments / последовательность сегментов пути
    * @returns {string}
    */
   static joinPath (paths) {
@@ -55,7 +55,7 @@ module.exports = class PropertiesFiles {
    * Reads the contents of the directory
    *
    * Читает содержимое директории
-   * @param {string|string[]} paths Path to the directory / Путь к директории
+   * @param {string|string[]} paths path to the directory / путь к директории
    * @returns {string[]}
    */
   static readDir (paths) {
@@ -85,7 +85,7 @@ module.exports = class PropertiesFiles {
    * Synchronously creates a directory
    *
    * Синхронно создает директорию
-   * @param {string[]} paths Path to the directory / Путь к директории
+   * @param {string[]} paths path to the directory / путь к директории
    * @returns {PropertiesFiles}
    */
   static createDir (paths) {
@@ -105,10 +105,10 @@ module.exports = class PropertiesFiles {
    * Writing data to a file
    *
    * Запись данных в файл
-   * @param {string|string[]} paths Path to the file / Путь к файлу
-   * @param {string} name File name / Название файла
-   * @param {Object<string,*>|*[]|string} value Values for storage / Значения для хранения
-   * @param {string} extension
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {Object<string,*>|*[]|string} value values for storage / значения для хранения
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {PropertiesFiles}
    */
   static createFile (
@@ -131,8 +131,8 @@ module.exports = class PropertiesFiles {
    * Returns the file name
    *
    * Возвращает имя файла
-   * @param {string} name Element name / Название элемента
-   * @param {string} extension
+   * @param {string} name element name / название элемента
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
    * @return {string}
    */
   static getFileName (name, extension = 'json') {
@@ -143,7 +143,7 @@ module.exports = class PropertiesFiles {
    * Getting information about the file
    *
    * Получение информации о файле
-   * @param {string|string[]} paths Path to the file / Путь к файлу
+   * @param {string|string[]} paths path to the file / путь к файлу
    * @return {Promise<{mtime: number}>}
    */
   static stat (paths) {

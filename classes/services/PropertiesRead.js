@@ -24,7 +24,8 @@ module.exports = class PropertiesRead {
   designsPaths = []
 
   /**
-   * @param {string[]} designs
+   * @param {string[]} designs list of design names corresponding to folder names / список
+   * названий дизайнов, соответствующих названиям папок
    */
   constructor (designs) {
     this.designs = ['d', ...designs]
@@ -146,7 +147,7 @@ module.exports = class PropertiesRead {
    * Returns the path to a file by design name
    *
    * Возвращает путь к файлу по названию дизайна
-   * @param {string} name Design name / Название дизайна
+   * @param {string} name design name / название дизайна
    * @return {(string[])[]}
    * @private
    */
@@ -163,9 +164,9 @@ module.exports = class PropertiesRead {
    * Getting data
    *
    * Получение данных
-   * @param {string} design Design name / Название дизайна
-   * @param {string} paths Path to the file / Путь к файлу
-   * @param {string} name File name / Название файла
+   * @param {string} design design name / название дизайна
+   * @param {string} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
    * @return {{
    *   design: string,
    *   component: string,
@@ -173,7 +174,7 @@ module.exports = class PropertiesRead {
    *   path: string,
    *   properties: Object<string,Object<string,*>>
    * }}
-   * @property
+   * @private
    */
   __getComponent (design, paths, name) {
     const path = PropertiesFiles.joinPath([...paths, name])
@@ -191,8 +192,8 @@ module.exports = class PropertiesRead {
    * Transforms an array into the required data structure
    *
    * Преобразует массив в нужную структуру
-   * @param {Object<string,*>|{}} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
+   * @param {Object<string,*>|{}} properties an array that needs to be
+   * transformed / массив, который нужно преобразовать
    * @return {Object<string,Object<string,*>>}
    * @private
    */
@@ -226,8 +227,8 @@ module.exports = class PropertiesRead {
    * Transform the property value into the required format
    *
    * Преобразовать значение свойства в необходимый формат
-   * @param {Object<string, *>|string|number} value Values for conversion / Значения для преобразования
-   * @param {string} name Property name / Название свойства
+   * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
+   * @param {string} name property name / название свойства
    * @return {Object<string, *>}
    * @private
    */

@@ -19,10 +19,24 @@ module.exports = class Properties {
     this.items = new PropertiesItems(this.__init(designs))
   }
 
+  /**
+   * Getting structured data for use in an SCSS file
+   *
+   * Получение структурированных данных для работы в SCSS файле
+   * @return {string}
+   */
   getScss () {
     return new PropertiesScss(this.items).get()
   }
 
+  /**
+   * Entry point for generating a file to work with data from JSON
+   *
+   * Точка входа для генерации файла для работы с данными из JSON
+   * @param {string[]} designs design name / название дизайна
+   * @return {Object<string, *>}
+   * @private
+   */
   __init (designs) {
     return PropertiesCache.get([], FILE_CACHE, () => {
       console.info('Properties: init')

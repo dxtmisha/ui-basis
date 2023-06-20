@@ -31,7 +31,7 @@ module.exports = class PropertiesTool {
    * Checks if the variable is a special value
    *
    * Проверяет, является ли переменная специальным значением
-   * @param {string} name Key name / Название ключа
+   * @param {string} name key name / название ключа
    * @return {boolean}
    */
   static isSpecial (name) {
@@ -42,7 +42,7 @@ module.exports = class PropertiesTool {
    * Checks whether a value is a reference
    *
    * Проверяет, является ли значение ссылкой
-   * @param {string} value
+   * @param {string} value values of properties from the value field / значения свойств из поля value
    * @return {boolean}
    */
   static isLink (value) {
@@ -53,7 +53,7 @@ module.exports = class PropertiesTool {
    * Checks whether the name is complete
    *
    * Проверяет, является ли название полным
-   * @param {string} name Key name / Название ключа
+   * @param {string} name key name / название ключа
    * @return {boolean}
    */
   static isFull (name) {
@@ -64,7 +64,7 @@ module.exports = class PropertiesTool {
    * Returns the property name, discarding its prefix
    *
    * Возвращает имя свойства, отбрасывая его префикс
-   * @param {string} name Key name / Название ключа
+   * @param {string} name key name / название ключа
    * @return {*}
    */
   static getName (name) {
@@ -77,9 +77,10 @@ module.exports = class PropertiesTool {
    * Returns similar values by its name
    *
    * Возвращает похожие значения по его имени
-   * @param {Object<string,*>} item Object for checking / Объект для проверки
-   * @param {string} name Name of the name / Название имени
-   * @param {Object<string,*>} parents
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @param {string} name name of the name / название имени
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
    * @return {Object<string,*>}
    */
   static getSimilarParent (
@@ -114,7 +115,7 @@ module.exports = class PropertiesTool {
    * Returns the variable type name from the property name
    *
    * Возвращает название типа переменной из названия свойства
-   * @param {string} name Key name / Название ключа
+   * @param {string} name key name / название ключа
    * @return {*}
    */
   static getVariableInName (name) {
@@ -217,7 +218,7 @@ module.exports = class PropertiesTool {
    * Returns a list of link values
    *
    * Возвращает список значений ссылок
-   * @param {string} value
+   * @param {string} value values of properties from the value field / значения свойств из поля value
    * @return {string[]}
    */
   static getLinkByValue (value) {
@@ -228,10 +229,10 @@ module.exports = class PropertiesTool {
    * Replaces labels with design and component names
    *
    * Заменяет метки на названия дизайна и компонента
-   * @param {string} value
-   * @param {string} design Design name / Название дизайна
-   * @param {string} component Component name / Название компонента
-   * @param {string[]} designs List of design names / Список названий дизайнов
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
+   * @param {string[]} designs list of design names / список названий дизайнов
    * @return {string}
    */
   static toFull (value, design, component, designs) {
@@ -248,9 +249,9 @@ module.exports = class PropertiesTool {
    * Replaces labels with design and component names
    *
    * Заменяет метки на названия дизайна и компонента
-   * @param {string} value
-   * @param {string} design Design name / Название дизайна
-   * @param {string} component Component name / Название компонента
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
    * @return {string}
    */
   static toFullForName (value, design, component) {
@@ -267,9 +268,9 @@ module.exports = class PropertiesTool {
    * Adds the name of the design at the beginning if it is missing
    *
    * Добавляет название дизайна в начало, если его нет
-   * @param {string} value
-   * @param {string} design Design name / Название дизайна
-   * @param {string[]} designs List of design names / Список названий дизайнов
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @param {string} design design name / название дизайна
+   * @param {string[]} designs list of design names / список названий дизайнов
    * @returns {string}
    */
   static toFullByDesigns (value, design, designs) {

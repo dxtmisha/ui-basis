@@ -74,9 +74,9 @@ module.exports = class PropertiesToMulti {
    * Transformation for the element
    *
    * Преобразование для элемента
-   * @param {string} name Property name / Название свойства
-   * @param {Object<string,*>} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
+   * @param {string} name property name / название свойства
+   * @param {Object<string,*>} properties an array that needs to be
+   * transformed / массив, который нужно преобразовать
    * @private
    */
   __toGo (name, properties) {

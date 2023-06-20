@@ -86,7 +86,7 @@ module.exports = class PropertiesToVar {
    * Returns the transformed pointer
    *
    * Возвращает преобразованный указатель
-   * @param {string} value
+   * @param {string} value values to process / значения для преобразования
    * @return {string}
    * @private
    */
@@ -100,8 +100,8 @@ module.exports = class PropertiesToVar {
    * Transformation to the CSS property
    *
    * Преобразование в свойство CSS
-   * @param {string} value
-   * @param {string} defaultValue
+   * @param {string} value values to process / значения для преобразования
+   * @param {string} defaultValue default values / значения по умолчанию
    * @return {string}
    * @private
    */
@@ -119,7 +119,7 @@ module.exports = class PropertiesToVar {
    * Checks if the value has a mathematical expression
    *
    * Проверяет, есть ли у значения математическое выражение
-   * @param {string} value
+   * @param {string} value values to process / значения для преобразования
    * @return {string}
    * @private
    */
