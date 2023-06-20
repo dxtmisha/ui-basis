@@ -1,5 +1,5 @@
 import { computed, ComputedRef, isRef, Ref } from 'vue'
-import { isFilled, isFunction, isNull } from '../functions/data'
+import { executeFunction, isFilled, isFunction, isNull } from '../functions/data'
 
 import { AnyOrUndefinedType, CallbackNullType } from '../constructors/types'
 import { RefOrCallbackOrNormalType } from '../constructors/typesRef'
@@ -10,11 +10,21 @@ import { RefOrCallbackOrNormalType } from '../constructors/typesRef'
  * Базовый абстрактный класс для управления хранением данных
  */
 export abstract class StorageAbstract<T = any> {
-  // eslint-disable-next-line no-useless-constructor
+  /**
+   * Constructor
+   * @param key key / ключ
+   * @param value
+   * @param defaultValue default values / значения по умолчанию
+   * @protected
+   */
   protected constructor (
     protected readonly key: string,
-    protected readonly value: Ref<AnyOrUndefinedType<T>>
+    protected readonly value: Ref<AnyOrUndefinedType<T>>,
+    defaultValue?: T | (() => T)
   ) {
+    if (!this.is() && defaultValue) {
+      this.set(executeFunction(defaultValue))
+    }
   }
 
   /**

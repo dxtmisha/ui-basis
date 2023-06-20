@@ -9,11 +9,11 @@ const HashCollect_1 = require('./HashCollect')
  * Работа с данными сохраненными в хеш
  */
 class Hash extends StorageAbstract_1.StorageAbstract {
-  constructor (key) {
+  constructor (key, defaultValue) {
     if (objects.has(key)) {
       return objects.get(key)
     }
-    super(key, HashCollect_1.HashCollect.get(key))
+    super(key, HashCollect_1.HashCollect.get(key), defaultValue)
     objects.set(key, this)
   }
 }

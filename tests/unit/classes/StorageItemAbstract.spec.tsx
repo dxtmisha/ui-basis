@@ -8,7 +8,7 @@ describe('classes/StorageItemAbstract', () => {
       key: string,
       method?: Storage
     ) {
-      super(name, key, method)
+      super(name, key, undefined, method)
     }
   }
 

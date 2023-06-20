@@ -9,10 +9,13 @@ import { CookieCollect, CookieItemType, CookieSameSiteType } from './CookieColle
 export class Cookie extends StorageAbstract<string> {
   protected readonly item: CookieItemType
 
-  constructor (key: string) {
+  constructor (
+    key: string,
+    defaultValue?: string | (() => string)
+  ) {
     const item = CookieCollect.get(key)
 
-    super(key, item.item)
+    super(key, item.item, defaultValue)
     this.item = item
 
     if (objects.has(key)) {

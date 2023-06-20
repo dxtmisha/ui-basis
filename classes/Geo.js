@@ -39,6 +39,16 @@ class Geo {
      */
   static code = (0, vue_1.computed)(() => `${this.lang.value}-${this.country.value}`)
   /**
+     * Full format according to the standard
+     *
+     * Полный формат согласно стандарту
+     */
+  static codeStandard = (0, vue_1.computed)(() => {
+    const lang = Geo.getDataByLanguage(this.lang.value)
+    return `${lang?.language || this.lang.value}-${this.country.value}`
+  })
+
+  /**
      * First day of the week
      *
      * Первый день недели

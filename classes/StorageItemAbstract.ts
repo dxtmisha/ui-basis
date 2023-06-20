@@ -18,19 +18,21 @@ export abstract class StorageItemAbstract<T = any> extends StorageAbstract<T> {
    * @param name group of records, from which we get data / группа записей, по которой
    * получаем данные
    * @param key key / ключ
+   * @param defaultValue default values / значения по умолчанию
    * @param method class, with which we will work / класс, с которым будем работать
    * @protected
    */
   protected constructor (
     name: string,
     key: string,
+    defaultValue?: T | (() => T),
     method?: Storage
   ) {
     const item = new StorageData<T>(name, key, method)
 
-    super(key, item.getItem())
+    super(key, item.getItem(), defaultValue)
 
-    this.item = new StorageData<T>(name, key, method)
+    this.item = item
   }
 
   /**

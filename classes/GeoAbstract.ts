@@ -40,6 +40,16 @@ export abstract class GeoAbstract {
   )
 
   /**
+   * Full format according to the standard
+   *
+   * Полный формат согласно стандарту
+   */
+  public readonly codeStandard = computed<string>(() => {
+    const lang = Geo.getDataByLanguage(this.lang.value)
+    return `${lang?.language || this.lang.value}-${this.country.value}`
+  })
+
+  /**
    * First day of the week
    *
    * Первый день недели

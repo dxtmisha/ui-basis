@@ -15,13 +15,14 @@ class StorageItemAbstract extends StorageAbstract_1.StorageAbstract {
      * @param name group of records, from which we get data / группа записей, по которой
      * получаем данные
      * @param key key / ключ
+     * @param defaultValue default values / значения по умолчанию
      * @param method class, with which we will work / класс, с которым будем работать
      * @protected
      */
-  constructor (name, key, method) {
+  constructor (name, key, defaultValue, method) {
     const item = new StorageData_1.StorageData(name, key, method)
-    super(key, item.getItem())
-    this.item = new StorageData_1.StorageData(name, key, method)
+    super(key, item.getItem(), defaultValue)
+    this.item = item
   }
 
   /**

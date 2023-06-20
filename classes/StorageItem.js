@@ -8,8 +8,8 @@ const StorageItemAbstract_1 = require('./StorageItemAbstract')
  * Класс для работы с localStorage
  */
 class StorageItem extends StorageItemAbstract_1.StorageItemAbstract {
-  constructor (key) {
-    super('local', key, window?.localStorage)
+  constructor (key, defaultValue) {
+    super('local', key, defaultValue, window?.localStorage)
   }
 }
 exports.StorageItem = StorageItem

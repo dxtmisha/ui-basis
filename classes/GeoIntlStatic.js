@@ -39,11 +39,11 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
     }
     try {
       if (value) {
-        text = new Intl.DisplayNames(this.code.value, options).of(value)
+        text = new Intl.DisplayNames(this.codeStandard.value, options).of(value)
       } else if (options.type === 'language') {
-        text = new Intl.DisplayNames(this.code.value, options).of(this.lang.value)
+        text = new Intl.DisplayNames(this.codeStandard.value, options).of(this.lang.value)
       } else if (options.type === 'region') {
-        text = new Intl.DisplayNames(this.code.value, options).of(this.country.value)
+        text = new Intl.DisplayNames(this.codeStandard.value, options).of(this.country.value)
       }
     } catch (e) {
       text = value
@@ -225,7 +225,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
       }
     }
     try {
-      text = new Intl.RelativeTimeFormat(this.code.value, options).format(Math.round(relative), unit)
+      text = new Intl.RelativeTimeFormat(this.codeStandard.value, options).format(Math.round(relative), unit)
     } catch (e) {
       text = ''
     }
@@ -242,7 +242,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
   numberObject (options) {
     let object
     try {
-      object = new Intl.NumberFormat(this.code.value, options)
+      object = new Intl.NumberFormat(this.codeStandard.value, options)
     } catch (e) {
     }
     return object
@@ -267,7 +267,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
     if (!isDisplay) {
       Object.assign(options, styleOptions)
     }
-    return date.toLocaleString(this.code.value, options)
+    return date.toLocaleString(this.codeStandard.value, options)
   }
 
   /**
@@ -278,7 +278,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
      * @param style the representation of the month / представление месяца
      */
   monthStatic (value, style) {
-    return Intl.DateTimeFormat(this.code.value, { month: style || 'long' })
+    return Intl.DateTimeFormat(this.codeStandard.value, { month: style || 'long' })
       .format(To_1.To.date(value))
   }
 
@@ -290,7 +290,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
      */
   monthsStatic (style) {
     const date = new Date()
-    const format = Intl.DateTimeFormat(this.code.value, { month: style || 'long' })
+    const format = Intl.DateTimeFormat(this.codeStandard.value, { month: style || 'long' })
     const list = [{
       text: '',
       value: undefined
@@ -315,7 +315,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
      * @param style the representation of the weekday / представление о дне недели
      */
   weekdayStatic (value, style) {
-    return Intl.DateTimeFormat(this.code.value, { weekday: style || 'long' })
+    return Intl.DateTimeFormat(this.codeStandard.value, { weekday: style || 'long' })
       .format(To_1.To.date(value))
   }
 
@@ -327,7 +327,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
      */
   weekdaysStatic (style) {
     const date = new Date()
-    const format = Intl.DateTimeFormat(this.code.value, { weekday: style || 'long' })
+    const format = Intl.DateTimeFormat(this.codeStandard.value, { weekday: style || 'long' })
     const current = date.getDay() + (this.firstDay.value === 'Mo' ? -1 : 1)
     const list = [{
       text: '',

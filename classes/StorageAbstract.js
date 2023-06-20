@@ -11,10 +11,19 @@ const data_1 = require('../functions/data')
 class StorageAbstract {
   key
   value
-  // eslint-disable-next-line no-useless-constructor
-  constructor (key, value) {
+  /**
+     * Constructor
+     * @param key key / ключ
+     * @param value
+     * @param defaultValue default values / значения по умолчанию
+     * @protected
+     */
+  constructor (key, value, defaultValue) {
     this.key = key
     this.value = value
+    if (!this.is() && defaultValue) {
+      this.set((0, data_1.executeFunction)(defaultValue))
+    }
   }
 
   /**
