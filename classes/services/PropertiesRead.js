@@ -198,29 +198,53 @@ module.exports = class PropertiesRead {
    * @private
    */
   __toStandard (properties) {
+    const keyVariable = PropertiesTool.getKeyVariable()
     const data = {}
 
     forEach(properties, (item, name) => {
       const key = PropertiesTool.getName(name)
       const variable = PropertiesTool.getVariableInName(name)
       const value = this.__toStandardByItem(item, key)
+      const newKey = this.__reKeyName(key, variable || value?.[keyVariable])
 
-      if (key in data) {
-        data[key] = replaceRecursive(data[key], value)
+      if (newKey in data) {
+        data[newKey] = replaceRecursive(data[newKey], value)
       } else {
-        data[key] = value
+        data[newKey] = value
       }
 
       if (variable) {
-        data[key][PropertiesTool.getKeyVariable()] = variable
+        data[newKey][keyVariable] = variable
       }
 
       if (PropertiesTool.isFull(name)) {
-        data[key][PropertiesTool.getKeyFull()] = true
+        data[newKey][PropertiesTool.getKeyFull()] = true
       }
     })
 
     return data
+  }
+
+  /**
+   * Returns a new key
+   *
+   * Возвращает новый ключ
+   * @param {string} key property name / название свойства
+   * @param {string|undefined} variable тип свойство
+   * @return {string}
+   * @private
+   */
+  __reKeyName (key, variable) {
+    switch (variable) {
+      case 'media':
+      case 'media-max':
+        if (!key.match(/^media-/)) {
+          return `media-${key}`
+        }
+        break
+    }
+
+    return key
   }
 
   /**

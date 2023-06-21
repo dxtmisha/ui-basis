@@ -317,7 +317,10 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __toValueForMedia (values) {
-    return forEach(values, value => this.media?.[value]?.value || value)
+    return forEach(values, value => {
+      const key = value.replace(/^media-/, '')
+      return this.media?.[key]?.value || key
+    })
   }
 
   /**
