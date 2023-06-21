@@ -88,25 +88,31 @@ module.exports = class PropertiesTool {
     name,
     parents = undefined
   ) {
+    const keyRename = this.getKeyRename()
     const keyVariable = this.getKeyVariable()
     const list = [...parents].reverse()
     let data
 
-    list.shift()
-    list.forEach(parent => {
-      if (data === undefined) {
-        if (
-          [
-            'class',
-            'subclass'
-          ].indexOf(parent.item?.[keyVariable]) !== -1
-        ) {
-          data = false
-        } else {
-          data = parent.item?.value?.[name]
+    if (!item?.[keyRename]) {
+      list.shift()
+      list.forEach(parent => {
+        if (data === undefined) {
+          if (
+            [
+              'class',
+              'subclass'
+            ].indexOf(parent.item?.[keyVariable]) !== -1
+          ) {
+            data = false
+          } else if (
+            item?.[keyVariable] === parent.item?.value?.[name]?.[keyVariable] &&
+            parent.item?.value?.[name]?.[keyRename]
+          ) {
+            data = parent.item?.value?.[name]
+          }
         }
-      }
-    })
+      })
+    }
 
     return data || undefined
   }

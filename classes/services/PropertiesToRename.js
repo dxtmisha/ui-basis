@@ -19,6 +19,7 @@ module.exports = class PropertiesToRename {
    */
   constructor (items) {
     this.items = items
+    this.media = this.items.getItemForMedia()
   }
 
   /**
@@ -294,7 +295,9 @@ module.exports = class PropertiesToRename {
    * @private
    */
   __toNameForMedia (item, name) {
-    const values = this.__getName(item, name).split(',')
+    const values = this.__toValueForMedia(
+      this.__getName(item, name).split(',')
+    )
 
     if (values.length > 1) {
       return `(min-width: ${values?.[0] || '0px'}) and (max-width: calc(${values?.[1] || '1980px'} - 1px))`
@@ -303,6 +306,18 @@ module.exports = class PropertiesToRename {
     } else {
       return `(min-width: ${values?.[0] || '0px'})`
     }
+  }
+
+  /**
+   * Updates data if the alias is entered
+   *
+   * Изменяет данные, если введен алиас
+   * @param {string[]} values a list of values for media / список значений для медиа
+   * @return {string[]}
+   * @private
+   */
+  __toValueForMedia (values) {
+    return forEach(values, value => this.media?.[value]?.value || value)
   }
 
   /**

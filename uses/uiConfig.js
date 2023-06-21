@@ -1,8 +1,9 @@
 const { defineConfig } = require('@vue/cli-service')
 const {
   executeFunction,
+  isFunction,
   replaceRecursive
-} = require('./data')
+} = require('../functions/data')
 
 const Properties = require('../classes/services/Properties')
 
@@ -14,7 +15,7 @@ const Properties = require('../classes/services/Properties')
  * @return {*}
  */
 const getConfig = (config) => {
-  return executeFunction(config)
+  return { ...executeFunction(config) }
 }
 
 /**
@@ -36,16 +37,33 @@ const getScss = (config) => {
  * @return {{css: {loaderOptions: {scss: {additionalData: string}}}}}
  */
 const getPropertiesScss = (config) => {
-  const designsString = process.env.VUE_APP_DESIGNS
-  const designs = designsString?.toString()?.split(',') || []
-
   return {
     css: {
       loaderOptions: {
         scss: {
-          additionalData: `${(new Properties(designs)).getScss()}\r\n${getScss(config)}`
+          additionalData: `${(new Properties()).getScss()}\r\n${getScss(config)}`
         }
       }
+    }
+  }
+}
+
+/**
+ *
+ * @param {Object<string,*>} configUser конфигурацию
+ * @return {{chainWebpack: *}}
+ */
+const getChainWebpack = (configUser) => {
+  return {
+    chainWebpack: config => {
+      if (isFunction(configUser?.chainWebpack)) {
+        configUser.chainWebpack(config)
+      }
+
+      config.module
+        .rule('vue')
+        .use('ui-vue-loader')
+        .loader('./uses/loaders/ui-vue-loader.js')
     }
   }
 }
@@ -62,6 +80,7 @@ module.exports = function uiConfig (
   let data = getConfig(config)
 
   data = replaceRecursive(data, getPropertiesScss(config))
+  data = replaceRecursive(data, getChainWebpack(config))
   data = replaceRecursive(data, {
     transpileDependencies: true
   })

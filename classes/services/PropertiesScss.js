@@ -202,26 +202,6 @@ module.exports = class PropertiesScss {
   }
 
   /**
-   * Returns a list of information about media file list
-   *
-   * Возвращает список информации о списках медиафайлов
-   * @return {Object<string,Object<string,*>>}
-   * @private
-   */
-  __getMediaList () {
-    const data = {}
-
-    this.items.findCategory('media')
-      .forEach(property => {
-        if (typeof property.item?.value === 'object') {
-          Object.assign(data, property.item.value)
-        }
-      })
-
-    return data
-  }
-
-  /**
    * Method for iterating over all properties and converting them to a SCSS structure
    *
    * Метод для обхода всех свойств и преобразования их в структуру SCSS
@@ -255,7 +235,7 @@ module.exports = class PropertiesScss {
   __toMedia () {
     let data = ''
 
-    forEach(this.__getMediaList(), (item, name) => {
+    forEach(this.items.getItemForMedia(), (item, name) => {
       data += `\r\n  ${name}:${this.__getValueItem(item)},`
     })
 

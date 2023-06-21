@@ -14,9 +14,19 @@ const PropertiesScss = require('./PropertiesScss')
 
 const FILE_CACHE = 'properties'
 
+/**
+ * The main class for working with tokens
+ *
+ * Главный класс для работы с токенами
+ */
 module.exports = class Properties {
-  constructor (designs) {
-    this.items = new PropertiesItems(this.__init(designs))
+  /**
+   * Constructor
+   * @param {string[]} designs list of design names / список названий дизайнов
+   */
+  constructor (designs = undefined) {
+    this.designs = designs || this.__getDesignsByEnv()
+    this.items = new PropertiesItems(this.__init())
   }
 
   /**
@@ -30,49 +40,69 @@ module.exports = class Properties {
   }
 
   /**
+   * This method returns the names of designs from the environment variable (env)
+   *
+   * Данный метод возвращает названия дизайнов из переменной окружения (env)
+   * @return {string[]}
+   * @private
+   */
+  __getDesignsByEnv () {
+    const designs = process.env.VUE_APP_DESIGNS
+    return designs?.toString()?.split(',') || []
+  }
+
+  /**
    * Entry point for generating a file to work with data from JSON
    *
    * Точка входа для генерации файла для работы с данными из JSON
-   * @param {string[]} designs design name / название дизайна
    * @return {Object<string, *>}
    * @private
    */
-  __init (designs) {
-    return PropertiesCache.get([], FILE_CACHE, () => {
-      console.info('Properties: init')
+  __init () {
+    return PropertiesCache.get([], FILE_CACHE, () => this.__initGo())
+  }
 
-      const read = new PropertiesRead(designs)
-      const items = new PropertiesItems(read.get())
+  /**
+   * Generating a base file for work
+   *
+   * Генерируется базовый файл для работы
+   * @return {Object<string, *>}
+   * @private
+   */
+  __initGo () {
+    console.info('Properties: init')
 
-      const full = new PropertiesToFull(items)
-      const rename = new PropertiesToRename(items)
-      const sub = new PropertiesToSub(items)
-      const value = new PropertiesToVar(items)
-      const variable = new PropertiesToVariable(items)
+    const read = new PropertiesRead(this.designs)
+    const items = new PropertiesItems(read.get())
 
-      full.toFullValueFix()
-      variable.to()
-      variable.toByLink()
-      sub.toByLink()
+    const full = new PropertiesToFull(items)
+    const rename = new PropertiesToRename(items)
+    const sub = new PropertiesToSub(items)
+    const value = new PropertiesToVar(items)
+    const variable = new PropertiesToVariable(items)
 
-      new PropertiesToLink(items).to()
+    full.toFullValueFix()
+    variable.to()
+    variable.toByLink()
+    sub.toByLink()
 
-      full.toFullValue()
-      full.toFullValueByDesign()
-      variable.toByVar()
-      sub.to()
+    new PropertiesToLink(items).to()
 
-      rename.to()
-      new PropertiesToMulti(items).to()
+    full.toFullValue()
+    full.toFullValueByDesign()
+    variable.toByVar()
+    sub.to()
 
-      rename.toByVar()
-      value.to()
-      value.toImportant()
+    rename.to()
+    new PropertiesToMulti(items).to()
 
-      rename.toByComponent()
-      rename.toBySimilar()
+    rename.toByVar()
+    value.to()
+    value.toImportant()
 
-      return items.get()
-    })
+    rename.toByComponent()
+    rename.toBySimilar()
+
+    return items.get()
   }
 }

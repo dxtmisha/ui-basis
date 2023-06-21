@@ -91,6 +91,9 @@
       }
     }
   },
+  "media|sm": {
+    "width": "240px"
+  },
   "media|{ref.screen.sm}": {
     "color": "green"
   },

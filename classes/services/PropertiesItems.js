@@ -106,6 +106,25 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Returns a list of information about media file list
+   *
+   * Возвращает список информации о списках медиафайлов
+   * @return {Object<string,Object<string,*>>}
+   */
+  getItemForMedia () {
+    const data = {}
+
+    this.findCategory('media')
+      .forEach(property => {
+        if (typeof property.item?.value === 'object') {
+          Object.assign(data, property.item.value)
+        }
+      })
+
+    return data
+  }
+
+  /**
    * Caching the result
    *
    * Читает результата из кеш

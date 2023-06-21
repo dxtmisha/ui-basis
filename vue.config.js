@@ -1,3 +1,3 @@
-const uiConfig = require('./functions/uiConfig')
+const uiConfig = require('./uses/uiConfig')
 
 module.exports = uiConfig({})
