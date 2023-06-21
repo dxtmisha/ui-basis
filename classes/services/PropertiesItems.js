@@ -7,6 +7,8 @@ const { To } = require('../To')
 const PropertiesCache = require('./PropertiesCache')
 const PropertiesTool = require('./PropertiesTool')
 
+let step = 10
+
 /**
  * Class for working with a list of all properties
  *
@@ -272,7 +274,7 @@ module.exports = class PropertiesItems {
    * @return {PropertiesItems}
    */
   cache (name, data = this.properties, extension = 'json') {
-    PropertiesCache.create([], name, data, extension)
+    PropertiesCache.create([], `step--${step++}__${name}`, data, extension)
 
     return this
   }

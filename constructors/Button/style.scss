@@ -1,0 +1,7 @@
+@import "../../styles/properties";
+
+@mixin initButtonDesign($component: 'design.button') {
+  @include initDesign($component) {
+    @content;
+  }
+}

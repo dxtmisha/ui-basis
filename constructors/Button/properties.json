@@ -1,0 +1,25 @@
+{
+  "background-color": {
+    "value": "none",
+    "_rename": "palette-background"
+  },
+  "hover": {},
+  "active": {},
+  "focus": {},
+  "dragged": {},
+  "selected": {},
+  "readonly": {},
+  "disabled": {},
+  "progress": {},
+  "align": {
+    "left": {
+      "_variable": "state"
+    },
+    "right": {
+      "_variable": "state"
+    },
+    "center": {
+      "_variable": "state"
+    }
+  }
+}

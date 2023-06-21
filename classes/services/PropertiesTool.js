@@ -11,6 +11,7 @@ const KEY_VARIABLE = '_variable'
 const KEY_CSS = '_css'
 const KEY_FULL = '_fullName'
 const KEY_FULL_VALUE = '_fullValue'
+const KEY_PATH = '_path'
 
 const KEYS_SPECIAL = [
   'value',
@@ -23,7 +24,8 @@ const KEYS_SPECIAL = [
   KEY_VARIABLE,
   KEY_CSS,
   KEY_FULL,
-  KEY_FULL_VALUE
+  KEY_FULL_VALUE,
+  KEY_PATH
 ]
 
 module.exports = class PropertiesTool {
@@ -218,6 +220,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyFullValue () {
     return KEY_FULL_VALUE
+  }
+
+  /**
+   * Returns the key by which the path to the file is stored
+   *
+   * Возвращает ключ, по которому хранится путь к файлу
+   * @return {string}
+   */
+  static getKeyPath () {
+    return KEY_PATH
   }
 
   /**

@@ -189,6 +189,7 @@ export class GeoIntl extends GeoIntlStatic {
       }
     })
   }
+  // TODO: Необходимо добавить параметр "предел", чтобы вывод был в формате обычной даты
 
   date (value: IntlDateType): ComputedRef<string>
   date (value: IntlDateType, type: GeoDateType): ComputedRef<string>

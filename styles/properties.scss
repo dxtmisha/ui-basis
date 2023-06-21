@@ -28,7 +28,7 @@ $designsInit: false !default;
 ///
 /// Генерация стилей для компонента
 /// @param {String} $component
-@mixin initDesign($component) {
+@mixin initDesign($component: 'design.component') {
   $designsValues: getProperties($component) !global;
   $designsInit: false !global;
 

@@ -106,7 +106,12 @@ module.exports = class PropertiesRead {
     info.forEach(item => {
       if (item.properties) {
         replaceRecursive(data, this.__toStandard({
-          [item.design]: { [item.component]: item.properties }
+          [item.design]: {
+            [item.component]: {
+              [PropertiesTool.getKeyPath()]: item.path,
+              ...item.properties
+            }
+          }
         }))
       }
     })
