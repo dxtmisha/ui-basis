@@ -4,6 +4,8 @@ const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
+const KEY_PROPS = '_props'
+const KEY_STYLE = '_style'
 const KEY_DEFAULT = '_default'
 const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
@@ -18,6 +20,8 @@ const KEYS_SPECIAL = [
   'type',
   KEY_NAME,
   KEY_CATEGORY,
+  KEY_PROPS,
+  KEY_STYLE,
   KEY_DEFAULT,
   KEY_IMPORTANT,
   KEY_RENAME,
@@ -150,6 +154,26 @@ module.exports = class PropertiesTool {
    */
   static getKeyCategory () {
     return KEY_CATEGORY
+  }
+
+  /**
+   * Returns the key for write control in props
+   *
+   * Возвращает ключ для контроля записи в props
+   * @return {string}
+   */
+  static getKeyProps () {
+    return KEY_PROPS
+  }
+
+  /**
+   * Returns the key to determine if the property is available for setting values in styles
+   *
+   * Возвращает ключ для определения, доступно ли свойство для установки значений в стилях
+   * @return {string}
+   */
+  static getKeyStyle () {
+    return KEY_STYLE
   }
 
   /**

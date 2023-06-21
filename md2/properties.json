@@ -848,7 +848,14 @@
   "button": {
     "padding-left": "{ref.spacing.4}",
     "padding-right": "{ref.spacing.4}",
-    "height": "{ref.spacing.9}",
+    "height": {
+      "sm": "{ref.spacing.7}",
+      "md": "{ref.spacing.9}",
+      "lg": "{ref.spacing.12}",
+      "border-radius": {
+        "color": "{ref.spacing.2}"
+      }
+    },
     "font": "{font.button}",
     "border-radius": "{ref.spacing.1}",
     "contained": {

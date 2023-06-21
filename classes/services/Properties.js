@@ -30,6 +30,16 @@ module.exports = class Properties {
   }
 
   /**
+   * Returns a PropertiesItems object for working with the list of properties
+   *
+   * Возвращает объект PropertiesItems для работы со списком свойств
+   * @return {PropertiesItems}
+   */
+  get () {
+    return this.items
+  }
+
+  /**
    * Getting structured data for use in an SCSS file
    *
    * Получение структурированных данных для работы в SCSS файле
