@@ -75,7 +75,7 @@ const getChainWebpack = (configUser) => {
  * Получение объекта для конфигурации
  * @param {Object<string,*>|(() => Object<string,*>)} config конфигурацию
  */
-module.exports = function uiConfig (
+module.exports = function designConfig (
   config = {}
 ) {
   let data = getConfig(config)

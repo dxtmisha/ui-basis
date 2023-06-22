@@ -6,10 +6,20 @@ const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesComponent = require('./PropertiesComponent')
 
-const EXP_VUE = /(new \w*Design ?\([^)]*\))/
-const EXP_STYLE = /(@include \w*Design(?! ?\())/
+const EXP_VUE = /(new \w*Design *\([^)]*\))/
+const EXP_STYLE = /(@include *\w*Design(?! *\())/
 
+/**
+ * Class for managing content in the code
+ *
+ * Класс для управления содержимым в коде
+ */
 module.exports = class DesignLoader {
+  /**
+   * Constructor
+   * @param {string} path filename / имя файла
+   * @param {string} source content in file  / содержимое в файле
+   */
   constructor (
     path,
     source
@@ -23,6 +33,12 @@ module.exports = class DesignLoader {
     this.component = To.kebabCase(dirs[dirs.length - 1])
   }
 
+  /**
+   * Starting code processing
+   *
+   * Начало обработки кода
+   * @return {string}
+   */
   to () {
     if (this.__isComponent()) {
       if (this.__isVue()) {
@@ -46,10 +62,24 @@ module.exports = class DesignLoader {
     return PropertiesTool.getDesignsByEnv().indexOf(this.design) !== -1
   }
 
+  /**
+   * Checking if this is a part of the style
+   *
+   * Проверка, является ли это частью стиля
+   * @return {boolean}
+   * @private
+   */
   __isVue () {
     return !!this.source.match(EXP_VUE)
   }
 
+  /**
+   * Checking if this is a part of the code
+   *
+   * Проверка, является ли это частью кода
+   * @return {boolean}
+   * @private
+   */
   __isStyle () {
     return !!this.source.match(EXP_STYLE)
   }
@@ -65,6 +95,13 @@ module.exports = class DesignLoader {
     return `${this.design}.${this.component}`
   }
 
+  /**
+   * Adding label of name and properties to the code
+   *
+   * Добавление метки имени и свойств к коду
+   * @return {string}
+   * @private
+   */
   __toVue () {
     const component = new PropertiesComponent(this.__getName())
 
@@ -83,6 +120,13 @@ module.exports = class DesignLoader {
     return source
   }
 
+  /**
+   * Adding a label to styles to indicate the component name
+   *
+   * Добавление метки к стилям для обозначения названия компонента
+   * @return {string}
+   * @private
+   */
   __toStyle () {
     const component = new PropertiesComponent(this.__getName())
 
