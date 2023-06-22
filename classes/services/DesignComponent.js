@@ -5,11 +5,6 @@ const PropertiesFiles = require('./PropertiesFiles')
 
 const DIR_SAMPLE = [__dirname, '..', '..', 'media', 'templates', 'component']
 
-const FILE_INDEX = 'index.vue'
-const FILE_PROPS = 'props.ts'
-const FILE_PROPS_DESIGN = 'props.design.ts'
-const FILE_PROPERTIES = 'properties.json'
-
 /**
  * Class for creating a component or updating data
  *
@@ -76,7 +71,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readIndex () {
-    return PropertiesFiles.readFile([...this.dir, FILE_INDEX])
+    return PropertiesFiles.readFile([...this.dir, this.component.getFileIndex()])
   }
 
   /**
@@ -87,7 +82,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleIndex () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, FILE_INDEX])
+    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileIndex()])
   }
 
   /**
@@ -98,7 +93,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleProps () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, FILE_PROPS])
+    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileProps()])
   }
 
   /**
@@ -109,7 +104,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSamplePropsDesign () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, FILE_PROPS_DESIGN])
+    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFilePropsDesign()])
   }
 
   /**
@@ -120,7 +115,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleProperties () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, FILE_PROPERTIES])
+    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileProperties()])
   }
 
   /**
@@ -145,9 +140,10 @@ module.exports = class DesignComponent {
    * @private
    */
   __initIndex () {
+    const file = this.component.getFileIndex()
     let sample
 
-    if (this.__isFile(FILE_INDEX)) {
+    if (this.__isFile(file)) {
       sample = this.__readIndex()
         .replace(
           /(name: ?['"])([^'"]+)(['"],? ?\/\/ name component)/,
@@ -159,7 +155,7 @@ module.exports = class DesignComponent {
         .replace('DesignComponent', this.component.getName())
     }
 
-    this.__createFile(FILE_INDEX, sample)
+    this.__createFile(file, sample)
 
     return this
   }
@@ -172,10 +168,12 @@ module.exports = class DesignComponent {
    * @private
    */
   __initProps () {
-    if (!this.__isFile(FILE_PROPS)) {
+    const file = this.component.getFileProps()
+
+    if (!this.__isFile(file)) {
       const sample = this.__readSampleProps()
 
-      this.__createFile(FILE_PROPS, sample)
+      this.__createFile(file, sample)
     }
 
     return this
@@ -190,7 +188,7 @@ module.exports = class DesignComponent {
    */
   __initPropsDesign () {
     let sample = this.__readSamplePropsDesign()
-    const props = this.component.getByProps()
+    const props = this.component.getProps()
     const templates = {
       sample: []
     }
@@ -210,7 +208,7 @@ module.exports = class DesignComponent {
       sample = sample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
     }
 
-    this.__createFile(FILE_PROPS_DESIGN, sample)
+    this.__createFile(this.component.getFilePropsDesign(), sample)
 
     return this
   }
@@ -271,10 +269,12 @@ module.exports = class DesignComponent {
    * @private
    */
   __initProperties () {
-    if (!this.__isFile(FILE_PROPERTIES)) {
+    const file = this.component.getFileProperties()
+
+    if (!this.__isFile(file)) {
       const sample = this.__readSampleProperties()
 
-      this.__createFile(FILE_PROPERTIES, sample)
+      this.__createFile(file, sample)
     }
 
     return this

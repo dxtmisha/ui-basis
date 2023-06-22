@@ -1,8 +1,9 @@
 const { forEach } = require('../../functions/data')
 
+const { To } = require('../To')
+
 const Properties = require('./Properties')
 const PropertiesTool = require('./PropertiesTool')
-const { To } = require('../To')
 
 /**
  * List available for addition to props
@@ -15,6 +16,11 @@ const LIST_PROPS = [
   'focus',
   'read-only'
 ]
+
+const FILE_INDEX = 'index.vue'
+const FILE_PROPS = 'props.ts'
+const FILE_PROPS_DESIGN = 'props.design.ts'
+const FILE_PROPERTIES = 'properties.json'
 
 /**
  * Class for preparing data for components
@@ -45,9 +51,9 @@ module.exports = class PropertiesComponent {
    * Returns the property available for props
    *
    * Возвращает свойство, доступное для props
-   * @return {{value:(string|boolean)[], name:string, style:boolean, default:boolean}}
+   * @return {{name:string, value:(string|boolean)[], style?:boolean, default?:boolean}}
    */
-  getByProps () {
+  getProps () {
     const keyDefault = PropertiesTool.getKeyDefault()
     const properties = {}
 
@@ -97,6 +103,66 @@ module.exports = class PropertiesComponent {
    */
   getName () {
     return To.camelCaseFirst(`${this.getDesign()}${this.getComponent()}`)
+  }
+
+  /**
+   * Returns the full name of the component in lower case
+   *
+   * Возвращает полное название компонента в нижнем регистре
+   * @return {string}
+   */
+  getNameLower () {
+    return To.kebabCase(this.getName())
+  }
+
+  /**
+   * Returns the full name of the component as a path to a list of properties
+   *
+   * Возвращает полное название компонента в виде пути к списку свойств
+   * @return {string}
+   */
+  getNameForStyle () {
+    return To.kebabCase(`${this.getDesign()}.${this.getComponent()}`)
+  }
+
+  /**
+   * Returns the filename index
+   *
+   * Возвращает название файла index
+   * @return {string}
+   */
+  getFileIndex () {
+    return FILE_INDEX
+  }
+
+  /**
+   * Returns the filename props
+   *
+   * Возвращает название файла props
+   * @return {string}
+   */
+  getFileProps () {
+    return FILE_PROPS
+  }
+
+  /**
+   * Returns the filename props.design
+   *
+   * Возвращает название файла props.design
+   * @return {string}
+   */
+  getFilePropsDesign () {
+    return FILE_PROPS_DESIGN
+  }
+
+  /**
+   * Returns the filename properties
+   *
+   * Возвращает название файла properties
+   * @return {string}
+   */
+  getFileProperties () {
+    return FILE_PROPERTIES
   }
 
   /**

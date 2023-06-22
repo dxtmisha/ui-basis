@@ -1,6 +1,7 @@
 const PropertiesCache = require('./PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
+const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
@@ -22,11 +23,17 @@ const FILE_CACHE = 'properties'
 module.exports = class Properties {
   /**
    * Constructor
+   * @param {boolean} cache enabling caching / включение кэширования
    * @param {string[]} designs list of design names / список названий дизайнов
    */
-  constructor (designs = undefined) {
-    this.designs = designs || this.__getDesignsByEnv()
-    this.items = new PropertiesItems(this.__init())
+  constructor (
+    cache = true,
+    designs = undefined
+  ) {
+    this.designs = designs || PropertiesTool.getDesignsByEnv()
+    this.items = new PropertiesItems(
+      cache ? this.__initCache() : this.__init()
+    )
   }
 
   /**
@@ -50,18 +57,6 @@ module.exports = class Properties {
   }
 
   /**
-   * This method returns the names of designs from the environment variable (env)
-   *
-   * Данный метод возвращает названия дизайнов из переменной окружения (env)
-   * @return {string[]}
-   * @private
-   */
-  __getDesignsByEnv () {
-    const designs = process.env.VUE_APP_DESIGNS
-    return designs?.toString()?.split(',') || []
-  }
-
-  /**
    * Entry point for generating a file to work with data from JSON
    *
    * Точка входа для генерации файла для работы с данными из JSON
@@ -69,6 +64,20 @@ module.exports = class Properties {
    * @private
    */
   __init () {
+    const data = this.__initGo()
+
+    PropertiesCache.create([], FILE_CACHE, data)
+    return data
+  }
+
+  /**
+   * Entry point for generating a file to work with data from JSON (caching)
+   *
+   * Точка входа для генерации файла для работы с данными из JSON (кеширование)
+   * @return {Object<string, *>}
+   * @private
+   */
+  __initCache () {
     return PropertiesCache.get([], FILE_CACHE, () => this.__initGo())
   }
 

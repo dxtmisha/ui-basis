@@ -2,7 +2,7 @@ const { To } = require('../To')
 
 const PropertiesFiles = require('./PropertiesFiles')
 
-const CACHE_STATUS = false
+const CACHE_STATUS = true
 const DIR_CACHE = ['cache']
 
 /**

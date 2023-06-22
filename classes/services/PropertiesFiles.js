@@ -54,6 +54,28 @@ module.exports = class PropertiesFiles {
   }
 
   /**
+   * Method returns an object whose properties represent significant elements of the path
+   *
+   * Метод возвращает объект, свойства которого представляют существенные элементы пути
+   * @param {string} path filename / имя файла
+   * @return {ParsedPath}
+   */
+  static parse (path) {
+    return requirePath.parse(path)
+  }
+
+  /**
+   * The method splits the path into an array of components
+   *
+   * Метод разбивает путь на массив компонентов
+   * @param {string} path path to the directory / путь к директории
+   * @return {string[]}
+   */
+  static splitForDir (path) {
+    return (this.parse(path)?.dir || '').split(requirePath.sep)
+  }
+
+  /**
    * Reads the contents of the directory
    *
    * Читает содержимое директории

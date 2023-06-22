@@ -41,7 +41,7 @@ const getPropertiesScss = (config) => {
     css: {
       loaderOptions: {
         scss: {
-          additionalData: `${(new Properties()).getScss()}\r\n${getScss(config)}`
+          additionalData: `${(new Properties(false)).getScss()}\r\n${getScss(config)}`
         }
       }
     }
@@ -62,8 +62,9 @@ const getChainWebpack = (configUser) => {
 
       config.module
         .rule('vue')
-        .use('ui-vue-loader')
-        .loader('./uses/loaders/ui-vue-loader.js')
+        .use('design-loader')
+        .loader('./uses/loaders/design-loader.js')
+        .before('vue-loader')
     }
   }
 }
