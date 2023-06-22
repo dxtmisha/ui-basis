@@ -3,7 +3,7 @@ const { To } = require('../To')
 const PropertiesFiles = require('./PropertiesFiles')
 
 const CACHE_STATUS = false
-const DIR_CACHE = ['..', '..', 'cache']
+const DIR_CACHE = ['cache']
 
 /**
  * Processing for storing temporary files
@@ -83,6 +83,6 @@ module.exports = class PropertiesCache {
    * @private
    */
   static __getPath (path) {
-    return [__dirname, ...DIR_CACHE, ...To.array(path)]
+    return [PropertiesFiles.getRoot(), ...DIR_CACHE, ...To.array(path)]
   }
 }

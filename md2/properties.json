@@ -870,7 +870,8 @@
       "border-color": "{sys.palette.outline}"
     },
     "text": {
-      "color": "{sys.palette.primary}"
+      "color": "{sys.palette.primary}",
+      "_props-name": "less-pronounced"
     }
   }
 }

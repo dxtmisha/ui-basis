@@ -105,9 +105,9 @@ class To {
   }
 
   /**
-     * Convert a String to Camel Case
+     * Convert a String to Camel Case (upper)
      *
-     * Преобразование строки в Camel Case
+     * Преобразование строки в Camel Case (upper)
      * @param value value / значения
      */
   static camelCase (value) {
@@ -132,9 +132,9 @@ class To {
   }
 
   /**
-     * Convert a string to kebab case
+     * Convert a string to kebab case (lower)
      *
-     * Преобразование строки в kebab case
+     * Преобразование строки в kebab case (lower)
      * @param value value / значения
      */
   static kebabCase (value) {

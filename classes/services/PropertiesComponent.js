@@ -2,6 +2,7 @@ const { forEach } = require('../../functions/data')
 
 const Properties = require('./Properties')
 const PropertiesTool = require('./PropertiesTool')
+const { To } = require('../To')
 
 /**
  * List available for addition to props
@@ -44,10 +45,9 @@ module.exports = class PropertiesComponent {
    * Returns the property available for props
    *
    * Возвращает свойство, доступное для props
-   * @return {{value:(string|boolean)[], _style:boolean, _default:boolean}}
+   * @return {{value:(string|boolean)[], name:string, style:boolean, default:boolean}}
    */
   getByProps () {
-    const keyStyle = PropertiesTool.getKeyStyle()
     const keyDefault = PropertiesTool.getKeyDefault()
     const properties = {}
 
@@ -57,8 +57,9 @@ module.exports = class PropertiesComponent {
 
         properties[name] = {
           value,
-          [keyStyle]: this.__isStyle(item, value),
-          [keyDefault]: item?.[keyDefault]
+          name: this.__toName(item, name),
+          style: this.__isStyle(item, value),
+          default: item?.[keyDefault]
         }
       }
     })
@@ -73,7 +74,29 @@ module.exports = class PropertiesComponent {
    * @return {string}
    */
   getDesign () {
-    return this.name.match(/^[^.]+/)?.[0] || 'd'
+    return To.kebabCase(this.name.match(/^[^.]+/)?.[0] || 'd')
+  }
+
+  /**
+   * Returns the name of the component
+   *
+   * Возвращает название компонента
+   * @return {string}
+   */
+  getComponent () {
+    return To.camelCaseFirst(
+      this.name.replace(/^([^.]+\.)(.*?)$/, '$2') || 'component'
+    )
+  }
+
+  /**
+   * Returns the full name of the component
+   *
+   * Возвращает полное название компонента
+   * @return {string}
+   */
+  getName () {
+    return To.camelCaseFirst(`${this.getDesign()}${this.getComponent()}`)
   }
 
   /**
@@ -104,6 +127,21 @@ module.exports = class PropertiesComponent {
    */
   __isStyle (item, value) {
     return item?.[PropertiesTool.getKeyStyle()] !== false && value?.[0] !== true
+  }
+
+  /**
+   * Returns a formatted string with the property name
+   *
+   * Возвращает отформатированную строку с названием свойства
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @param {string} name name of the name / название имени
+   * @return {string}
+   * @private
+   */
+  __toName (item, name) {
+    return To.camelCase(
+      item?.[PropertiesTool.getKeyPropsName()] || name
+    )
   }
 
   /**

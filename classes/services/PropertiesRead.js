@@ -159,6 +159,7 @@ module.exports = class PropertiesRead {
   __getDesignPath (name) {
     const path = name === 'd' ? 'constructors' : name
 
+    // TODO: Необходимо проверить, правильно ли будет работать путь при подключении модуля
     return [
       [__dirname, '..', '..', path],
       [__dirname, '..', '..', '..', '..', path]

@@ -5,14 +5,15 @@ const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
 const KEY_PROPS = '_props'
+const KEY_PROPS_NAME = '_props-name'
 const KEY_STYLE = '_style'
 const KEY_DEFAULT = '_default'
 const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
 const KEY_VARIABLE = '_variable'
 const KEY_CSS = '_css'
-const KEY_FULL = '_fullName'
-const KEY_FULL_VALUE = '_fullValue'
+const KEY_FULL = '_full-name'
+const KEY_FULL_VALUE = '_full-value'
 const KEY_PATH = '_path'
 
 const KEYS_SPECIAL = [
@@ -21,6 +22,7 @@ const KEYS_SPECIAL = [
   KEY_NAME,
   KEY_CATEGORY,
   KEY_PROPS,
+  KEY_PROPS_NAME,
   KEY_STYLE,
   KEY_DEFAULT,
   KEY_IMPORTANT,
@@ -164,6 +166,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyProps () {
     return KEY_PROPS
+  }
+
+  /**
+   * Returns a key for renaming a property in props
+   *
+   * Возвращает ключ для переименования свойства в props
+   * @return {string}
+   */
+  static getKeyPropsName () {
+    return KEY_PROPS_NAME
   }
 
   /**

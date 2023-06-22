@@ -9,6 +9,8 @@ const requirePath = require('path')
  * Класс для работы с файлами
  */
 module.exports = class PropertiesFiles {
+  static root
+
   /**
    * The fs.existsSync() method is used to synchronously check if a file already
    * exists in the given path or not. It returns a boolean value which indicates
@@ -136,7 +138,17 @@ module.exports = class PropertiesFiles {
    * @return {string}
    */
   static getFileName (name, extension = 'json') {
-    return `${To.kebabCase(name)}.${extension}`
+    return `${To.kebabCase(name)}${extension === '' ? '' : `.${extension}`}`
+  }
+
+  /**
+   * Returns the root path
+   *
+   * Возвращает корневой путь
+   * @return {string}
+   */
+  static getRoot () {
+    return this.root
   }
 
   /**
@@ -159,5 +171,26 @@ module.exports = class PropertiesFiles {
         }
       )
     })
+  }
+
+  /**
+   * Initializing root path
+   *
+   * Инициализация корневого пути
+   * @return {this}
+   * @private
+   */
+  static __initRoot () {
+    if (__dirname.match('node_modules')) {
+      this.root = __dirname.replace(/node_modules.*?$/, '')
+    } else {
+      this.root = this.joinPath([__dirname, '..', '..'])
+    }
+
+    return this
+  }
+
+  static {
+    this.__initRoot()
   }
 }
