@@ -8,8 +8,7 @@ export default defineComponent({
   name: 'Md2Button', // name component
   props,
   setup (props, context) {
-    console.log('asd')
-    return new Design(props, context).setup({})
+    return new Design(props, context).setup()
   }
 })
 </script>
