@@ -29,11 +29,20 @@ module.exports = class PropertiesToMulti {
 
     this.__getList().forEach(({
       item,
+      index,
       name,
+      design,
+      component,
       value
     }) => {
-      item[key] = 'state'
       this.__toGo(name, value)
+
+      item[key] = 'state'
+      value[`sys-multi-${name}`] = {
+        value: PropertiesTool.toFullForName(`var(--??s-${index})`, design, component),
+        [PropertiesTool.getKeyName()]: name,
+        [key]: 'property'
+      }
     })
 
     this.items.cache(FILE_CACHE_MULTI)
@@ -47,7 +56,10 @@ module.exports = class PropertiesToMulti {
    * Возвращает список свойств с множеством значений
    * @return {{
    *   item: Object<string,*>,
+   *   index: string,
    *   name: string,
+   *   design: string,
+   *   component: string,
    *   value: Object<string,*>
    * }[]}
    * @private
@@ -56,14 +68,22 @@ module.exports = class PropertiesToMulti {
     const keyName = PropertiesTool.getKeyName()
     const keyVariable = PropertiesTool.getKeyVariable()
 
-    return this.items.each(({ item }) => {
+    return this.items.each(({
+      item,
+      name,
+      design,
+      component
+    }) => {
       if (
         item?.[keyVariable] === 'property' &&
         typeof item?.value === 'object'
       ) {
         return {
           item,
+          index: name,
           name: item?.[keyName],
+          design,
+          component,
           value: item.value
         }
       }
@@ -84,7 +104,8 @@ module.exports = class PropertiesToMulti {
 
     forEach(properties, item => {
       if (
-        typeof item?.value !== 'object'
+        typeof item?.value !== 'object' &&
+        ['state', 'var'].indexOf(item[keyVariable]) !== -1
       ) {
         item[keyVariable] = 'state'
         item.value = {

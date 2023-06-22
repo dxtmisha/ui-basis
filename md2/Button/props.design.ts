@@ -2,7 +2,7 @@ import { PropType } from 'vue'
 
 export const propsDesign = {
   height: {
-    type: [String] as PropType<'sm' | 'md' | 'lg' | 'border-radius'>
+    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true>
   },
   contained: {
     type: [Boolean]
@@ -10,7 +10,7 @@ export const propsDesign = {
   outlined: {
     type: [Boolean]
   },
-  lessPronounced: {
+  text: {
     type: [Boolean]
   }
 }

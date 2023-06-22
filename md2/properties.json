@@ -852,9 +852,7 @@
       "sm": "{ref.spacing.7}",
       "md": "{ref.spacing.9}",
       "lg": "{ref.spacing.12}",
-      "border-radius": {
-        "color": "{ref.spacing.2}"
-      }
+      "border-color": "{ref.spacing.2}"
     },
     "font": "{font.button}",
     "border-radius": "{ref.spacing.1}",
@@ -870,8 +868,7 @@
       "border-color": "{sys.palette.outline}"
     },
     "text": {
-      "color": "{sys.palette.primary}",
-      "_props-name": "less-pronounced"
+      "color": "{sys.palette.primary}"
     }
   }
 }

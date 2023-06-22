@@ -24,21 +24,23 @@ module.exports = class PropertiesScss {
    * @return {string}
    */
   get () {
+    const data = this.__get()
+
+    this.items.cache(FILE_CACHE_SCSS, data, 'scss')
+
+    return data
+  }
+
+  /**
+   * Returns a formatted string for SCSS
+   *
+   * Возвращает отформатированную строку для SCSS
+   * @return {string}
+   */
+  getCache () {
     return this.items.getCache(
       FILE_CACHE_SCSS,
-      () => {
-        let data = ''
-
-        console.info('PropertiesScss: init')
-
-        data += `${this.getRoot()}\r\n`
-        data += `${this.getMedia()}\r\n`
-        data += `${this.getDesigns()}\r\n`
-        data += `${this.getClasses()}\r\n`
-        data += `${this.getProperties()}\r\n`
-
-        return data
-      },
+      () => this.__get(),
       'scss'
     )
   }
@@ -92,6 +94,27 @@ module.exports = class PropertiesScss {
    */
   getProperties () {
     return `$designsProperties: (${this.__toGo(this.items.get())});`
+  }
+
+  /**
+   * Returns a formatted string for SCSS
+   *
+   * Возвращает отформатированную строку для SCSS
+   * @return {string}
+   * @private
+   */
+  __get () {
+    let data = ''
+
+    console.info('PropertiesScss: init')
+
+    data += `${this.getRoot()}\r\n`
+    data += `${this.getMedia()}\r\n`
+    data += `${this.getDesigns()}\r\n`
+    data += `${this.getClasses()}\r\n`
+    data += `${this.getProperties()}\r\n`
+
+    return data
   }
 
   /**

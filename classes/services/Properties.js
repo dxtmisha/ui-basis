@@ -30,6 +30,7 @@ module.exports = class Properties {
     cache = true,
     designs = undefined
   ) {
+    this.cache = cache
     this.designs = designs || PropertiesTool.getDesignsByEnv()
     this.items = new PropertiesItems(
       cache ? this.__initCache() : this.__init()
