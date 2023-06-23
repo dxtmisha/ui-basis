@@ -1,4 +1,7 @@
-const { forEach } = require('../../functions/data')
+const {
+  forEach,
+  uniqueArray
+} = require('../../functions/data')
 
 const { To } = require('../To')
 
@@ -29,6 +32,22 @@ const FILE_PROPERTIES = 'properties.json'
  */
 module.exports = class PropertiesComponent {
   /**
+   * @type {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   map:{
+   *     index:string,
+   *     value:(string|boolean),
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>}
+   */
+  props
+
+  /**
    * Constructor
    * @param {string} name component name / названия компонента
    * @param {boolean} cache enabling caching / включение кэширования
@@ -52,30 +71,79 @@ module.exports = class PropertiesComponent {
   }
 
   /**
-   * Returns the property available for props
+   * Returns records that meet state conditions
    *
-   * Возвращает свойство, доступное для props
-   * @return {{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}}
+   * Возвращает записи, удовлетворяющие условиям состояния
+   * @param {Object<string,*>} data input data / входной данный
+   * @return {{index:string,item:Object<string,*>}[]}
    */
-  getProps () {
-    const keyDefault = PropertiesTool.getKeyDefault()
-    const properties = {}
+  getState (data = this.get()?.value) {
+    const properties = []
 
-    forEach(this.get()?.value, (item, name) => {
+    forEach(data, (item, index) => {
       if (this.__isProps(item)) {
-        const value = this.__toValue(item?.value)
-
-        properties[name] = {
-          index: name,
-          name: this.__toName(item, name),
-          value,
-          style: this.__isStyle(item, value),
-          default: item?.[keyDefault]
-        }
+        properties.push({
+          index,
+          item
+        })
       }
     })
 
     return properties
+  }
+
+  /**
+   * Returns records that meet state conditions and already exist in props
+   *
+   * Возвращает записи, удовлетворяющие условиям состояния и уже находящиеся в props
+   * @param {Object<string,*>} data input data / входной данный
+   * @return {{
+   *   index:string,
+   *   item:Object<string,*>,
+   *   props: {
+   *     index:string,
+   *     name:string,
+   *     value:(string|boolean)[],
+   *     map:{
+   *       index:string,
+   *       value:(string|boolean),
+   *       state:Object<string,*>[]
+   *     }[],
+   *     style?:boolean,
+   *     default?:boolean
+   *   }
+   * }[]}
+   */
+  getStateOnly (data = this.get()?.value) {
+    return forEach(this.getState(data), ({
+      index,
+      item
+    }) => {
+      if (index in this.props) {
+        return {
+          index,
+          item,
+          props: this.props[index]
+        }
+      }
+    }, true)
+  }
+
+  /**
+   * Returns the property available for props
+   *
+   * Возвращает свойство, доступное для props
+   * @return {Object<string,{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}>}
+   */
+  getProps () {
+    if (this.props === undefined) {
+      this.props = this.__getProps()
+
+      this.__toPropsValue()
+        .__toPropsUpdate()
+    }
+
+    return this.props
   }
 
   /**
@@ -212,6 +280,18 @@ module.exports = class PropertiesComponent {
   }
 
   /**
+   * Is the property a state type
+   *
+   * Является ли свойство типом состояния
+   * @param {(string|boolean)[]} value
+   * @return {boolean}
+   * @private
+   */
+  __isState (value) {
+    return value.indexOf(true) !== -1
+  }
+
+  /**
    * Does this property belong to the class
    *
    * Является ли это свойство частью класса
@@ -234,6 +314,138 @@ module.exports = class PropertiesComponent {
    */
   __isStyle (item, value) {
     return item?.[PropertiesTool.getKeyStyle()] !== false && value?.[0] !== true
+  }
+
+  /**
+   * Retrieves all properties for preparing data filling
+   *
+   * Получает все свойства для подготовки заполнения данными
+   * @return {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   map:{
+   *     index:string,
+   *     name:string,
+   *     value:(string|boolean),
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>}
+   * @private
+   */
+  __getProps () {
+    const keyDefault = PropertiesTool.getKeyDefault()
+    const properties = {}
+
+    this.getState().forEach(({
+      index,
+      item
+    }) => {
+      properties[index] = {
+        index,
+        name: this.__toName(item, index),
+        value: [],
+        map: [],
+        style: undefined,
+        default: item?.[keyDefault]
+      }
+    })
+
+    return properties
+  }
+
+  /**
+   * Gets all possible values
+   *
+   * Получает всех возможных значения
+   * @param {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   map:{
+   *     index:string,
+   *     value:(string|boolean),
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>} properties
+   * @param {Object<string,*>} data
+   * @return {this}
+   * @private
+   */
+  __toPropsValue (data = this.get()?.value) {
+    this.getStateOnly(data).forEach(({
+      item,
+      props
+    }) => {
+      const value = this.__toValue(item?.value)
+
+      props.value.push(...value)
+
+      if (this.__isState(value)) {
+        this.__toPropsValue(item.value)
+      }
+    })
+
+    return this
+  }
+
+  /**
+   * Updates values by removing duplicates and updating the style property value
+   *
+   * Обновляет значения, удаляя все повторы и обновляя значения свойства style
+   * @return {this}
+   * @private
+   */
+  __toPropsUpdate () {
+    this.getStateOnly().forEach(({
+      item,
+      props
+    }) => {
+      const value = uniqueArray(props.value)
+
+      props.value = value
+      props.style = this.__isStyle(item, value)
+    })
+
+    return this
+  }
+
+  /**
+   * Updates values in a map
+   *
+   * Обновляет значения в карте
+   * @param {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   map:{
+   *     index:string,
+   *     value:(string|boolean),
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>} properties
+   * @param {Object<string,*>} data
+   * @param {{
+   *     index:string,
+   *     value:(string|boolean),
+   *     state:Object<string,*>[]
+   *   }[]} map
+   * @return {this}
+   * @private
+   */
+  __toPropsMap (
+    properties,
+    data = this.get()?.value,
+    map = undefined
+  ) {
+    // Close
+    return this
   }
 
   /**
@@ -260,15 +472,21 @@ module.exports = class PropertiesComponent {
    * @private
    */
   __toValue (properties) {
+    const keyPropsValue = PropertiesTool.getKeyPropsValue()
     const keyVariable = PropertiesTool.getKeyVariable()
     const value = []
     let isTrue = false
 
     forEach(properties, (property, name) => {
-      if (property?.[keyVariable] === 'state') {
-        value.push(name)
-      } else {
-        isTrue = true
+      if (
+        !(name in this.props) ||
+        property?.[keyPropsValue]
+      ) {
+        if (property?.[keyVariable] === 'state') {
+          value.push(name)
+        } else {
+          isTrue = true
+        }
       }
     })
 

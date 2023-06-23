@@ -6,6 +6,7 @@ const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category'
 const KEY_PROPS = '_props'
 const KEY_PROPS_NAME = '_props-name'
+const KEY_PROPS_VALUE = '_props-value'
 const KEY_STYLE = '_style'
 const KEY_DEFAULT = '_default'
 const KEY_IMPORTANT = '_important'
@@ -23,6 +24,7 @@ const KEYS_SPECIAL = [
   KEY_CATEGORY,
   KEY_PROPS,
   KEY_PROPS_NAME,
+  KEY_PROPS_VALUE,
   KEY_STYLE,
   KEY_DEFAULT,
   KEY_IMPORTANT,
@@ -187,6 +189,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyPropsName () {
     return KEY_PROPS_NAME
+  }
+
+  /**
+   * Returns the key for a value in props
+   *
+   * Возвращает ключ для значения в props
+   * @return {string}
+   */
+  static getKeyPropsValue () {
+    return KEY_PROPS_VALUE
   }
 
   /**

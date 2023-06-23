@@ -313,6 +313,16 @@ export function replaceRecursive<T = any> (
 }
 
 /**
+ * Removes duplicate entries in an array
+ *
+ * Удаляет повторяющиеся записи в массиве
+ * @param value
+ */
+export function uniqueArray<T = any> (value: T[]): T[] {
+  return [...new Set(value)]
+}
+
+/**
  * The method creates an array of "count" elements with values equal to "value"
  *
  * Метод создает массив из "count" элементов со значениями равными "value"

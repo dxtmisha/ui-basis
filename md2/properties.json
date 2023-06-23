@@ -863,10 +863,11 @@
         "xl": "{ref.spacing.16}"
       },
       "hover": {
-        "background-image": "{sys.palette.onPrimary}"
+        "gradient": "{sys.palette.onPrimary}",
+        "gradient-opacity": "{sys.opacity.hover}"
       },
       "disabled": {
-        "background-opacity": "{sys.opacity.disabled}"
+        "opacity": "{sys.opacity.disabled}"
       }
     },
     "outlined": {

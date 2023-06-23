@@ -1,5 +1,6 @@
 // import { PropType } from 'vue'
 
-export type subClasses = [/* classes */]
+// TODO: В разработке
+export const subClasses = [/* classes */]
 
 export const propsDesign = { /* sample */ }

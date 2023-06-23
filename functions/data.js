@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isFilled = exports.isNull = void 0
+exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isFilled = exports.isNull = void 0
 /**
  * Is the variable equal to null or undefined
  *
@@ -262,6 +262,16 @@ function replaceRecursive (array, replacement, isMerge = true) {
   return array
 }
 exports.replaceRecursive = replaceRecursive
+/**
+ * Removes duplicate entries in an array
+ *
+ * Удаляет повторяющиеся записи в массиве
+ * @param value
+ */
+function uniqueArray (value) {
+  return [...new Set(value)]
+}
+exports.uniqueArray = uniqueArray
 /**
  * The method creates an array of "count" elements with values equal to "value"
  *

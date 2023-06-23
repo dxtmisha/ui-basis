@@ -1,10 +1,11 @@
 import { PropType } from 'vue'
 
-export type subClasses = ['inscription']
+// TODO: В разработке
+export const subClasses = []
 
 export const propsDesign = {
   height: {
-    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | string>
+    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>
   },
   contained: {
     type: [Boolean]
