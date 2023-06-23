@@ -4,7 +4,7 @@ import { PropType } from 'vue'
 export const subClasses = []
 
 export const propsDesign = {
-  height: {
+  size: {
     type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>,
     default: 'md'
   },

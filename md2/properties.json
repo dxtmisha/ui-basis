@@ -853,7 +853,8 @@
       "md": "{ref.spacing.9}",
       "lg": "{ref.spacing.12}",
       "border-color": "{ref.spacing.2}",
-      "_default": "md"
+      "_default": "md",
+      "_props-name": "size"
     },
     "font": "{font.button}",
     "border-radius": "{ref.spacing.1}",
@@ -873,7 +874,9 @@
     },
     "outlined": {
       "color": "{sys.palette.primary}",
-      "border-color": "{sys.palette.outline}"
+      "border-color": "{sys.palette.outline}",
+      "border-opacity": "{sys.opacity.outline}",
+      "border-width": "1px"
     },
     "text": {
       "color": "{sys.palette.primary}"
