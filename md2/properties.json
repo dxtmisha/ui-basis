@@ -876,6 +876,7 @@
     },
     "text": {
       "color": "{sys.palette.primary}"
-    }
+    },
+    "~disabled": {}
   }
 }

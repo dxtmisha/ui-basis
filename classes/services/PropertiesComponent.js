@@ -38,7 +38,8 @@ module.exports = class PropertiesComponent {
    *   value:(string|boolean)[],
    *   map:{
    *     index:string,
-   *     value:(string|boolean),
+   *     name:string,
+   *     value:(string|boolean)[],
    *     state:Object<string,*>[]
    *   }[],
    *   style?:boolean,
@@ -68,6 +69,24 @@ module.exports = class PropertiesComponent {
    */
   get () {
     return this.properties.get().getItemByIndex(this.name) || {}
+  }
+
+  /**
+   * Returns the property available for props
+   *
+   * Возвращает свойство, доступное для props
+   * @return {Object<string,{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}>}
+   */
+  getProps () {
+    if (this.props === undefined) {
+      this.props = this.__getProps()
+
+      this.__toPropsValue()
+        .__toPropsUpdate()
+        .__toPropsMap()
+    }
+
+    return this.props
   }
 
   /**
@@ -106,7 +125,8 @@ module.exports = class PropertiesComponent {
    *     value:(string|boolean)[],
    *     map:{
    *       index:string,
-   *       value:(string|boolean),
+   *       name:string,
+   *       value:(string|boolean)[],
    *       state:Object<string,*>[]
    *     }[],
    *     style?:boolean,
@@ -127,23 +147,6 @@ module.exports = class PropertiesComponent {
         }
       }
     }, true)
-  }
-
-  /**
-   * Returns the property available for props
-   *
-   * Возвращает свойство, доступное для props
-   * @return {Object<string,{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}>}
-   */
-  getProps () {
-    if (this.props === undefined) {
-      this.props = this.__getProps()
-
-      this.__toPropsValue()
-        .__toPropsUpdate()
-    }
-
-    return this.props
   }
 
   /**
@@ -327,7 +330,7 @@ module.exports = class PropertiesComponent {
    *   map:{
    *     index:string,
    *     name:string,
-   *     value:(string|boolean),
+   *     value:(string|boolean)[],
    *     state:Object<string,*>[]
    *   }[],
    *   style?:boolean,
@@ -360,18 +363,6 @@ module.exports = class PropertiesComponent {
    * Gets all possible values
    *
    * Получает всех возможных значения
-   * @param {Object<string,{
-   *   index:string,
-   *   name:string,
-   *   value:(string|boolean)[],
-   *   map:{
-   *     index:string,
-   *     value:(string|boolean),
-   *     state:Object<string,*>[]
-   *   }[],
-   *   style?:boolean,
-   *   default?:boolean
-   * }>} properties
    * @param {Object<string,*>} data
    * @return {this}
    * @private
@@ -418,33 +409,40 @@ module.exports = class PropertiesComponent {
    * Updates values in a map
    *
    * Обновляет значения в карте
-   * @param {Object<string,{
-   *   index:string,
-   *   name:string,
-   *   value:(string|boolean)[],
-   *   map:{
-   *     index:string,
-   *     value:(string|boolean),
-   *     state:Object<string,*>[]
-   *   }[],
-   *   style?:boolean,
-   *   default?:boolean
-   * }>} properties
    * @param {Object<string,*>} data
    * @param {{
    *     index:string,
-   *     value:(string|boolean),
+   *     name:string,
+   *     value:(string|boolean)[],
    *     state:Object<string,*>[]
-   *   }[]} map
+   *   }[]} state
    * @return {this}
    * @private
    */
   __toPropsMap (
-    properties,
     data = this.get()?.value,
-    map = undefined
+    state = undefined
   ) {
-    // Close
+    this.getStateOnly(data).forEach(({
+      index,
+      item,
+      props
+    }) => {
+      if (state) {
+        const newState = {
+          index,
+          name: props.name,
+          value: this.__toValue(item?.value),
+          state: []
+        }
+
+        state.push(newState)
+        this.__toPropsMap(item?.value, newState.state)
+      } else {
+        this.__toPropsMap(item?.value, props.map)
+      }
+    })
+
     return this
   }
 

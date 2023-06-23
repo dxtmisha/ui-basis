@@ -77,7 +77,10 @@ module.exports = class PropertiesVariable {
         item[key] = 'design'
       } else if (name === component) {
         item[key] = 'component'
-      } else if (Object.keys(item?.value).length === 0) {
+      } else if (
+        !item?.[key] &&
+        Object.keys(item?.value).length === 0
+      ) {
         item[key] = 'subclass'
       } else {
         const property = this.__getProperty(item, name)
