@@ -852,7 +852,8 @@
       "sm": "{ref.spacing.7}",
       "md": "{ref.spacing.9}",
       "lg": "{ref.spacing.12}",
-      "border-color": "{ref.spacing.2}"
+      "border-color": "{ref.spacing.2}",
+      "_default": "md"
     },
     "font": "{font.button}",
     "border-radius": "{ref.spacing.1}",

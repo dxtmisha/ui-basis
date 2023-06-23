@@ -206,7 +206,7 @@ module.exports = class DesignComponent {
       templates.sample.push(
         `\r\n  ${prop.name}: {` +
         `\r\n    type: ${this.__getType(prop.value, prop?.style)}` +
-        (prop.default !== undefined ? `,\r\n    default: ${prop.default}` : '') +
+        (prop.default !== undefined ? `,\r\n    default: ${this.__getDefault(prop.default)}` : '') +
         '\r\n  }'
       )
     })
@@ -277,6 +277,14 @@ module.exports = class DesignComponent {
     }
 
     return `[${type.join(', ')}]${typeValue.length > 0 ? ` as PropType<${typeValue.join(' | ')}>` : ''}`
+  }
+
+  __getDefault (value) {
+    if (typeof value === 'string') {
+      return `'${value}'`
+    } else {
+      return `${value}`
+    }
   }
 
   /**

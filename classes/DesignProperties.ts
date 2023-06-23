@@ -6,10 +6,14 @@ import {
 } from '../constructors/types'
 import { isFilled } from '../functions/data'
 
-export interface PropertiesItemType {
+export interface PropertiesStateType {
   index: string,
   name: string,
-  value: BooleanOrStringType[],
+  value: BooleanOrStringType[]
+  state: PropertiesStateType[]
+}
+
+export interface PropertiesItemType extends PropertiesStateType {
   style?: boolean,
   default?: boolean
 }
@@ -39,8 +43,15 @@ export class DesignProperties {
     return this
   }
 
-  isValue (name: string, value: BooleanOrStringType): boolean {
-    const item = this.getByName(name)
+  isValue (name: string, value: BooleanOrStringType): boolean
+  isValue (item: PropertiesItemType | PropertiesStateType, value: BooleanOrStringType): boolean
+  isValue (
+    nameItem: string | PropertiesItemType | PropertiesStateType,
+    value: BooleanOrStringType
+  ): boolean {
+    const item = typeof nameItem === 'string'
+      ? this.getByName(nameItem)
+      : nameItem
 
     return !!(
       item &&
@@ -49,13 +60,20 @@ export class DesignProperties {
     )
   }
 
-  isStyle (name: string, value: BooleanOrStringType) {
-    const item = this.getByName(name)
+  isStyle (name: string, value: BooleanOrStringType): boolean
+  isStyle (item: PropertiesItemType | PropertiesStateType, value: BooleanOrStringType): boolean
+  isStyle (
+    nameItem: string | PropertiesItemType | PropertiesStateType,
+    value: BooleanOrStringType
+  ) {
+    const item = typeof nameItem === 'string'
+      ? this.getByName(nameItem)
+      : nameItem
 
     return !!(
       item &&
       isFilled(value) &&
-      item?.style &&
+      (!('style' in item) || item?.style) &&
       item?.value?.indexOf(true) !== -1
     )
   }

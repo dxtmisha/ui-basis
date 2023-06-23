@@ -36,7 +36,7 @@ module.exports = class PropertiesComponent {
    *   index:string,
    *   name:string,
    *   value:(string|boolean)[],
-   *   map:{
+   *   state:{
    *     index:string,
    *     name:string,
    *     value:(string|boolean)[],
@@ -123,7 +123,7 @@ module.exports = class PropertiesComponent {
    *     index:string,
    *     name:string,
    *     value:(string|boolean)[],
-   *     map:{
+   *     state:{
    *       index:string,
    *       name:string,
    *       value:(string|boolean)[],
@@ -327,7 +327,7 @@ module.exports = class PropertiesComponent {
    *   index:string,
    *   name:string,
    *   value:(string|boolean)[],
-   *   map:{
+   *   state:{
    *     index:string,
    *     name:string,
    *     value:(string|boolean)[],
@@ -350,7 +350,7 @@ module.exports = class PropertiesComponent {
         index,
         name: this.__toName(item, index),
         value: [],
-        map: [],
+        state: [],
         style: undefined,
         default: item?.[keyDefault]
       }
@@ -439,7 +439,7 @@ module.exports = class PropertiesComponent {
         state.push(newState)
         this.__toPropsMap(item?.value, newState.state)
       } else {
-        this.__toPropsMap(item?.value, props.map)
+        this.__toPropsMap(item?.value, props.state)
       }
     })
 

@@ -5,7 +5,8 @@ export const subClasses = []
 
 export const propsDesign = {
   height: {
-    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>
+    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>,
+    default: 'md'
   },
   contained: {
     type: [Boolean]
@@ -14,6 +15,9 @@ export const propsDesign = {
     type: [Boolean]
   },
   text: {
+    type: [Boolean]
+  },
+  disabled: {
     type: [Boolean]
   }
 }

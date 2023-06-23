@@ -38,11 +38,15 @@ module.exports = class PropertiesToMulti {
       this.__toGo(name, value)
 
       item[key] = 'state'
+
+      // TODO: в разработке
+      /*
       value[`sys-multi-${name}`] = {
         value: PropertiesTool.toFullForName(`var(--??s-${index})`, design, component),
         [PropertiesTool.getKeyName()]: name,
         [key]: 'property'
       }
+      */
     })
 
     this.items.cache(FILE_CACHE_MULTI)

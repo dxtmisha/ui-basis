@@ -2,8 +2,11 @@ import { computed, ComputedRef, ref, Ref } from 'vue'
 import { executeFunction, forEach } from '../functions/data'
 import { getRef } from '../functions/ref'
 
-import { DesignProperties } from './DesignProperties'
-
+import {
+  DesignProperties,
+  PropertiesItemType,
+  PropertiesStateType
+} from './DesignProperties'
 import {
   AssociativeType,
   CallbackOrAnyType
@@ -84,6 +87,9 @@ export class DesignClasses {
     const data: ClassesItemType = {}
 
     this.properties.get()?.forEach(item => {
+      Object.assign(data, this.toClassName(item))
+
+      /*
       const prop = this.props?.[item.name]
       const is = this.properties.isValue(item.name, prop)
       const className = `${name}--${item.index}`
@@ -97,6 +103,7 @@ export class DesignClasses {
           data[`${className}--${prop}`] = true
         }
       }
+      */
     })
 
     return data
@@ -117,5 +124,49 @@ export class DesignClasses {
     })
 
     return extra
+  }
+
+  protected toClassName (
+    item: PropertiesItemType | PropertiesStateType,
+    className: string = this.getName()
+  ) {
+    const prop = this.props?.[item.name]
+    const is = this.properties.isValue(item, prop)
+    const data: ClassesItemType = {}
+
+    if (
+      (
+        is &&
+        prop === true
+      ) || (
+        this.properties.isStyle(item, prop)
+      )
+    ) {
+      this.toClassNameByState(data, item, className)
+    }
+
+    if (
+      is &&
+      typeof prop === 'string'
+    ) {
+      data[`${className}--${item.index}--${prop}`] = true
+    }
+
+    return data
+  }
+
+  protected toClassNameByState (
+    data: ClassesItemType,
+    item: PropertiesItemType | PropertiesStateType,
+    className: string
+  ) {
+    data[`${className}--${item.index}`] = true
+
+    item.state?.forEach(state => {
+      Object.assign(
+        data,
+        this.toClassName(state, `${className}--${item.index}`)
+      )
+    })
   }
 }
