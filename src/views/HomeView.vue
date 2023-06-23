@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <md2-button/>
+    <md2-button height="lg" contained/>
   </div>
 </template>
 

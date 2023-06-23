@@ -1,33 +1,15 @@
-import { ComponentObjectPropsOptions, SetupContext } from 'vue'
-
-import { AssociativeType } from '../constructors/types'
+import { ComponentObjectPropsOptions, ComputedRef, ref, SetupContext } from 'vue'
 import { executeFunction } from '../functions/data'
 
-export interface DesignPropertiesItem {
-  name: string,
-  value: (string | boolean)[],
-  style?: boolean,
-  default?: boolean
-}
-
-export type DesignProperties = DesignPropertiesItem[]
-
-export type DesignClassesItem = AssociativeType<boolean> | string
-export type DesignStylesItem = AssociativeType<string> | string
-
-export interface DesignClasses {
-  main: DesignClassesItem
-}
-
-export interface DesignStyles {
-  main: DesignStylesItem
-}
+import { AssociativeType } from '../constructors/types'
+import { DesignProperties, PropertiesListType } from './DesignProperties'
+import { DesignClasses, ClassesListType } from './DesignClasses'
 
 export interface DesignSetupBasic {
-  classes: DesignClasses
+  classes: ComputedRef<ClassesListType>
 }
 
-export type DesignSetupValue<D = AssociativeType, T = any> = D | ((this: T) => D)
+export type DesignSetupValue<D = AssociativeType> = D | (() => D)
 export type DesignSetup<D = AssociativeType> = DesignSetupBasic & D
 
 /**
@@ -36,19 +18,25 @@ export type DesignSetup<D = AssociativeType> = DesignSetupBasic & D
  * Основной класс для связывания токенов и компонентов Vue
  */
 export class Design<P = ComponentObjectPropsOptions> {
-  protected name ?: string
-  protected properties?: DesignProperties
+  protected name = ref<string>('design-component')
+  protected properties: DesignProperties
+  protected classes: DesignClasses
 
   /**
    * Constructor
    * @param props свойства
    * @param context additional property / дополнительное свойство
    */
-  // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly props: P,
     protected readonly context: SetupContext
   ) {
+    this.properties = new DesignProperties()
+    this.classes = new DesignClasses(
+      this.name,
+      this.properties,
+      this.props as AssociativeType
+    )
   }
 
   /**
@@ -60,6 +48,10 @@ export class Design<P = ComponentObjectPropsOptions> {
     return this.props
   }
 
+  getName (): string {
+    return this.name.value
+  }
+
   /**
    * Component names.
    * Are added automatically during build
@@ -69,30 +61,26 @@ export class Design<P = ComponentObjectPropsOptions> {
    * @param name
    */
   setName (name: string): this {
-    this.name = name
+    this.name.value = name
     return this
   }
 
   /**
-   * Add all component properties
+   * Add all component properties.
+   * Are added automatically during build
    *
-   * Добавление всех свойств компонента
+   * Добавление всех свойств компонента.
+   * Добавляются автоматически во время сборки
    * @param properties
    */
-  setProperties (properties: DesignProperties): this {
-    this.properties = properties
+  setProperties (properties: PropertiesListType): this {
+    this.properties.set(properties)
     return this
   }
 
   setup<D = AssociativeType> (dataCallback?: DesignSetupValue<D>): DesignSetup<D> {
-    // TODO: Close
-
-    console.log('dataCallback', dataCallback)
-
     return {
-      classes: {
-        main: 'is-class'
-      },
+      classes: this.classes.get(),
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }

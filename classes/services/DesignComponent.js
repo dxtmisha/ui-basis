@@ -22,16 +22,20 @@ module.exports = class DesignComponent {
   ) {
     this.name = name
     this.options = options // TODO: не использовано еще
-    this.component = new PropertiesComponent(name)
+    this.component = new PropertiesComponent(name, false)
 
     this.dir = this.__initDir()
   }
 
   init () {
+    console.info(`-- ${this.component.getName()}:`)
+
     this.__initIndex()
       .__initPropsDesign()
       .__initProps()
       .__initProperties()
+
+    console.info('-- end')
   }
 
   /**
@@ -155,6 +159,7 @@ module.exports = class DesignComponent {
         .replace('DesignComponent', this.component.getName())
     }
 
+    this.__console(file)
     this.__createFile(file, sample)
 
     return this
@@ -173,6 +178,7 @@ module.exports = class DesignComponent {
     if (!this.__isFile(file)) {
       const sample = this.__readSampleProps()
 
+      this.__console(file)
       this.__createFile(file, sample)
     }
 
@@ -188,27 +194,34 @@ module.exports = class DesignComponent {
    */
   __initPropsDesign () {
     let sample = this.__readSamplePropsDesign()
+    const file = this.component.getFilePropsDesign()
     const props = this.component.getProps()
+    const classes = this.component.getClasses()
     const templates = {
-      sample: []
+      sample: [],
+      classes: []
     }
 
     forEach(props, prop => {
       templates.sample.push(
         `\r\n  ${prop.name}: {` +
-        `\r\n    type: ${this.__getType(prop.value)}` +
+        `\r\n    type: ${this.__getType(prop.value, prop?.style)}` +
         (prop.default !== undefined ? `,\r\n    default: ${prop.default}` : '') +
         '\r\n  }'
       )
     })
 
+    classes.forEach(className => templates.classes.push(`'${className}'`))
+
     sample = sample.replace(' /* sample */ ', templates.sample.join(',') + '\r\n')
+    sample = sample.replace('/* classes */', templates.classes.join(','))
 
     if (sample.match('as PropType')) {
       sample = sample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
     }
 
-    this.__createFile(this.component.getFilePropsDesign(), sample)
+    this.__console(file)
+    this.__createFile(file, sample)
 
     return this
   }
@@ -242,10 +255,11 @@ module.exports = class DesignComponent {
    *
    * Возвращает строку с типом данных
    * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @param {boolean} style is the property style present / является ли свойство style
    * @return {string}
    * @private
    */
-  __getType (value) {
+  __getType (value, style) {
     const type = []
     const typeValue = []
 
@@ -256,6 +270,10 @@ module.exports = class DesignComponent {
     if (this.__isString(value)) {
       type.push('String')
       value.forEach(item => typeValue.push(item === true ? 'true' : `'${item}'`))
+    }
+
+    if (style) {
+      typeValue.push('string')
     }
 
     return `[${type.join(', ')}]${typeValue.length > 0 ? ` as PropType<${typeValue.join(' | ')}>` : ''}`
@@ -274,9 +292,21 @@ module.exports = class DesignComponent {
     if (!this.__isFile(file)) {
       const sample = this.__readSampleProperties()
 
+      this.__console(file)
       this.__createFile(file, sample)
     }
 
     return this
+  }
+
+  /**
+   * Outputting data to the console
+   *
+   * Вывод данных в консоль
+   * @param {string} name file name / название файла
+   * @private
+   */
+  __console (name) {
+    console.info(`--  ${this.__isFile(name) ? 'update' : 'create'} ${name}`)
   }
 }

@@ -108,7 +108,7 @@
 
 /* Color */
 
-@mixin color($color, $opacity: null) {
+@mixin color($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-color: #{toColorRbg($color)};
     @include colorOpacity($opacity);
@@ -130,7 +130,7 @@
 
 /* Stroke */
 
-@mixin stroke($color, $opacity: null) {
+@mixin stroke($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-color: #{toColorRbg($color)};
     @include strokeOpacity($opacity);
@@ -152,7 +152,7 @@
 
 /* Background */
 
-@mixin background($color, $opacity: null) {
+@mixin background($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-background: #{toColorRbg($color)};
     @include backgroundOpacity($opacity);
@@ -174,7 +174,7 @@
 
 /* Fill */
 
-@mixin fill($color, $opacity: null) {
+@mixin fill($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-background: #{toColorRbg($color)};
     @include fillOpacity($opacity);
@@ -196,7 +196,7 @@
 
 /* Gradient */
 
-@mixin gradient($color, $opacity: null) {
+@mixin gradient($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-gradient: #{toColorRbg($color)};
     @include gradientOpacity($opacity);
@@ -218,7 +218,7 @@
 
 /* Border */
 
-@mixin border($color, $opacity: null) {
+@mixin border($color, $opacity: 1) {
   @if (isColorRbgOrVar($color)) {
     --sys-border: #{toColorRbg($color)};
     @include borderOpacity($opacity);

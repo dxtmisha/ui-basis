@@ -31,10 +31,14 @@ module.exports = class PropertiesComponent {
   /**
    * Constructor
    * @param {string} name component name / названия компонента
+   * @param {boolean} cache enabling caching / включение кэширования
    */
-  constructor (name) {
+  constructor (
+    name,
+    cache = true
+  ) {
     this.name = name
-    this.properties = new Properties()
+    this.properties = new Properties(cache)
   }
 
   /**
@@ -51,7 +55,7 @@ module.exports = class PropertiesComponent {
    * Returns the property available for props
    *
    * Возвращает свойство, доступное для props
-   * @return {{name:string, value:(string|boolean)[], style?:boolean, default?:boolean}}
+   * @return {{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}}
    */
   getProps () {
     const keyDefault = PropertiesTool.getKeyDefault()
@@ -62,8 +66,9 @@ module.exports = class PropertiesComponent {
         const value = this.__toValue(item?.value)
 
         properties[name] = {
-          value,
+          index: name,
           name: this.__toName(item, name),
+          value,
           style: this.__isStyle(item, value),
           default: item?.[keyDefault]
         }
@@ -71,6 +76,30 @@ module.exports = class PropertiesComponent {
     })
 
     return properties
+  }
+
+  /**
+   * Returns all properties as a JSON string
+   *
+   * Возвращает все свойства в виде строки JSON
+   * @return {string}
+   */
+  getPropsJson () {
+    return JSON.stringify(Object.values(this.getProps()))
+  }
+
+  /**
+   * Returns a list of classes
+   *
+   * Возвращает список классов
+   * @return {string[]}
+   */
+  getClasses () {
+    return forEach(this.get()?.value, (item, name) => {
+      if (this.__isClasses(item)) {
+        return name
+      }
+    }, true)
   }
 
   /**
@@ -180,6 +209,18 @@ module.exports = class PropertiesComponent {
       item?.[PropertiesTool.getKeyVariable()] === 'state' ||
       LIST_PROPS.indexOf(item?.[PropertiesTool.getKeyName()]) !== -1
     )
+  }
+
+  /**
+   * Does this property belong to the class
+   *
+   * Является ли это свойство частью класса
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @return {boolean}
+   * @private
+   */
+  __isClasses (item) {
+    return item?.[PropertiesTool.getKeyVariable()] === 'subclass'
   }
 
   /**

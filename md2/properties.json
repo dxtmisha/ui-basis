@@ -861,6 +861,9 @@
       "background-color": "{sys.palette.primary}",
       "hover": {
         "background-image": "{sys.palette.onPrimary}"
+      },
+      "disabled": {
+        "background-opacity": "{sys.opacity.disabled}"
       }
     },
     "outlined": {

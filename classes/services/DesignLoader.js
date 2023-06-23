@@ -6,7 +6,7 @@ const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesComponent = require('./PropertiesComponent')
 
-const EXP_VUE = /(new \w*Design *\([^)]*\))/
+const EXP_VUE = /(new \w*Design *(<[^>]*>|) *\([^)]*\))/
 const EXP_STYLE = /(@include *\w*Design(?! *\())/
 
 /**
@@ -106,9 +106,10 @@ module.exports = class DesignLoader {
     const component = new PropertiesComponent(this.__getName())
 
     const name = component.getNameLower()
-    const properties = JSON.stringify(component.getProps())
+    const properties = component.getPropsJson()
     const source = this.source
-      .replace(EXP_VUE, `$1.setName('${name}').setProperties(${properties})`)
+      .replace('export default', `const __PROPERTIES_LIST = ${properties};\r\n\r\nexport default`)
+      .replace(EXP_VUE, `$1.setName('${name}').setProperties(__PROPERTIES_LIST)`)
 
     PropertiesCache.create(
       [name],

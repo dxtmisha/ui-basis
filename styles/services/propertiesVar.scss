@@ -1,6 +1,8 @@
 @use "sass:map";
 @use "sass:meta";
 
+@import "../color";
+
 /// Mixin for adding variables
 ///
 /// Миксин для добавления переменных
@@ -12,7 +14,7 @@
   @if (meta.type-of($value) == map) {
     @include initVars($value);
   } @else {
-    #{$name}: #{$value};
+    #{$name}: __getVarValue($value);
   }
 }
 
@@ -25,5 +27,17 @@
     @each $index, $property in $properties {
       @include initVar($property);
     }
+  }
+}
+
+/// Returns the value of a property
+///
+/// Возвращает значение свойства
+/// @param {String} $value
+@function __getVarValue($value) {
+  @if (meta.type-of($value) == color) {
+    @return #{toColorRbg($value)};
+  } @else {
+    @return #{$value};
   }
 }

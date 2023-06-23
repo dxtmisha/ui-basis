@@ -9,6 +9,7 @@ export type AnyOrUndefinedType<T = any> = T | UndefinedType
 export type NumberOrUndefinedType = number | UndefinedType
 export type NumberOrStringType = number | string
 export type BooleanOrNumberOrStringType = boolean | NumberOrStringType
+export type BooleanOrStringType = boolean | string
 export type NumberOrStringOrDateType = NumberOrStringType | Date
 
 /**

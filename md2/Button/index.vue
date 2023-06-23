@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 import { props } from './props'
 
 import { Design } from '../../classes/Design'
@@ -8,13 +9,13 @@ export default defineComponent({
   name: 'Md2Button', // name component
   props,
   setup (props, context) {
-    return new Design(props, context).setup()
+    return new Design(props, context).setup({ testName: 'asd' })
   }
 })
 </script>
 
 <template>
-  <div :class="classes.main"></div>
+  <button :class="classes.main">{{ testName }}</button>
 </template>
 
 <style lang="scss">
