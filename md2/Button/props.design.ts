@@ -1,12 +1,11 @@
 import { PropType } from 'vue'
 
 // TODO: В разработке
-export const subClasses = []
+export const subClasses = [[]]
 
 export const propsDesign = {
-  size: {
-    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>,
-    default: 'md'
+  height: {
+    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>
   },
   contained: {
     type: [Boolean]
@@ -15,9 +14,6 @@ export const propsDesign = {
     type: [Boolean]
   },
   text: {
-    type: [Boolean]
-  },
-  disabled: {
     type: [Boolean]
   }
 }

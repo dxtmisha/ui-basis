@@ -18,13 +18,20 @@ export type DesignSetup<D = AssociativeType> = DesignSetupBasic & D
  * Основной класс для связывания токенов и компонентов Vue
  */
 export class Design<P = ComponentObjectPropsOptions> {
+  /**
+   * Class name
+   *
+   * Название класса
+   * @protected
+   */
   protected name = ref<string>('design-component')
+
   protected properties: DesignProperties
   protected classes: DesignClasses
 
   /**
    * Constructor
-   * @param props свойства
+   * @param props properties / свойства
    * @param context additional property / дополнительное свойство
    */
   constructor (
@@ -40,16 +47,12 @@ export class Design<P = ComponentObjectPropsOptions> {
   }
 
   /**
-   * Returns props
+   * Returns the base class name
    *
-   * Возвращает свойства (props)
+   * Возвращает базовое название класса
    */
-  getProps (): P {
-    return this.props
-  }
-
   getName (): string {
-    return this.name.value
+    return this.classes.getName()
   }
 
   /**
@@ -58,11 +61,20 @@ export class Design<P = ComponentObjectPropsOptions> {
    *
    * Названия компонентов.
    * Добавляются автоматически во время сборки
-   * @param name
+   * @param name class name / название класса
    */
   setName (name: string): this {
     this.name.value = name
     return this
+  }
+
+  /**
+   * Returns props
+   *
+   * Возвращает свойства (props)
+   */
+  getProps (): P {
+    return this.props
   }
 
   /**
@@ -78,9 +90,15 @@ export class Design<P = ComponentObjectPropsOptions> {
     return this
   }
 
+  /**
+   * Execution method to replace setup in Vue
+   *
+   * Метод выполнения, для замены setup в Vue
+   * @param dataCallback additional component properties / дополнительные свойства компонента
+   */
   setup<D = AssociativeType> (dataCallback?: DesignSetupValue<D>): DesignSetup<D> {
     return {
-      classes: this.classes.get(),
+      classes: this.classes.getItem(),
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }

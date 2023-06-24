@@ -17,7 +17,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <button :class="classes.main">test</button>
+  <div :class="classes.main"></div>
 </template>
 
 <style lang="scss">

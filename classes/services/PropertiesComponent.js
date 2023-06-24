@@ -36,6 +36,7 @@ module.exports = class PropertiesComponent {
    *   index:string,
    *   name:string,
    *   value:(string|boolean)[],
+   *   valueAll:(string|boolean)[],
    *   state:{
    *     index:string,
    *     name:string,
@@ -59,6 +60,8 @@ module.exports = class PropertiesComponent {
   ) {
     this.name = name
     this.properties = new Properties(cache)
+
+    this.__initProps()
   }
 
   /**
@@ -69,108 +72,6 @@ module.exports = class PropertiesComponent {
    */
   get () {
     return this.properties.get().getItemByIndex(this.name) || {}
-  }
-
-  /**
-   * Returns the property available for props
-   *
-   * Возвращает свойство, доступное для props
-   * @return {Object<string,{index:string, name:string, value:(string|boolean)[], style?:boolean, default?:boolean}>}
-   */
-  getProps () {
-    if (this.props === undefined) {
-      this.props = this.__getProps()
-
-      this.__toPropsValue()
-        .__toPropsUpdate()
-        .__toPropsMap()
-    }
-
-    return this.props
-  }
-
-  /**
-   * Returns records that meet state conditions
-   *
-   * Возвращает записи, удовлетворяющие условиям состояния
-   * @param {Object<string,*>} data input data / входной данный
-   * @return {{index:string,item:Object<string,*>}[]}
-   */
-  getState (data = this.get()?.value) {
-    const properties = []
-
-    forEach(data, (item, index) => {
-      if (this.__isProps(item)) {
-        properties.push({
-          index,
-          item
-        })
-      }
-    })
-
-    return properties
-  }
-
-  /**
-   * Returns records that meet state conditions and already exist in props
-   *
-   * Возвращает записи, удовлетворяющие условиям состояния и уже находящиеся в props
-   * @param {Object<string,*>} data input data / входной данный
-   * @return {{
-   *   index:string,
-   *   item:Object<string,*>,
-   *   props: {
-   *     index:string,
-   *     name:string,
-   *     value:(string|boolean)[],
-   *     state:{
-   *       index:string,
-   *       name:string,
-   *       value:(string|boolean)[],
-   *       state:Object<string,*>[]
-   *     }[],
-   *     style?:boolean,
-   *     default?:boolean
-   *   }
-   * }[]}
-   */
-  getStateOnly (data = this.get()?.value) {
-    return forEach(this.getState(data), ({
-      index,
-      item
-    }) => {
-      if (index in this.props) {
-        return {
-          index,
-          item,
-          props: this.props[index]
-        }
-      }
-    }, true)
-  }
-
-  /**
-   * Returns all properties as a JSON string
-   *
-   * Возвращает все свойства в виде строки JSON
-   * @return {string}
-   */
-  getPropsJson () {
-    return JSON.stringify(Object.values(this.getProps()))
-  }
-
-  /**
-   * Returns a list of classes
-   *
-   * Возвращает список классов
-   * @return {string[]}
-   */
-  getClasses () {
-    return forEach(this.get()?.value, (item, name) => {
-      if (this.__isClasses(item)) {
-        return name
-      }
-    }, true)
   }
 
   /**
@@ -226,6 +127,124 @@ module.exports = class PropertiesComponent {
   }
 
   /**
+   * Returns a list of classes
+   *
+   * Возвращает список классов
+   * @return {string[]}
+   */
+  getClasses () {
+    return forEach(this.get()?.value, (item, name) => {
+      if (this.__isClasses(item)) {
+        return name
+      }
+    }, true)
+  }
+
+  /**
+   * Converting all classes to string
+   *
+   * Преобразование всех классов в строку
+   * @return {string}
+   */
+  getClassesJson () {
+    return JSON.stringify(this.getClasses())
+  }
+
+  /**
+   * Returns the property available for props
+   *
+   * Возвращает свойство, доступное для props
+   * @return {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   valueAll:(string|boolean)[],
+   *   state:{
+   *     index:string,
+   *     name:string,
+   *     value:(string|boolean)[],
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>}
+   */
+  getProps () {
+    return this.props
+  }
+
+  /**
+   * Returns all properties as a JSON string
+   *
+   * Возвращает все свойства в виде строки JSON
+   * @return {string}
+   */
+  getPropsJson () {
+    return JSON.stringify(Object.values(this.getProps()))
+  }
+
+  /**
+   * Returns records that meet state conditions
+   *
+   * Возвращает записи, удовлетворяющие условиям состояния
+   * @param {Object<string,*>} data input data / входной данный
+   * @return {{index:string,item:Object<string,*>}[]}
+   */
+  getState (data = this.get()?.value) {
+    const properties = []
+
+    forEach(data, (item, index) => {
+      if (this.__isProps(item)) {
+        properties.push({
+          index,
+          item
+        })
+      }
+    })
+
+    return properties
+  }
+
+  /**
+   * Returns records that meet state conditions and already exist in props
+   *
+   * Возвращает записи, удовлетворяющие условиям состояния и уже находящиеся в props
+   * @param {Object<string,*>} data input data / входной данный
+   * @return {{
+   *   index:string,
+   *   item:Object<string,*>,
+   *   props: {
+   *     index:string,
+   *     name:string,
+   *     value:(string|boolean)[],
+   *     valueAll:(string|boolean)[],
+   *     state:{
+   *       index:string,
+   *       name:string,
+   *       value:(string|boolean)[],
+   *       state:Object<string,*>[]
+   *     }[],
+   *     style?:boolean,
+   *     default?:boolean
+   *   }
+   * }[]}
+   */
+  getStateOnly (data = this.get()?.value) {
+    return forEach(this.getState(data), ({
+      index,
+      item
+    }) => {
+      if (index in this.props) {
+        return {
+          index,
+          item,
+          props: this.props[index]
+        }
+      }
+    }, true)
+  }
+
+  /**
    * Returns the filename index
    *
    * Возвращает название файла index
@@ -263,6 +282,66 @@ module.exports = class PropertiesComponent {
    */
   getFileProperties () {
     return FILE_PROPERTIES
+  }
+
+  /**
+   * Generating a record for props
+   *
+   * Генерация записи для props
+   * @return this
+   * @private
+   */
+  __initProps () {
+    this.props = this.__getProps()
+
+    this.__toPropsValue()
+      .__toPropsValueAll()
+      .__toPropsUpdate()
+      .__toPropsState()
+
+    return this
+  }
+
+  /**
+   * Retrieves all properties for preparing data filling
+   *
+   * Получает все свойства для подготовки заполнения данными
+   * @return {Object<string,{
+   *   index:string,
+   *   name:string,
+   *   value:(string|boolean)[],
+   *   valueAll:(string|boolean)[],
+   *   state:{
+   *     index:string,
+   *     name:string,
+   *     value:(string|boolean)[],
+   *     state:Object<string,*>[]
+   *   }[],
+   *   style?:boolean,
+   *   default?:boolean
+   * }>}
+   * @private
+   */
+  __getProps () {
+    const keyDefault = PropertiesTool.getKeyDefault()
+    const properties = {}
+
+    this.getState().forEach(({
+      index,
+      item
+    }) => {
+      properties[index] = {
+        index,
+        name: this.__toName(item, index),
+        value: [],
+        valueAll: [],
+        state: [],
+        style: undefined,
+        default: item?.[keyDefault]
+      }
+    })
+
+    return properties
   }
 
   /**
@@ -320,43 +399,20 @@ module.exports = class PropertiesComponent {
   }
 
   /**
-   * Retrieves all properties for preparing data filling
+   * Receives the default values
    *
-   * Получает все свойства для подготовки заполнения данными
-   * @return {Object<string,{
-   *   index:string,
-   *   name:string,
-   *   value:(string|boolean)[],
-   *   state:{
-   *     index:string,
-   *     name:string,
-   *     value:(string|boolean)[],
-   *     state:Object<string,*>[]
-   *   }[],
-   *   style?:boolean,
-   *   default?:boolean
-   * }>}
+   * Получает базовые значения
+   * @param {Object<string,*>} data
+   * @return {this}
    * @private
    */
-  __getProps () {
-    const keyDefault = PropertiesTool.getKeyDefault()
-    const properties = {}
+  __toPropsValue (data = this.get()?.value) {
+    this.getStateOnly(data).forEach(({
+      item,
+      props
+    }) => props.value.push(...this.__toValue(item?.value)))
 
-    this.getState().forEach(({
-      index,
-      item
-    }) => {
-      properties[index] = {
-        index,
-        name: this.__toName(item, index),
-        value: [],
-        state: [],
-        style: undefined,
-        default: item?.[keyDefault]
-      }
-    })
-
-    return properties
+    return this
   }
 
   /**
@@ -367,17 +423,17 @@ module.exports = class PropertiesComponent {
    * @return {this}
    * @private
    */
-  __toPropsValue (data = this.get()?.value) {
+  __toPropsValueAll (data = this.get()?.value) {
     this.getStateOnly(data).forEach(({
       item,
       props
     }) => {
       const value = this.__toValue(item?.value)
 
-      props.value.push(...value)
+      props.valueAll.push(...value)
 
       if (this.__isState(value)) {
-        this.__toPropsValue(item.value)
+        this.__toPropsValueAll(item.value)
       }
     })
 
@@ -419,7 +475,7 @@ module.exports = class PropertiesComponent {
    * @return {this}
    * @private
    */
-  __toPropsMap (
+  __toPropsState (
     data = this.get()?.value,
     state = undefined
   ) {
@@ -437,9 +493,9 @@ module.exports = class PropertiesComponent {
         }
 
         state.push(newState)
-        this.__toPropsMap(item?.value, newState.state)
+        this.__toPropsState(item?.value, newState.state)
       } else {
-        this.__toPropsMap(item?.value, props.state)
+        this.__toPropsState(item?.value, props.state)
       }
     })
 
@@ -477,6 +533,7 @@ module.exports = class PropertiesComponent {
 
     forEach(properties, (property, name) => {
       if (
+        !this.props ||
         !(name in this.props) ||
         property?.[keyPropsValue]
       ) {

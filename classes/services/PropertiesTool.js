@@ -3,16 +3,17 @@ const { To } = require('../To')
 const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
 const KEY_NAME = '_name'
-const KEY_CATEGORY = '_category'
+const KEY_CATEGORY = '_category' // TODO: в разработке
+const KEY_GROUP = '_group' // TODO: в разработке
 const KEY_PROPS = '_props'
 const KEY_PROPS_NAME = '_props-name'
 const KEY_PROPS_VALUE = '_props-value'
-const KEY_STYLE = '_style'
+const KEY_STYLE = '_style' // TODO: в разработке
 const KEY_DEFAULT = '_default'
 const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
 const KEY_VARIABLE = '_variable'
-const KEY_CSS = '_css'
+const KEY_CSS = '_css' // TODO: в разработке
 const KEY_FULL = '_full-name'
 const KEY_FULL_VALUE = '_full-value'
 const KEY_PATH = '_path'
@@ -22,6 +23,7 @@ const KEYS_SPECIAL = [
   'type',
   KEY_NAME,
   KEY_CATEGORY,
+  KEY_GROUP,
   KEY_PROPS,
   KEY_PROPS_NAME,
   KEY_PROPS_VALUE,

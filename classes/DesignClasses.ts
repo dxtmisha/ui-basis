@@ -26,8 +26,20 @@ export type ClassesExtraListType = AssociativeType<ClassesExtraItemType>
  * Класс для работы с классами в компоненте
  */
 export class DesignClasses {
+  /**
+   * List of additional classes
+   *
+   * Список дополнительных классов
+   * @protected
+   */
   protected readonly extra = ref<ClassesExtraListType>({})
 
+  /**
+   * Constructor
+   * @param name class name / название класса
+   * @param properties list of available properties / список доступных свойств
+   * @param props properties / свойства
+   */
   // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly name: Ref<string>,
@@ -36,24 +48,60 @@ export class DesignClasses {
   ) {
   }
 
-  get (): ComputedRef<ClassesListType> {
+  /**
+   * Returns a list of all active classes
+   *
+   * Возвращает список всех активных классов
+   */
+  get (): ClassesListType {
+    return this.classes.value
+  }
+
+  /**
+   * Returns a list of all active classes
+   *
+   * Возвращает список всех активных классов
+   */
+  getItem (): ComputedRef<ClassesListType> {
     return this.classes
   }
 
+  /**
+   * Returns the base class name
+   *
+   * Возвращает базовое название класса
+   */
   getName (): string {
     return this.name.value || 'design-component'
   }
 
+  /**
+   * Adding additional classes
+   *
+   * Добавление дополнительных классов
+   * @param data list of additional classes / список дополнительных классов
+   */
   setExtra (data: ClassesExtraListType): this {
     this.extra.value = data
     return this
   }
 
+  /**
+   * Adding additional classes for the base class
+   * Добавление дополнительных классов для базового класса
+   * @param data list of additional classes / список дополнительных классов
+   */
   setExtraMain (data: ClassesExtraItemType): this {
     this.extra.value.main = data
     return this
   }
 
+  /**
+   * An object with a full list of classes for work
+   *
+   * Объект с полным списком классов для работы
+   * @protected
+   */
   protected classes = computed<ClassesListType>(() => {
     return {
       main: {
@@ -64,9 +112,9 @@ export class DesignClasses {
   })
 
   /**
-   * An object containing all the classes for working with basic data types.
+   * An object containing all the classes for working with basic data types
    *
-   * Объект, содержащий все классы для работы с базовыми типами данных.
+   * Объект, содержащий все классы для работы с базовыми типами данных
    * @protected
    */
   protected classesMain = computed<ClassesItemType>(() => {
@@ -83,28 +131,11 @@ export class DesignClasses {
    * @protected
    */
   protected classesProperties = computed<ClassesItemType>(() => {
-    const name = this.getName()
     const data: ClassesItemType = {}
 
-    this.properties.get()?.forEach(item => {
-      Object.assign(data, this.toClassName(item))
-
-      /*
-      const prop = this.props?.[item.name]
-      const is = this.properties.isValue(item.name, prop)
-      const className = `${name}--${item.index}`
-
-      if (is || this.properties.isStyle(item.name, prop)) {
-        if (prop === true || this.properties.isBool(item.name)) {
-          data[`${className}`] = true
-        }
-
-        if (is && typeof prop === 'string') {
-          data[`${className}--${prop}`] = true
-        }
-      }
-      */
-    })
+    this.properties.get()?.forEach(
+      item => Object.assign(data, this.toClassName(item))
+    )
 
     return data
   })
@@ -126,13 +157,23 @@ export class DesignClasses {
     return extra
   }
 
+  /**
+   * Generating a class name based on its property
+   *
+   * Формирование названия класса по его свойству
+   * @param item current property / текущее свойство
+   * @param className array of class names / массив с названиями классов
+   * @protected
+   */
   protected toClassName (
     item: PropertiesItemType | PropertiesStateType,
-    className: string = this.getName()
-  ) {
+    className: string[] = [this.getName()]
+  ): ClassesItemType {
     const prop = this.props?.[item.name]
     const is = this.properties.isValue(item, prop)
-    const data: ClassesItemType = {}
+    const classes: ClassesItemType = {}
+
+    className.push(item.index)
 
     if (
       (
@@ -142,31 +183,62 @@ export class DesignClasses {
         this.properties.isStyle(item, prop)
       )
     ) {
-      this.toClassNameByState(data, item, className)
+      this.toClassNameByState(classes, item, className)
     }
 
     if (
       is &&
       typeof prop === 'string'
     ) {
-      data[`${className}--${item.index}--${prop}`] = true
+      classes[this.jsonState([...className, prop])] = true
     }
 
-    return data
+    return classes
   }
 
+  /**
+   * A class for generating the class name recursively based on the state tree array
+   *
+   * Класс для генерации названия класса в глубину по массиву дерева состояния
+   * @param data list of active classes / список активных классов
+   * @param item current property / текущее свойство
+   * @param className array of class names / массив с названиями классов
+   * @protected
+   */
   protected toClassNameByState (
     data: ClassesItemType,
     item: PropertiesItemType | PropertiesStateType,
-    className: string
-  ) {
-    data[`${className}--${item.index}`] = true
+    className: string[]
+  ): this {
+    const index = this.jsonState(className)
 
-    item.state?.forEach(state => {
-      Object.assign(
-        data,
-        this.toClassName(state, `${className}--${item.index}`)
-      )
-    })
+    data[index] = true
+    item.state?.forEach(
+      state => Object.assign(data, this.toClassName(state, [index]))
+    )
+
+    return this
+  }
+
+  /**
+   * Concatenates class names into a string for state classes
+   *
+   * Соединяем названия классов в строку для классов состояния
+   * @param classes array to class name / массив в название класса
+   * @private
+   */
+  private jsonState (classes: string[]): string {
+    return classes.join('--')
+  }
+
+  /**
+   * Concatenates class names into a string for additional classes
+   *
+   * Соединяем названия классов в строку для дополнительных классов
+   * @param classes array to class name / массив в название класса
+   * @private
+   */
+  private jsonSubclass (classes: string[]): string {
+    return classes.join('__')
   }
 }

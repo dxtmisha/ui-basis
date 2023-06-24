@@ -196,25 +196,21 @@ module.exports = class DesignComponent {
     let sample = this.__readSamplePropsDesign()
     const file = this.component.getFilePropsDesign()
     const props = this.component.getProps()
-    const classes = this.component.getClasses()
     const templates = {
-      sample: [],
-      classes: []
+      sample: []
     }
 
     forEach(props, prop => {
       templates.sample.push(
         `\r\n  ${prop.name}: {` +
-        `\r\n    type: ${this.__getType(prop.value, prop?.style)}` +
+        `\r\n    type: ${this.__getType(prop.valueAll, prop?.style)}` +
         (prop.default !== undefined ? `,\r\n    default: ${this.__getDefault(prop.default)}` : '') +
         '\r\n  }'
       )
     })
 
-    classes.forEach(className => templates.classes.push(`'${className}'`))
-
     sample = sample.replace(' /* sample */ ', templates.sample.join(',') + '\r\n')
-    sample = sample.replace('/* classes */', templates.classes.join(','))
+    sample = sample.replace('/* classes */', this.component.getClassesJson())
 
     if (sample.match('as PropType')) {
       sample = sample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
@@ -222,6 +218,26 @@ module.exports = class DesignComponent {
 
     this.__console(file)
     this.__createFile(file, sample)
+
+    return this
+  }
+
+  /**
+   * This code generates the properties.json
+   *
+   * Генерация файла properties.json
+   * @return {this}
+   * @private
+   */
+  __initProperties () {
+    const file = this.component.getFileProperties()
+
+    if (!this.__isFile(file)) {
+      const sample = this.__readSampleProperties()
+
+      this.__console(file)
+      this.__createFile(file, sample)
+    }
 
     return this
   }
@@ -279,32 +295,20 @@ module.exports = class DesignComponent {
     return `[${type.join(', ')}]${typeValue.length > 0 ? ` as PropType<${typeValue.join(' | ')}>` : ''}`
   }
 
+  /**
+   * Returns default values
+   *
+   * Возвращает значения по умолчанию
+   * @param {string|boolean} value
+   * @return {string}
+   * @private
+   */
   __getDefault (value) {
     if (typeof value === 'string') {
       return `'${value}'`
     } else {
       return `${value}`
     }
-  }
-
-  /**
-   * This code generates the properties.json
-   *
-   * Генерация файла properties.json
-   * @return {this}
-   * @private
-   */
-  __initProperties () {
-    const file = this.component.getFileProperties()
-
-    if (!this.__isFile(file)) {
-      const sample = this.__readSampleProperties()
-
-      this.__console(file)
-      this.__createFile(file, sample)
-    }
-
-    return this
   }
 
   /**

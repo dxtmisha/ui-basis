@@ -852,9 +852,7 @@
       "sm": "{ref.spacing.7}",
       "md": "{ref.spacing.9}",
       "lg": "{ref.spacing.12}",
-      "border-color": "{ref.spacing.2}",
-      "_default": "md",
-      "_props-name": "size"
+      "border-color": "{ref.spacing.2}"
     },
     "font": "{font.button}",
     "border-radius": "{ref.spacing.1}",
@@ -880,7 +878,6 @@
     },
     "text": {
       "color": "{sys.palette.primary}"
-    },
-    "~disabled": {}
+    }
   }
 }
