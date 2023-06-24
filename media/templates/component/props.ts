@@ -1,4 +1,10 @@
-import { propsDesign } from './props.design'
+import { propsDesign, subClassesDesign } from './props.design'
+
+export const subClasses = {
+  ...subClassesDesign
+  // Subclass list
+
+}
 
 export const props = {
   ...propsDesign

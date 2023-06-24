@@ -14,18 +14,30 @@ import {
 import { RefOrNormalType } from '../constructors/typesRef'
 
 export type ClassesItemType = AssociativeType<boolean>
-export type ClassesListType = { main: ClassesItemType } & AssociativeType<ClassesItemType>
+
+export type ClassesSubClassesType = Record<string, string>
+export type ClassesSubClassesListType<T> = Record<keyof T, ClassesItemType>
 
 export type ClassesExtraType = CallbackOrAnyType<RefOrNormalType<boolean>>
 export type ClassesExtraItemType = AssociativeType<ClassesExtraType>
 export type ClassesExtraListType = AssociativeType<ClassesExtraItemType>
+
+export type ClassesListType<T> = { main: ClassesItemType } & ClassesSubClassesListType<T>
 
 /**
  * Class for working with classes in a component
  *
  * Класс для работы с классами в компоненте
  */
-export class DesignClasses {
+export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesType> {
+  /**
+   * List of subclasses
+   *
+   * Список подклассов
+   * @protected
+   */
+  protected readonly subClasses = ref<C>()
+
   /**
    * List of additional classes
    *
@@ -53,7 +65,7 @@ export class DesignClasses {
    *
    * Возвращает список всех активных классов
    */
-  get (): ClassesListType {
+  get (): ClassesListType<C> {
     return this.classes.value
   }
 
@@ -62,7 +74,7 @@ export class DesignClasses {
    *
    * Возвращает список всех активных классов
    */
-  getItem (): ComputedRef<ClassesListType> {
+  getItem (): ComputedRef<ClassesListType<C>> {
     return this.classes
   }
 
@@ -73,6 +85,17 @@ export class DesignClasses {
    */
   getName (): string {
     return this.name.value || 'design-component'
+  }
+
+  /**
+   * Modifying the list of subclasses
+   *
+   * Изменение списка подклассов
+   * @param classes list of subclass values / список значений подкласса
+   */
+  setSubClasses (classes: C): this {
+    this.subClasses.value = classes
+    return this
   }
 
   /**
@@ -102,14 +125,17 @@ export class DesignClasses {
    * Объект с полным списком классов для работы
    * @protected
    */
-  protected classes = computed<ClassesListType>(() => {
-    return {
-      main: {
-        ...this.classesMain.value,
-        ...this.classesProperties.value
+  protected classes = computed<ClassesListType<C>>(
+    () => {
+      return {
+        main: {
+          ...this.classesMain.value,
+          ...this.classesProperties.value
+        },
+        ...this.classesSubClasses.value
       }
     }
-  })
+  )
 
   /**
    * An object containing all the classes for working with basic data types
@@ -117,12 +143,14 @@ export class DesignClasses {
    * Объект, содержащий все классы для работы с базовыми типами данных
    * @protected
    */
-  protected classesMain = computed<ClassesItemType>(() => {
-    return {
-      [this.getName()]: true,
-      ...this.getExtraByName('main')
+  protected classesMain = computed<ClassesItemType>(
+    () => {
+      return {
+        [this.getName()]: true,
+        ...this.getExtraByName('main')
+      }
     }
-  })
+  )
 
   /**
    * List of active state classes
@@ -138,6 +166,24 @@ export class DesignClasses {
     )
 
     return data
+  })
+
+  protected classesSubClasses = computed<ClassesSubClassesListType<C>>(() => {
+    const classBasic = this.getName()
+    const classes: ClassesSubClassesListType<C> = {} as ClassesSubClassesListType<C>
+
+    if (this.subClasses.value) {
+      forEach(this.subClasses.value, (name, index) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        classes[index] = {
+          [this.jsonSubclass([classBasic, name])]: true,
+          ...this.getExtraByName('name')
+        }
+      })
+    }
+
+    return classes
   })
 
   /**

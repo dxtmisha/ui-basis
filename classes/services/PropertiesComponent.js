@@ -130,14 +130,26 @@ module.exports = class PropertiesComponent {
    * Returns a list of classes
    *
    * Возвращает список классов
-   * @return {string[]}
+   * @param {Object<string,*>} data list of properties / список свойств
+   * @param {string[]} parentName Ancestor name / Название предка
+   * @return {Object<string,string>}
    */
-  getClasses () {
-    return forEach(this.get()?.value, (item, name) => {
+  getClasses (
+    data = this.get()?.value,
+    parentName = []
+  ) {
+    const list = {}
+
+    forEach(data, (item, name) => {
       if (this.__isClasses(item)) {
-        return name
+        const newName = [...parentName, name]
+
+        list[To.camelCase(newName.join('-'))] = newName.join('__')
+        Object.assign(list, this.getClasses(item?.value, newName))
       }
-    }, true)
+    })
+
+    return list
   }
 
   /**
@@ -402,7 +414,7 @@ module.exports = class PropertiesComponent {
    * Receives the default values
    *
    * Получает базовые значения
-   * @param {Object<string,*>} data
+   * @param {Object<string,*>} data list of properties / список свойств
    * @return {this}
    * @private
    */
@@ -419,7 +431,7 @@ module.exports = class PropertiesComponent {
    * Gets all possible values
    *
    * Получает всех возможных значения
-   * @param {Object<string,*>} data
+   * @param {Object<string,*>} data list of properties / список свойств
    * @return {this}
    * @private
    */
@@ -465,7 +477,7 @@ module.exports = class PropertiesComponent {
    * Updates values in a map
    *
    * Обновляет значения в карте
-   * @param {Object<string,*>} data
+   * @param {Object<string,*>} data list of properties / список свойств
    * @param {{
    *     index:string,
    *     name:string,

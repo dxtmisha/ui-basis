@@ -109,7 +109,7 @@ module.exports = class DesignLoader {
     const properties = component.getPropsJson()
     const source = this.source
       .replace('export default', `const __PROPERTIES_LIST = ${properties};\r\n\r\nexport default`)
-      .replace(EXP_VUE, `$1.setName('${name}').setProperties(__PROPERTIES_LIST)`)
+      .replace(EXP_VUE, `$1.setName('${name}').setSubClasses(subClasses).setProperties(__PROPERTIES_LIST)`)
 
     PropertiesCache.create(
       [name],

@@ -193,15 +193,33 @@ module.exports = class DesignComponent {
    * @private
    */
   __initPropsDesign () {
-    let sample = this.__readSamplePropsDesign()
     const file = this.component.getFilePropsDesign()
+    let sample = this.__readSamplePropsDesign()
+
+    sample = this.__initPropsDesignForProps(sample)
+    sample = this.__initPropsDesignForClasses(sample)
+
+    this.__console(file)
+    this.__createFile(file, sample)
+
+    return this
+  }
+
+  /**
+   * Generation of properties for a component
+   *
+   * Генерация свойств для компонента
+   * @param {string} sample base template / базовый шаблон
+   * @return {string}
+   * @private
+   */
+  __initPropsDesignForProps (sample) {
     const props = this.component.getProps()
-    const templates = {
-      sample: []
-    }
+    const templates = []
+    let newSample = sample
 
     forEach(props, prop => {
-      templates.sample.push(
+      templates.push(
         `\r\n  ${prop.name}: {` +
         `\r\n    type: ${this.__getType(prop.valueAll, prop?.style)}` +
         (prop.default !== undefined ? `,\r\n    default: ${this.__getDefault(prop.default)}` : '') +
@@ -209,17 +227,39 @@ module.exports = class DesignComponent {
       )
     })
 
-    sample = sample.replace(' /* sample */ ', templates.sample.join(',') + '\r\n')
-    sample = sample.replace('/* classes */', this.component.getClassesJson())
+    if (templates.length > 0) {
+      newSample = sample.replace(' /* sample */ ', `${templates.join(',')}\r\n`)
 
-    if (sample.match('as PropType')) {
-      sample = sample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
+      if (newSample.match('as PropType')) {
+        newSample = newSample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
+      }
     }
 
-    this.__console(file)
-    this.__createFile(file, sample)
+    return newSample
+  }
 
-    return this
+  /**
+   * Generating a subclass for a component
+   *
+   * Генерация подкласса для компонента
+   * @param {string} sample base template / базовый шаблон
+   * @return {string}
+   * @private
+   */
+  __initPropsDesignForClasses (sample) {
+    const classes = this.component.getClasses()
+    const templates = []
+    let newSample = sample
+
+    forEach(classes, (className, index) => {
+      templates.push(`\r\n  ${index}: '${className}'`)
+    })
+
+    if (templates.length > 0) {
+      newSample = newSample.replace(' /* classes */ ', `${templates.join(',')}\r\n`)
+    }
+
+    return newSample
   }
 
   /**
