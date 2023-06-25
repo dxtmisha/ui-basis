@@ -1,8 +1,6 @@
 import { PropType } from 'vue'
 
-export const subClassesDesign = {
-  text: 'text'
-}
+export const subClassesDesign = { /* classes */ }
 
 export const propsDesign = {
   width: {
@@ -15,6 +13,9 @@ export const propsDesign = {
     type: [Boolean]
   },
   outlined: {
+    type: [Boolean]
+  },
+  text: {
     type: [Boolean]
   }
 }

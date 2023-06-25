@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="classes.main"></div>
+  <div :class="classes.main" :style="styles"></div>
 </template>
 
 <style lang="scss">

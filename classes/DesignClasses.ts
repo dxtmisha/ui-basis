@@ -24,6 +24,8 @@ export type ClassesExtraListType = AssociativeType<ClassesExtraItemType>
 
 export type ClassesListType<T> = { main: ClassesItemType } & ClassesSubClassesListType<T>
 
+const KEY_CLASS_CUSTOM = 'custom'
+
 /**
  * Class for working with classes in a component
  *
@@ -222,11 +224,9 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     className.push(item.index)
 
     if (
-      (
-        is &&
-        prop === true
-      ) || (
-        this.properties.isStyle(item, prop)
+      is && (
+        prop === true ||
+        this.properties.isBool(item)
       )
     ) {
       this.toClassNameByState(classes, item, className)
@@ -237,6 +237,8 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
       typeof prop === 'string'
     ) {
       classes[this.jsonState([...className, prop])] = true
+    } else if (this.properties.isStyle(item, prop)) {
+      classes[this.jsonState([...className, KEY_CLASS_CUSTOM])] = true
     }
 
     return classes

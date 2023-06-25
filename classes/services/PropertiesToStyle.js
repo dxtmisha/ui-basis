@@ -23,6 +23,7 @@ module.exports = class PropertiesToStyle {
     const key = PropertiesTool.getKeyStyle()
     const keyName = PropertiesTool.getKeyName()
     const keyVariable = PropertiesTool.getKeyVariable()
+    const keyCustom = PropertiesTool.getKeyClassCustom()
     const designs = this.items.getDesigns()
 
     this.items.each(({
@@ -33,10 +34,10 @@ module.exports = class PropertiesToStyle {
     }) => {
       if (
         item?.[key] &&
-        !item?.value?.custom
+        !item?.value?.[keyCustom]
       ) {
         item[keyVariable] = 'state'
-        item.value.custom = {
+        item.value[keyCustom] = {
           value: {
             [name]: {
               value: PropertiesTool.toFull(`{??sys.${name}}`, design, component, designs),

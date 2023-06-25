@@ -18,6 +18,8 @@ const KEY_FULL = '_full-name'
 const KEY_FULL_VALUE = '_full-value'
 const KEY_PATH = '_path'
 
+const KEY_CLASS_CUSTOM = 'custom'
+
 const KEYS_SPECIAL = [
   'value',
   'type',
@@ -291,6 +293,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyPath () {
     return KEY_PATH
+  }
+
+  /**
+   * Returns the key name of the property for storing user-defined values
+   *
+   * Возвращает ключ названия свойства для хранения пользовательских значений
+   * @return {string}
+   */
+  static getKeyClassCustom () {
+    return KEY_CLASS_CUSTOM
   }
 
   /**

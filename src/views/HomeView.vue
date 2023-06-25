@@ -4,7 +4,7 @@
     <md2-button contained/>
     <md2-button height="lg" contained/>
     <md2-button height="xl" contained/>
-    <md2-button/>
+    <md2-button width="120px"/>
     <md2-button outlined/>
     <md2-button contained disabled/>
   </div>

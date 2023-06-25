@@ -402,15 +402,11 @@ module.exports = class PropertiesComponent {
    *
    * Проверяет, доступно ли свойство для добавления в style
    * @param {Object<string,*>} item object for checking / объект для проверки
-   * @param {(string|boolean)[]} value available property / доступное свойство
    * @return {boolean}
    * @private
    */
-  __isStyle (item, value) {
-    const style = item?.[PropertiesTool.getKeyStyle()]
-
-    return style ||
-      (style !== false && value?.[0] !== true)
+  __isStyle (item) {
+    return !!item?.[PropertiesTool.getKeyStyle()]
   }
 
   /**
@@ -467,10 +463,8 @@ module.exports = class PropertiesComponent {
       item,
       props
     }) => {
-      const value = uniqueArray(props.valueAll)
-
-      props.valueAll = value
-      props.style = this.__isStyle(item, value)
+      props.valueAll = uniqueArray(props.valueAll)
+      props.style = this.__isStyle(item)
     })
 
     return this

@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-
 import { props, subClasses } from './props'
 
 import { Design } from '../../classes/Design'
@@ -16,9 +15,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="classes.main">
-    <div :class="classes.text"/>
-  </div>
+  <div :class="classes.main" :style="styles"></div>
 </template>
 
 <style lang="scss">

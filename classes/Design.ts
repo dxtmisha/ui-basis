@@ -3,10 +3,18 @@ import { executeFunction } from '../functions/data'
 
 import { AssociativeType } from '../constructors/types'
 import { DesignProperties, PropertiesListType } from './DesignProperties'
-import { DesignClasses, ClassesListType, ClassesSubClassesType } from './DesignClasses'
+import {
+  DesignClasses,
+  ClassesListType,
+  ClassesSubClassesType,
+  ClassesExtraListType,
+  ClassesExtraItemType
+} from './DesignClasses'
+import { DesignStyles, StylesListType } from './DesignStyles'
 
 export interface DesignSetupBasic<C> {
   classes: ComputedRef<ClassesListType<C>>
+  styles: ComputedRef<StylesListType>
 }
 
 export type DesignProps = Record<string, any>
@@ -31,7 +39,8 @@ export class Design<
   protected name = ref<string>('design-component')
 
   protected properties: DesignProperties
-  protected classes: DesignClasses
+  protected classes: DesignClasses<C>
+  protected styles: DesignStyles
 
   /**
    * Constructor
@@ -43,7 +52,14 @@ export class Design<
     protected readonly context: SetupContext
   ) {
     this.properties = new DesignProperties()
+
     this.classes = new DesignClasses<C>(
+      this.name,
+      this.properties,
+      this.props as AssociativeType
+    )
+
+    this.styles = new DesignStyles(
       this.name,
       this.properties,
       this.props as AssociativeType
@@ -84,6 +100,27 @@ export class Design<
   }
 
   /**
+   * Adding additional classes
+   *
+   * Добавление дополнительных классов
+   * @param data list of additional classes / список дополнительных классов
+   */
+  setExtra (data: ClassesExtraListType): this {
+    this.classes.setExtra(data)
+    return this
+  }
+
+  /**
+   * Adding additional classes for the base class
+   * Добавление дополнительных классов для базового класса
+   * @param data list of additional classes / список дополнительных классов
+   */
+  setExtraMain (data: ClassesExtraItemType): this {
+    this.classes.setExtraMain(data)
+    return this
+  }
+
+  /**
    * Returns props
    *
    * Возвращает свойства (props)
@@ -114,6 +151,7 @@ export class Design<
   setup<D = AssociativeType> (dataCallback?: DesignSetupValue<D>): DesignSetup<C, D> {
     return {
       classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
+      styles: this.styles.getItem(),
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }

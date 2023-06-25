@@ -10,6 +10,7 @@ export interface PropertiesStateType {
   index: string,
   name: string,
   value: BooleanOrStringType[]
+  valueAll: BooleanOrStringType[]
   state: PropertiesStateType[]
 }
 
@@ -121,7 +122,7 @@ export class DesignProperties {
   isStyle (
     nameItem: string | PropertiesItemType | PropertiesStateType,
     value: BooleanOrStringType
-  ) {
+  ): boolean {
     const item = this.getOrItem(nameItem)
 
     return !!(
@@ -129,7 +130,27 @@ export class DesignProperties {
       isFilled(value) &&
       'style' in item &&
       item?.style === true &&
-      item?.value?.indexOf(true) !== -1
+      item?.valueAll?.indexOf(value) === -1
+    )
+  }
+
+  isBool (name: string): boolean
+  isBool (item: PropertiesItemType | PropertiesStateType): boolean
+  /**
+   * Checks if the property value is true
+   *
+   * Проверяет, если у свойства значение true
+   * @param nameItem property names or the property instance itself / названия свойств
+   * или сам экземпляр свойства
+   */
+  isBool (
+    nameItem: string | PropertiesItemType | PropertiesStateType
+  ): boolean {
+    const item = this.getOrItem(nameItem)
+
+    return !!(
+      item &&
+      item?.valueAll?.indexOf(true) !== -1
     )
   }
 }
