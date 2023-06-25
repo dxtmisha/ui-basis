@@ -189,7 +189,46 @@ export class GeoIntl extends GeoIntlStatic {
       }
     })
   }
-  // TODO: Необходимо добавить параметр "предел", чтобы вывод был в формате обычной даты
+
+  /**
+   * Enables language-sensitive relative time formatting
+   * Including the ability to add a limit to output the standard time format if the value
+   * exceeds the allowable limit
+   *
+   * Включает форматирование относительного времени с учетом языка.
+   * Включая возможность добавления лимита, чтобы выводить уже стандартный формат времени,
+   * если значение вышло за пределы допустимого
+   * @param value a number, bigint, or string, to format / число для форматирования
+   * @param limit values that determine the output limit (values per day) / значения,
+   * по которым определяем предел вывода (значения в день)
+   * @param todayValue current day / текущий день
+   * @param relativeOptions the length of the internationalized message / длина
+   * интернационализированного сообщения
+   * @param dateOptions the representation of the month / представление месяца
+   * @param type type of data format / тип формата data
+   * @param hour24 whether to use 12-hour time / использовать ли 12-часовое время
+   */
+  relativeLimit (
+    value: NumberOrStringOrDateType,
+    limit: number,
+    todayValue?: Date,
+    relativeOptions?: Intl.RelativeTimeFormatStyle | Intl.RelativeTimeFormatOptions,
+    dateOptions?: Intl.DateTimeFormatOptions['month'] | Intl.DateTimeFormatOptions,
+    type?: GeoDateType,
+    hour24?: boolean
+  ): ComputedRef<string> {
+    return computed(() => {
+      return this.relativeLimitStatic(
+        getRef(value),
+        limit,
+        todayValue,
+        relativeOptions,
+        dateOptions,
+        type,
+        hour24
+      )
+    })
+  }
 
   date (value: IntlDateType): ComputedRef<string>
   date (value: IntlDateType, type: GeoDateType): ComputedRef<string>

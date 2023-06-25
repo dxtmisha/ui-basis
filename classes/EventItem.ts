@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 import { To } from './To'
 import { ElementItem, ElementItemType, ElementRefType } from './ElementItem'
@@ -22,7 +22,7 @@ export class EventItem<R = any, E = Event, D = AssociativeType> {
    * Чувствительная к регистру строка, представляющая тип обрабатываемого события
    * @protected
    */
-  protected readonly type = ref(['click']) as Ref<string[]>
+  protected readonly type = ref<string[]>(['click'])
 
   /**
    * Element
