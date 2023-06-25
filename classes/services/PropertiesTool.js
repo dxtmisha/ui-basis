@@ -4,16 +4,15 @@ const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
 const KEY_NAME = '_name'
 const KEY_CATEGORY = '_category' // TODO: в разработке
-const KEY_GROUP = '_group' // TODO: в разработке
 const KEY_PROPS = '_props'
 const KEY_PROPS_NAME = '_props-name'
 const KEY_PROPS_VALUE = '_props-value'
-const KEY_STYLE = '_style' // TODO: в разработке
+const KEY_STYLE = '_style'
 const KEY_DEFAULT = '_default'
 const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
 const KEY_VARIABLE = '_variable'
-const KEY_CSS = '_css' // TODO: в разработке
+const KEY_CSS = '_css'
 const KEY_FULL = '_full-name'
 const KEY_FULL_VALUE = '_full-value'
 const KEY_PATH = '_path'
@@ -25,7 +24,6 @@ const KEYS_SPECIAL = [
   'type',
   KEY_NAME,
   KEY_CATEGORY,
-  KEY_GROUP,
   KEY_PROPS,
   KEY_PROPS_NAME,
   KEY_PROPS_VALUE,
@@ -75,6 +73,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Is the property a SCSS selector
+   *
+   * Является ли свойство выборки SCSS
+   * @param {string} name key name / название ключа
+   * @return {boolean}
+   */
+  static isScss (name) {
+    return !!name.match(/^&/)
+  }
+
+  /**
    * This method returns the names of designs from the environment variable (env)
    *
    * Данный метод возвращает названия дизайнов из переменной окружения (env)
@@ -93,9 +102,30 @@ module.exports = class PropertiesTool {
    * @return {*}
    */
   static getName (name) {
-    return To.kebabCase(
-      name.replace(new RegExp(`^(.*?)(${SYMBOL_AVAILABLE})$`), '$2')
-    )
+    if (this.isScss(name)) {
+      return name
+    } else {
+      return To.kebabCase(
+        name.replace(new RegExp(`^(.*?)(${SYMBOL_AVAILABLE})$`), '$2')
+      )
+    }
+  }
+
+  /**
+   * Returns the variable type name from the property name
+   *
+   * Возвращает название типа переменной из названия свойства
+   * @param {string} name key name / название ключа
+   * @return {*}
+   */
+  static getVariableInName (name) {
+    if (this.isScss(name)) {
+      return '&'
+    } else {
+      return To.kebabCase(
+        name.replace(new RegExp(`^(.*?)([|].*?$|${SYMBOL_AVAILABLE}$)`), '$1')
+      )
+    }
   }
 
   /**
@@ -140,19 +170,6 @@ module.exports = class PropertiesTool {
     }
 
     return data || undefined
-  }
-
-  /**
-   * Returns the variable type name from the property name
-   *
-   * Возвращает название типа переменной из названия свойства
-   * @param {string} name key name / название ключа
-   * @return {*}
-   */
-  static getVariableInName (name) {
-    return To.kebabCase(
-      name.replace(new RegExp(`^(.*?)([|].*?$|${SYMBOL_AVAILABLE}$)`), '$1')
-    )
   }
 
   /**
