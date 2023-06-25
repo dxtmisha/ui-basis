@@ -467,9 +467,9 @@ module.exports = class PropertiesComponent {
       item,
       props
     }) => {
-      const value = uniqueArray(props.value)
+      const value = uniqueArray(props.valueAll)
 
-      props.value = value
+      props.valueAll = value
       props.style = this.__isStyle(item, value)
     })
 

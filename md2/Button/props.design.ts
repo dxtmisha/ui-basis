@@ -5,8 +5,11 @@ export const subClassesDesign = {
 }
 
 export const propsDesign = {
+  width: {
+    type: [String] as PropType<'custom' | string>
+  },
   height: {
-    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | true | 'xl' | string>
+    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | 'custom' | true | 'xl' | string>
   },
   contained: {
     type: [Boolean]
