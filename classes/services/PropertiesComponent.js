@@ -407,7 +407,10 @@ module.exports = class PropertiesComponent {
    * @private
    */
   __isStyle (item, value) {
-    return item?.[PropertiesTool.getKeyStyle()] !== false && value?.[0] !== true
+    const style = item?.[PropertiesTool.getKeyStyle()]
+
+    return style ||
+      (style !== false && value?.[0] !== true)
   }
 
   /**

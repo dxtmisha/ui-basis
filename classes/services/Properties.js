@@ -7,6 +7,7 @@ const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
 const PropertiesToMulti = require('./PropertiesToMulti')
 const PropertiesToRename = require('./PropertiesToRename')
+const PropertiesToStyle = require('./PropertiesToStyle')
 const PropertiesToSub = require('./PropertiesToSub')
 const PropertiesToVar = require('./PropertiesToVar')
 const PropertiesToVariable = require('./PropertiesToVariable')
@@ -115,6 +116,7 @@ module.exports = class Properties {
 
     rename.to()
     new PropertiesToMulti(items).to()
+    new PropertiesToStyle(items).to()
 
     rename.toByVar()
     value.to()

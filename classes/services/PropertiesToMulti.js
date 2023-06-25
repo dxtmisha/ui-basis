@@ -26,27 +26,20 @@ module.exports = class PropertiesToMulti {
    */
   to () {
     const key = PropertiesTool.getKeyVariable()
+    const keyStyle = PropertiesTool.getKeyStyle()
 
     this.__getList().forEach(({
       item,
-      index,
       name,
-      design,
-      component,
       value
     }) => {
       this.__toGo(name, value)
 
       item[key] = 'state'
 
-      // TODO: в разработке
-      /*
-      value[`sys-multi-${name}`] = {
-        value: PropertiesTool.toFullForName(`var(--??s-${index})`, design, component),
-        [PropertiesTool.getKeyName()]: name,
-        [key]: 'property'
+      if (item?.[keyStyle] !== true) {
+        item[keyStyle] = true
       }
-      */
     })
 
     this.items.cache(FILE_CACHE_MULTI)
