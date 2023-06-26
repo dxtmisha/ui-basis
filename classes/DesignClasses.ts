@@ -236,9 +236,9 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
       is &&
       typeof prop === 'string'
     ) {
-      classes[this.jsonState([...className, prop])] = true
+      classes[this.jsonState([...this.getClassName(item, className), prop])] = true
     } else if (this.properties.isStyle(item, prop)) {
-      classes[this.jsonState([...className, KEY_CLASS_CUSTOM])] = true
+      classes[this.jsonState([...this.getClassName(item, className), KEY_CLASS_CUSTOM])] = true
     }
 
     return classes
@@ -258,7 +258,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     item: PropertiesItemType | PropertiesStateType,
     className: string[]
   ): this {
-    const index = this.jsonState(className)
+    const index = this.jsonState(this.getClassName(item, className))
 
     data[index] = true
     item.state?.forEach(
@@ -266,6 +266,27 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     )
 
     return this
+  }
+
+  /**
+   * Returns the class name for the current element
+   *
+   * Возвращает имя класса для текущего элемента
+   * @param item current property / текущее свойство
+   * @param className array of class names / массив с названиями классов
+   * @private
+   */
+  private getClassName (
+    item: PropertiesItemType | PropertiesStateType,
+    className: string[]
+  ): string[] {
+    if (
+      'className' in item && item.className
+    ) {
+      return [item.className]
+    } else {
+      return className
+    }
   }
 
   /**

@@ -3,7 +3,7 @@ const { To } = require('../To')
 const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
 const KEY_NAME = '_name'
-const KEY_CATEGORY = '_category' // TODO: в разработке
+const KEY_CATEGORY = '_category'
 const KEY_PROPS = '_props'
 const KEY_PROPS_NAME = '_props-name'
 const KEY_PROPS_VALUE = '_props-value'
@@ -389,5 +389,21 @@ module.exports = class PropertiesTool {
         return name
       }
     })
+  }
+
+  /**
+   * Transformations to a class name
+   *
+   * Преобразование в имя класса
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {string}
+   */
+  static toClass (value) {
+    return To.kebabCase(
+      value
+        .replace(/[{}]/g, '')
+        .replace('.', '-')
+        .replaceAll('.', '--')
+    )
   }
 }

@@ -10,11 +10,13 @@ export interface PropertiesStateType {
   index: string,
   name: string,
   value: BooleanOrStringType[]
-  valueAll: BooleanOrStringType[]
   state: PropertiesStateType[]
 }
 
 export interface PropertiesItemType extends PropertiesStateType {
+  type: string,
+  className?: string,
+  valueAll: BooleanOrStringType[]
   style?: boolean,
   default?: boolean
 }
@@ -150,6 +152,7 @@ export class DesignProperties {
 
     return !!(
       item &&
+      'valueAll' in item &&
       item?.valueAll?.indexOf(true) !== -1
     )
   }

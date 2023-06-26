@@ -35,6 +35,8 @@ module.exports = class PropertiesComponent {
    * @type {Object<string,{
    *   index:string,
    *   name:string,
+   *   type:string,
+   *   className:string,
    *   value:(string|boolean)[],
    *   valueAll:(string|boolean)[],
    *   state:{
@@ -71,7 +73,7 @@ module.exports = class PropertiesComponent {
    * @return {Object<string, *>}
    */
   get () {
-    return this.properties.get().getItemByIndex(this.name) || {}
+    return this.__getByLink(this.name)
   }
 
   /**
@@ -169,6 +171,8 @@ module.exports = class PropertiesComponent {
    * @return {Object<string,{
    *   index:string,
    *   name:string,
+   *   type:string,
+   *   className:string,
    *   value:(string|boolean)[],
    *   valueAll:(string|boolean)[],
    *   state:{
@@ -209,7 +213,18 @@ module.exports = class PropertiesComponent {
       if (this.__isProps(item)) {
         properties.push({
           index,
-          item
+          item,
+          type: 'property',
+          className: undefined
+        })
+      }
+
+      if (this.__isLinkClass(item)) {
+        properties.push({
+          index,
+          item: this.__getByLink(item?.value),
+          type: 'link-class',
+          className: PropertiesTool.toClass(item?.value)
         })
       }
     })
@@ -228,6 +243,8 @@ module.exports = class PropertiesComponent {
    *   props: {
    *     index:string,
    *     name:string,
+   *     type:string,
+   *     className:string,
    *     value:(string|boolean)[],
    *     valueAll:(string|boolean)[],
    *     state:{
@@ -321,6 +338,8 @@ module.exports = class PropertiesComponent {
    * @return {Object<string,{
    *   index:string,
    *   name:string,
+   *   type:string,
+   *   className:string,
    *   value:(string|boolean)[],
    *   valueAll:(string|boolean)[],
    *   state:{
@@ -340,11 +359,15 @@ module.exports = class PropertiesComponent {
 
     this.getState().forEach(({
       index,
-      item
+      item,
+      type,
+      className
     }) => {
       properties[index] = {
         index,
         name: this.__toName(item, index),
+        type,
+        className,
         value: [],
         valueAll: [],
         state: [],
@@ -354,6 +377,17 @@ module.exports = class PropertiesComponent {
     })
 
     return properties
+  }
+
+  /**
+   * Returns all properties of a component by its reference
+   *
+   * Возвращает все свойства компонента по его reference
+   * @param {string} link link to a property / ссылка на свойство
+   * @return {Object<string, *>}
+   */
+  __getByLink (link) {
+    return this.properties.get().getItemByIndex(link) || {}
   }
 
   /**
@@ -371,6 +405,19 @@ module.exports = class PropertiesComponent {
       item?.[PropertiesTool.getKeyVariable()] === 'state' ||
       LIST_PROPS.indexOf(item?.[PropertiesTool.getKeyName()]) !== -1
     )
+  }
+
+  /**
+   * Checks whether the property is a reference to a class
+   *
+   * Проверяет, является ли свойство ссылкой на класс
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @return {boolean}
+   * @private
+   */
+  __isLinkClass (item) {
+    return item?.[PropertiesTool.getKeyVariable()] === 'link-class' &&
+      typeof item?.value === 'string'
   }
 
   /**

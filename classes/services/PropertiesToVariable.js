@@ -144,10 +144,13 @@ module.exports = class PropertiesVariable {
     }) => {
       if (
         ['var', 'property'].indexOf(item?.[key]) !== -1 &&
-        PropertiesTool.isLink(item?.value) &&
-        this.__isLink(item, design, component)
+        PropertiesTool.isLink(item?.value)
       ) {
-        item[key] = 'link'
+        const type = this.__isLink(item, design, component)
+
+        if (type) {
+          item[key] = type
+        }
       }
     })
 
@@ -161,7 +164,7 @@ module.exports = class PropertiesVariable {
    * @param {Object<string,*>} item current element / текущий элемент
    * @param {string} design design name / название дизайна
    * @param {string} component component name / название компонента
-   * @return {boolean}
+   * @return {string}
    * @private
    */
   __isLink (
@@ -175,8 +178,13 @@ module.exports = class PropertiesVariable {
       component,
       this.items.getDesigns()
     )
+    const itemLink = this.items.getItemByIndex(index)
 
-    return typeof this.items.getItemByIndex(index)?.value === 'object'
+    if (typeof itemLink?.value === 'object') {
+      return 'link'
+    } else {
+      return undefined
+    }
   }
 
   /**
