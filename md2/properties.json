@@ -847,7 +847,7 @@
   },
   "button": {
     "padding-left": "{ref.spacing.4}",
-    "padding-right": "{ref.spacing.4}",
+    "padding_right": "{ref.spacing.4}",
     "height": {
       "sm": "{ref.spacing.7}",
       "md": "{ref.spacing.9}",
@@ -855,7 +855,7 @@
       "border-color": "{ref.spacing.2}"
     },
     "font": "{font}",
-    "border-radius": "{ref.spacing.1}",
+    "border_radius": "{ref.spacing.1}",
     "contained": {
       "color": "{sys.palette.onPrimary}",
       "background-color": "{sys.palette.primary}",
@@ -879,5 +879,27 @@
     "text": {
       "color": "{sys.palette.primary}"
     }
+  },
+  "checkbox/contained": {
+    "padding-left": "{ref.spacing.4}",
+    "padding-right": "{ref.spacing.4}",
+    "color": "{sys.palette.onPrimary}",
+    "background-color": "{sys.palette.primary}"
+  },
+  "checkbox/contained/hover": {
+    "padding-left": "{ref.spacing.4}",
+    "padding-right": "{ref.spacing.4}",
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "{sys.opacity.hover}"
+  },
+  "checkbox/outlined/basic": {
+    "padding-left": "{ref.spacing.4}",
+    "padding-right": "{ref.spacing.4}",
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "{sys.opacity.hover}"
+  },
+  "checkbox/outlined/hover": {
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "{sys.opacity.hover}"
   }
 }

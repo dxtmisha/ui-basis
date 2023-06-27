@@ -250,7 +250,7 @@ module.exports = class PropertiesRead {
         break
     }
 
-    return key
+    return PropertiesTool.toIndex(key)
   }
 
   /**

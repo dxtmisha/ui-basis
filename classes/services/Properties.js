@@ -3,7 +3,6 @@ const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
 const PropertiesTool = require('./PropertiesTool')
 
-const PropertiesToCategory = require('./PropertiesToCategory')
 const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
 const PropertiesToMulti = require('./PropertiesToMulti')
@@ -97,7 +96,6 @@ module.exports = class Properties {
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
 
-    const category = new PropertiesToCategory(items)
     const full = new PropertiesToFull(items)
     const rename = new PropertiesToRename(items)
     const sub = new PropertiesToSub(items)
@@ -105,7 +103,6 @@ module.exports = class Properties {
     const variable = new PropertiesToVariable(items)
 
     full.toFullValueFix()
-    category.toByClass()
     variable.to()
     variable.toByLink()
     sub.toByLink()

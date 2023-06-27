@@ -233,6 +233,39 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
   }
 
   /**
+     * Enables language-sensitive relative time formatting
+     * Including the ability to add a limit to output the standard time format if the value
+     * exceeds the allowable limit
+     *
+     * Включает форматирование относительного времени с учетом языка.
+     * Включая возможность добавления лимита, чтобы выводить уже стандартный формат времени,
+     * если значение вышло за пределы допустимого
+     * @param value a number, bigint, or string, to format / число для форматирования
+     * @param limit values that determine the output limit (values per day) / значения,
+     * по которым определяем предел вывода (значения в день)
+     * @param todayValue current day / текущий день
+     * @param relativeOptions the length of the internationalized message / длина
+     * интернационализированного сообщения
+     * @param dateOptions the representation of the month / представление месяца
+     * @param type type of data format / тип формата data
+     * @param hour24 whether to use 12-hour time / использовать ли 12-часовое время
+     */
+  relativeLimitStatic (value, limit, todayValue, relativeOptions, dateOptions, type, hour24) {
+    const date = To_1.To.date(value)
+    const today = todayValue || new Date()
+    const limitValueIn = (new Date(today))
+    const limitValueOut = (new Date(today))
+    limitValueIn.setDate(today.getDate() - limit)
+    limitValueOut.setDate(today.getDate() + limit)
+    if (date >= limitValueIn &&
+            date <= limitValueOut) {
+      return this.relativeStatic(date, relativeOptions, today)
+    } else {
+      return this.dateStatic(date, type, dateOptions, hour24)
+    }
+  }
+
+  /**
      * The object enables language-sensitive number formatting
      *
      * Объект включает форматирование чисел с учетом языка
@@ -251,7 +284,7 @@ class GeoIntlStatic extends GeoAbstract_1.GeoAbstract {
   /**
      * Enables language-sensitive date and time formatting
      *
-     * Конструктором объектов, включающих языка-зависимое форматирование даты и времени.
+     * Конструктором объектов, включающих языка-зависимое форматирование даты и времени
      * @param value the date to format / дата для форматирования
      * @param type type of data format / тип формата data
      * @param styleOptions the representation of the month / представление месяца

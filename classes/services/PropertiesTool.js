@@ -334,6 +334,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Changes the name so that it is suitable for indication
+   *
+   * Изменяет имя так, чтобы оно подходило для индикации
+   * @param {string} name property name / название свойства
+   * @return {string}
+   */
+  static toIndex (name) {
+    return To.kebabCase(name.replace(/(?<!^)_+/g, '-'))
+  }
+
+  /**
    * Replaces labels with design and component names
    *
    * Заменяет метки на названия дизайна и компонента

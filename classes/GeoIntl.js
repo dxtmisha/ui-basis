@@ -141,6 +141,30 @@ class GeoIntl extends GeoIntlStatic_1.GeoIntlStatic {
   }
 
   /**
+     * Enables language-sensitive relative time formatting
+     * Including the ability to add a limit to output the standard time format if the value
+     * exceeds the allowable limit
+     *
+     * Включает форматирование относительного времени с учетом языка.
+     * Включая возможность добавления лимита, чтобы выводить уже стандартный формат времени,
+     * если значение вышло за пределы допустимого
+     * @param value a number, bigint, or string, to format / число для форматирования
+     * @param limit values that determine the output limit (values per day) / значения,
+     * по которым определяем предел вывода (значения в день)
+     * @param todayValue current day / текущий день
+     * @param relativeOptions the length of the internationalized message / длина
+     * интернационализированного сообщения
+     * @param dateOptions the representation of the month / представление месяца
+     * @param type type of data format / тип формата data
+     * @param hour24 whether to use 12-hour time / использовать ли 12-часовое время
+     */
+  relativeLimit (value, limit, todayValue, relativeOptions, dateOptions, type, hour24) {
+    return (0, vue_1.computed)(() => {
+      return this.relativeLimitStatic((0, ref_1.getRef)(value), limit, todayValue, relativeOptions, dateOptions, type, hour24)
+    })
+  }
+
+  /**
      * Enables language-sensitive date and time formatting
      *
      * Конструктором объектов, включающих языка-зависимое форматирование даты и времени.

@@ -113,7 +113,8 @@ class To {
   static camelCase (value) {
     return value
       .toString()
-      .replace(/[-.]([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
+      .trim()
+      .replace(/-([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
       .replace(/^([A-Z])/g, (all, char) => `${char.toLowerCase()}`)
   }
 
@@ -127,7 +128,7 @@ class To {
     return value
       .toString()
       .trim()
-      .replace(/[-.]([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
+      .replace(/-([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
       .replace(/^([a-zA-Z])/g, (all, char) => `${char.toUpperCase()}`)
   }
 
@@ -140,8 +141,10 @@ class To {
   static kebabCase (value) {
     return value
       .toString()
+      .trim()
       .replace(/^[A-Z]/g, all => all.toLowerCase())
       .replace(/(?<=\w)[A-Z]/g, all => `-${all.toLowerCase()}`)
+      .replace(/-+/g, '-')
       .replace(/[A-Z]/g, all => all.toLowerCase())
   }
 
