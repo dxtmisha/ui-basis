@@ -123,6 +123,14 @@ const KEY_SEPARATOR = '_separator'
 const KEY_SIMPLIFICATION = '_simplification'
 
 /**
+ * Indicates that this property was broken into parts
+ *
+ * Указывает, что это свойство было разбито на части
+ * @type {string}
+ */
+const KEY_WRAP = '_wrap'
+
+/**
  * The key for storing the path to the component
  *
  * Ключ для хранения пути к компоненту
@@ -239,6 +247,18 @@ module.exports = class PropertiesTool {
         name.replace(new RegExp(`^(.*?)([|].*?$|${SYMBOL_AVAILABLE}$)`), '$1')
       )
     }
+  }
+
+  /**
+   * Returns the values of the property
+   *
+   * Возвращает значения свойства
+   * @param {Object<string,*>} property An array that needs to be
+   * transformed / Массив, который нужно преобразовать
+   * @return {Object<string,*>}
+   */
+  static getValue (property) {
+    return property?.value || property
   }
 
   /**
@@ -433,6 +453,16 @@ module.exports = class PropertiesTool {
    */
   static getKeySimplification () {
     return KEY_SIMPLIFICATION
+  }
+
+  /**
+   * Returns the key, indicating that this property was broken into parts
+   *
+   * Возвращает ключ, указывая, что это свойство было разбито на части
+   * @return {string}
+   */
+  static getKeyWrap () {
+    return KEY_WRAP
   }
 
   /**

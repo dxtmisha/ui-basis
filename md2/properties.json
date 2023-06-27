@@ -881,7 +881,7 @@
     }
   },
   "checkbox/contained": {
-    "padding-left": "{ref.spacing.4}",
+    "padding-left": "{ref.spacing.2}",
     "padding-right": "{ref.spacing.4}",
     "color": "{sys.palette.onPrimary}",
     "background-color": "{sys.palette.primary}"
@@ -892,13 +892,25 @@
     "gradient": "{sys.palette.onPrimary}",
     "gradient-opacity": "{sys.opacity.hover}"
   },
+  "checkbox/contained/disabled": {
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "{sys.opacity.disabled}"
+  },
   "checkbox/outlined/basic": {
     "padding-left": "{ref.spacing.4}",
     "padding-right": "{ref.spacing.4}",
     "gradient": "{sys.palette.onPrimary}",
-    "gradient-opacity": "{sys.opacity.hover}"
+    "gradient-opacity": "{sys.opacity.hover}",
+    "disabled/test1/test2/test3/": {
+      "color": "red"
+    },
+    "disabled/test1/test2/test4/": {
+      "color": "blue"
+    }
   },
   "checkbox/outlined/hover": {
+    "padding-left": "{ref.spacing.4}",
+    "padding-right": "{ref.spacing.4}",
     "gradient": "{sys.palette.onPrimary}",
     "gradient-opacity": "{sys.opacity.hover}"
   }

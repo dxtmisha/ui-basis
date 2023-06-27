@@ -9,6 +9,8 @@ const PropertiesCache = require('./PropertiesCache')
 const PropertiesFiles = require('./PropertiesFiles')
 const PropertiesTool = require('./PropertiesTool')
 
+const PropertiesReadSeparator = require('./PropertiesReadSeparator')
+
 const FILE_NAME = 'properties.json'
 const FILE_CACHE_READ = 'properties-read'
 const FILE_CACHE_MAIN = 'properties-read-main'
@@ -29,6 +31,8 @@ module.exports = class PropertiesRead {
    */
   constructor (designs) {
     this.designs = ['d', ...designs]
+
+    this.separator = new PropertiesReadSeparator()
   }
 
   /**
@@ -83,7 +87,9 @@ module.exports = class PropertiesRead {
     list.forEach(item => {
       return item.paths.forEach(path => {
         return replaceRecursive(data, this.__toStandard({
-          [item.design]: PropertiesFiles.readFile([...path, FILE_NAME]) || {}
+          [item.design]: this.separator.to(
+            PropertiesFiles.readFile([...path, FILE_NAME]) || {}
+          )
         }))
       })
     })
@@ -192,10 +198,6 @@ module.exports = class PropertiesRead {
       path,
       properties: PropertiesFiles.readFile([path, FILE_NAME]) || {}
     }
-  }
-
-  __toSeparator (item) {
-    // TODO: в разработке
   }
 
   /**
