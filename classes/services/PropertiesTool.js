@@ -2,19 +2,132 @@ const { To } = require('../To')
 
 const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
+/**
+ * The key for storing the final name of the property after all processing
+ *
+ * Ключ для хранения конечного названия свойства после всех обработок
+ * @type {string}
+ */
 const KEY_NAME = '_name'
+
+/**
+ * The key for storing the type of category of the property, for example, class, root
+ *
+ * Ключ для хранения типа категории свойства, например, class, root
+ * @type {string}
+ */
 const KEY_CATEGORY = '_category'
+
+/**
+ * The key for determining whether to add the property as a variable of the component or not
+ *
+ * Ключ для определения, нужно ли добавлять свойство как переменную компонента или нет
+ * @type {string}
+ */
 const KEY_PROPS = '_props'
+
+/**
+ * Key for renaming the variable name in the component
+ *
+ * Ключ для переименования названия переменной в компоненте
+ * @type {string}
+ */
 const KEY_PROPS_NAME = '_props-name'
+
+/**
+ * Key for determining whether to add this property as a parameter to the component or not
+ *
+ * Ключ для определения, нужно ли добавлять это свойство в качестве параметра у компонента или нет
+ * @type {string}
+ */
 const KEY_PROPS_VALUE = '_props-value'
+
+/**
+ * Key for determining whether the property is available as a value for a custom style attribute
+ *
+ * Ключ для определения, доступно ли свойство в качестве значения пользовательского атрибута стиля
+ * @type {string}
+ */
 const KEY_STYLE = '_style'
+
+/**
+ * Key for determining the default value of the component parameter
+ *
+ * Ключ для определения значения по умолчанию параметра компонента
+ * @type {string}
+ */
 const KEY_DEFAULT = '_default'
+
+/**
+ * To determine whether to add !important at the end of the value
+ *
+ * Ключ для определения, добавлять ли !important в конце значения
+ * @type {string}
+ */
 const KEY_IMPORTANT = '_important'
+
+/**
+ * Key for renaming the property name
+ *
+ * Ключ для переименования названия свойства
+ * @type {string}
+ */
 const KEY_RENAME = '_rename'
+
+/**
+ * The parameter determines the type of property
+ *
+ * Параметр определяет тип свойства
+ * @type {string}
+ */
 const KEY_VARIABLE = '_variable'
+
+/**
+ * The key for storing a value, formatted for output in a specific style
+ *
+ * Ключ для хранения значения, отформатированный для вывода в определенный стиль
+ * @type {string}
+ */
 const KEY_CSS = '_css'
+
+/**
+ * The key determines that the name of the property is the final version and does not require further processing
+ *
+ * Ключ определяет, что имя свойства является финальной версией и не требует дополнительной обработки
+ * @type {string}
+ */
 const KEY_FULL = '_full-name'
+
+/**
+ * The key determines that the property value is the final version and does not require further processing.
+ *
+ * Ключ определяет, что значение свойства является финальной версией и не требует дополнительной обработки.
+ * @type {string}
+ */
 const KEY_FULL_VALUE = '_full-value'
+
+/**
+ * The key by which the delimiter sign is determined
+ *
+ * Ключ, по которому определяется знак-разделитель (/)
+ * @type {string}
+ */
+const KEY_SEPARATOR = '_separator'
+
+/**
+ * The key for simplifying the nesting type
+ *
+ * Ключ для упрощения типа nesting (/basic)
+ * @type {string}
+ */
+const KEY_SIMPLIFICATION = '_simplification'
+
+/**
+ * The key for storing the path to the component
+ *
+ * Ключ для хранения пути к компоненту
+ * @type {string}
+ */
 const KEY_PATH = '_path'
 
 const KEY_CLASS_CUSTOM = 'custom'
@@ -300,6 +413,26 @@ module.exports = class PropertiesTool {
    */
   static getKeyFullValue () {
     return KEY_FULL_VALUE
+  }
+
+  /**
+   * Returns the key by which the delimiter sign is determined
+   *
+   * Возвращает ключ, по которому определяется знак-разделитель
+   * @return {string}
+   */
+  static getKeySeparator () {
+    return KEY_SEPARATOR
+  }
+
+  /**
+   * Returns the key for simplifying the nesting type
+   *
+   * Возвращает ключ для упрощения типа nesting
+   * @return {string}
+   */
+  static getKeySimplification () {
+    return KEY_SIMPLIFICATION
   }
 
   /**

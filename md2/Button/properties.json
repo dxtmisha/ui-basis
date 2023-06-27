@@ -1,8 +1,1 @@
-{
-  "width": {
-    "_style": true
-  },
-  "&.is-icon ~ .test": {
-    "color": "red"
-  }
-}
+{}

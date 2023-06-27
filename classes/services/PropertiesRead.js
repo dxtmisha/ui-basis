@@ -178,7 +178,7 @@ module.exports = class PropertiesRead {
    *   component: string,
    *   code: string,
    *   path: string,
-   *   properties: Object<string,Object<string,*>>
+   *   properties: Object<string,*>
    * }}
    * @private
    */
@@ -190,8 +190,12 @@ module.exports = class PropertiesRead {
       component: To.kebabCase(name),
       code: To.camelCaseFirst(`${design}-${name}`),
       path,
-      properties: this.__toStandard(PropertiesFiles.readFile([path, FILE_NAME]) || {})
+      properties: PropertiesFiles.readFile([path, FILE_NAME]) || {}
     }
+  }
+
+  __toSeparator (item) {
+    // TODO: в разработке
   }
 
   /**

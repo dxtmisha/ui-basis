@@ -854,7 +854,7 @@
       "lg": "{ref.spacing.12}",
       "border-color": "{ref.spacing.2}"
     },
-    "font": "{font}",
+    "font": "{font.button}",
     "border_radius": "{ref.spacing.1}",
     "contained": {
       "color": "{sys.palette.onPrimary}",
