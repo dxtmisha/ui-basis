@@ -1,7 +1,7 @@
 {
   "ref": {
     "value": {
-      "file|main": "properties/ref.json",
+      "file|main": "tokens/ref.json",
       "screen": {
         "_category": "media"
       }
@@ -285,7 +285,7 @@
   },
   "font": {
     "value": {
-      "file|main": "properties/font.json"
+      "file|main": "tokens/font.json"
     },
     "_variable": "state",
     "_category": "class"

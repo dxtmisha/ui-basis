@@ -32,11 +32,11 @@ module.exports = class PropertiesFiles {
    * Checks whether it is a directory
    *
    * Проверяет, является ли это директорией
-   * @param {string} name name of the element being checked / название проверяемого элемента
+   * @param {string[]} name name of the element being checked / название проверяемого элемента
    * @return {boolean}
    */
   static isDir (name) {
-    return !name.match(/\.\w+$/)
+    return !(this.joinPath(name)).match(/\.\w+$/)
   }
 
   /**

@@ -89,11 +89,7 @@ module.exports = class PropertiesRead {
         const fullPath = [...path, FILE_NAME]
         let properties = PropertiesFiles.readFile(fullPath) || {}
 
-        properties = this.separator.to(properties)
-        properties = this.standard.to(properties)
-
         properties = this.fileImport.to(fullPath, properties)
-
         properties = this.separator.to(properties)
         properties = this.standard.to({
           [item.design]: properties
