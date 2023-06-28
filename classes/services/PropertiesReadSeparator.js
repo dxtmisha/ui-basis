@@ -1,5 +1,6 @@
 const {
   forEach,
+  isObject,
   replaceRecursive
 } = require('../../functions/data')
 
@@ -30,61 +31,49 @@ module.exports = class PropertiesReadSeparator {
   }
 
   /**
-   * Returns a broken list of names by name
-   *
-   * Возвращает разбитый список названий по имени
-   * @param {string} name property names / названия свойств
-   * @param {string} key the key by which to find a match / ключ, по которому нужно найти сходство
-   * @return {string[]}
-   * @private
-   */
-  __getNameList (name, key) {
-    return name.split(this.__getSeparator(key))
-  }
-
-  /**
-   * Returns an object with updated values, taking into account its location
-   *
-   * Возвращает объект с обновленными значениями, учитывая его местоположение
+   * Начало преобразования
    * @param {Object<string,*>} properties An array that needs to be
    * transformed / Массив, который нужно преобразовать
-   * @param value new values for the properties / новые значения для свойств
-   * @return {(*&{value})|*}
-   * @private
+   * @param {string} separator separator symbol / символ разделителя
+   * @param {string} simplification values to be deleted / значения для удаления
+   * @return {*}
    */
-  __getPropertiesByValue (properties, value) {
-    if (properties?.value) {
-      return {
-        ...properties,
-        value
-      }
+  __toGo (
+    properties,
+    separator = READ_SEPARATOR,
+    simplification = READ_SIMPLIFICATION
+  ) {
+    const values = PropertiesTool.getValue(properties)
+
+    if (isObject(values)) {
+      let newProperties = {}
+
+      separator = properties?.[PropertiesTool.getKeySeparator()] || separator
+      simplification = properties?.[PropertiesTool.getKeySimplification()] || simplification
+
+      forEach(values, (item, name) => {
+        const newItem = this.__toGo(item, separator, simplification)
+
+        if (this.__isSeparator(name, separator)) {
+          const list = this.__getNameList(
+            this.__toSimplification(
+              name,
+              separator,
+              simplification
+            ),
+            separator
+          )
+
+          newProperties = replaceRecursive(newProperties, this.__toWrap(list, newItem))
+        } else {
+          newProperties[name] = newItem
+        }
+      })
+
+      return PropertiesTool.getPropertiesByValue(properties, newProperties)
     } else {
-      return value
+      return properties
     }
-  }
-
-  /**
-   * Returns the delimiter key
-   *
-   * Возвращает ключ разделения
-   * @param {string} key the key by which to find a match / ключ, по которому нужно найти сходство
-   * @return {string}
-   * @private
-   */
-  __getSeparator (key) {
-    return key || READ_SEPARATOR
-  }
-
-  /**
-   * Returns the values by which to remove unnecessary characters.
-   *
-   * Возвращает значения, по которым удаляем лишние символы.
-   * @param {string} value values to be deleted / значения для удаления
-   * @return {string}
-   * @private
-   */
-  __getSimplification (value) {
-    return value || READ_SIMPLIFICATION
   }
 
   /**
@@ -92,46 +81,25 @@ module.exports = class PropertiesReadSeparator {
    *
    * Проверяет, подходит ли свойство для разделения
    * @param {string} name property names / названия свойств
-   * @param {string} key the key by which to find a match / ключ, по которому нужно найти сходство
+   * @param {string} separator separator symbol / символ разделителя
    * @return {boolean}
    * @private
    */
-  __isSeparator (name, key) {
-    return !!name.match(this.__getSeparator(key))
+  __isSeparator (name, separator) {
+    return !!name.match(separator)
   }
 
   /**
-   * Начало преобразования
-   * @param {Object<string,*>} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
-   * @return {*}
+   * Returns a broken list of names by name
+   *
+   * Возвращает разбитый список названий по имени
+   * @param {string} name property names / названия свойств
+   * @param {string} separator separator symbol / символ разделителя
+   * @return {string[]}
+   * @private
    */
-  __toGo (properties) {
-    const keySeparator = PropertiesTool.getKeySeparator()
-    const keySimplification = PropertiesTool.getKeySimplification()
-    let newProperties = {}
-
-    forEach(PropertiesTool.getValue(properties), (item, name) => {
-      const separator = item?.[keySeparator]
-      const newItem = typeof item === 'object' ? this.__toGo(item) : item
-
-      if (this.__isSeparator(name, separator)) {
-        const list = this.__getNameList(
-          this.__toSimplification(
-            name,
-            separator,
-            item?.[keySimplification]
-          ),
-          separator
-        )
-
-        newProperties = replaceRecursive(newProperties, this.__toWrap(list, newItem))
-      } else {
-        newProperties[name] = newItem
-      }
-    })
-
-    return this.__getPropertiesByValue(properties, newProperties)
+  __getNameList (name, separator) {
+    return name.split(separator)
   }
 
   /**
@@ -139,16 +107,14 @@ module.exports = class PropertiesReadSeparator {
    *
    * Удаление лишних символов из названия
    * @param {string} name property names / названия свойств
-   * @param {string} key the key by which to find a match / ключ, по которому нужно найти сходство
-   * @param {string} value values to be deleted / значения для удаления
+   * @param {string} separator separator symbol / символ разделителя
+   * @param {string} simplification values to be deleted / значения для удаления
    * @return {string}
    * @private
    */
-  __toSimplification (name, key, value) {
-    const separator = this.__getSeparator(key)
-
+  __toSimplification (name, separator, simplification) {
     return name
-      .replaceAll(`${separator}${this.__getSimplification(value)}`, '')
+      .replaceAll(`${separator}${simplification}`, '')
       .replace(new RegExp(`${separator}$`), '')
   }
 
@@ -210,6 +176,8 @@ module.exports = class PropertiesReadSeparator {
             }
           })
         }
+
+        delete item[keyWrap]
       }
 
       this.__toDuplicatesParent(item)
@@ -242,7 +210,7 @@ module.exports = class PropertiesReadSeparator {
 
       if (
         !PropertiesTool.isSpecial(name) &&
-        typeof values === 'object'
+        isObject(values)
       ) {
         data.quantity++
         this.__addSelectorsItem(data.items, item)
@@ -250,6 +218,39 @@ module.exports = class PropertiesReadSeparator {
     })
 
     return data
+  }
+
+  /**
+   * Adding information about the property and its values
+   *
+   * Добавления информация об свойство и его значения
+   * @param {Object<string, {
+   *   quantity: number,
+   *   values: Object<string,*[]>
+   * }>} data object with all the collected data / объект со всеми собранными данными
+   * @param {Object<string,*>} properties list of properties / свойств
+   * @private
+   */
+  __addSelectorsItem (data, properties) {
+    forEach(PropertiesTool.getValue(properties), (item, name) => {
+      const value = PropertiesTool.getValue(item)
+
+      if (!isObject(value)) {
+        if (!(name in data)) {
+          data[name] = {
+            quantity: 0,
+            values: {}
+          }
+        }
+
+        if (!(value in data[name].values)) {
+          data[name].values[value] = []
+        }
+
+        data[name].quantity++
+        data[name].values[value].push(properties)
+      }
+    })
   }
 
   /**
@@ -277,41 +278,6 @@ module.exports = class PropertiesReadSeparator {
     })
 
     return focusValue
-  }
-
-  /**
-   * Adding information about the property and its values
-   *
-   * Добавления информация об свойство и его значения
-   * @param {Object<string, {
-   *   quantity: number,
-   *   values: Object<string,*[]>
-   * }>} data object with all the collected data / объект со всеми собранными данными
-   * @param {Object<string,*>} properties list of properties / свойств
-   * @private
-   */
-  __addSelectorsItem (data, properties) {
-    const values = PropertiesTool.getValue(properties)
-
-    forEach(values, (item, name) => {
-      const value = PropertiesTool.getValue(item)
-
-      if (typeof value !== 'object') {
-        if (!(name in data)) {
-          data[name] = {
-            quantity: 0,
-            values: {}
-          }
-        }
-
-        if (!(value in data[name].values)) {
-          data[name].values[value] = []
-        }
-
-        data[name].quantity++
-        data[name].values[value].push(properties)
-      }
-    })
   }
 
   /**

@@ -53,6 +53,16 @@ export function isFilled<T = any> (value: T): value is Exclude<T, EmptyType> {
 }
 
 /**
+ * Checks if a value is an object
+ *
+ * Проверяет, является ли значение объектом
+ * @param value value / значение
+ */
+export function isObject<T = any> (value: T): value is Record<any, any> {
+  return typeof value === 'object'
+}
+
+/**
  * Checks if the function is a callback function
  *
  * Проверяет, является ли функция обратного вызова

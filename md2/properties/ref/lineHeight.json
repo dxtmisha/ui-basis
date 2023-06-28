@@ -1,0 +1,15 @@
+{
+  "sm": "{ref.spacing.4}",
+  "md": "{ref.spacing.5}",
+  "lg": "{ref.spacing.6}",
+  "xl": "{ref.spacing.7}",
+  "headline": {
+    "1": "{ref.spacing.px}*112",
+    "2": "{ref.spacing.px}*72",
+    "3": "{ref.spacing.px}*56",
+    "4": "{ref.spacing.px}*36",
+    "5": "{ref.spacing.px}*24",
+    "6": "{ref.spacing.px}*24"
+  },
+  "interactiveDisplay": "{ref.spacing.px}*88"
+}

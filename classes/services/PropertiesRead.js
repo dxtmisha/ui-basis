@@ -1,15 +1,13 @@
 const { To } = require('../To')
-const {
-  forEach,
-  isFilled,
-  replaceRecursive
-} = require('../../functions/data')
+const { replaceRecursive } = require('../../functions/data')
 
 const PropertiesCache = require('./PropertiesCache')
 const PropertiesFiles = require('./PropertiesFiles')
 const PropertiesTool = require('./PropertiesTool')
 
+const PropertiesReadImport = require('./PropertiesReadImport')
 const PropertiesReadSeparator = require('./PropertiesReadSeparator')
+const PropertiesReadStandard = require('./PropertiesReadStandard')
 
 const FILE_NAME = 'properties.json'
 const FILE_CACHE_READ = 'properties-read'
@@ -32,7 +30,9 @@ module.exports = class PropertiesRead {
   constructor (designs) {
     this.designs = ['d', ...designs]
 
+    this.fileImport = new PropertiesReadImport()
     this.separator = new PropertiesReadSeparator()
+    this.standard = new PropertiesReadStandard()
   }
 
   /**
@@ -86,11 +86,20 @@ module.exports = class PropertiesRead {
 
     list.forEach(item => {
       return item.paths.forEach(path => {
-        return replaceRecursive(data, this.__toStandard({
-          [item.design]: this.separator.to(
-            PropertiesFiles.readFile([...path, FILE_NAME]) || {}
-          )
-        }))
+        const fullPath = [...path, FILE_NAME]
+        let properties = PropertiesFiles.readFile(fullPath) || {}
+
+        properties = this.separator.to(properties)
+        properties = this.standard.to(properties)
+
+        properties = this.fileImport.to(fullPath, properties)
+
+        properties = this.separator.to(properties)
+        properties = this.standard.to({
+          [item.design]: properties
+        })
+
+        return replaceRecursive(data, properties)
       })
     })
 
@@ -111,7 +120,7 @@ module.exports = class PropertiesRead {
 
     info.forEach(item => {
       if (item.properties) {
-        replaceRecursive(data, this.__toStandard({
+        replaceRecursive(data, this.standard.to({
           [item.design]: {
             [item.component]: {
               [PropertiesTool.getKeyPath()]: item.path,
@@ -197,124 +206,6 @@ module.exports = class PropertiesRead {
       code: To.camelCaseFirst(`${design}-${name}`),
       path,
       properties: PropertiesFiles.readFile([path, FILE_NAME]) || {}
-    }
-  }
-
-  /**
-   * Transforms an array into the required data structure
-   *
-   * Преобразует массив в нужную структуру
-   * @param {Object<string,*>|{}} properties an array that needs to be
-   * transformed / массив, который нужно преобразовать
-   * @return {Object<string,Object<string,*>>}
-   * @private
-   */
-  __toStandard (properties) {
-    const keyVariable = PropertiesTool.getKeyVariable()
-    const data = {}
-
-    forEach(properties, (item, name) => {
-      const key = PropertiesTool.getName(name)
-      const variable = PropertiesTool.getVariableInName(name)
-      const value = this.__toStandardByItem(item, key)
-      const newKey = this.__reKeyName(key, variable || value?.[keyVariable])
-
-      if (newKey in data) {
-        data[newKey] = replaceRecursive(data[newKey], value)
-      } else {
-        data[newKey] = value
-      }
-
-      if (variable) {
-        data[newKey][keyVariable] = variable
-      }
-
-      if (PropertiesTool.isFull(name)) {
-        data[newKey][PropertiesTool.getKeyFull()] = true
-      }
-    })
-
-    return data
-  }
-
-  /**
-   * Returns a new key
-   *
-   * Возвращает новый ключ
-   * @param {string} key property name / название свойства
-   * @param {string|undefined} variable тип свойство
-   * @return {string}
-   * @private
-   */
-  __reKeyName (key, variable) {
-    switch (variable) {
-      case 'media':
-      case 'media-max':
-        if (!key.match(/^media-/)) {
-          return `media-${key}`
-        }
-        break
-    }
-
-    return PropertiesTool.toIndex(key)
-  }
-
-  /**
-   * Transform the property value into the required format
-   *
-   * Преобразовать значение свойства в необходимый формат
-   * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
-   * @param {string} name property name / название свойства
-   * @return {Object<string, *>}
-   * @private
-   */
-  __toStandardByItem (value, name) {
-    if (PropertiesTool.isSpecial(name)) {
-      return value
-    } else if (typeof value !== 'object') {
-      return { value }
-    } else if ('value' in value) {
-      if (typeof value.value === 'object') {
-        return {
-          ...value,
-          value: this.__toStandard(value.value)
-        }
-      } else {
-        return value
-      }
-    } else if (Object.keys(value).length === 0) {
-      return { value: {} }
-    } else if (isFilled(value)) {
-      return this.__toSeparate(this.__toStandard(value))
-    } else {
-      return { value: {} }
-    }
-  }
-
-  /**
-   * Separate a special property from regular values
-   *
-   * Разделить специальное свойство от обычных значений
-   * @param {Object<string,*>} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
-   * @return {Object<string,*>}
-   * @private
-   */
-  __toSeparate (properties) {
-    const value = {}
-    const special = {}
-
-    forEach(this.__toStandard(properties), (item, name) => {
-      if (PropertiesTool.isSpecial(name)) {
-        special[name] = item
-      } else {
-        value[name] = item
-      }
-    })
-
-    return {
-      value,
-      ...special
     }
   }
 }

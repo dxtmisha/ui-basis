@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isFilled = exports.isNull = void 0
+exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isObject = exports.isFilled = exports.isNull = void 0
 /**
  * Is the variable equal to null or undefined
  *
@@ -45,6 +45,16 @@ function isFilled (value) {
   return false
 }
 exports.isFilled = isFilled
+/**
+ * Checks if a value is an object
+ *
+ * Проверяет, является ли значение объектом
+ * @param value value / значение
+ */
+function isObject (value) {
+  return typeof value === 'object'
+}
+exports.isObject = isObject
 /**
  * Checks if the function is a callback function
  *

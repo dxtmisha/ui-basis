@@ -1,4 +1,9 @@
 const { To } = require('../To')
+const {
+  forEach,
+  isObject,
+  replaceRecursive
+} = require('../../functions/data')
 
 const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
@@ -9,6 +14,14 @@ const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
  * @type {string}
  */
 const KEY_NAME = '_name'
+
+/**
+ * Key for storing the original key
+ *
+ * Ключ для хранения оригинального ключа
+ * @type {string}
+ */
+const KEY_ORIGINAL = '_original'
 
 /**
  * The key for storing the type of category of the property, for example, class, root
@@ -144,6 +157,7 @@ const KEYS_SPECIAL = [
   'value',
   'type',
   KEY_NAME,
+  KEY_ORIGINAL,
   KEY_CATEGORY,
   KEY_PROPS,
   KEY_PROPS_NAME,
@@ -156,6 +170,9 @@ const KEYS_SPECIAL = [
   KEY_CSS,
   KEY_FULL,
   KEY_FULL_VALUE,
+  KEY_SEPARATOR,
+  KEY_SIMPLIFICATION,
+  KEY_WRAP,
   KEY_PATH
 ]
 
@@ -313,6 +330,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyName () {
     return KEY_NAME
+  }
+
+  /**
+   * Returns a key for the property name
+   *
+   * Возвращает ключ для названия свойства
+   * @return {string}
+   */
+  static getKeyOriginal () {
+    return KEY_ORIGINAL
   }
 
   /**
@@ -494,6 +521,26 @@ module.exports = class PropertiesTool {
    */
   static getLinkByValue (value) {
     return value.match(/{[^{}]+}/ig)
+  }
+
+  /**
+   * Returns an object with updated values, taking into account its location
+   *
+   * Возвращает объект с обновленными значениями, учитывая его местоположение
+   * @param {Object<string,*>} properties An array that needs to be
+   * transformed / Массив, который нужно преобразовать
+   * @param value new values for the properties / новые значения для свойств
+   * @return {(*&{value})|*}
+   */
+  static getPropertiesByValue (properties, value) {
+    if (properties?.value) {
+      return {
+        ...properties,
+        value
+      }
+    } else {
+      return value
+    }
   }
 
   /**

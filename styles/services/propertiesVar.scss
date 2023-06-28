@@ -37,7 +37,12 @@
 @function __getVarValue($value) {
   @if (meta.type-of($value) == color) {
     @return #{toColorRbg($value)};
-  } @else {
+  } @else if (
+          meta.type-of($value) != list and
+          meta.type-of($value) != map
+  ) {
     @return #{$value};
+  } @else {
+    @return unset;
   }
 }

@@ -8,21 +8,54 @@ const cssSelector = require('../../constructors/propertiesListCssSelector.json')
 const cssVirtual = require('../../constructors/propertiesListCssVirtual.json')
 
 const TYPE = [
+  // data type for the root property / типа данных для свойства root
   'design',
+
+  // indicates that the property belongs to a component / указывает, что свойство
+  // относится к компоненту
   'component',
+
+  // indicates that the property belongs to a class / указывает, что свойство
+  // принадлежит классу
   'class',
+
+  // user property / пользовательское свойство
   'var',
+
+  // property / свойство
   'property',
+
+  // pseudo-classes / псевдоклассы
   'selector',
+
+  // type responsible for states / тип, отвечающий за состояния
   'state',
+
+  // virtual classes / виртуальные классы
   'virtual',
+
+  // sub-elements / под элементы
   'subclass',
+
+  // is a style selector / является селектором стиля
   'scss',
+
+  // is a division for responsiveness / является разделением для адаптивности
   'media',
   'media-max',
+
+  // property for animation / свойство для анимации
   'animate',
+
+  // link to another property / ссылка на другое свойство
   'link',
   'link-class',
+
+  // link to file / ссылка на файл
+  'file',
+
+  // property that does not contribute to the style formation / свойство, которое
+  // не участвует в формировании стиля
   'mixin',
   'none'
 ]

@@ -1,0 +1,27 @@
+{
+  "family": {
+    "roboto": "'Roboto'"
+  },
+  "size": {
+    "xs": "{ref.spacing.px}*10",
+    "sm": "{ref.spacing.px}*12",
+    "md": "{ref.spacing.px}*14",
+    "lg": "{ref.spacing.px}*16",
+    "xl": "{ref.spacing.px}*18",
+    "2xl": "{ref.spacing.px}*20",
+    "headline": {
+      "1": "{ref.spacing.px}*96",
+      "2": "{ref.spacing.px}*60",
+      "3": "{ref.spacing.px}*48",
+      "4": "{ref.spacing.px}*34",
+      "5": "{ref.spacing.px}*24",
+      "6": "{ref.spacing.px}*20"
+    },
+    "interactiveDisplay": "{ref.spacing.px}*72"
+  },
+  "weight": {
+    "lighter": "300",
+    "normal": "400",
+    "bold": "500"
+  }
+}
