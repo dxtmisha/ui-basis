@@ -1,0 +1,52 @@
+{
+  "0": {
+    "background": "{ref.background.0}",
+    "boxShadow": "{ref.shadow.0}",
+    "zIndex": "{ref.index.0}"
+  },
+  "1": {
+    "background": "{ref.background.1}",
+    "boxShadow": "{ref.shadow.1}",
+    "zIndex": "{ref.index.1}"
+  },
+  "2": {
+    "background": "{ref.background.2}",
+    "boxShadow": "{ref.shadow.2}",
+    "zIndex": "{ref.index.2}"
+  },
+  "3": {
+    "background": "{ref.background.3}",
+    "boxShadow": "{ref.shadow.3}",
+    "zIndex": "{ref.index.3}"
+  },
+  "4": {
+    "background": "{ref.background.4}",
+    "boxShadow": "{ref.shadow.4}",
+    "zIndex": "{ref.index.4}"
+  },
+  "6": {
+    "background": "{ref.background.6}",
+    "boxShadow": "{ref.shadow.6}",
+    "zIndex": "{ref.index.6}"
+  },
+  "8": {
+    "background": "{ref.background.8}",
+    "boxShadow": "{ref.shadow.8}",
+    "zIndex": "{ref.index.8}"
+  },
+  "12": {
+    "background": "{ref.background.12}",
+    "boxShadow": "{ref.shadow.12}",
+    "zIndex": "{ref.index.12}"
+  },
+  "16": {
+    "background": "{ref.background.16}",
+    "boxShadow": "{ref.shadow.16}",
+    "zIndex": "{ref.index.16}"
+  },
+  "24": {
+    "background": "{ref.background.24}",
+    "boxShadow": "{ref.shadow.24}",
+    "zIndex": "{ref.index.24}"
+  }
+}

@@ -96,7 +96,8 @@ module.exports = class PropertiesToRename {
     this.items.each(({
       item,
       name,
-      parents
+      parents,
+      design
     }) => {
       switch (item?.[keyVariable]) {
         case 'component':
@@ -112,7 +113,7 @@ module.exports = class PropertiesToRename {
           break
         case 'media':
         case 'media-max':
-          item[key] = this.__toNameForMedia(item, name)
+          item[key] = this.__toNameForMedia(item, name, design)
           break
         case 'animate':
           item[key] = this.__toNameForAnimate(parents, item, name)
@@ -291,12 +292,14 @@ module.exports = class PropertiesToRename {
    * Преобразование имени для типа media, media-max
    * @param {Object<string,*>} item current element / текущий элемент
    * @param {string} name base property name / базовое название свойства
+   * @param {string} design design name / название дизайна
    * @return {string}
    * @private
    */
-  __toNameForMedia (item, name) {
+  __toNameForMedia (item, name, design) {
     const values = this.__toValueForMedia(
-      this.__getName(item, name).split(',')
+      this.__getName(item, name).split(','),
+      design
     )
 
     if (values.length > 1) {
@@ -313,13 +316,14 @@ module.exports = class PropertiesToRename {
    *
    * Изменяет данные, если введен алиас
    * @param {string[]} values a list of values for media / список значений для медиа
+   * @param {string} design design name / название дизайна
    * @return {string[]}
    * @private
    */
-  __toValueForMedia (values) {
+  __toValueForMedia (values, design) {
     return forEach(values, value => {
       const key = value.replace(/^media-/, '')
-      return this.media?.[key]?.value || key
+      return this.media?.[design]?.[key]?.value || key
     })
   }
 

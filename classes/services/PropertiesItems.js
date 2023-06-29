@@ -119,7 +119,7 @@ module.exports = class PropertiesItems {
     this.findCategory('media')
       .forEach(property => {
         if (typeof property.item?.value === 'object') {
-          Object.assign(data, property.item.value)
+          Object.assign(data, { [property.design]: property.item.value })
         }
       })
 
@@ -146,7 +146,7 @@ module.exports = class PropertiesItems {
    *
    * Поиск записей с выделенными категориями
    * @param {string} category names of categories / названия категорий
-   * @return {{index:string,item:Object<string,*>}[]}
+   * @return {{index:string,item:Object<string,*>,design:string}[]}
    */
   findCategory (category) {
     const key = PropertiesTool.getKeyCategory()
@@ -155,12 +155,14 @@ module.exports = class PropertiesItems {
     this.each(({
       item,
       name,
-      parents
+      parents,
+      design
     }) => {
       if (item?.[key] === category) {
         data.push({
           index: `${getColumn(parents, 'name').join('.')}.${name}`,
-          item
+          item,
+          design
         })
       }
     })

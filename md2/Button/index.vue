@@ -22,6 +22,8 @@ export default defineComponent({
 @import "../../styles/properties";
 
 @include initDesign {
-
+  @include mediaMaxWidth('md') {
+    color: red;
+  }
 }
 </style>

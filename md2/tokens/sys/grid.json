@@ -1,0 +1,7 @@
+{
+  "xs": "{ref.grid.4}",
+  "sm": "{ref.grid.8}",
+  "md": "{ref.grid.12}",
+  "lg": "{ref.grid.12}",
+  "xl": "{ref.grid.12}"
+}

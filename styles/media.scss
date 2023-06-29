@@ -1,6 +1,7 @@
 @use "sass:map";
 @use "sass:meta";
 
+$designsDesign: 'design' !default;
 $designsMedia: (
         'xs': 300px,
         'sm': 640px,
@@ -16,7 +17,7 @@ $designsMedia: (
 /// @param {String} $width size name / название размера
 /// @return {String}
 @function media($width) {
-  @return map.get($designsMedia, $width);
+  @return map.get($designsMedia, #{$designsDesign}#{'-'}#{$width});
 }
 
 @mixin mediaMinWidth($width) {

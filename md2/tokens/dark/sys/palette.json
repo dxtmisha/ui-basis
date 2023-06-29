@@ -1,0 +1,22 @@
+{
+  "primary": "{ref.palette.blue.{sys.shade.dark.normal}}",
+  "primaryVariant": "{ref.palette.blue.{sys.shade.dark.variant}}",
+  "secondary": "{ref.palette.amber.{sys.shade.dark.normal}}",
+  "secondaryVariant": "{ref.palette.amber.{sys.shade.dark.variant}}",
+  "background": "{ref.palette.blackLight}",
+  "surface": "{ref.palette.blackLight}",
+  "success": "{ref.palette.green.{sys.shade.dark.variant}}",
+  "warning": "{ref.palette.yellow.{sys.shade.dark.variant}}",
+  "error": "{ref.palette.red.{sys.shade.dark.variant}}",
+  "onPrimary": "{ref.palette.black}",
+  "onSecondary": "{ref.palette.black}",
+  "onBackground": "{ref.palette.white}",
+  "onSurface": "{ref.palette.white}",
+  "onSuccess": "{ref.palette.black}",
+  "onWarning": "{ref.palette.black}",
+  "onError": "{ref.palette.black}",
+  "outline": "{ref.palette.white}",
+  "white": "{ref.palette.white}",
+  "black": "{ref.palette.blackLight}",
+  "overlay": "{ref.palette.white}"
+}

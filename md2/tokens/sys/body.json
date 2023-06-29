@@ -1,0 +1,14 @@
+{
+  "xs": "{ref.body.auto}",
+  "sm": "{ref.body.auto}",
+  "md": "{ref.body.840}",
+  "lg": "{ref.body.auto}",
+  "xl": "{ref.body.1040}",
+  "margin": {
+    "xs": "{ref.body.margin.4}",
+    "sm": "{ref.body.margin.8}",
+    "md": "{ref.body.margin.0}",
+    "lg": "{ref.body.margin.200}",
+    "xl": "{ref.body.margin.0}"
+  }
+}

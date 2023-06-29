@@ -1,0 +1,20 @@
+{
+  "gridTemplateColumns": "repeat({sys.grid.xs}, minmax(0, 1fr))",
+  "columnGap": "{sys.gap.xs}",
+  "media|sm": {
+    "gridTemplateColumns": "repeat({sys.grid.sm}, minmax(0, 1fr))",
+    "columnGap": "{sys.gap.sm}"
+  },
+  "media|md": {
+    "gridTemplateColumns": "repeat({sys.grid.md}, minmax(0, 1fr))",
+    "columnGap": "{sys.gap.md}"
+  },
+  "media|lg": {
+    "gridTemplateColumns": "repeat({sys.grid.lg}, minmax(0, 1fr))",
+    "columnGap": "{sys.gap.lg}"
+  },
+  "media|xl": {
+    "gridTemplateColumns": "repeat({sys.grid.xl}, minmax(0, 1fr))",
+    "columnGap": "{sys.gap.xl}"
+  }
+}

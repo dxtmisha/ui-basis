@@ -258,8 +258,16 @@ module.exports = class PropertiesScss {
   __toMedia () {
     let data = ''
 
-    forEach(this.items.getItemForMedia(), (item, name) => {
-      data += `\r\n  ${name}:${this.__getValueItem(item)},`
+    forEach(this.items.getItemForMedia(), (
+      values,
+      design
+    ) => {
+      forEach(values, (
+        item,
+        name
+      ) => {
+        data += `\r\n  '${design}-${name}': ${this.__getValueItem(item)},`
+      })
     })
 
     return data

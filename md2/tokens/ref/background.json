@@ -1,3 +1,12 @@
 {
-  "white": "rgb({ref.palette.white})"
+  "0": "rgb({ref.palette.white})",
+  "1": "rgb({ref.palette.white})",
+  "2": "rgb({ref.palette.white})",
+  "3": "rgb({ref.palette.white})",
+  "4": "rgb({ref.palette.white})",
+  "6": "rgb({ref.palette.white})",
+  "8": "rgb({ref.palette.white})",
+  "12": "rgb({ref.palette.white})",
+  "16": "rgb({ref.palette.white})",
+  "24": "rgb({ref.palette.white})"
 }

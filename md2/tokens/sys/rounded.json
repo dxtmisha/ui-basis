@@ -1,0 +1,9 @@
+{
+  "none": "{ref.rounded.0}",
+  "standard": "{ref.rounded.1}",
+  "sm": "{ref.rounded.1}",
+  "md": "{ref.rounded.2}",
+  "lg": "{ref.rounded.4}",
+  "xl": "{ref.rounded.8}",
+  "full": "{ref.rounded.full}"
+}
