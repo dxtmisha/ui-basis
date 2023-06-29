@@ -40,16 +40,19 @@ module.exports = class PropertiesReadImport {
     properties,
     root
   ) {
-    if (isObject(properties)) {
+    const values = PropertiesTool.getValue(properties)
+
+    if (isObject(values)) {
       const data = {}
 
-      forEach(PropertiesTool.getValue(properties), (item, name) => {
+      forEach(values, (item, name) => {
         if (this.__isFile(item, name)) {
           const path = this.__getPath(root, item)
           const read = this.__read(path)
 
           replaceRecursive(data, this.__toGo(read, path))
         } else {
+          console.log('name', name, item)
           replaceRecursive(data, { [name]: this.__toGo(item, root) })
         }
       })

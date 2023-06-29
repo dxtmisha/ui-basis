@@ -12,9 +12,11 @@ const FILE_CACHE_SCSS = 'properties-style'
 module.exports = class PropertiesScss {
   /**
    * @param {PropertiesItems} items
+   * @param {PropertiesPalette} palette
    */
-  constructor (items) {
+  constructor (items, palette) {
     this.items = items
+    this.palette = palette
   }
 
   /**
@@ -284,29 +286,21 @@ module.exports = class PropertiesScss {
     return data
   }
 
+  /**
+   * Getting a list of all used colors
+   *
+   * Получение списка всех используемых цветов
+   * @return {string}
+   * @private
+   */
   __toPalette () {
     let data = ''
 
-    this.items.findCategory('palette')
+    this.palette.getListUsed()
       .forEach(property => {
-        data += `\r\n  (design: '${property.design}', list: (${this.__getPaletteList(property.item)})),`
+        data += `\r\n  '${property.name}': '${property.value}',`
       })
 
     return data
-  }
-
-  __getPaletteList (properties) {
-    const keyName = PropertiesTool.getKeyName()
-    let data = ''
-
-    forEach(properties?.value, (items, name) => {
-      data += `'${name}': (`
-      forEach(items?.value, (item, code) => {
-        data += `(code: '${code}', value: '${item?.[keyName]}'),`
-      })
-      data += '),'
-    })
-
-    return ''
   }
 }

@@ -6,7 +6,7 @@ const PropertiesTool = require('./PropertiesTool')
 const PropertiesToFull = require('./PropertiesToFull')
 const PropertiesToLink = require('./PropertiesToLink')
 const PropertiesToMulti = require('./PropertiesToMulti')
-const PropertiesToPalette = require('./PropertiesToPalette')
+const PropertiesPalette = require('./PropertiesPalette')
 const PropertiesToRename = require('./PropertiesToRename')
 const PropertiesToStyle = require('./PropertiesToStyle')
 const PropertiesToSub = require('./PropertiesToSub')
@@ -37,6 +37,8 @@ module.exports = class Properties {
     this.items = new PropertiesItems(
       cache ? this.__initCache() : this.__init()
     )
+
+    this.palette = new PropertiesPalette(this.items)
   }
 
   /**
@@ -56,7 +58,10 @@ module.exports = class Properties {
    * @return {string}
    */
   getScss () {
-    return new PropertiesScss(this.items).get()
+    return new PropertiesScss(
+      this.items,
+      this.palette
+    ).get()
   }
 
   /**
@@ -118,7 +123,7 @@ module.exports = class Properties {
     rename.to()
     new PropertiesToMulti(items).to()
     new PropertiesToStyle(items).to()
-    new PropertiesToPalette(items).to()
+    new PropertiesPalette(items).to()
 
     rename.toByVar()
     value.to()

@@ -1,5 +1,7 @@
 @use "sass:meta";
 
+$designsPalette: () !default;
+
 /// Checks if a value is a color
 ///
 /// Проверяет, является ли значение цветом
@@ -45,6 +47,7 @@
 /// @param {Color} $color
 /// @return {String}
 @function getPalette($color) {
+  @warn $color;
   @return #{var(--sys-palette, #{toColorRbg($color)})}
 }
 

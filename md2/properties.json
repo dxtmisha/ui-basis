@@ -63,7 +63,10 @@
     "border_radius": "{ref.spacing.1}",
     "contained": {
       "color": "{sys.palette.onPrimary}",
-      "background-color": "{sys.palette.primary}",
+      "background-color": {
+        "value": "{sys.palette.primary}",
+        "_rename": "palette-background"
+      },
       "height": {
         "xl": "{ref.spacing.16}"
       },

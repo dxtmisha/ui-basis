@@ -6,6 +6,8 @@ const {
 const PropertiesTool = require('./PropertiesTool')
 
 const KEY_PALETTE = 'palette'
+const KEY_CATEGORY = 'color'
+
 const FILE_CACHE_PALETTE = 'palette'
 
 /**
@@ -13,7 +15,7 @@ const FILE_CACHE_PALETTE = 'palette'
  *
  * Класс для работы с цветами
  */
-module.exports = class PropertiesToPalette {
+module.exports = class PropertiesPalette {
   /**
    * Constructor
    * @param {PropertiesItems} items
@@ -24,6 +26,50 @@ module.exports = class PropertiesToPalette {
   }
 
   /**
+   * Getting a list of all colors
+   *
+   * Получение списка всех цветов
+   * @return {string[]}
+   */
+  getListValue () {
+    return forEach(
+      this.items.findCategory('color'),
+      property => property?.item?.value
+    )
+  }
+
+  /**
+   * Getting a list of used values
+   *
+   * Получаем список использованных значений
+   * @return {{name:string,value:string}[]}
+   */
+  getListUsed () {
+    const keyName = PropertiesTool.getKeyName()
+    const keyCategory = PropertiesTool.getKeyCategory()
+    const list = this.getListValue()
+    const data = []
+
+    this.items.each(({
+      item,
+      design
+    }) => {
+      if (
+        typeof item?.value === 'string' &&
+        item?.[keyCategory] !== KEY_CATEGORY &&
+        list.indexOf(item?.value) !== -1
+      ) {
+        data.push({
+          name: item?.[keyName],
+          value: `--${design}-palette-${item?.value?.match(/\.([^.{}]+)}/)?.[1]}`
+        })
+      }
+    })
+
+    return data
+  }
+
+  /**
    * Adding a class for working with colors
    *
    * Добавление класса для работы со цветами
@@ -31,6 +77,7 @@ module.exports = class PropertiesToPalette {
    */
   to () {
     const keyName = PropertiesTool.getKeyName()
+    const keyCategory = PropertiesTool.getKeyCategory()
     const keyVariable = PropertiesTool.getKeyVariable()
     const palettes = {}
 
@@ -43,6 +90,7 @@ module.exports = class PropertiesToPalette {
         forEach(items?.value, (item, code) => {
           classItem[code] = {
             value: `{${palette.index}.${name}.${code}}`,
+            [keyCategory]: KEY_CATEGORY,
             [keyVariable]: 'var',
             [keyName]: code
           }
