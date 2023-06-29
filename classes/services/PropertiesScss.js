@@ -99,6 +99,16 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns a list of color saturation codes
+   *
+   * Возвращает список кодов насыщенности цветов
+   * @return {string}
+   */
+  getShade () {
+    return `$designsShade: (${this.__toShade()});`
+  }
+
+  /**
    * Returns a list of properties
    *
    * Возвращает список свойств
@@ -125,6 +135,7 @@ module.exports = class PropertiesScss {
     data += `${this.getDesigns()}\r\n`
     data += `${this.getClasses()}\r\n`
     data += `${this.getPalette()}\r\n`
+    data += `${this.getShade()}\r\n`
     data += `${this.getProperties()}\r\n`
 
     return data
@@ -299,6 +310,27 @@ module.exports = class PropertiesScss {
     this.palette.getListUsed()
       .forEach(property => {
         data += `\r\n  '${property.name}': '${property.value}',`
+      })
+
+    return data
+  }
+
+  /**
+   * Getting a list of all available saturation levels
+   *
+   * Получение списка всех доступных уровней насыщенности
+   * @return {string}
+   * @private
+   */
+  __toShade () {
+    let data = ''
+
+    this.palette.getListShade()
+      .forEach(({
+        design,
+        value
+      }) => {
+        data += `\r\n  '${design}': (${value.join(',')}),`
       })
 
     return data

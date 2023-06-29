@@ -1,6 +1,9 @@
 @use "sass:meta";
+@use "sass:string";
 
+$designsDesign: 'design' !default;
 $designsPalette: () !default;
+$designsShade: () !default;
 
 /// Checks if a value is a color
 ///
@@ -14,6 +17,15 @@ $designsPalette: () !default;
     $color != 'initial' and
     $color != 'inherit'
   )
+}
+
+/// Checks if a color is suitable for the palette
+///
+/// Проверяет, является ли цвет подходящим для палитры
+/// @param {Color} $color
+/// @return {Boolean}
+@function isPalette($color) {
+  @return string.index($color, '--') != null
 }
 
 /// Returns color value by its code
@@ -41,13 +53,59 @@ $designsPalette: () !default;
   }
 }
 
+/// Checking if a color is part of the list of used colors
+///
+/// Проверка, является ли цвет частью списка используемых цветов
+/// @param {Color} $color
+/// @return {String}
+@function getColorByPalette($color) {
+  @each $name, $value in $designsPalette {
+    @if (string.index($color, #{$name}#{')'}) != null) {
+      @return $value;
+    }
+  }
+
+  @return null;
+}
+
+/// Checking if a color is part of the list of saturation levels
+///
+/// Проверка, является ли цвет частью списка насыщенности
+/// @param {Color} $color
+/// @return {String}
+@function getColorByShade($color) {
+  @each $design, $list in $designsShade {
+    @if ($design == $designsDesign) {
+      @each $value in $list {
+        @if (string.index($color, #{'-'}#{$value}#{')'}) != null) {
+          @return #{'--'}#{$designsDesign}#{'-palette-'}#{$value};
+        }
+      }
+    }
+  }
+
+  @return null;
+}
+
 /// Returns value for palette
 ///
 /// Возвращает значение для палитры
 /// @param {Color} $color
 /// @return {String}
 @function getPalette($color) {
-  @warn $color;
+  @if (isPalette($color)) {
+    $palette: getColorByPalette($color);
+
+    @if ($palette != null) {
+      @return #{var(#{$palette}, #{toColorRbg($color)})};
+    } @else {
+      $shade: getColorByShade($color);
+
+      @if ($shade) {
+        @return #{var(#{$shade}, #{toColorRbg($color)})};
+      }
+    }
+  }
   @return #{var(--sys-palette, #{toColorRbg($color)})}
 }
 

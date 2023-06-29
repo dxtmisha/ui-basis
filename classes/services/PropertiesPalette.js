@@ -1,6 +1,7 @@
 const {
   forEach,
-  replaceRecursive
+  replaceRecursive,
+  getColumn
 } = require('../../functions/data')
 
 const PropertiesTool = require('./PropertiesTool')
@@ -39,6 +40,32 @@ module.exports = class PropertiesPalette {
   }
 
   /**
+   * Returns a list of available saturation levels
+   *
+   * Возвращает список доступных уровней насыщенности
+   * @return {{design: string, value: string[]}[]}
+   */
+  getListShade () {
+    return forEach(
+      forEach(
+        this.items.findCategory('shade'),
+        property => {
+          return {
+            design: property.design,
+            value: property?.item?.value
+          }
+        }
+      ),
+      item => {
+        return {
+          design: item.design,
+          value: getColumn(item.value, 'value')
+        }
+      }
+    )
+  }
+
+  /**
    * Getting a list of used values
    *
    * Получаем список использованных значений
@@ -47,6 +74,7 @@ module.exports = class PropertiesPalette {
   getListUsed () {
     const keyName = PropertiesTool.getKeyName()
     const keyCategory = PropertiesTool.getKeyCategory()
+    const keyVariable = PropertiesTool.getKeyVariable()
     const list = this.getListValue()
     const data = []
 
@@ -57,6 +85,7 @@ module.exports = class PropertiesPalette {
       if (
         typeof item?.value === 'string' &&
         item?.[keyCategory] !== KEY_CATEGORY &&
+        item?.[keyVariable] === 'var' &&
         list.indexOf(item?.value) !== -1
       ) {
         data.push({

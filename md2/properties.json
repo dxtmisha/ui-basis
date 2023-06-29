@@ -79,13 +79,17 @@
       }
     },
     "outlined": {
-      "color": "{sys.palette.primary}",
+      "color": {
+        "value": "{sys.palette.primaryVariant}",
+        "_rename": "palette-background"
+      },
       "border-color": "{sys.palette.outline}",
       "border-opacity": "{sys.opacity.outline}",
       "border-width": "1px"
     },
     "text": {
-      "color": "{sys.palette.primary}"
+      "color": "{sys.palette.primary}",
+      "palette-background": "{ref.palette.red.300}"
     }
   }
 }

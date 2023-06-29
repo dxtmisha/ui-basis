@@ -52,7 +52,6 @@ module.exports = class PropertiesReadImport {
 
           replaceRecursive(data, this.__toGo(read, path))
         } else {
-          console.log('name', name, item)
           replaceRecursive(data, { [name]: this.__toGo(item, root) })
         }
       })
