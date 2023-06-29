@@ -87,6 +87,16 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns a list of colors
+   *
+   * Возвращает список цветов
+   * @return {string}
+   */
+  getPalette () {
+    return `$designsPalette: (${this.__toPalette()});`
+  }
+
+  /**
    * Returns a list of properties
    *
    * Возвращает список свойств
@@ -112,6 +122,7 @@ module.exports = class PropertiesScss {
     data += `${this.getMedia()}\r\n`
     data += `${this.getDesigns()}\r\n`
     data += `${this.getClasses()}\r\n`
+    data += `${this.getPalette()}\r\n`
     data += `${this.getProperties()}\r\n`
 
     return data
@@ -271,5 +282,31 @@ module.exports = class PropertiesScss {
     })
 
     return data
+  }
+
+  __toPalette () {
+    let data = ''
+
+    this.items.findCategory('palette')
+      .forEach(property => {
+        data += `\r\n  (design: '${property.design}', list: (${this.__getPaletteList(property.item)})),`
+      })
+
+    return data
+  }
+
+  __getPaletteList (properties) {
+    const keyName = PropertiesTool.getKeyName()
+    let data = ''
+
+    forEach(properties?.value, (items, name) => {
+      data += `'${name}': (`
+      forEach(items?.value, (item, code) => {
+        data += `(code: '${code}', value: '${item?.[keyName]}'),`
+      })
+      data += '),'
+    })
+
+    return ''
   }
 }
