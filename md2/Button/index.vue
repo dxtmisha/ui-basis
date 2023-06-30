@@ -4,8 +4,12 @@ import { props, subClasses } from './props'
 
 import { Design } from '../../classes/Design'
 
+import Md2Ripple from '../Ripple/index.vue'
+
 export default defineComponent({
-  name: 'Md2Button', // name component
+  name: 'Md2Button',
+  components: { Md2Ripple },
+  // name component
   props,
   setup (props, context) {
     return new Design<typeof subClasses>(props, context)
@@ -15,8 +19,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <button :class="classes.main" :style="styles">
+  <button
+    :class="classes.main"
+    :style="styles"
+    :disabled="disabled"
+  >
     <span :class="classes.inscription">{{ text }}</span>
+    <md2-ripple :disabled="disabled"/>
   </button>
 </template>
 

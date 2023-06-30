@@ -1,7 +1,14 @@
-import { ComputedRef, ref, SetupContext } from 'vue'
+import {
+  ComputedRef,
+  Ref,
+  ref,
+  SetupContext,
+  ToRefs,
+  toRefs
+} from 'vue'
 import { executeFunction } from '../functions/data'
+import { To } from './To'
 
-import { AssociativeType } from '../constructors/types'
 import { DesignProperties, PropertiesListType } from './DesignProperties'
 import {
   DesignClasses,
@@ -12,14 +19,23 @@ import {
 } from './DesignClasses'
 import { DesignStyles, StylesListType } from './DesignStyles'
 
-export interface DesignSetupBasic<C> {
+import { AssociativeType, ElementType } from '../constructors/types'
+
+export interface DesignSetupBasicInterface<C, E> {
+  element: Ref<E | undefined>
   classes: ComputedRef<ClassesListType<C>>
   styles: ComputedRef<StylesListType>
 }
 
-export type DesignProps = Record<string, any>
-export type DesignSetupValue<D = AssociativeType> = D | (() => D)
-export type DesignSetup<C, D = AssociativeType> = DesignSetupBasic<C> & D
+export type DesignPropsType = Record<string, any>
+export type DesignPropsValueType<T = []> = Record<keyof T, any> & DesignPropsType
+export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
+export type DesignSetupType<
+  C,
+  E,
+  D = AssociativeType,
+  T = AssociativeType
+> = DesignSetupBasicInterface<C, E> & D & T
 
 /**
  * Main class for binding tokens and Vue components
@@ -28,7 +44,9 @@ export type DesignSetup<C, D = AssociativeType> = DesignSetupBasic<C> & D
  */
 export class Design<
   C extends ClassesSubClassesType = ClassesSubClassesType,
-  P extends DesignProps = DesignProps
+  E extends ElementType = ElementType,
+  P extends DesignPropsType = DesignPropsType,
+  I extends DesignPropsType = DesignPropsType
 > {
   /**
    * Class name
@@ -42,6 +60,9 @@ export class Design<
   protected classes: DesignClasses<C>
   protected styles: DesignStyles
 
+  protected element = ref<E>()
+  protected refs: ToRefs<P>
+
   /**
    * Constructor
    * @param props properties / свойства
@@ -51,6 +72,7 @@ export class Design<
     protected readonly props: P,
     protected readonly context: SetupContext
   ) {
+    this.refs = toRefs(props)
     this.properties = new DesignProperties()
 
     this.classes = new DesignClasses<C>(
@@ -130,6 +152,16 @@ export class Design<
   }
 
   /**
+   * Returns the names of the user properties
+   *
+   * Возвращает название пользовательского свойства
+   * @param names class name / название класса
+   */
+  getNameByVar (names: string | string[]) {
+    return `--${this.getName}${names.length > 0 ? `-${To.array(names).join('-')}` : ''}`
+  }
+
+  /**
    * Add all component properties.
    * Are added automatically during build
    *
@@ -148,11 +180,23 @@ export class Design<
    * Метод выполнения, для замены setup в Vue
    * @param dataCallback additional component properties / дополнительные свойства компонента
    */
-  setup<D = AssociativeType> (dataCallback?: DesignSetupValue<D>): DesignSetup<C, D> {
+  setup<D = AssociativeType> (dataCallback?: DesignSetupValueType<D>): DesignSetupType<C, E, D, I> {
     return {
+      element: this.element,
       classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
       styles: this.styles.getItem(),
+      ...this.init(),
       ...(executeFunction(dataCallback) || ({} as D))
     }
+  }
+
+  /**
+   * Method for generating additional properties
+   *
+   * Метод для генерации дополнительных свойств
+   * @protected
+   */
+  protected init (): I {
+    return {} as I
   }
 }

@@ -7,6 +7,7 @@ import {
   PropertiesItemType,
   PropertiesStateType
 } from './DesignProperties'
+
 import {
   AssociativeType,
   CallbackOrAnyType
@@ -87,6 +88,26 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    */
   getName (): string {
     return this.name.value || 'design-component'
+  }
+
+  /**
+   * Returns the class names for the status
+   *
+   * Возвращает название класса для статуса
+   * @param names class name / название класса
+   */
+  getNameByState (names: string[]) {
+    return this.jsonState([this.getName(), ...names])
+  }
+
+  /**
+   * Возвращает название класса для подкласса
+   *
+   * Returns the class names for the subclass
+   * @param names class name / название класса
+   */
+  getNameBySubclass (names: string[]) {
+    return this.jsonSubclass([this.getName(), ...names])
   }
 
   /**

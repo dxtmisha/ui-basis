@@ -69,6 +69,26 @@ class DesignClasses {
   }
 
   /**
+     * Returns the class names for the status
+     *
+     * Возвращает название класса для статуса
+     * @param names class name / название класса
+     */
+  getNameByState (names) {
+    return this.jsonState([this.getName(), ...names])
+  }
+
+  /**
+     * Возвращает название класса для подкласса
+     *
+     * Returns the class names for the subclass
+     * @param names class name / название класса
+     */
+  getNameBySubclass (names) {
+    return this.jsonSubclass([this.getName(), ...names])
+  }
+
+  /**
      * Modifying the list of subclasses
      *
      * Изменение списка подклассов
@@ -185,8 +205,9 @@ class DesignClasses {
     const is = this.properties.isValue(item, prop)
     const classes = {}
     className.push(item.index)
-    if (is && (prop === true ||
-            this.properties.isBool(item))) {
+    if ((is && (prop === true ||
+            this.properties.isBool(item))) ||
+            this.properties.isExceptions(item, prop)) {
       this.toClassNameByState(classes, item, className)
     }
     if (is &&

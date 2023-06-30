@@ -1,0 +1,8 @@
+{
+  "overflow": "hidden",
+  "position": "absolute",
+  "inset": "0",
+  "z-index": "8",
+  "border-radius": "inherit",
+  "#item": {}
+}

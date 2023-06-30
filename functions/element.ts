@@ -4,7 +4,7 @@ import {
   ElementOptionsItemType,
   ElementOptionsType,
   ElementOrStringType,
-  ElementOrUndefinedType,
+  ElementOrUndefinedType, ElementType,
   NumberOrStringType
 } from '../constructors/types'
 
@@ -53,11 +53,11 @@ export function getIdElement (element?: HTMLElement, selector?: string): string 
  * @param defaultValue returns this parameter if the value is missing / возвращает этот параметр,
  * если значение отсутствует
  */
-export function getItemElementByIndex<T = any> (
-  element: HTMLElement,
+export function getItemElementByIndex<T extends ElementType = HTMLElement, R = any> (
+  element: T,
   index: NumberOrStringType,
-  defaultValue?: T
-): T {
+  defaultValue?: R
+): R {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   return element?.[index] || defaultValue
@@ -71,8 +71,8 @@ export function getItemElementByIndex<T = any> (
  * @param index index at which we retrieve values / индекс, по которому получаем значения
  * @param value new value / новое значение
  */
-export function setItemElementByIndex (
-  element: HTMLElement,
+export function setItemElementByIndex<T extends ElementType = HTMLElement> (
+  element: T,
   index: NumberOrStringType,
   value: ElementOptionsItemType
 ): void {
@@ -105,13 +105,13 @@ export function setItemElementByIndex (
  * @param referenceElement the node before which newNode is inserted / элемент, перед
  * которым будет вставлен newElement
  */
-export function createElement<T = HTMLElement> (
+export function createElement<T extends ElementType = HTMLElement> (
   parentElement?: HTMLElement,
   tagName = 'div' as string,
-  options?: ElementOptionsType,
+  options?: ElementOptionsType<T>,
   referenceElement?: HTMLElement
 ): T {
-  const element = document.createElement(tagName)
+  const element = document.createElement(tagName) as T
 
   if (typeof options === 'function') {
     options(element)
@@ -121,7 +121,7 @@ export function createElement<T = HTMLElement> (
     })
   }
 
-  parentElement?.insertBefore(element, referenceElement || null)
+  parentElement?.insertBefore(element as HTMLElement, referenceElement || null)
 
   return element as T
 }

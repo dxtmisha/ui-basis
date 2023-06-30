@@ -3,6 +3,11 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.DesignProperties = void 0
 const vue_1 = require('vue')
 const data_1 = require('../functions/data')
+const EXCEPTIONS = [
+  'focus',
+  'readonly',
+  'disabled'
+]
 /**
  * A class for working with basic properties from tokens
  *
@@ -108,6 +113,21 @@ class DesignProperties {
     return !!(item &&
             'valueAll' in item &&
             item?.valueAll?.indexOf(true) !== -1)
+  }
+
+  /**
+     * This checks if an exception belongs to a rule
+     *
+     * Проверяет, является ли исключение из правила
+     * @param nameItem property names or the property instance itself / названия свойств
+     * или сам экземпляр свойства
+     * @param value property values / значения свойства
+     */
+  isExceptions (nameItem, value) {
+    const item = this.getOrItem(nameItem)
+    return !!(item &&
+            value === true &&
+            EXCEPTIONS.indexOf(item?.name) !== -1)
   }
 }
 exports.DesignProperties = DesignProperties

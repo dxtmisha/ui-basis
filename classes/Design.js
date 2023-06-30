@@ -6,6 +6,7 @@ const data_1 = require('../functions/data')
 const DesignProperties_1 = require('./DesignProperties')
 const DesignClasses_1 = require('./DesignClasses')
 const DesignStyles_1 = require('./DesignStyles')
+const To_1 = require('./To')
 /**
  * Main class for binding tokens and Vue components
  *
@@ -24,6 +25,8 @@ class Design {
   properties
   classes
   styles
+  element = (0, vue_1.ref)()
+  refs
   /**
      * Constructor
      * @param props properties / свойства
@@ -32,6 +35,7 @@ class Design {
   constructor (props, context) {
     this.props = props
     this.context = context
+    this.refs = (0, vue_1.toRefs)(props)
     this.properties = new DesignProperties_1.DesignProperties()
     this.classes = new DesignClasses_1.DesignClasses(this.name, this.properties, this.props)
     this.styles = new DesignStyles_1.DesignStyles(this.name, this.properties, this.props)
@@ -101,6 +105,16 @@ class Design {
   }
 
   /**
+     * Returns the names of the user properties
+     *
+     * Возвращает название пользовательского свойства
+     * @param names class name / название класса
+     */
+  getNameByVar (names) {
+    return `--${this.getName}${names.length > 0 ? `-${To_1.To.array(names).join('-')}` : ''}`
+  }
+
+  /**
      * Add all component properties.
      * Are added automatically during build
      *
@@ -121,6 +135,7 @@ class Design {
      */
   setup (dataCallback) {
     return {
+      element: this.element,
       classes: this.classes.getItem(),
       styles: this.styles.getItem(),
       ...((0, data_1.executeFunction)(dataCallback) || {})
