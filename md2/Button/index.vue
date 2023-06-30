@@ -15,15 +15,15 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="classes.main" :style="styles"></div>
+  <button :class="classes.main" :style="styles">
+    <span :class="classes.inscription">{{ text }}</span>
+  </button>
 </template>
 
 <style lang="scss">
 @import "../../styles/properties";
 
 @include initDesign {
-  @include mediaMaxWidth('md') {
-    color: red;
-  }
+
 }
 </style>

@@ -1,18 +1,22 @@
 import { PropType } from 'vue'
 
-export const subClassesDesign = { /* classes */ }
+export const subClassesDesign = {
+  inscription: 'inscription'
+}
 
 export const propsDesign = {
+  align: {
+    type: [String] as PropType<'left' | 'right' | 'center'>
+  },
   height: {
-    type: [Boolean, String] as PropType<'sm' | 'md' | 'lg' | 'custom' | true | 'xl' | string>
+    type: [String] as PropType<'sm' | 'md' | 'lg' | 'custom' | string>,
+    default: 'md'
   },
   contained: {
-    type: [Boolean]
+    type: [Boolean],
+    default: true
   },
-  outlined: {
-    type: [Boolean]
-  },
-  text: {
+  disabled: {
     type: [Boolean]
   }
 }

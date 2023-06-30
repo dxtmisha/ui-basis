@@ -1,25 +1,23 @@
 {
-  "background-color": {
-    "value": "none",
-    "_rename": "palette-background"
-  },
-  "hover": {},
-  "active": {},
-  "focus": {},
-  "dragged": {},
-  "selected": {},
-  "readonly": {},
-  "disabled": {},
-  "progress": {},
+  "display": "flex",
+  "justify-content": "center",
+  "align-items": "center",
+  "border-radius": "0px",
+  "border": "solid transparent 0px",
   "align": {
     "left": {
+      "justify-content": "flex-start",
       "_variable": "state"
     },
     "right": {
+      "justify-content": "flex-end",
       "_variable": "state"
     },
     "center": {
+      "justify-content": "center",
       "_variable": "state"
     }
+  },
+  "#inscription": {
   }
 }

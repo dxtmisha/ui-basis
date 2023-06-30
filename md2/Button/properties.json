@@ -1,1 +1,13 @@
-{}
+{
+  "basic": "{d.button}",
+  "height": {
+    "_default": "md"
+  },
+  "contained": {
+    "background-color": {
+      "_rename": "palette-background"
+    },
+    "_default": true
+  },
+  "~disabled": {}
+}

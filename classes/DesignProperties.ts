@@ -23,6 +23,12 @@ export interface PropertiesItemType extends PropertiesStateType {
 
 export type PropertiesListType = PropertiesItemType[]
 
+const EXCEPTIONS = [
+  'focus',
+  'readonly',
+  'disabled'
+]
+
 /**
  * A class for working with basic properties from tokens
  *
@@ -154,6 +160,27 @@ export class DesignProperties {
       item &&
       'valueAll' in item &&
       item?.valueAll?.indexOf(true) !== -1
+    )
+  }
+
+  /**
+   * This checks if an exception belongs to a rule
+   *
+   * Проверяет, является ли исключение из правила
+   * @param nameItem property names or the property instance itself / названия свойств
+   * или сам экземпляр свойства
+   * @param value property values / значения свойства
+   */
+  isExceptions (
+    nameItem: string | PropertiesItemType | PropertiesStateType,
+    value: BooleanOrStringType
+  ): boolean {
+    const item = this.getOrItem(nameItem)
+
+    return !!(
+      item &&
+      value === true &&
+      EXCEPTIONS.indexOf(item?.name) !== -1
     )
   }
 }

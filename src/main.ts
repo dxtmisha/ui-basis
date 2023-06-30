@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 
 import './main.scss'
-import './assets/tailwind.css'
+// import './assets/tailwind.css'
 
 createApp(App)
   .use(store)

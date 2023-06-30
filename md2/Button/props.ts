@@ -7,9 +7,10 @@ export const subClasses = {
 }
 
 export const props = {
-  ...propsDesign
+  ...propsDesign,
 
   // Values
+  text: String
 
   // Status
 

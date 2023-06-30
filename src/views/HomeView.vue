@@ -1,13 +1,7 @@
 <template>
-  <div class="p-6 flex flex-wrap gap-4 items-center">
-    <md2-button/>
-    <md2-button font="caption"/>
-    <md2-button contained/>
-    <md2-button height="lg" contained/>
-    <md2-button height="xl" contained/>
-    <md2-button width="120px"/>
-    <md2-button outlined/>
-    <md2-button contained disabled/>
+  <div style="display: flex;gap: 16px;">
+    <md2-button text="button"/>
+    <md2-button text="button" disabled/>
   </div>
 </template>
 

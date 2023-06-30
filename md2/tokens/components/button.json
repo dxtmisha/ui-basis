@@ -1,0 +1,32 @@
+{
+  "padding": "0px {ref.spacing.4}",
+  "height": {
+    "sm": "{ref.spacing.7}",
+    "md": "{ref.spacing.9}",
+    "lg": "{ref.spacing.12}"
+  },
+  "font": "{font.button}",
+  "border-radius": "{ref.spacing.1}",
+  "contained": {
+    "color": "{sys.palette.onPrimary}",
+    "color-opacity": "{sys.opacity.primary.high}",
+    "background-color": "{sys.palette.primary}",
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "0",
+    "hover": {
+      "gradient-opacity": "{sys.opacity.hover}"
+    },
+    "focus": {
+      "gradient-opacity": "{sys.opacity.focus}"
+    },
+    "active": {
+      "gradient-opacity": "{sys.opacity.pressed}"
+    },
+    "disabled": {
+      "color": "{sys.palette.disabled}",
+      "color-opacity": "{sys.opacity.primary.disabled}",
+      "background-color": "{sys.palette.disabled}",
+      "background-opacity": "{sys.opacity.disabled}"
+    }
+  }
+}

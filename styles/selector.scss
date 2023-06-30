@@ -11,7 +11,7 @@
 /// @param {List} $parent
 @mixin selector($name, $parent: &) {
   @if ($name == 'focus') {
-    &:focus, &:focus-within, &#{$parent}--focus {
+    &:focus, &:focus-within, &#{$parent}--focus, &--focus {
       @content;
     }
   } @else {
@@ -74,13 +74,13 @@
 }
 
 @mixin disabled($parent: &) {
-  &:disabled, &#{$parent}--disabled {
+  &:disabled, &#{$parent}--disabled, &--disabled {
     @content;
   }
 }
 
 @mixin readonly($parent: &) {
-  &:read-only, &#{$parent}--readonly {
+  &:read-only, &#{$parent}--readonly, &--readonly {
     @content;
   }
 }

@@ -224,10 +224,13 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     className.push(item.index)
 
     if (
-      is && (
-        prop === true ||
-        this.properties.isBool(item)
-      )
+      (
+        is && (
+          prop === true ||
+          this.properties.isBool(item)
+        )
+      ) ||
+      this.properties.isExceptions(item, prop)
     ) {
       this.toClassNameByState(classes, item, className)
     }
