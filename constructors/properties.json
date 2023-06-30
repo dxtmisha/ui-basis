@@ -17,7 +17,7 @@
       "e40i80": "cubic-bezier(0.4, 0.0, 0.2, 1)",
       "e40i40": "cubic-bezier(0.4, 0.0, 0.6, 1)"
     },
-    "_variable": "var",
+    "_type": "var",
     "_category": "root"
   },
   "sys": {
@@ -51,7 +51,7 @@
       "acceleration": "{ref.transitionFunction.e40i0}",
       "deceleration": "{ref.transitionFunction.e0i80}"
     },
-    "_variable": "var",
+    "_type": "var",
     "_category": "root"
   }
 }

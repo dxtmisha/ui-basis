@@ -1,9 +1,4 @@
 const { To } = require('../To')
-const {
-  forEach,
-  isObject,
-  replaceRecursive
-} = require('../../functions/data')
 
 const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
 
@@ -205,7 +200,9 @@ module.exports = class PropertiesTool {
    * @return {boolean}
    */
   static isLink (value) {
-    return typeof value === 'string' && !!value.match(/^{[^{}]+}$/)
+    return typeof value === 'string' &&
+      !!value.match(/^{[^{}]+}$/) &&
+      !value.match(/[{?.]sys/)
   }
 
   /**

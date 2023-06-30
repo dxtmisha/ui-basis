@@ -8,15 +8,15 @@
   "align": {
     "left": {
       "justify-content": "flex-start",
-      "_variable": "state"
+      "_type": "state"
     },
     "right": {
       "justify-content": "flex-end",
-      "_variable": "state"
+      "_type": "state"
     },
     "center": {
       "justify-content": "center",
-      "_variable": "state"
+      "_type": "state"
     }
   },
   "#inscription": {

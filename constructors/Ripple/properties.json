@@ -13,7 +13,10 @@
   "#item": {
     "position": "absolute",
     "inset": "0",
-    "background-color": "{??background-color}",
+    "background-color": {
+      "value": "{??sys.color}",
+      "_default": "{??background-color}"
+    },
     "background-opacity": "{??background-opacity}"
   },
   "animate|start": {
