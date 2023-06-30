@@ -88,6 +88,14 @@ const KEY_IMPORTANT = '_important'
 const KEY_RENAME = '_rename'
 
 /**
+ * The parameter determines the type of property (for the user)
+ *
+ * Параметр определяет тип свойства (для пользователя)
+ * @type {string}
+ */
+const KEY_TYPE = '_type'
+
+/**
  * The parameter determines the type of property
  *
  * Параметр определяет тип свойства
@@ -166,6 +174,7 @@ const KEYS_SPECIAL = [
   KEY_DEFAULT,
   KEY_IMPORTANT,
   KEY_RENAME,
+  KEY_TYPE,
   KEY_VARIABLE,
   KEY_CSS,
   KEY_FULL,
@@ -246,6 +255,27 @@ module.exports = class PropertiesTool {
       return To.kebabCase(
         name.replace(new RegExp(`^(.*?)(${SYMBOL_AVAILABLE})$`), '$2')
       )
+    }
+  }
+
+  /**
+   * Returns the standard name
+   *
+   * Возвращает стандартное имя
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @param {string} name name of the name / название имени
+   * @return {string}
+   */
+  static getNameByItem (item, name) {
+    const keyName = this.getKeyName()
+    const keyRename = this.getKeyRename()
+
+    if (item?.[keyName]) {
+      return item[keyName]
+    } else if (item?.[keyRename]) {
+      return this.getName(item?.[keyRename])
+    } else {
+      return this.getName(name)
     }
   }
 
@@ -420,6 +450,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyRename () {
     return KEY_RENAME
+  }
+
+  /**
+   * Returns a key for storing the property type (for the user)
+   *
+   * Возвращает ключ для хранения типа свойства (для пользователя)
+   * @return {string}
+   */
+  static getKeyType () {
+    return KEY_TYPE
   }
 
   /**

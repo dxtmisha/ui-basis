@@ -1,4 +1,7 @@
 {
   "background-color": "{sys.palette.primary}",
-  "background-opacity": "{sys.opacity.pressed}"
+  "background-opacity": "{sys.opacity.pressed}",
+  "inverse": {
+    "background-color": "{sys.palette.onPrimary}"
+  }
 }

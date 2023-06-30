@@ -96,6 +96,7 @@ module.exports = class PropertiesVariable {
    */
   to () {
     const key = PropertiesTool.getKeyVariable()
+    const keyType = PropertiesTool.getKeyType()
     const keyCategory = PropertiesTool.getKeyCategory()
 
     this.items.each(({
@@ -104,7 +105,9 @@ module.exports = class PropertiesVariable {
       design,
       component
     }) => {
-      if (item?.[keyCategory] === 'root') {
+      if (item?.[keyType]) {
+        item[key] = item?.[keyType]
+      } else if (item?.[keyCategory] === 'root') {
         item[key] = 'var'
       } else if (name === design) {
         item[key] = 'design'

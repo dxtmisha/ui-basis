@@ -4,16 +4,34 @@
   "inset": "0",
   "z-index": "8",
   "background-color": {
-    "_rename": "var|color"
+    "_type": "var"
   },
   "background-opacity": {
-    "_rename": "var|opacity"
+    "_type": "var"
   },
   "border-radius": "inherit",
   "#item": {
     "position": "absolute",
     "inset": "0",
     "background-color": "{??background-color}",
-    "background-opacity": "{??background-opacity}"
+    "background-opacity": "{??background-opacity}",
+    "animation-duration": "{d.sys.transitionDuration.fade.through}",
+    "animation-fill-mode": "forwards",
+    "animation-name": "asd",
+    "animation-timing-function": "linear"
+  },
+  "animate|start": {
+    "0%": {
+      "gradient-opacity": "0",
+      "clip-path": "circle(000% at {??x} {??y})"
+    },
+    "50%": {
+      "gradient-opacity": "{??background-opacity}",
+      "clip-path": "circle(075% at {??x} {??y})"
+    },
+    "100%": {
+      "gradient-opacity": "{??background-opacity}",
+      "clip-path": "circle(150% at {??x} {??y})"
+    }
   }
 }
