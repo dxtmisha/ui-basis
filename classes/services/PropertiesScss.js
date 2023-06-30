@@ -222,7 +222,7 @@ module.exports = class PropertiesScss {
         return `value: ${this.__getValueItem(property)},`
       }
     } else {
-      return 'value: null,'
+      return 'value: (),'
     }
   }
 

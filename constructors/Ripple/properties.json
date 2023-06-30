@@ -17,7 +17,7 @@
     "background-opacity": "{??background-opacity}",
     "animation-duration": "{d.sys.transitionDuration.fade.through}",
     "animation-fill-mode": "forwards",
-    "animation-name": "asd",
+    "animation-name": "",
     "animation-timing-function": "linear"
   },
   "animate|start": {

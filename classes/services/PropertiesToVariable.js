@@ -6,6 +6,7 @@ const PropertiesTool = require('./PropertiesTool')
 const css = require('../../constructors/propertiesListCss.json')
 const cssSelector = require('../../constructors/propertiesListCssSelector.json')
 const cssVirtual = require('../../constructors/propertiesListCssVirtual.json')
+const { isFilled } = require('../../functions/data')
 
 const TYPE = [
   // data type for the root property / типа данных для свойства root
@@ -75,6 +76,7 @@ const SYMBOLS = {
 const FILE_CACHE_VARIABLE = 'properties-variable'
 const FILE_CACHE_VARIABLE_VAR = 'properties-variable-var'
 const FILE_CACHE_VARIABLE_LINK = 'properties-variable-link'
+const FILE_CACHE_VARIABLE_NONE = 'properties-variable-none'
 
 /**
  * Class for performing data type conversions
@@ -192,6 +194,23 @@ module.exports = class PropertiesVariable {
     })
 
     this.items.cache(FILE_CACHE_VARIABLE_LINK)
+  }
+
+  /**
+   * Updating all types of properties to ‘none’ if the value is empty
+   *
+   * Обновление всех типов свойств на ‘none’, если значение пустое
+   */
+  toByNone () {
+    const key = PropertiesTool.getKeyVariable()
+
+    this.items.each(({ item }) => {
+      if (!isFilled(item?.value)) {
+        item[key] = 'none'
+      }
+    })
+
+    this.items.cache(FILE_CACHE_VARIABLE_NONE)
   }
 
   /**
