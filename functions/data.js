@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isObject = exports.isFilled = exports.isNull = void 0
+exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.intersectKey = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isObject = exports.isFilled = exports.isNull = void 0
 /**
  * Is the variable equal to null or undefined
  *
@@ -198,35 +198,63 @@ function forEach (data, callback, filterUndefined) {
 }
 exports.forEach = forEach
 /**
- * This method is used to copy the values of all enumerable own properties from one
- * source object to a target object
+ * Computes the intersection of arrays using keys for comparison
  *
- * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой
+ * Вычислить пересечение массивов, сравнивая ключи
+ * @param data the array with master keys to check / основной проверяемый массив
+ * @param comparison arrays to compare keys against / массивы, с которыми идёт сравнение
+ */
+function intersectKey (data, comparison) {
+  const values = {}
+  if (isObject(data) &&
+        isObject(comparison)) {
+    forEach(data, (item, index) => {
+      if (index in comparison) {
+        values[index] = item
+      }
+    })
+  }
+  return values
+}
+exports.intersectKey = intersectKey
+/**
+ * This method is used to copy the values of all enumerable own properties from one
+ * source object to a target object. In priority according to the processing list
+ *
+ * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой.
+ * В приоритете по списку обработки
  * @param data the target object / целевой объект
  * @param item the source object / исходные объекты
  * @param start index at which to start changing the array / индекс, по которому начинает изменять массив
  * @param isDelete removing the initial value of start / удаление начального значения start
  */
 function splice (data, item, start, isDelete) {
-  if (typeof data === 'object' &&
-        typeof item === 'object') {
+  if (data &&
+        item &&
+        isObject(data) &&
+        isObject(item)) {
     if (start) {
       let init = false
-      forEach(Object.assign({}, data), (value, index) => {
+      forEach(replaceRecursive({}, data), (value, index) => {
         if (start === index ||
                     start === value) {
           init = true
-          Object.assign(data, item)
+          replaceRecursive(data, item)
           if (isDelete) {
             delete data[index]
           }
         } else if (init) {
+          const valueData = data[index]
           delete data[index]
-          data[index] = value
+          replaceRecursive(data, {
+            [index]: isObject(valueData) && isObject(value)
+              ? replaceRecursive(valueData, value)
+              : value
+          })
         }
       })
     } else {
-      Object.assign(data, item)
+      replaceRecursive(data, item)
     }
   }
   return data || {}
@@ -249,8 +277,8 @@ function replaceRecursive (array, replacement, isMerge = true) {
       const data = array?.[index]
       if (data &&
                 item &&
-                typeof data === 'object' &&
-                typeof item === 'object') {
+                isObject(data) &&
+                isObject(item)) {
         if (isMerge &&
                     Array.isArray(data) &&
                     Array.isArray(item)) {

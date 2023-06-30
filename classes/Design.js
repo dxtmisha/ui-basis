@@ -3,10 +3,10 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.Design = void 0
 const vue_1 = require('vue')
 const data_1 = require('../functions/data')
+const To_1 = require('./To')
 const DesignProperties_1 = require('./DesignProperties')
 const DesignClasses_1 = require('./DesignClasses')
 const DesignStyles_1 = require('./DesignStyles')
-const To_1 = require('./To')
 /**
  * Main class for binding tokens and Vue components
  *
@@ -111,7 +111,7 @@ class Design {
      * @param names class name / название класса
      */
   getNameByVar (names) {
-    return `--${this.getName}${names.length > 0 ? `-${To_1.To.array(names).join('-')}` : ''}`
+    return `--${this.getName()}${names.length > 0 ? `-${To_1.To.array(names).join('-')}` : ''}`
   }
 
   /**
@@ -138,8 +138,19 @@ class Design {
       element: this.element,
       classes: this.classes.getItem(),
       styles: this.styles.getItem(),
+      ...this.init(),
       ...((0, data_1.executeFunction)(dataCallback) || {})
     }
+  }
+
+  /**
+     * Method for generating additional properties
+     *
+     * Метод для генерации дополнительных свойств
+     * @protected
+     */
+  init () {
+    return {}
   }
 }
 exports.Design = Design

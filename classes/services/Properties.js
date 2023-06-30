@@ -114,6 +114,7 @@ module.exports = class Properties {
     sub.toByLink()
 
     new PropertiesToLink(items).to()
+    variable.to()
 
     full.toFullValue()
     full.toFullValueByDesign()

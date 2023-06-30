@@ -13,7 +13,7 @@
 
   @if (meta.type-of($value) == map) {
     @include initVars($value);
-  } @else {
+  } @else if (meta.type-of($value) != list) {
     #{$name}: __getVarValue($value);
   }
 }

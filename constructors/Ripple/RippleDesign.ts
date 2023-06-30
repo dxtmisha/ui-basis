@@ -9,9 +9,11 @@ interface RippleDesignInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
+type RippleDesignPropsValueType = DesignPropsValueType<typeof props>
+
 export class RippleDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
-  P extends DesignPropsValueType<typeof props> = DesignPropsValueType<typeof props>
+  P extends RippleDesignPropsValueType = RippleDesignPropsValueType
 > extends Design<C, HTMLDivElement, P, RippleDesignInitInterface> {
   /**
    * Method for generating additional properties

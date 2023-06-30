@@ -158,7 +158,7 @@ export class Design<
    * @param names class name / название класса
    */
   getNameByVar (names: string | string[]) {
-    return `--${this.getName}${names.length > 0 ? `-${To.array(names).join('-')}` : ''}`
+    return `--${this.getName()}${names.length > 0 ? `-${To.array(names).join('-')}` : ''}`
   }
 
   /**

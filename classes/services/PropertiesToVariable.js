@@ -112,6 +112,7 @@ module.exports = class PropertiesVariable {
         item[key] = 'component'
       } else if (
         !item?.[key] &&
+        Object.keys(item).length <= 1 &&
         Object.keys(item?.value).length === 0
       ) {
         item[key] = 'subclass'

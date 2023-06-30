@@ -1,6 +1,4 @@
 {
-  "#item": {
-    "background-color": "{sys.palette.primary}",
-    "background-opacity": "{sys.opacity.pressed}"
-  }
+  "background-color": "{sys.palette.primary}",
+  "background-opacity": "{sys.opacity.pressed}"
 }

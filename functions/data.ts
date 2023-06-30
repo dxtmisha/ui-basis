@@ -218,10 +218,38 @@ export function forEach<T, K = NumberOrStringType, R = undefined> (
 }
 
 /**
- * This method is used to copy the values of all enumerable own properties from one
- * source object to a target object
+ * Computes the intersection of arrays using keys for comparison
  *
- * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой
+ * Вычислить пересечение массивов, сравнивая ключи
+ * @param data the array with master keys to check / основной проверяемый массив
+ * @param comparison arrays to compare keys against / массивы, с которыми идёт сравнение
+ */
+export function intersectKey<T = any> (
+  data?: AssociativeType<T>,
+  comparison?: AssociativeType<T>
+) {
+  const values: AssociativeType<T> = {}
+
+  if (
+    isObject(data) &&
+    isObject(comparison)
+  ) {
+    forEach(data, (item, index) => {
+      if (index in comparison) {
+        values[index] = item
+      }
+    })
+  }
+
+  return values
+}
+
+/**
+ * This method is used to copy the values of all enumerable own properties from one
+ * source object to a target object. In priority according to the processing list
+ *
+ * Метод используется для копирования значений всех перечисляемых свойств одного объекта в другой.
+ * В приоритете по списку обработки
  * @param data the target object / целевой объект
  * @param item the source object / исходные объекты
  * @param start index at which to start changing the array / индекс, по которому начинает изменять массив
@@ -234,30 +262,39 @@ export function splice<T = any> (
   isDelete?: boolean
 ): AssociativeType<T> {
   if (
-    typeof data === 'object' &&
-    typeof item === 'object'
+    data &&
+    item &&
+    isObject(data) &&
+    isObject(item)
   ) {
     if (start) {
       let init = false
 
-      forEach(Object.assign({}, data), (value, index) => {
+      forEach(replaceRecursive({}, data), (value, index) => {
         if (
           start === index ||
           start === value
         ) {
           init = true
-          Object.assign(data, item)
+          replaceRecursive(data, item)
 
           if (isDelete) {
             delete data[index]
           }
         } else if (init) {
+          const valueData = data[index]
+
           delete data[index]
-          data[index] = value
+
+          replaceRecursive(data, {
+            [index]: isObject(valueData) && isObject(value)
+              ? replaceRecursive(valueData, value)
+              : value
+          })
         }
       })
     } else {
-      Object.assign(data, item)
+      replaceRecursive(data, item)
     }
   }
 
@@ -289,8 +326,8 @@ export function replaceRecursive<T = any> (
       if (
         data &&
         item &&
-        typeof data === 'object' &&
-        typeof item === 'object'
+        isObject(data) &&
+        isObject(item)
       ) {
         if (
           isMerge &&
