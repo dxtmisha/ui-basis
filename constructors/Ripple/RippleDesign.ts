@@ -42,7 +42,7 @@ export class RippleDesign<
     ) {
       createElement<HTMLSpanElement>(this.element.value, 'span', item => {
         item.onanimationend = () => item.classList.add(this.classes.getNameByState(['end']))
-        item.ontransitionend = () => item.parentElement?.removeChild(item)
+        // item.ontransitionend = () => item.parentElement?.removeChild(item)
 
         item.style.setProperty(this.getNameByVar('x'), `${x}px`)
         item.style.setProperty(this.getNameByVar('y'), `${y}px`)

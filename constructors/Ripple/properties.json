@@ -14,11 +14,7 @@
     "position": "absolute",
     "inset": "0",
     "background-color": "{??background-color}",
-    "background-opacity": "{??background-opacity}",
-    "animation-duration": "{d.sys.transitionDuration.fade.through}",
-    "animation-fill-mode": "forwards",
-    "animation-name": "",
-    "animation-timing-function": "linear"
+    "background-opacity": "{??background-opacity}"
   },
   "animate|start": {
     "0%": {

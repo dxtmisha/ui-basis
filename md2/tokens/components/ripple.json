@@ -1,5 +1,5 @@
 {
-  "background-color": "{sys.palette.primary}",
+  "background-color": "{sys.palette.error}",
   "background-opacity": "{sys.opacity.pressed}",
   "inverse": {
     "background-color": "{sys.palette.onPrimary}"

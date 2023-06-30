@@ -125,7 +125,7 @@ module.exports = class PropertiesToVar {
    */
   __toCalculator (value) {
     if (
-      value.match(/[+\-*/]/ig) &&
+      value.match(/([+*/]|(?<![\w-])-(?![\w-]))/ig) &&
       value.match(/calc/ig) === null
     ) {
       return `calc(${value})`

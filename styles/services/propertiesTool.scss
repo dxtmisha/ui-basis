@@ -9,6 +9,15 @@ $designsClassName: 'class' !default;
 
 @import "./propertiesItem";
 
+/// Returns the processed name
+///
+/// Возвращает обработанное название
+/// @param {String} $name
+/// @return {String}
+@function n($name) {
+  @return #{__toByName($name)};
+}
+
 /// Returns the class name
 ///
 /// Возвращает название класса

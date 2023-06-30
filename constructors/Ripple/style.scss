@@ -1,0 +1,42 @@
+@import "../../styles/properties";
+
+@mixin initRippleDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinRippleAnimation;
+    @content;
+  }
+}
+
+@mixin mixinRippleAnimation {
+  $subClass: 'item';
+  $stateEnd: 'end';
+
+  %ripple-end {
+    opacity: 0;
+
+    transition-delay: v('d.sys.transition-duration.fade.enter');
+    transition-duration: v('d.sys.transition-duration.fade.through');
+    transition-property: opacity;
+  }
+
+  &__#{$subClass} {
+    animation-duration: v('d.sys.transition-duration.fade.through');
+    animation-fill-mode: forwards;
+    animation-name: n('??start');
+    animation-timing-function: linear;
+
+    &:not(:last-child) {
+      @include state($stateEnd) {
+        @extend %ripple-end;
+      }
+    }
+  }
+
+  &:not(:active) {
+    @include subclass($subClass) {
+      @include state($stateEnd) {
+        @extend %ripple-end;
+      }
+    }
+  }
+}

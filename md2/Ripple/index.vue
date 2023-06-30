@@ -23,9 +23,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@import "../../styles/properties";
+@import "../../constructors/Ripple/style";
 
-@include initDesign {
+@include initRippleDesign {
 
 }
 </style>
