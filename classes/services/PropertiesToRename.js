@@ -8,6 +8,11 @@ const FILE_CACHE_RENAME_VAR = 'properties-rename-var'
 const FILE_CACHE_RENAME_COMPONENT = 'properties-rename-component'
 const FILE_CACHE_RENAME_SIMILAR = 'properties-rename-similar'
 
+const SUPPORT_RENAME = [
+  'property',
+  'var'
+]
+
 /**
  * Class for working with the property name
  *
@@ -194,7 +199,11 @@ module.exports = class PropertiesToRename {
         ['design', 'component'].indexOf(parent.item?.[key]) !== -1 ||
         variable.indexOf(parent.item?.[key]) !== -1
       ) {
-        return parent.name
+        if (SUPPORT_RENAME.indexOf(parent.item?.[key]) !== -1) {
+          return this.__getName(parent.item, parent.name)
+        } else {
+          return parent.name
+        }
       } else {
         return undefined
       }
@@ -216,7 +225,7 @@ module.exports = class PropertiesToRename {
     if (item?.[PropertiesTool.getKeyFull()]) {
       return `--${name}`
     } else {
-      return `--${this.__getParentsName(parents, ['var']).join('-')}-${name}`
+      return `--${this.__getParentsName(parents, ['var']).join('-')}-${this.__getName(item, name)}`
     }
   }
 
