@@ -214,7 +214,10 @@ module.exports = class PropertiesVariable {
     )
     const itemLink = this.items.getItemByIndex(index)
 
-    if (typeof itemLink?.value === 'object') {
+    if (
+      typeof itemLink?.value === 'object' &&
+      Object.keys(itemLink?.value).length > 0
+    ) {
       return 'link'
     } else {
       return undefined
