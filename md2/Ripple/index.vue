@@ -9,18 +9,10 @@ export default defineComponent({
   props,
   setup (props, context) {
     return new RippleDesign<typeof subClasses>(props, context)
-      .setup({})
+      .render()
   }
 })
 </script>
-
-<template>
-  <div
-    ref="element"
-    :class="classes.main"
-    @mousedown="onClick"
-  />
-</template>
 
 <style lang="scss">
 @import "../../constructors/Ripple/style";

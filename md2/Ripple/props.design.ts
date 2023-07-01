@@ -4,4 +4,8 @@ export const subClassesDesign = {
   item: 'item'
 }
 
-export const propsDesign = { /* sample */ }
+export const propsDesign = {
+  inverse: {
+    type: [Boolean]
+  }
+}

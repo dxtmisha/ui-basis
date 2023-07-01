@@ -1,10 +1,12 @@
 import {
   ComputedRef,
+  h,
   Ref,
   ref,
   SetupContext,
   ToRefs,
-  toRefs
+  toRefs,
+  VNode
 } from 'vue'
 import { executeFunction } from '../functions/data'
 import { To } from './To'
@@ -191,6 +193,18 @@ export class Design<
   }
 
   /**
+   * The rendering method for the setup method
+   *
+   * Метод рендеринга для метода настройки
+   * @param dataCallback additional component properties / дополнительные свойства компонента
+   */
+  render<D = AssociativeType> (dataCallback?: DesignSetupValueType<D>): () => VNode {
+    const setup = this.setup<D>(dataCallback)
+
+    return () => this.initRender<D>(setup)
+  }
+
+  /**
    * Method for generating additional properties
    *
    * Метод для генерации дополнительных свойств
@@ -198,5 +212,16 @@ export class Design<
    */
   protected init (): I {
     return {} as I
+  }
+
+  /**
+   * A method for rendering
+   *
+   * Метод для рендеринга
+   * @param setup the result of executing the setup method / результат выполнения метода настройки
+   * @protected
+   */
+  protected initRender<D = AssociativeType> (setup: DesignSetupType<C, E, D, I>): VNode {
+    return h('div', { class: setup.classes.value.main })
   }
 }

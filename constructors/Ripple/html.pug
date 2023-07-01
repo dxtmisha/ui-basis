@@ -1,0 +1,6 @@
+mixin RippleHtmlMixin (classMain, onClick)
+    div(
+        ref="element",
+        class=classMain
+        @mousedown=onClick
+    )

@@ -1,7 +1,14 @@
+import { h, VNode } from 'vue'
 import { createElement } from '../../functions/element'
 
-import { Design, DesignPropsValueType } from '../../classes/Design'
+import {
+  Design,
+  DesignPropsValueType,
+  DesignSetupType
+} from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
+
+import { AssociativeType } from '../types'
 
 import { props } from './props'
 
@@ -11,6 +18,9 @@ interface RippleDesignInitInterface {
 
 type RippleDesignPropsValueType = DesignPropsValueType<typeof props>
 
+/**
+ * RippleDesign
+ */
 export class RippleDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends RippleDesignPropsValueType = RippleDesignPropsValueType
@@ -25,6 +35,21 @@ export class RippleDesign<
     return {
       onClick: (event: MouseEvent) => this.addItem(event.offsetX, event.offsetY)
     }
+  }
+
+  /**
+   * A method for rendering
+   *
+   * Метод для рендеринга
+   * @param setup the result of executing the setup method / результат выполнения метода настройки
+   * @protected
+   */
+  protected initRender<D = AssociativeType> (setup: DesignSetupType<C, HTMLDivElement, D, RippleDesignInitInterface>): VNode {
+    return h('div', {
+      ref: this.element,
+      class: setup.classes.value.main,
+      onMousedown: setup.onClick
+    })
   }
 
   /**
