@@ -1,6 +1,10 @@
+const { To } = require('../To')
+
 const DesignCommand = require('./DesignCommand')
 
 const DIR_NAME = 'constructors'
+
+const FILE_PROPS = 'props.ts'
 
 module.exports = class DesignConstructor extends DesignCommand {
   dirSampleName = 'constructor'
@@ -20,7 +24,8 @@ module.exports = class DesignConstructor extends DesignCommand {
   }
 
   initMain () {
-    // TODO
+    this
+      .__initProps()
   }
 
   /**
@@ -33,7 +38,40 @@ module.exports = class DesignConstructor extends DesignCommand {
   _initDir () {
     return [
       ...super._initDir(),
-      DIR_NAME
+      DIR_NAME,
+      To.camelCaseFirst(this.name)
     ]
+  }
+
+  /**
+   * This code reads a template for the props.ts
+   *
+   * Читает шаблона для файла props.ts
+   * @return {string}
+   * @private
+   */
+  __readSampleProps () {
+    return this._readSample(FILE_PROPS)
+  }
+
+  /**
+   * This code generates the props.ts
+   *
+   * Генерация файла props.ts
+   * @return {this}
+   * @private
+   */
+  __initProps () {
+    const file = FILE_PROPS
+
+    if (!this._isFile(file)) {
+      const sample = this.__readSampleProps()
+        .replace('propsConstructor', To.camelCase(`props-${this.name}`))
+
+      this._console(file)
+      this._createFile(file, sample)
+    }
+
+    return this
   }
 }

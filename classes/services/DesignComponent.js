@@ -27,7 +27,8 @@ module.exports = class DesignComponent extends DesignCommand {
   }
 
   initMain () {
-    this.__initIndex()
+    this
+      .__initIndex()
       .__initPropsDesign()
       .__initProps()
       .__initProperties()

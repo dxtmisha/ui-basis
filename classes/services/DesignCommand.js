@@ -21,11 +21,15 @@ module.exports = class DesignCommand {
   }
 
   init () {
-    console.info(`-- ${this.getNameCommand()}:`)
+    if (this.name) {
+      console.info(`-- ${this.getNameCommand()}:`)
 
-    this.initMain()
+      this.initMain()
 
-    console.info('-- end')
+      console.info('-- end')
+    } else {
+      console.info('-- not name')
+    }
   }
 
   initMain () {
