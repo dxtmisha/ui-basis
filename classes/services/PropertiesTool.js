@@ -366,15 +366,18 @@ module.exports = class PropertiesTool {
       list.shift()
       list.forEach(parent => {
         if (data === undefined) {
+          const similar = parent.item?.value?.[name]
+
           if (this.isSimilarException(parent.item)) {
             data = false
           } else if (
-            this.isSimilar(parent.item) && (
-              parent.item?.value?.[name]?.[keyRename] ||
-              parent.item?.value?.[name]?.[keyType]
+            similar &&
+            this.isSimilar(similar) && (
+              similar?.[keyRename] ||
+              similar?.[keyType]
             )
           ) {
-            data = parent.item?.value?.[name]
+            data = similar
           }
         }
       })
