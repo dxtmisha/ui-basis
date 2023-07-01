@@ -1,4 +1,4 @@
-export const constructorProps = {
+export const propsConstructor = {
   // Values
 
   // Status

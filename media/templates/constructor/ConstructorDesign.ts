@@ -7,13 +7,13 @@ import {
 } from '../../../classes/Design'
 import { ClassesSubClassesType } from '../../../classes/DesignClasses'
 
-import { constructorProps } from './constructorProps'
+import { propsConstructor } from './props'
 
 interface ConstructorDesignInitInterface {
   property: string
 }
 
-type ConstructorDesignPropsValueType = DesignPropsValueType<typeof constructorProps>
+type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstructor>
 
 /**
  * RippleDesign

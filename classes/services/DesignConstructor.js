@@ -1,11 +1,10 @@
 const DesignCommand = require('./DesignCommand')
-const PropertiesComponent = require('./PropertiesComponent')
-const PropertiesFiles = require('./PropertiesFiles')
 
 const DIR_NAME = 'constructors'
-const DIR_SAMPLE = [__dirname, '..', '..', 'media', 'templates', 'constructor']
 
 module.exports = class DesignConstructor extends DesignCommand {
+  dirSampleName = 'constructor'
+
   /**
    * Constructor
    * @param {string} name component name / названия компонента
@@ -29,6 +28,7 @@ module.exports = class DesignConstructor extends DesignCommand {
    *
    * Возвращает массив с путями к компонентам
    * @return {string[]}
+   * @protected
    */
   _initDir () {
     return [

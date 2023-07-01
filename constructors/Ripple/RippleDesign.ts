@@ -8,13 +8,13 @@ import {
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
-import { rippleProps } from './rippleProps'
+import { propsRipple } from './props'
 
 interface RippleDesignInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
-type RippleDesignPropsValueType = DesignPropsValueType<typeof rippleProps>
+type RippleDesignPropsValueType = DesignPropsValueType<typeof propsRipple>
 
 /**
  * RippleDesign
