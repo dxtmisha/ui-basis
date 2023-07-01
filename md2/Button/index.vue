@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { props, subClasses } from './props'
 
 import { Design } from '../../classes/Design'
@@ -13,7 +13,9 @@ export default defineComponent({
   props,
   setup (props, context) {
     return new Design<typeof subClasses>(props, context)
-      .setup({})
+      .setup({
+        inverse: ref(false)
+      })
   }
 })
 </script>
@@ -23,9 +25,10 @@ export default defineComponent({
     :class="classes.main"
     :style="styles"
     :disabled="disabled"
+    @click="inverse = !inverse"
   >
     <span :class="classes.inscription">{{ text }}</span>
-    <md2-ripple :disabled="disabled"/>
+    <md2-ripple :disabled="disabled" :inverse="inverse"/>
   </button>
 </template>
 

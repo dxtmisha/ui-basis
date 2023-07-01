@@ -169,7 +169,7 @@ $designsShade: () !default;
 
 /* Color */
 
-@mixin color($color, $opacity: 1) {
+@mixin color($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-color: #{toColorRbg($color)};
     @include colorOpacity($opacity);
@@ -186,12 +186,12 @@ $designsShade: () !default;
 }
 
 @mixin colorInit() {
-  color: rgba(var(--sys-color), var(--sys-color-opacity));
+  color: rgba(var(--sys-color), var(--sys-color-opacity, 1));
 }
 
 /* Stroke */
 
-@mixin stroke($color, $opacity: 1) {
+@mixin stroke($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-color: #{toColorRbg($color)};
     @include strokeOpacity($opacity);
@@ -208,12 +208,12 @@ $designsShade: () !default;
 }
 
 @mixin strokeInit() {
-  stroke: rgba(var(--sys-color), var(--sys-color-opacity));
+  stroke: rgba(var(--sys-color), var(--sys-color-opacity, 1));
 }
 
 /* Background */
 
-@mixin background($color, $opacity: 1) {
+@mixin background($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-background: #{toColorRbg($color)};
     @include backgroundOpacity($opacity);
@@ -230,12 +230,12 @@ $designsShade: () !default;
 }
 
 @mixin backgroundInit() {
-  background-color: rgba(var(--sys-background), var(--sys-background-opacity));
+  background-color: rgba(var(--sys-background), var(--sys-background-opacity, 1));
 }
 
 /* Fill */
 
-@mixin fill($color, $opacity: 1) {
+@mixin fill($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-background: #{toColorRbg($color)};
     @include fillOpacity($opacity);
@@ -252,12 +252,12 @@ $designsShade: () !default;
 }
 
 @mixin fillInit() {
-  fill: rgba(var(--sys-background), var(--sys-background-opacity));
+  fill: rgba(var(--sys-background), var(--sys-background-opacity, 1));
 }
 
 /* Gradient */
 
-@mixin gradient($color, $opacity: 1) {
+@mixin gradient($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-gradient: #{toColorRbg($color)};
     @include gradientOpacity($opacity);
@@ -274,12 +274,12 @@ $designsShade: () !default;
 }
 
 @mixin gradientInit() {
-  background-image: #{toGradient(#{rgba(var(--sys-gradient), var(--sys-gradient-opacity))})};
+  background-image: #{toGradient(#{rgba(var(--sys-gradient), var(--sys-gradient-opacity, 1))})};
 }
 
 /* Border */
 
-@mixin border($color, $opacity: 1) {
+@mixin border($color, $opacity: null) {
   @if (isColorRbgOrVar($color)) {
     --sys-border: #{toColorRbg($color)};
     @include borderOpacity($opacity);
@@ -296,7 +296,7 @@ $designsShade: () !default;
 }
 
 @mixin borderInit() {
-  border-color: rgba(var(--sys-border), var(--sys-border-opacity));
+  border-color: rgba(var(--sys-border), var(--sys-border-opacity, 1));
 }
 
 /* As */

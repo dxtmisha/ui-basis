@@ -138,6 +138,7 @@ module.exports = class PropertiesToRename {
    */
   toBySimilar () {
     const key = PropertiesTool.getKeyName()
+    const keyVariable = PropertiesTool.getKeyVariable()
 
     this.items.each(({
       item,
@@ -148,6 +149,7 @@ module.exports = class PropertiesToRename {
 
       if (similar) {
         item[key] = this.__getName(similar, name)
+        item[keyVariable] = similar?.[keyVariable]
       }
     })
 

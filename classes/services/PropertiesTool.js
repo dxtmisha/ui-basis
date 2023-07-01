@@ -180,6 +180,16 @@ const KEYS_SPECIAL = [
   KEY_PATH
 ]
 
+const SIMILAR = [
+  'var',
+  'property'
+]
+
+const SIMILAR_EXCEPTION = [
+  'class',
+  'subclass'
+]
+
 module.exports = class PropertiesTool {
   /**
    * Checks if the variable is a special value
@@ -225,6 +235,28 @@ module.exports = class PropertiesTool {
    */
   static isScss (name) {
     return !!name.match(/^&/)
+  }
+
+  /**
+   * Checks if the property is available for inheritance
+   *
+   * Проверяет, доступно ли свойство для наследования
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @return {boolean}
+   */
+  static isSimilar (item) {
+    return SIMILAR.indexOf(item?.[this.getKeyVariable()]) !== -1
+  }
+
+  /**
+   * Checks if inheriting the property is prohibited
+   *
+   * Проверяет, запрещено ли наследовать свойство
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @return {boolean}
+   */
+  static isSimilarException (item) {
+    return SIMILAR_EXCEPTION.indexOf(item?.[this.getKeyVariable()]) !== -1
   }
 
   /**
@@ -321,24 +353,26 @@ module.exports = class PropertiesTool {
     parents = undefined
   ) {
     const keyRename = this.getKeyRename()
-    const keyVariable = this.getKeyVariable()
+    const keyType = this.getKeyType()
     const list = [...parents].reverse()
     let data
 
-    if (!item?.[keyRename]) {
+    if (
+      !item?.[keyRename] &&
+      !item?.[keyType] &&
+      !this.isSimilarException(item) &&
+      !this.isSimilarException(list?.[0]?.item)
+    ) {
       list.shift()
       list.forEach(parent => {
         if (data === undefined) {
-          if (
-            [
-              'class',
-              'subclass'
-            ].indexOf(parent.item?.[keyVariable]) !== -1
-          ) {
+          if (this.isSimilarException(parent.item)) {
             data = false
           } else if (
-            item?.[keyVariable] === parent.item?.value?.[name]?.[keyVariable] &&
-            parent.item?.value?.[name]?.[keyRename]
+            this.isSimilar(parent.item) && (
+              parent.item?.value?.[name]?.[keyRename] ||
+              parent.item?.value?.[name]?.[keyType]
+            )
           ) {
             data = parent.item?.value?.[name]
           }
