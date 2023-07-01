@@ -3,6 +3,7 @@ import { props as propsConstructor } from '../../constructors/Ripple/props'
 
 export const subClasses = {
   ...subClassesDesign
+
   // Subclass list
 
 }
