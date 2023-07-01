@@ -6,7 +6,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "component": "commands/design.js component"
+    "component": "commands/design.js component",
+    "constructor": "commands/design.js constructor"
   },
   "dependencies": {
     "core-js": "3.31.0",

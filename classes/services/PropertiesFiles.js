@@ -1,3 +1,4 @@
+const { isFilled } = require('../../functions/data')
 const { To } = require('../To')
 
 const requireFs = require('fs')
@@ -160,7 +161,11 @@ module.exports = class PropertiesFiles {
    * @return {string}
    */
   static getFileName (name, extension = 'json') {
-    return `${To.kebabCase(name)}${extension === '' ? '' : `.${extension}`}`
+    if (isFilled(extension)) {
+      return `${To.kebabCase(name)}.${extension}`
+    } else {
+      return name
+    }
   }
 
   /**

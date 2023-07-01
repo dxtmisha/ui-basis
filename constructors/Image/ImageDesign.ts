@@ -4,31 +4,31 @@ import {
   Design,
   DesignPropsValueType,
   DesignSetupType
-} from '../../../classes/Design'
-import { ClassesSubClassesType } from '../../../classes/DesignClasses'
+} from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
-import { propsConstructor } from './props'
+import { propsImage } from './props'
 
-interface ConstructorDesignInitInterface {
+interface ImageDesignInitInterface {
   property: string
 }
 
-type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstructor>
+type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
 
 /**
- * ConstructorDesign
+ * ImageDesign
  */
-export class ConstructorDesign<
+export class ImageDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
-  P extends ConstructorDesignPropsValueType = ConstructorDesignPropsValueType
-> extends Design<C, HTMLElement, P, ConstructorDesignInitInterface> {
+  P extends ImageDesignPropsValueType = ImageDesignPropsValueType
+> extends Design<C, HTMLElement, P, ImageDesignInitInterface> {
   /**
    * Method for generating additional properties
    *
    * Метод для генерации дополнительных свойств
    * @protected
    */
-  protected init (): ConstructorDesignInitInterface {
+  protected init (): ImageDesignInitInterface {
     return {
       property: 'constructor'
     }
@@ -42,7 +42,7 @@ export class ConstructorDesign<
    * @protected
    */
   protected initRender<D = Record<string, any>> (
-    setup: DesignSetupType<C, HTMLDivElement, D, ConstructorDesignInitInterface>
+    setup: DesignSetupType<C, HTMLDivElement, D, ImageDesignInitInterface>
   ): VNode {
     return h('div', {
       ref: this.element,

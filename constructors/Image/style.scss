@@ -1,0 +1,7 @@
+@import "../../styles/properties";
+
+@mixin initImageDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @content;
+  }
+}
