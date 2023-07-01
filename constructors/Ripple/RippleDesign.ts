@@ -8,15 +8,13 @@ import {
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
-import { AssociativeType } from '../types'
-
-import { props } from './props'
+import { rippleProps } from './rippleProps'
 
 interface RippleDesignInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
-type RippleDesignPropsValueType = DesignPropsValueType<typeof props>
+type RippleDesignPropsValueType = DesignPropsValueType<typeof rippleProps>
 
 /**
  * RippleDesign
@@ -44,7 +42,9 @@ export class RippleDesign<
    * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = AssociativeType> (setup: DesignSetupType<C, HTMLDivElement, D, RippleDesignInitInterface>): VNode {
+  protected initRender<D = Record<string, any>> (
+    setup: DesignSetupType<C, HTMLDivElement, D, RippleDesignInitInterface>
+  ): VNode {
     return h('div', {
       ref: this.element,
       class: setup.classes.value.main,

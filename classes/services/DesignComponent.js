@@ -1,16 +1,16 @@
 const { forEach } = require('../../functions/data')
 
+const DesignCommand = require('./DesignCommand')
 const PropertiesComponent = require('./PropertiesComponent')
-const PropertiesFiles = require('./PropertiesFiles')
-
-const DIR_SAMPLE = [__dirname, '..', '..', 'media', 'templates', 'component']
 
 /**
  * Class for creating a component or updating data
  *
  * Класс для создания компонента или обновления данных
  */
-module.exports = class DesignComponent {
+module.exports = class DesignComponent extends DesignCommand {
+  dirSampleName = 'component'
+
   /**
    * Constructor
    * @param {string} name component name / названия компонента
@@ -20,51 +20,41 @@ module.exports = class DesignComponent {
     name,
     options = {}
   ) {
-    this.name = name
-    this.options = options // TODO: не использовано еще
-    this.component = new PropertiesComponent(name, false)
+    super(name, options)
 
-    this.dir = this.__initDir()
+    this.component = new PropertiesComponent(name, false)
+    this.dir = this._initDir()
   }
 
-  init () {
-    console.info(`-- ${this.component.getName()}:`)
-
+  initMain () {
     this.__initIndex()
       .__initPropsDesign()
       .__initProps()
       .__initProperties()
-
-    console.info('-- end')
   }
 
   /**
-   * Checks the presence of a file
+   * Returns the names for the team
    *
-   * Проверяет наличие файла
-   * @param {string} name file name / название файла
-   * @return {boolean}
-   * @private
+   * Возвращает названия для команды
+   * @return {string}
    */
-  __isFile (name) {
-    return PropertiesFiles.is([...this.dir, name])
+  getNameCommand () {
+    return this.component.getName()
   }
 
   /**
-   * Creating or rewriting a file
+   * Returns an array of paths to components
    *
-   * Создание или перезапись файла
-   * @param {string} name file name / название файла
-   * @param {string} value values for storage / значения для хранения
-   * @private
+   * Возвращает массив с путями к компонентам
+   * @return {string[]}
    */
-  __createFile (name, value) {
-    PropertiesFiles.createFile(
-      this.dir,
-      name,
-      value,
-      ''
-    )
+  _initDir () {
+    return [
+      ...super._initDir(),
+      this.component.getDesign(),
+      this.component.getComponent()
+    ]
   }
 
   /**
@@ -75,7 +65,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readIndex () {
-    return PropertiesFiles.readFile([...this.dir, this.component.getFileIndex()])
+    return this._read(this.component.getFileIndex())
   }
 
   /**
@@ -86,7 +76,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleIndex () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileIndex()])
+    return this._readSample(this.component.getFileIndex())
   }
 
   /**
@@ -97,7 +87,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleProps () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileProps()])
+    return this._readSample(this.component.getFileProps())
   }
 
   /**
@@ -108,7 +98,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSamplePropsDesign () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFilePropsDesign()])
+    return this._readSample(this.component.getFilePropsDesign())
   }
 
   /**
@@ -119,21 +109,7 @@ module.exports = class DesignComponent {
    * @private
    */
   __readSampleProperties () {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, this.component.getFileProperties()])
-  }
-
-  /**
-   * Returns an array of paths to components
-   *
-   * Возвращает массив с путями к компонентам
-   * @return {string[]}
-   */
-  __initDir () {
-    return [
-      PropertiesFiles.getRoot(),
-      this.component.getDesign(),
-      this.component.getComponent()
-    ]
+    return this._readSample(this.component.getFileProperties())
   }
 
   /**
@@ -147,7 +123,7 @@ module.exports = class DesignComponent {
     const file = this.component.getFileIndex()
     let sample
 
-    if (this.__isFile(file)) {
+    if (this._isFile(file)) {
       sample = this.__readIndex()
         .replace(
           /(name: ?['"])([^'"]+)(['"],? ?\/\/ name component)/,
@@ -159,8 +135,8 @@ module.exports = class DesignComponent {
         .replace('DesignComponent', this.component.getName())
     }
 
-    this.__console(file)
-    this.__createFile(file, sample)
+    this._console(file)
+    this._createFile(file, sample)
 
     return this
   }
@@ -175,11 +151,11 @@ module.exports = class DesignComponent {
   __initProps () {
     const file = this.component.getFileProps()
 
-    if (!this.__isFile(file)) {
+    if (!this._isFile(file)) {
       const sample = this.__readSampleProps()
 
-      this.__console(file)
-      this.__createFile(file, sample)
+      this._console(file)
+      this._createFile(file, sample)
     }
 
     return this
@@ -199,8 +175,8 @@ module.exports = class DesignComponent {
     sample = this.__initPropsDesignForProps(sample)
     sample = this.__initPropsDesignForClasses(sample)
 
-    this.__console(file)
-    this.__createFile(file, sample)
+    this._console(file)
+    this._createFile(file, sample)
 
     return this
   }
@@ -272,11 +248,11 @@ module.exports = class DesignComponent {
   __initProperties () {
     const file = this.component.getFileProperties()
 
-    if (!this.__isFile(file)) {
+    if (!this._isFile(file)) {
       const sample = this.__readSampleProperties()
 
-      this.__console(file)
-      this.__createFile(file, sample)
+      this._console(file)
+      this._createFile(file, sample)
     }
 
     return this
@@ -349,16 +325,5 @@ module.exports = class DesignComponent {
     } else {
       return `${value}`
     }
-  }
-
-  /**
-   * Outputting data to the console
-   *
-   * Вывод данных в консоль
-   * @param {string} name file name / название файла
-   * @private
-   */
-  __console (name) {
-    console.info(`--  ${this.__isFile(name) ? 'update' : 'create'} ${name}`)
   }
 }

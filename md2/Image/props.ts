@@ -1,5 +1,4 @@
 import { propsDesign, subClassesDesign } from './props.design'
-import { rippleProps } from '../../constructors/Ripple/rippleProps'
 
 export const subClasses = {
   ...subClassesDesign
@@ -9,8 +8,7 @@ export const subClasses = {
 }
 
 export const props = {
-  ...propsDesign,
-  ...rippleProps
+  ...propsDesign
 
   // Values
 

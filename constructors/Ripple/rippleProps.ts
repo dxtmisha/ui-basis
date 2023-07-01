@@ -1,4 +1,4 @@
-export const props = {
+export const rippleProps = {
   // Values
 
   // Status

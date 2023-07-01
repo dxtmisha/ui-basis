@@ -1,0 +1,7 @@
+@import "../../../styles/properties";
+
+@mixin initConstructorDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @content;
+  }
+}
