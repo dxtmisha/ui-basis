@@ -4,7 +4,9 @@
     <md2-button text="button" disabled/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
-    <md2-image/>
+    <div style="width: 160px; height: 160px;">
+      <md2-image/>
+    </div>
   </div>
 </template>
 

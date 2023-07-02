@@ -29,11 +29,13 @@
 @mixin initPropertyValue($name, $value) {
   @if (
     /* Flex */
-          $name == 'justify-content'
+          $name == 'flex-position'
   ) {
-    @include justifyContent(#{$value});
+    @include flexPosition(#{$value});
   } @else if ($name == 'flex-dynamic') {
     @include flexDynamic(#{$value});
+  } @else if ($name == 'justify-content') {
+    @include justifyContent(#{$value});
   } @else if (
     /* Position */
           $name == 'inset'

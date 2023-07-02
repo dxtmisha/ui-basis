@@ -10,7 +10,75 @@
   }
 }
 
-@mixin flexDynamic() {
+@mixin flex {
+  display: flex;
+}
+
+@mixin flexInline {
+  display: inline-flex;
+}
+
+@mixin flexX {
+  @include flex;
+  align-items: center;
+}
+
+@mixin flexY {
+  @include flexX;
+  flex-flow: column;
+}
+
+@mixin flexCenter {
+  @include flexX;
+  justify-content: center;
+}
+
+@mixin flexBetween {
+  @include flexX;
+  justify-content: space-between;
+}
+
+@mixin flexInlineX {
+  @include flexX;
+  @include flexInline;
+}
+
+@mixin flexInlineY {
+  @include flexY;
+  @include flexInline;
+}
+
+@mixin flexInlineCenter {
+  @include flexCenter;
+  @include flexInline;
+}
+
+@mixin flexInlineBetween {
+  @include flexBetween;
+  @include flexInline;
+}
+
+@mixin flexPosition($value) {
+  @if ($value == 'x') {
+    @include flexX;
+  } @else if ($value == 'y') {
+    @include flexY;
+  } @else if ($value == 'center') {
+    @include flexCenter;
+  } @else if ($value == 'between') {
+    @include flexBetween;
+  } @else if ($value == 'inline-x') {
+    @include flexInlineX;
+  } @else if ($value == 'inline-y') {
+    @include flexInlineY;
+  } @else if ($value == 'inline-center') {
+    @include flexInlineCenter;
+  } @else if ($value == 'inline-between') {
+    @include flexInlineBetween;
+  }
+}
+
+@mixin flexDynamic {
   flex-basis: 1px;
   flex-grow: 1;
   flex-shrink: 1;

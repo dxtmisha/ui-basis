@@ -147,6 +147,7 @@
   "flex-dynamic",
   "flex-flow",
   "flex-grow",
+  "flex-position",
   "flex-shrink",
   "flex-wrap",
   "float",
