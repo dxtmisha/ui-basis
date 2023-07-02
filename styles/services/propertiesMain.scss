@@ -3,6 +3,7 @@
 $designsRoot: () !default;
 $designsClasses: () !default;
 
+@import "propertiesGlobal";
 @import "propertiesItem";
 @import "propertiesVar";
 @import "propertiesClass";
@@ -11,6 +12,7 @@ $designsClasses: () !default;
 ///
 /// Точка входа для генерации всех данных
 @mixin initMain {
+  @include propertiesGlobal;
   @include readClasses;
   @include readRoot;
 }

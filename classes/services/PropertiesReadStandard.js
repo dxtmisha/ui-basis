@@ -44,6 +44,10 @@ module.exports = class PropertiesReadStandard {
         if (PropertiesTool.isFull(name)) {
           data[newKey][PropertiesTool.getKeyFull()] = true
         }
+
+        if (typeof data[newKey]?.value === 'number') {
+          data[newKey].value = data[newKey].value.toString()
+        }
       } else {
         data[newKey] = value
       }

@@ -1,5 +1,10 @@
 @import "dir";
 
+@mixin paddingGlobal {
+  --sys-padding-left: 0;
+  --sys-padding-right: 0;
+}
+
 @mixin padding($value) {
   padding: $value;
 }

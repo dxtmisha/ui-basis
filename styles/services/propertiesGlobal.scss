@@ -1,0 +1,18 @@
+@import "../color";
+@import "../dir";
+@import "../margin";
+@import "../padding";
+@import "../position";
+@import "../transform";
+
+@mixin propertiesGlobal {
+  @include dirInit;
+
+  * {
+    @include paletteGlobal;
+    @include marginGlobal;
+    @include paddingGlobal;
+    @include positionGlobal;
+    @include transformGlobal;
+  }
+}

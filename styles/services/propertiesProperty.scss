@@ -7,6 +7,7 @@
 @import "../margin";
 @import "../padding";
 @import "../position";
+@import "../transform";
 
 /// Generating value
 ///
@@ -134,6 +135,8 @@
     @include background(#{$value});
   } @else if ($name == 'background-opacity') {
     @include backgroundOpacity(#{$value});
+  } @else if ($name == 'background-size') {
+    @include backgroundSize(#{$value});
   } @else if ($name == 'fill') {
     @include fill(#{$value});
   } @else if ($name == 'fill-opacity') {
@@ -146,6 +149,17 @@
     @include border(#{$value});
   } @else if ($name == 'border-opacity') {
     @include borderOpacity(#{$value});
+  } @else if (
+    /* Transform */
+          $name == 'translate-x'
+  ) {
+    @include translateX(#{$value});
+  } @else if ($name == 'translate-y') {
+    @include translateY(#{$value});
+  } @else if ($name == 'scale') {
+    @include scale(#{$value});
+  } @else if ($name == 'rotate') {
+    @include rotate(#{$value});
   } @else {
     #{$name}: #{$value};
   }

@@ -1,5 +1,10 @@
 @import "dir";
 
+@mixin positionGlobal {
+  --sys-position-left: auto;
+  --sys-position-right: auto;
+}
+
 @mixin inset($value: 0) {
   inset: $value;
 

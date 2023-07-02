@@ -1,5 +1,10 @@
 @import "dir";
 
+@mixin marginGlobal {
+  --sys-margin-left: 0;
+  --sys-margin-right: 0;
+}
+
 @mixin margin($value) {
   margin: $value;
 }

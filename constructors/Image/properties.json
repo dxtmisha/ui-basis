@@ -1,3 +1,14 @@
 {
-  "flex-position": "center"
+  "direction": "ltr",
+  "flex-position": "center",
+  "position": "absolute",
+  "inset": "0",
+  "background-size": "cover",
+  "border-radius": "inherit",
+  "transition-property": "background-size, filter, opacity, transform",
+  "transition-duration": "{d.sys.transitionDuration.standard}",
+  "transform": "none",
+  "turn": {
+    "rotate": "180deg"
+  }
 }
