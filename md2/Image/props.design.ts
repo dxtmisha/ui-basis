@@ -2,4 +2,11 @@
 
 export const subClassesDesign = { /* classes */ }
 
-export const propsDesign = { /* sample */ }
+export const propsDesign = {
+  turn: {
+    type: [Boolean]
+  },
+  disabled: {
+    type: []
+  }
+}

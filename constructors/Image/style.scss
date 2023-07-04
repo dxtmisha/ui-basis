@@ -1,7 +1,70 @@
 @import "../../styles/properties";
 
+$designsClassName: 'class' !default;
+
 @mixin initImageDesign($component: 'design.component') {
   @include initDesign($component) {
+    @include mixinImageType;
+
+    @include mixinImageMaterial;
+    @include mixinImageLineAwesome;
+
     @content;
+  }
+}
+
+@mixin mixinImageType {
+  &--type {
+    &--public {
+      @include backgroundAsColor;
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+    }
+
+    &--color,
+    &--file,
+    &--image {
+      @include disabled($designsClassName) {
+        filter: grayscale(1) opacity(#{var(--sys-color-opacity)});
+      }
+    }
+  }
+}
+
+@mixin mixinImageMaterial {
+  &.material-icons {
+    direction: ltr;
+  }
+
+  &--type {
+    &--outlined {
+      font-family: 'Material Icons Outlined', sans-serif;
+    }
+
+    &--round {
+      font-family: 'Material Icons Round', sans-serif;
+    }
+
+    &--sharp {
+      font-family: 'Material Icons Sharp', sans-serif;
+    }
+
+    &--two-tone {
+      font-family: 'Material Icons Two Tone', sans-serif;
+    }
+  }
+}
+
+@mixin mixinImageLineAwesome {
+  &.la,
+  &.lab,
+  &.lad,
+  &.lal,
+  &.lar,
+  &.las {
+    &::before {
+      color: inherit;
+    }
   }
 }

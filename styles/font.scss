@@ -1,5 +1,10 @@
 @import "dir";
 
+@mixin fontSize($value) {
+  --sys-font-size: #{$value};
+  font-size: #{$value};
+}
+
 @mixin textAlign($value) {
   @if ($value == 'left') {
     text-align: dirLeft();

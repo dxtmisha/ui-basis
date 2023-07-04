@@ -10,5 +10,9 @@
   "transform": "none",
   "turn": {
     "rotate": "180deg"
+  },
+  "hide": {
+    "opacity": "0",
+    "scale": ".8"
   }
 }

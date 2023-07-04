@@ -5,7 +5,7 @@
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
     <div style="width: 160px; height: 160px;">
-      <md2-image/>
+      <md2-image turn/>
     </div>
   </div>
 </template>

@@ -99,8 +99,10 @@
     @include circle(#{$value});
   } @else if (
     /* Font */
-          $name == 'text-align'
+          $name == 'font-size'
   ) {
+    @include fontSize(#{$value});
+  } @else if ($name == 'text-align') {
     @include textAlign(#{$value});
   } @else if ($name == 'clamp') {
     @include clamp(#{$value});

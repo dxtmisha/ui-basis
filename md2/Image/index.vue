@@ -19,9 +19,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss">
-@import "../../styles/properties";
+@import "../../constructors/Image/style";
 
-@include initDesign {
+@include initImageDesign {
 
 }
 </style>

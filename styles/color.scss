@@ -221,7 +221,9 @@ $designsShade: () !default;
 /* Background */
 
 @mixin background($color, $opacity: null) {
-  @if (isColorRbgOrVar($color)) {
+  @if ($color == 'as-color') {
+    @include backgroundAsColor;
+  } @else if (isColorRbgOrVar($color)) {
     --sys-background: #{toColorRbg($color)};
     @include backgroundOpacity($opacity);
     @include backgroundInit;
