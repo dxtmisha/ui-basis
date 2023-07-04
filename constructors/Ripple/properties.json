@@ -14,8 +14,8 @@
     "position": "absolute",
     "inset": "0",
     "background-color": {
-      "value": "{??sys.color}",
-      "_default": "{??background-color}"
+      "value": "var(--??sys-color, var(--sys-color, var(--??background-color)))",
+      "_modification": false
     },
     "background-opacity": "{??background-opacity}"
   },

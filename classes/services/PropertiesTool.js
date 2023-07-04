@@ -256,6 +256,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Checks if there is a label for converting to the full name
+   *
+   * Проверяет, есть ли метка для преобразования в полное имя
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {boolean}
+   */
+  static isMarkFull (value) {
+    return !!value.match(/\?/)
+  }
+
+  /**
    * Checks if the property is available for inheritance
    *
    * Проверяет, доступно ли свойство для наследования
@@ -696,7 +707,7 @@ module.exports = class PropertiesTool {
    * @return {string}
    */
   static toFullForName (value, design, component) {
-    if (value.match(/\?/)) {
+    if (this.isMarkFull(value)) {
       return value
         .replace(/\?\?/g, `${design}-${component}-`)
         .replace(/\?/g, `${design}-`)

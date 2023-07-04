@@ -62,6 +62,33 @@ module.exports = class PropertiesToVar {
   }
 
   /**
+   * Converts all labels to the full format
+   *
+   * Преобразует все метки в полный формат
+   * @return {this}
+   */
+  toFull () {
+    const keyCss = PropertiesTool.getKeyCss()
+
+    this.items.each(({
+      item,
+      design,
+      component
+    }) => {
+      const value = item?.[keyCss] || item?.value
+
+      if (
+        typeof value === 'string' &&
+        PropertiesTool.isMarkFull(value)
+      ) {
+        item[keyCss] = PropertiesTool.toFullForName(value, design, component)
+      }
+    })
+
+    return this
+  }
+
+  /**
    * Returns a list of all values that have a pointer.
    *
    * Возвращает список всех значений, у которых есть указатель

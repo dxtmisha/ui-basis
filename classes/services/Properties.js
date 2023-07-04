@@ -128,6 +128,7 @@ module.exports = class Properties {
 
     rename.toByVar()
     value.to()
+    value.toFull()
     value.toImportant()
 
     rename.toByComponent()
