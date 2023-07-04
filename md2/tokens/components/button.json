@@ -6,7 +6,10 @@
     "lg": "{ref.spacing.12}"
   },
   "font": "{font.button}",
-  "border-radius": "{ref.spacing.1}",
+  "border-radius": {
+    "value": "{ref.spacing.1}",
+    "_var": true
+  },
   "contained": {
     "color": "{sys.palette.onPrimary}",
     "color-opacity": "{sys.opacity.primary.high}",

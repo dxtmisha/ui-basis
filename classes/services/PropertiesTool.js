@@ -115,6 +115,14 @@ const KEY_CSS = '_css'
 const KEY_MODIFICATION = '_modification'
 
 /**
+ * The key for storing the value indicating whether to add a custom property
+ *
+ * Ключ для хранения значения, указывающего, добавлять ли пользовательское свойство
+ * @type {string}
+ */
+const KEY_VAR = '_var'
+
+/**
  * The key determines that the name of the property is the final version and does not require further processing
  *
  * Ключ определяет, что имя свойства является финальной версией и не требует дополнительной обработки
@@ -181,6 +189,7 @@ const KEYS_SPECIAL = [
   KEY_VARIABLE,
   KEY_CSS,
   KEY_MODIFICATION,
+  KEY_VAR,
   KEY_FULL,
   KEY_FULL_VALUE,
   KEY_SEPARATOR,
@@ -533,6 +542,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyModification () {
     return KEY_MODIFICATION
+  }
+
+  /**
+   * Returns the key for enabling the custom value
+   *
+   * Возвращает ключ для включения пользовательского значения
+   * @return {string}
+   */
+  static getKeyVar () {
+    return KEY_VAR
   }
 
   /**

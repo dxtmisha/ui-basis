@@ -6,6 +6,7 @@ $designsDesign: 'design' !default;
 $designsComponent: 'component' !default;
 $designsValues: () !default;
 $designsClassName: 'class' !default;
+$designsClassIndex: 'class' !default;
 $designsInit: false !default;
 
 @import "./rules";
@@ -38,6 +39,7 @@ $designsInit: false !default;
     $designsComponent: __getComponent() !global;
 
     $name: map.get($designsValues, 'name');
+    $designsClassIndex: $name !global;
 
     #{'.'}#{$name} {
       $designsClassName: & !global;

@@ -1,5 +1,7 @@
 @use "sass:map";
 
+$designsClassIndex: 'class' !default;
+
 @import "../color";
 @import "../dimension";
 @import "../flex";
@@ -16,9 +18,15 @@
 /// @param {Map} $property
 @mixin initProperty($property) {
   @if ($property != null) {
-    $name: map.get($property, 'name');
-    $value: map-get($property, 'value');
+    $index: getMapByIndex($property, 'index');
+    $name: getMapByIndex($property, 'name');
+    $value: getMapByIndex($property, 'value');
     $modification: getMapByIndex($property, 'modification', true);
+    $var: getMapByIndex($property, 'var');
+
+    @if ($var) {
+      #{'--'}#{$designsClassIndex}-#{$index}: #{$value};
+    }
 
     @if ($modification) {
       @include initPropertyValue($name, $value);

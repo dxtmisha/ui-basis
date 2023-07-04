@@ -270,6 +270,27 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns the value for enabling the custom value
+   *
+   * Возвращает значение для включения пользовательского значения
+   * @param {Object<string,*>} property property value / значение свойства
+   * @return {string|undefined}
+   * @private
+   */
+  __getVar (property) {
+    /**
+     * @type {boolean}
+     */
+    const value = property?.[PropertiesTool.getKeyVar()]
+
+    if (value === true) {
+      return 'var: true,'
+    } else {
+      return undefined
+    }
+  }
+
+  /**
    * Method for iterating over all properties and converting them to a SCSS structure
    *
    * Метод для обхода всех свойств и преобразования их в структуру SCSS
@@ -283,6 +304,7 @@ module.exports = class PropertiesScss {
 
     forEach(properties, (property, name) => {
       const modification = this.__getModification(property)
+      const isVar = this.__getVar(property)
 
       data += `\r\n${space}'${name}':(`
       data += `\r\n${space}  ${this.__getIndex(name)}`
@@ -292,6 +314,10 @@ module.exports = class PropertiesScss {
 
       if (modification) {
         data += `\r\n${space}  ${modification}`
+      }
+
+      if (isVar) {
+        data += `\r\n${space}  ${isVar}`
       }
 
       data += `\r\n${space}),`
