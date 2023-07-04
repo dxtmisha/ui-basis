@@ -34,6 +34,24 @@
   }
 }
 
+/// Returns the value by its index
+///
+/// Возвращает значение по его индексу
+/// @param {Map} $map input array / массив входных данных
+/// @param {List} $index list of keys to traverse / список ключей для обхода
+/// @param {*} $default default values if not found / значения по умолчанию, если не было найдено
+@function getMapByIndex(
+  $map,
+  $index,
+  $default: null
+) {
+  @if (map.has-key($map, $index)) {
+    @return map.get($map, $index);
+  } @else {
+    @return $default;
+  }
+}
+
 /// Changes values in an array
 ///
 /// Меняет значения в массиве

@@ -249,6 +249,27 @@ module.exports = class PropertiesScss {
   }
 
   /**
+   * Returns the value for determining the modification
+   *
+   * Возвращает значение для определения модификации
+   * @param {Object<string,*>} property property value / значение свойства
+   * @return {string|undefined}
+   * @private
+   */
+  __getModification (property) {
+    /**
+     * @type {boolean}
+     */
+    const modification = property?.[PropertiesTool.getKeyModification()]
+
+    if (modification === false) {
+      return 'modification: false,'
+    } else {
+      return undefined
+    }
+  }
+
+  /**
    * Method for iterating over all properties and converting them to a SCSS structure
    *
    * Метод для обхода всех свойств и преобразования их в структуру SCSS
@@ -261,11 +282,18 @@ module.exports = class PropertiesScss {
     let data = ''
 
     forEach(properties, (property, name) => {
+      const modification = this.__getModification(property)
+
       data += `\r\n${space}'${name}':(`
       data += `\r\n${space}  ${this.__getIndex(name)}`
       data += `\r\n${space}  ${this.__getName(property, name)}`
       data += `\r\n${space}  ${this.__getType(property)}`
       data += `\r\n${space}  ${this.__getValue(property, space)}`
+
+      if (modification) {
+        data += `\r\n${space}  ${modification}`
+      }
+
       data += `\r\n${space}),`
     })
 

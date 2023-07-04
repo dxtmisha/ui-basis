@@ -7,6 +7,7 @@
 @import "../margin";
 @import "../padding";
 @import "../position";
+@import "../rules";
 @import "../transform";
 
 /// Generating value
@@ -17,8 +18,13 @@
   @if ($property != null) {
     $name: map.get($property, 'name');
     $value: map-get($property, 'value');
+    $modification: getMapByIndex($property, 'modification', true);
 
-    @include initPropertyValue($name, $value);
+    @if ($modification) {
+      @include initPropertyValue($name, $value);
+    } @else {
+      #{$name}: #{$value};
+    }
   }
 }
 
