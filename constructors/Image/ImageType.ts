@@ -18,7 +18,7 @@ export class ImageType {
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
-    private readonly image: ImageValueType
+    protected readonly image: ImageValueType
   ) {
   }
 

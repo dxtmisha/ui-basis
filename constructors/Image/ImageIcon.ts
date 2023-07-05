@@ -6,7 +6,7 @@ import { forEach } from '../../functions/data'
  * Класс для управления иконками
  */
 export class ImageIcon {
-  private static readonly icons: Record<string, string> = {}
+  protected static readonly icons: Record<string, string> = {}
 
   /**
    * Returns the icon by the name
