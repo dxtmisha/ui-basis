@@ -2,13 +2,13 @@
 import { defineComponent } from 'vue'
 import { props, subClasses } from './props'
 
-import { Design } from '../../classes/Design'
+import { ImageDesign } from '../../constructors/Image/ImageDesign'
 
 export default defineComponent({
   name: 'Md2Image', // name component
   props,
   setup (props, context) {
-    return new Design<typeof subClasses>(props, context)
+    return new ImageDesign<typeof subClasses>(props, context)
       .setup({})
   }
 })

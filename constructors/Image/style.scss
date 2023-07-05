@@ -35,6 +35,7 @@ $designsClassName: 'class' !default;
 @mixin mixinImageMaterial {
   &.material-icons {
     direction: ltr;
+    font-size: v('??font-size', 1.5em);
   }
 
   &--type {

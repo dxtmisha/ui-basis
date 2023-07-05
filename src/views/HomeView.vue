@@ -4,7 +4,7 @@
     <md2-button text="button" disabled/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
-    <div style="width: 160px; height: 160px;">
+    <div style="position: relative; width: 160px; height: 160px;">
       <md2-image turn/>
     </div>
   </div>

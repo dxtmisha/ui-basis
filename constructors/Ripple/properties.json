@@ -13,10 +13,7 @@
   "#item": {
     "position": "absolute",
     "inset": "0",
-    "background-color": {
-      "value": "var(--??sys-color, var(--sys-color, var(--??background-color)))",
-      "_modification": false
-    },
+    "background-color": "var(--??sys-color, var(--sys-color, var(--??background-color)))",
     "background-opacity": "{??background-opacity}"
   },
   "animate|start": {

@@ -4,7 +4,6 @@
     "_default": "md"
   },
   "contained": {
-    "=?ripple-sys-color": "var(--sys-color)",
     "background-color": {
       "_rename": "palette-background"
     },

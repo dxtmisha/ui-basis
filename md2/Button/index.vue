@@ -28,7 +28,7 @@ export default defineComponent({
     @click="inverse = !inverse"
   >
     <span :class="classes.inscription">{{ text }}</span>
-    <md2-ripple :disabled="disabled" :inverse="inverse"/>
+    <md2-ripple :disabled="disabled"/>
   </button>
 </template>
 
