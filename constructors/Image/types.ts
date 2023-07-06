@@ -18,12 +18,18 @@ export type ImageTypeType = ComputedRef<ImageTypeItemType | undefined>
 
 export type ImageElementType = Ref<HTMLElement | undefined>
 export type ImageValueType = Ref<string | File>
-export type ImageCoordinatorType = Ref<[number, number, number, number] | undefined>
+export type ImageCoordinatorType = Ref<
+  [number] |
+  [number, number] |
+  [number, number, number] |
+  [number, number, number, number] |
+  undefined
+>
 export type ImageOptionType = Ref<NumberOrStringType | undefined>
 
-export interface ImageSizeType {
-  width: number
-  height: number
+export interface ImageSizeType<T extends NumberOrStringType = number> {
+  width: T
+  height: T
 }
 
 export interface ImageItemType extends ImageSizeType {

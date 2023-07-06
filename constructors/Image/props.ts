@@ -9,6 +9,10 @@ export const propsImage = {
   y: [String, Number],
 
   // Adaptive
+  group: {
+    type: String,
+    default: 'main'
+  },
   adaptive: Boolean,
   objectWidth: Number,
   objectHeight: Number,

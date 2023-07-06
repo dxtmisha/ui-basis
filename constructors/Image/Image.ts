@@ -27,6 +27,7 @@ export class Image {
     protected readonly size: ImageOptionType,
     protected readonly x: ImageOptionType,
     protected readonly y: ImageOptionType,
+    protected readonly group: Ref<string>,
     protected readonly adaptive: Ref<boolean>,
     protected readonly width: Ref<number>,
     protected readonly height: Ref<number>,
@@ -45,6 +46,7 @@ export class Image {
     this.adaptiveItem = new ImageAdaptive(
       this.element,
       this.data,
+      this.group,
       this.adaptive,
       this.width,
       this.height
