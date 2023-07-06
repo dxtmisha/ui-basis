@@ -21,7 +21,8 @@ export type ClassesSubClassesListType<T> = Record<keyof T, ClassesItemType>
 
 export type ClassesExtraType = CallbackOrAnyType<RefOrNormalType<boolean>>
 export type ClassesExtraItemType = AssociativeType<ClassesExtraType>
-export type ClassesExtraListType = AssociativeType<ClassesExtraItemType>
+export type ClassesExtraRefType = RefOrNormalType<ClassesExtraItemType>
+export type ClassesExtraListType = AssociativeType<ClassesExtraRefType>
 
 export type ClassesListType<T> = { main: ClassesItemType } & ClassesSubClassesListType<T>
 
@@ -137,7 +138,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * Добавление дополнительных классов для базового класса
    * @param data list of additional classes / список дополнительных классов
    */
-  setExtraMain (data: ClassesExtraItemType): this {
+  setExtraMain (data: ClassesExtraRefType): this {
     this.extra.value.main = data
     return this
   }
@@ -219,9 +220,12 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
   protected getExtraByName (name: string): AssociativeType<boolean> {
     const extra: AssociativeType<boolean> = {}
 
-    forEach(this.extra.value?.[name], (item, index) => {
-      extra[index] = getRef(executeFunction(item))
-    })
+    forEach(
+      getRef(this.extra.value?.[name]),
+      (item, index) => {
+        extra[index] = getRef(executeFunction(item))
+      }
+    )
 
     return extra
   }

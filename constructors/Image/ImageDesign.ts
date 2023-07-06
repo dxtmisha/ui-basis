@@ -1,4 +1,4 @@
-import { h, VNode } from 'vue'
+import { ComputedRef, h, onUnmounted, SetupContext, VNode } from 'vue'
 
 import {
   Design,
@@ -7,10 +7,12 @@ import {
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
+import { Image } from './Image'
+
 import { propsImage } from './props'
 
 interface ImageDesignInitInterface {
-  property: string
+  text: ComputedRef<string | undefined>
 }
 
 type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
@@ -22,6 +24,37 @@ export class ImageDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends ImageDesignPropsValueType = ImageDesignPropsValueType
 > extends Design<C, HTMLElement, P, ImageDesignInitInterface> {
+  protected readonly image: Image
+
+  /**
+   * Constructor
+   * @param props properties / свойства
+   * @param context additional property / дополнительное свойство
+   */
+  constructor (
+    protected readonly props: P,
+    protected readonly context: SetupContext
+  ) {
+    super(props, context)
+
+    this.image = new Image(
+      this.element,
+      this.classes.getName(),
+      this.refs.value,
+      this.refs.coordinator,
+      this.refs.size,
+      this.refs.x,
+      this.refs.y,
+      this.refs.group,
+      this.refs.adaptive,
+      this.refs.objectWidth,
+      this.refs.objectHeight,
+      this.refs.url
+    )
+
+    onUnmounted(() => this.image.destructor())
+  }
+
   /**
    * Method for generating additional properties
    *
@@ -29,8 +62,11 @@ export class ImageDesign<
    * @protected
    */
   protected init (): ImageDesignInitInterface {
+    this.setExtraMain(this.image.classes)
+    this.setExtraStyles(this.image.styles)
+
     return {
-      property: 'constructor'
+      text: this.image.text
     }
   }
 
@@ -46,7 +82,8 @@ export class ImageDesign<
   ): VNode {
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main
-    })
+      class: setup.classes.value.main,
+      style: setup.styles.value
+    }, setup.text.value)
   }
 }

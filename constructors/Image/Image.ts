@@ -7,6 +7,9 @@ import { ImageData } from './ImageData'
 import { ImagePosition } from './ImagePosition'
 import { ImageType } from './ImageType'
 
+import { ClassesExtraItemType } from '../../classes/DesignClasses'
+import { StylesListType } from '../../classes/DesignStyles'
+
 import {
   ImageCoordinatorType,
   ImageElementType,
@@ -14,6 +17,11 @@ import {
   ImageValueType
 } from './types'
 
+/**
+ * Base class for working with images and icons
+ *
+ * Базовый класс для работы с изображениями и иконками
+ */
 export class Image {
   protected type: ImageType
 
@@ -24,6 +32,21 @@ export class Image {
   protected position: ImagePosition
   protected adaptiveItem: ImageAdaptive
 
+  /**
+   * Constructor
+   * @param element image element for scaling / элемент изображения для масштабирования
+   * @param className base name of the current class / базовое название текущего класса
+   * @param image values from the image / значения из изображения
+   * @param coordinator coordinates for margins / координаты для отступов
+   * @param size property determining the size of the picture / свойство определяющее размер картины
+   * @param x coordinate of the picture on the left / координата картины слева
+   * @param y coordinate of the picture on the top / координата картины сверху
+   * @param group group name / название группы
+   * @param adaptive activity status / статус активности
+   * @param width physical width of the object / физическая ширина объекта
+   * @param height physical height of the object / физическая высота объекта
+   * @param url link to the folder with images / ссылка на папку с изображениями
+   */
   constructor (
     protected readonly element: ImageElementType,
     protected readonly className: string,
@@ -109,7 +132,7 @@ export class Image {
    *
    * Значения для класса
    */
-  readonly classes = computed<object>(() => {
+  readonly classes = computed<ClassesExtraItemType>(() => {
     const type = this.type.get()
     const data = { [`${this.className}--type--${type}`]: type !== undefined }
 
@@ -139,7 +162,7 @@ export class Image {
    *
    * Значения для стиля
    */
-  readonly styles = computed<object | undefined>(() => {
+  readonly styles = computed<StylesListType>(() => {
     switch (this.type.get()) {
       case 'file':
       case 'image':
@@ -152,9 +175,9 @@ export class Image {
       case 'public':
         return { 'mask-image': this.background.getImage() }
       case 'color':
-        return { 'background-color': this.image.value }
+        return { 'background-color': this.image.value } as StylesListType
     }
 
-    return undefined
+    return {}
   })
 }

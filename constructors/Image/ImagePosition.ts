@@ -30,11 +30,11 @@ export class ImagePosition {
    * Положение картины слева
    * @protected
    */
-  protected readonly positionX = computed<string | number | null>(() => {
+  protected readonly positionX = computed<string | null>(() => {
     if (this.coordinator.is()) {
       return `${this.coordinator.getCoordinator()[3] + (this.coordinator.get().width / 2)}%`
     } else {
-      return this.x.value || null
+      return this.x.value?.toString() || null
     }
   })
 
@@ -44,11 +44,11 @@ export class ImagePosition {
    * Положение картины сверху
    * @protected
    */
-  private readonly positionY = computed<string | number | null>(() => {
+  private readonly positionY = computed<string | null>(() => {
     if (this.coordinator.is()) {
       return `${this.coordinator.getCoordinator()[0] + (this.coordinator.get().height / 2)}%`
     } else {
-      return this.y.value || null
+      return this.y.value?.toString() || null
     }
   })
 
@@ -57,7 +57,7 @@ export class ImagePosition {
    *
    * Возвращает позицию слева
    */
-  getX (): string | number | null {
+  getX (): string | null {
     return this.positionX.value
   }
 
@@ -66,7 +66,7 @@ export class ImagePosition {
    *
    * Возвращает позицию сверху
    */
-  getY (): string | number | null {
+  getY (): string | null {
     return this.positionY.value
   }
 }

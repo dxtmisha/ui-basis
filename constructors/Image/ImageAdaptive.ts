@@ -48,8 +48,8 @@ export class ImageAdaptive {
    *
    * Возвращает размер для свойства background-size
    */
-  getSize (): string | undefined {
-    return this.item?.backgroundSize.value
+  getSize (): string | null {
+    return this.item?.backgroundSize.value || null
   }
 
   /**

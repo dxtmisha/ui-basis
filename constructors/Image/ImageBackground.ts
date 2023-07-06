@@ -36,7 +36,7 @@ export class ImageBackground {
    * Значения для свойства background
    * @private
    */
-  private readonly item = computed<string | undefined>(() => {
+  private readonly item = computed<string | null>(() => {
     const size = this.size.value
 
     if (this.coordinator.is()) {
@@ -46,7 +46,7 @@ export class ImageBackground {
     } else if (size && isFilled(size)) {
       return size.toString().match(/%$/) ? this.getSize(size, size) : size.toString()
     } else {
-      return undefined
+      return null
     }
   })
 
@@ -96,13 +96,13 @@ export class ImageBackground {
   protected getSize (
     width: NumberOrStringType,
     height: NumberOrStringType
-  ): string | undefined {
+  ): string | null {
     const image = this.data.get()
 
     if (typeof image === 'object') {
       return image.height < image.width ? `auto ${height}` : `${width} auto`
     } else {
-      return undefined
+      return null
     }
   }
 

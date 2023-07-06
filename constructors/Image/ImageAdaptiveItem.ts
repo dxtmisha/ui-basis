@@ -132,7 +132,7 @@ export class ImageAdaptiveItem {
    *
    * Вычисление значения для свойства background-size
    */
-  readonly backgroundSize = computed<string | undefined>(() => {
+  readonly backgroundSize = computed<string | null>(() => {
     const factorMax = ImageCalculationList.get(this.groupName.value).getFactorMax()
 
     switch (this.type.value) {
@@ -142,7 +142,7 @@ export class ImageAdaptiveItem {
         return `auto ${100 * this.percentHeight.value * factorMax}%`
     }
 
-    return undefined
+    return null
   })
 
   /**

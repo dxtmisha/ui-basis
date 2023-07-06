@@ -3,8 +3,11 @@ import { computed, ComputedRef, ref, Ref } from 'vue'
 import { DesignProperties } from './DesignProperties'
 
 import { AssociativeType } from '../constructors/types'
+import { RefOrNormalType } from '../constructors/typesRef'
+import { getRef } from '../functions/ref'
 
 export type StylesListType = Record<string, string | null>
+export type StylesRefType = RefOrNormalType<StylesListType>
 
 /**
  * A class for working with user-defined values in a component
@@ -18,7 +21,7 @@ export class DesignStyles {
    * Список дополнительных стилей
    * @protected
    */
-  protected readonly extra = ref<StylesListType>({})
+  protected readonly extra = ref<StylesRefType>()
 
   /**
    * Constructor
@@ -67,8 +70,8 @@ export class DesignStyles {
    * Добавление дополнительных стилей
    * @param data list of additional classes / список дополнительных классов
    */
-  setExtra (data: StylesListType): this {
-    this.extra.value = data || {}
+  setExtra (data: StylesRefType): this {
+    this.extra.value = data
     return this
   }
 
@@ -91,7 +94,7 @@ export class DesignStyles {
 
     return {
       ...data,
-      ...this.extra.value
+      ...getRef(this.extra.value || {})
     }
   })
 

@@ -11,15 +11,15 @@ import {
 import { executeFunction } from '../functions/data'
 import { To } from './To'
 
-import { DesignProperties, PropertiesListType } from './DesignProperties'
 import {
   DesignClasses,
   ClassesListType,
   ClassesSubClassesType,
   ClassesExtraListType,
-  ClassesExtraItemType
+  ClassesExtraRefType
 } from './DesignClasses'
-import { DesignStyles, StylesListType } from './DesignStyles'
+import { DesignProperties, PropertiesListType } from './DesignProperties'
+import { DesignStyles, StylesListType, StylesRefType } from './DesignStyles'
 
 import { AssociativeType, ElementType } from '../constructors/types'
 
@@ -139,7 +139,7 @@ export class Design<
    * Добавление дополнительных классов для базового класса
    * @param data list of additional classes / список дополнительных классов
    */
-  setExtraMain (data: ClassesExtraItemType): this {
+  setExtraMain (data: ClassesExtraRefType): this {
     this.classes.setExtraMain(data)
     return this
   }
@@ -149,7 +149,7 @@ export class Design<
    * Добавление дополнительных стилей
    * @param data list of additional styles / список дополнительных стилей
    */
-  setExtraStyles (data: StylesListType): this {
+  setExtraStyles (data: StylesRefType): this {
     this.styles.setExtra(data)
     return this
   }
