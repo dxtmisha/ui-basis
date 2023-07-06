@@ -1,10 +1,10 @@
-import { computed, ComputedRef, Ref } from 'vue'
+import { computed, ComputedRef, ref, Ref } from 'vue'
 
 import { DesignProperties } from './DesignProperties'
 
 import { AssociativeType } from '../constructors/types'
 
-export type StylesListType = Record<string, string>
+export type StylesListType = Record<string, string | null>
 
 /**
  * A class for working with user-defined values in a component
@@ -12,6 +12,14 @@ export type StylesListType = Record<string, string>
  * Класс для работы с пользовательскими значениями в компоненте
  */
 export class DesignStyles {
+  /**
+   * List of additional styles
+   *
+   * Список дополнительных стилей
+   * @protected
+   */
+  protected readonly extra = ref<StylesListType>({})
+
   /**
    * Constructor
    * @param name class name / название класса
@@ -54,6 +62,17 @@ export class DesignStyles {
   }
 
   /**
+   * Adding additional styles
+   *
+   * Добавление дополнительных стилей
+   * @param data list of additional classes / список дополнительных классов
+   */
+  setExtra (data: StylesListType): this {
+    this.extra.value = data || {}
+    return this
+  }
+
+  /**
    * List of all user-defined properties
    *
    * Список всех пользовательских свойств
@@ -70,7 +89,10 @@ export class DesignStyles {
       }
     })
 
-    return data
+    return {
+      ...data,
+      ...this.extra.value
+    }
   })
 
   /**

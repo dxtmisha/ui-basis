@@ -94,11 +94,9 @@ export class ImageAdaptiveGroup {
     ) {
       this.event.stop()
       this.event = undefined
-    } else {
+    } else if (this.objects.length > 0) {
       this.event = new EventScroll(window, () => this.start())
         .go()
-
-      requestAnimationFrame(() => this.start())
     }
   }
 

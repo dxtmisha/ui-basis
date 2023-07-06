@@ -57,7 +57,7 @@ export class ImagePosition {
    *
    * Возвращает позицию слева
    */
-  getPositionX (): string | number | null {
+  getX (): string | number | null {
     return this.positionX.value
   }
 
@@ -66,7 +66,7 @@ export class ImagePosition {
    *
    * Возвращает позицию сверху
    */
-  getPositionY (): string | number | null {
+  getY (): string | number | null {
     return this.positionY.value
   }
 }

@@ -145,6 +145,16 @@ export class Design<
   }
 
   /**
+   * Adding additional styles
+   * Добавление дополнительных стилей
+   * @param data list of additional styles / список дополнительных стилей
+   */
+  setExtraStyles (data: StylesListType): this {
+    this.styles.setExtra(data)
+    return this
+  }
+
+  /**
    * Returns props
    *
    * Возвращает свойства (props)
