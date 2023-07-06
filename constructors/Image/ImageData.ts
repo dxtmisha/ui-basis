@@ -10,7 +10,6 @@ import {
   ImageItemType,
   ImageValueType
 } from './types'
-import { NumberOrStringType } from '../types'
 
 /**
  * Class for working and processing the image
@@ -101,24 +100,5 @@ export class ImageData {
    */
   getItem (): Ref<ImageDataType> {
     return this.item
-  }
-
-  /**
-   * Returns a formatted value for the background-size property
-   *
-   * Возвращает отформатированное значение для свойства background-size
-   * @param width width value / значение ширины
-   * @param height height value / значение высоты
-   */
-  getSize (
-    width: NumberOrStringType,
-    height: NumberOrStringType
-  ): string | undefined {
-    if (this.isImage()) {
-      const item = this.item.value
-      return item.height < item.width ? `auto ${height}` : `${width} auto`
-    } else {
-      return undefined
-    }
   }
 }

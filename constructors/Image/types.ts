@@ -1,6 +1,5 @@
 import { ComputedRef, Ref } from 'vue'
-import { EmptyType, NumberOrStringType } from '../types'
-import { isFilled } from '../../functions/data'
+import { NumberOrStringType } from '../types'
 
 export type ImageTypeItemType =
   'file'
@@ -17,6 +16,7 @@ export type ImageTypeItemType =
   | 'material'
 export type ImageTypeType = ComputedRef<ImageTypeItemType | undefined>
 
+export type ImageElementType = Ref<HTMLElement | undefined>
 export type ImageValueType = Ref<string | File>
 export type ImageCoordinatorType = Ref<[number, number, number, number] | undefined>
 export type ImageOptionType = Ref<NumberOrStringType | undefined>
@@ -29,6 +29,13 @@ export interface ImageSizeType {
 export interface ImageItemType extends ImageSizeType {
   image: HTMLImageElement
   src: string
+}
+
+export interface ImageCalculationType {
+  name: string
+  factorMax: Ref<number>
+  size: ImageSizeType
+  offset: ImageSizeType
 }
 
 export type ImageDataType = ImageItemType | string | undefined
