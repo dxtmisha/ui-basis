@@ -1,14 +1,40 @@
 {
+  "rounded": "{rounded.full}",
   "size": {
     "xs": {
-      "_size": "{ref.spacing.6}"
+      "__size": "{ref.spacing.6}"
     },
     "sm": {
-      "_size": "{ref.spacing.8}"
+      "__size": "{ref.spacing.8}"
     },
     "md": {
-      "_size": "{ref.spacing.10}",
+      "__size": "{ref.spacing.10}",
       "font": "{font.headline5}"
+    },
+    "lg": {
+      "__size": "{ref.spacing.14}",
+      "font": "{font.headline4}",
+      "rounded": "{rounded.standard}"
+    },
+    "xl": {
+      "__size": "{ref.spacing.25}",
+      "aspect-ratio-width": "25/14",
+      "font": "{font.headline3}",
+      "rounded": "{rounded.none}"
+    }
+  },
+  "overlay": {
+    "background-opacity": "{sys.opacity.pressed}"
+  },
+  "dynamic": {
+    "hover": {
+      "gradient-opacity": "{sys.opacity.hover}"
+    },
+    "active": {
+      "gradient-opacity": "{sys.opacity.dragged}"
+    },
+    "focus": {
+      "gradient-opacity": "{sys.opacity.focus}"
     }
   }
 }

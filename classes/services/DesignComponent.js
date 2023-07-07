@@ -392,6 +392,10 @@ module.exports = class DesignComponent extends DesignCommand {
       typeValue.push('string')
     }
 
+    if (type.length === 0) {
+      type.push('Boolean')
+    }
+
     return `[${type.join(', ')}]${typeValue.length > 0 ? ` as PropType<${typeValue.join(' | ')}>` : ''}`
   }
 

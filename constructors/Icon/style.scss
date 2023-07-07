@@ -2,6 +2,44 @@
 
 @mixin initIconDesign($component: 'design.component') {
   @include initDesign($component) {
+    @include mixinIcon;
+    @include mixinIconAnimation;
+
     @content;
+  }
+}
+
+@mixin mixinIcon {
+  @include squared(#{v('??__size')});
+  min-width: v('??__size');
+
+  @include textSelectNone;
+
+  transition-property: clip-path, margin, opacity, transform;
+  transition-duration: v('d.sys.transition-duration.standard');
+}
+
+@mixin mixinIconAnimation {
+  $clipPath: clip-path #{v('d.sys.transition-duration.fade.enter')} #{v('d.sys.transition-function.deceleration')};
+  $margin: margin #{v('d.ref.transition-duration.1')} linear;
+  $background: background #{v('d.sys.transition-duration.standard')} linear;
+  $transform: transform #{v('d.sys.transition-duration.standard')} linear;
+
+  &--animation-type {
+    &--type2 {
+      clip-path: inset(0 0 0 0);
+
+      transition: #{$clipPath}, #{$margin}, #{$background}, #{$transform};
+
+      @include state('hide') {
+        clip-path: inset(0 100% 0 0);
+        margin: 0 calc(#{v('??__size')} * -1) 0 0 !important;
+        opacity: 1;
+
+        transition-duration: v('d.sys.transition-duration.fade.exit');
+        transition-timing-function: linear;
+        transform: none;
+      }
+    }
   }
 }

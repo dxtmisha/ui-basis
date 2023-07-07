@@ -1,3 +1,6 @@
 {
-  "basic": "{d.icon}"
+  "basic": "{d.icon}",
+  "size": {
+    "_default": "xs"
+  }
 }

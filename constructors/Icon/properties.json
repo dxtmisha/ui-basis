@@ -1,6 +1,38 @@
 {
-  "_size": {
+  "__size": {
     "_type": "var"
+  },
+  "display": "inline-block",
+  "overflow": "hidden",
+  "position": "relative",
+  "disabled": {
+    "_type": "state"
+  },
+  "hide": {
+    "opacity": "0",
+    "transform": "scale(.8)"
+  },
+  "animation-type": {
+    "type1": {
+      "_type": "state"
+    },
+    "type2": {
+      "_type": "state"
+    }
+  },
+  "animation-show": {
+    "animation-name": "??show",
+    "animation-duration": "{d.sys.transitionDuration.standard}"
+  },
+  "overlay": {
+    "background-color": "var(--??sys-color, var(--sys-color))"
+  },
+  "dynamic": {
+    "gradient": "var(--??sys-color, var(--sys-color))",
+    "gradient-opacity": "0"
+  },
+  "end": {
+    "order": "999999"
   },
   "animate|show": {
     "0%": {

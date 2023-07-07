@@ -121,7 +121,7 @@ $designsClassIndex: 'class' !default;
   } @else if ($name == 'clamp') {
     @include clamp(#{$value});
   } @else if ($name == 'text-select-none') {
-    @include textSelectNone(#{$value});
+    @include textSelectNone;
   } @else if (
     /* Color */
           $name == 'palette'
