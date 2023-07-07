@@ -10,8 +10,8 @@
 }
 
 @mixin mixinIcon {
-  @include squared(#{v('??__size')});
-  min-width: v('??__size');
+  @include squared(#{v('??width')});
+  min-width: v('??width');
 
   @include textSelectNone;
 
@@ -33,7 +33,7 @@
 
       @include state('hide') {
         clip-path: inset(0 100% 0 0);
-        margin: 0 calc(#{v('??__size')} * -1) 0 0 !important;
+        margin: 0 calc(#{v('??width')} * -1) 0 0 !important;
         opacity: 1;
 
         transition-duration: v('d.sys.transition-duration.fade.exit');

@@ -1,10 +1,10 @@
 {
-  "__size": {
-    "_type": "var"
-  },
   "display": "inline-block",
   "overflow": "hidden",
   "position": "relative",
+  "width": {
+    "_type": "var"
+  },
   "disabled": {
     "_type": "state"
   },

@@ -1,23 +1,25 @@
 {
-  "rounded": "{rounded.full}",
+  "rounded": {
+    "border-radius": "{rounded}"
+  },
   "size": {
     "xs": {
-      "__size": "{ref.spacing.6}"
+      "width": "{ref.spacing.6}"
     },
     "sm": {
-      "__size": "{ref.spacing.8}"
+      "width": "{ref.spacing.8}"
     },
     "md": {
-      "__size": "{ref.spacing.10}",
+      "width": "{ref.spacing.10}",
       "font": "{font.headline5}"
     },
     "lg": {
-      "__size": "{ref.spacing.14}",
+      "width": "{ref.spacing.14}",
       "font": "{font.headline4}",
       "rounded": "{rounded.standard}"
     },
     "xl": {
-      "__size": "{ref.spacing.25}",
+      "width": "{ref.spacing.25}",
       "aspect-ratio-width": "25/14",
       "font": "{font.headline3}",
       "rounded": "{rounded.none}"

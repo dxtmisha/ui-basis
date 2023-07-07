@@ -90,7 +90,7 @@ export class Design<
     )
 
     if (process.env.NODE_ENV !== 'production') {
-      onUpdated(() => console.warn(this.getName()))
+      onUpdated(() => console.warn(`Updated: ${this.getName()}`))
     }
   }
 

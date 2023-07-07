@@ -3,6 +3,10 @@ import { PropType } from 'vue'
 export const subClassesDesign = { /* classes */ }
 
 export const propsDesign = {
+  rounded: {
+    type: [String] as PropType<'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'>,
+    default: 'full'
+  },
   size: {
     type: [String] as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl'>,
     default: 'xs'

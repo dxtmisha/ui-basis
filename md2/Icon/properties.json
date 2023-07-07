@@ -1,5 +1,8 @@
 {
   "basic": "{d.icon}",
+  "rounded": {
+    "_default": "full"
+  },
   "size": {
     "_default": "xs"
   }
