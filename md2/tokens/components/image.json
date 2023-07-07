@@ -1,1 +1,6 @@
-{}
+{
+  "disabled": {
+    "color": "{sys.palette.disabled}",
+    "color-opacity": "{sys.opacity.surface.disabled}"
+  }
+}

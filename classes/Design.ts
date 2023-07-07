@@ -1,6 +1,6 @@
 import {
   ComputedRef,
-  h,
+  h, onUpdated,
   Ref,
   ref,
   SetupContext,
@@ -26,7 +26,7 @@ import { AssociativeType, ElementType } from '../constructors/types'
 export interface DesignSetupBasicInterface<C, E> {
   element: Ref<E | undefined>
   classes: ComputedRef<ClassesListType<C>>
-  styles: ComputedRef<StylesListType>
+  styles: ComputedRef<StylesListType | undefined>
 }
 
 export type DesignPropsType = Record<string, any>
@@ -88,6 +88,10 @@ export class Design<
       this.properties,
       this.props as AssociativeType
     )
+
+    if (process.env.NODE_ENV !== 'production') {
+      onUpdated(() => console.warn(this.getName()))
+    }
   }
 
   /**

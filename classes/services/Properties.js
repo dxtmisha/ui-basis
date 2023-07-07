@@ -121,13 +121,16 @@ module.exports = class Properties {
     variable.toByVar()
     sub.to()
 
+    value.toString()
     rename.to()
     new PropertiesToMulti(items).to()
     new PropertiesToStyle(items).to()
     new PropertiesPalette(items).to()
 
     rename.toByVar()
+    value.toString()
     value.to()
+
     value.toFull()
     value.toImportant()
 

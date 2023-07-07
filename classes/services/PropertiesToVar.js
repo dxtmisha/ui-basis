@@ -2,10 +2,12 @@ const { To } = require('../To')
 
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
+const { isFilled } = require('../../functions/data')
 
 const REG_VAR = /\{([^{}]+)}/ig
 
 const FILE_CACHE_VAR = 'properties-var'
+const FILE_CACHE_VAR_STRING = 'properties-string'
 const FILE_CACHE_VAR_IMPORTANT = 'properties-var-important'
 
 /**
@@ -38,6 +40,24 @@ module.exports = class PropertiesToVar {
     this.items.cache(FILE_CACHE_VAR)
 
     return this
+  }
+
+  /**
+   * Converting empty properties to string
+   *
+   * Преобразование пустых свойств в строку
+   */
+  toString () {
+    const keyVariable = PropertiesTool.getKeyVariable()
+    this.items.each(({ item }) => {
+      if (
+        ['var', 'property'].indexOf(item?.[keyVariable]) !== -1 &&
+        typeof item.value !== 'string' &&
+        !isFilled(item.value)
+      ) {
+        item.value = ''
+      }
+    })
   }
 
   /**

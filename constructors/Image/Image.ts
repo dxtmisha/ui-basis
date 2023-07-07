@@ -43,6 +43,7 @@ export class Image {
    * @param y coordinate of the picture on the top / координата картины сверху
    * @param group group name / название группы
    * @param adaptive activity status / статус активности
+   * @param adaptiveAlways does the element always participate / участвует ли элемент всегда
    * @param width physical width of the object / физическая ширина объекта
    * @param height physical height of the object / физическая высота объекта
    * @param url link to the folder with images / ссылка на папку с изображениями
@@ -57,6 +58,7 @@ export class Image {
     protected readonly y: ImageOptionType,
     protected readonly group: Ref<string>,
     protected readonly adaptive: Ref<boolean>,
+    protected readonly adaptiveAlways: Ref<boolean>,
     protected readonly width: Ref<number>,
     protected readonly height: Ref<number>,
     protected readonly url: Ref<string>
@@ -81,6 +83,7 @@ export class Image {
       this.data,
       this.group,
       this.adaptive,
+      this.adaptiveAlways,
       this.width,
       this.height
     )
@@ -134,7 +137,10 @@ export class Image {
    */
   readonly classes = computed<ClassesExtraItemType>(() => {
     const type = this.type.get()
-    const data = { [`${this.className}--type--${type}`]: type !== undefined }
+    const data = {
+      [`${this.className}--type--${type}`]: type !== undefined,
+      notranslate: true
+    }
 
     switch (type) {
       case 'la':

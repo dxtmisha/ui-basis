@@ -32,6 +32,7 @@ export class ImageAdaptiveGroup {
    * @param info basic information about the picture / базовая информация о картине
    * @param groupName group name / название группы
    * @param adaptive activity status / статус активности
+   * @param adaptiveAlways does the element always participate / участвует ли элемент всегда
    * @param width physical width of the object / физическая ширина объекта
    * @param height physical height of the object / физическая высота объекта
    */
@@ -40,6 +41,7 @@ export class ImageAdaptiveGroup {
     info: Ref<ImageItemType>,
     groupName: Ref<string>,
     adaptive: Ref<boolean>,
+    adaptiveAlways: Ref<boolean>,
     width: Ref<number>,
     height: Ref<number>
   ): ImageAdaptiveItem {
@@ -48,6 +50,7 @@ export class ImageAdaptiveGroup {
       info,
       groupName,
       adaptive,
+      adaptiveAlways,
       width,
       height
     )

@@ -132,10 +132,8 @@ $designsShade: () !default;
 }
 
 @mixin paletteGlobal {
-  --sys-color-opacity: 1;
   --sys-background-opacity: 1;
   --sys-gradient-opacity: 1;
-  --sys-border-opacity: 1;
 }
 
 /* Palette */

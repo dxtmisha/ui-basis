@@ -1,4 +1,5 @@
 import { propsDesign, subClassesDesign } from './props.design'
+import { propsImage } from '../../constructors/Image/props'
 
 export const subClasses = {
   ...subClassesDesign
@@ -8,7 +9,8 @@ export const subClasses = {
 }
 
 export const props = {
-  ...propsDesign
+  ...propsDesign,
+  ...propsImage
 
   // Values
 

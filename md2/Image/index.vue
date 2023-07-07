@@ -9,14 +9,10 @@ export default defineComponent({
   props,
   setup (props, context) {
     return new ImageDesign<typeof subClasses>(props, context)
-      .setup({})
+      .render({})
   }
 })
 </script>
-
-<template>
-  <div :class="classes.main" :style="styles"></div>
-</template>
 
 <style lang="scss">
 @import "../../constructors/Image/style";

@@ -5,6 +5,7 @@ $designsClassName: 'class' !default;
 @mixin initImageDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinImageType;
+    @include mixinImageDisabled;
 
     @include mixinImageMaterial;
     @include mixinImageLineAwesome;
@@ -26,9 +27,15 @@ $designsClassName: 'class' !default;
     &--file,
     &--image {
       @include disabled($designsClassName) {
-        filter: grayscale(1) opacity(#{var(--sys-color-opacity)});
+        filter: grayscale(1) opacity(#{var(--sys-color-opacity, v('??color-opacity'))});
       }
     }
+  }
+}
+
+@mixin mixinImageDisabled {
+  &--disabled {
+    color: rgba(var(--sys-color, v('??color')), var(--sys-color-opacity, v('??color-opacity')));
   }
 }
 

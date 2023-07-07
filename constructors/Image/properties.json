@@ -3,13 +3,27 @@
   "flex-position": "center",
   "position": "absolute",
   "inset": "0",
+  "color": {
+    "_type": "var"
+  },
+  "color-opacity": {
+    "_type": "var"
+  },
+  "background-position": "center",
+  "background-repeat": "no-repeat",
   "background-size": "cover",
   "border-radius": "inherit",
   "transition-property": "background-size, filter, opacity, transform",
   "transition-duration": "{d.sys.transitionDuration.standard}",
   "transform": "none",
+  "adaptive": {
+    "background-size": "100%"
+  },
   "turn": {
     "rotate": "180deg"
+  },
+  "disabled": {
+    "_type": "state"
   },
   "hide": {
     "opacity": "0",

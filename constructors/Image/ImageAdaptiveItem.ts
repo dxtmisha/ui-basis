@@ -45,6 +45,7 @@ export class ImageAdaptiveItem {
    * @param info image data / данные изображения
    * @param groupName group name / название группы
    * @param adaptive activity status / статус активности
+   * @param adaptiveAlways does the element always participate / участвует ли элемент всегда
    * @param width physical width of the object / физическая ширина объекта
    * @param height physical height of the object / физическая высота объекта
    */
@@ -54,6 +55,7 @@ export class ImageAdaptiveItem {
     protected readonly info: Ref<ImageItemType>,
     protected readonly groupName: Ref<string>,
     protected readonly adaptive: Ref<boolean>,
+    protected readonly adaptiveAlways: Ref<boolean>,
     protected readonly width: Ref<number>,
     protected readonly height: Ref<number>
   ) {
@@ -258,18 +260,23 @@ export class ImageAdaptiveItem {
     this.visible = false
 
     if (this.isAdaptive()) {
-      const rect = this.element.value?.getBoundingClientRect()
+      if (this.adaptiveAlways.value) {
+        this.beyond = true
+        this.visible = true
+      } else {
+        const rect = this.element.value?.getBoundingClientRect()
 
-      if (rect) {
-        this.beyond = !(
-          rect.bottom < (0 - MAX_BEYOND) ||
-          rect.top > (window.innerHeight + MAX_BEYOND)
-        )
+        if (rect) {
+          this.beyond = !(
+            rect.bottom < (0 - MAX_BEYOND) ||
+            rect.top > (window.innerHeight + MAX_BEYOND)
+          )
 
-        this.visible = !(
-          rect.bottom < 0 ||
-          rect.top > window.innerHeight
-        )
+          this.visible = !(
+            rect.bottom < 0 ||
+            rect.top > window.innerHeight
+          )
+        }
       }
     }
 

@@ -24,7 +24,7 @@ export class ImageDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends ImageDesignPropsValueType = ImageDesignPropsValueType
 > extends Design<C, HTMLElement, P, ImageDesignInitInterface> {
-  protected readonly image: Image
+  protected image?: Image
 
   /**
    * Constructor
@@ -36,7 +36,15 @@ export class ImageDesign<
     protected readonly context: SetupContext
   ) {
     super(props, context)
+  }
 
+  /**
+   * Method for generating additional properties
+   *
+   * Метод для генерации дополнительных свойств
+   * @protected
+   */
+  protected init (): ImageDesignInitInterface {
     this.image = new Image(
       this.element,
       this.classes.getName(),
@@ -47,23 +55,16 @@ export class ImageDesign<
       this.refs.y,
       this.refs.group,
       this.refs.adaptive,
+      this.refs.adaptiveAlways,
       this.refs.objectWidth,
       this.refs.objectHeight,
       this.refs.url
     )
 
-    onUnmounted(() => this.image.destructor())
-  }
-
-  /**
-   * Method for generating additional properties
-   *
-   * Метод для генерации дополнительных свойств
-   * @protected
-   */
-  protected init (): ImageDesignInitInterface {
     this.setExtraMain(this.image.classes)
     this.setExtraStyles(this.image.styles)
+
+    onUnmounted(() => this.image?.destructor())
 
     return {
       text: this.image.text
@@ -83,7 +84,8 @@ export class ImageDesign<
     return h('div', {
       ref: this.element,
       class: setup.classes.value.main,
-      style: setup.styles.value
+      style: setup.styles.value,
+      translate: 'no'
     }, setup.text.value)
   }
 }

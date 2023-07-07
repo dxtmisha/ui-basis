@@ -20,6 +20,7 @@ export class ImageAdaptive {
    * @param data data management object / объект управления данными
    * @param groupName group name / название группы
    * @param adaptive activity status / статус активности
+   * @param adaptiveAlways does the element always participate / участвует ли элемент всегда
    * @param width physical width of the object / физическая ширина объекта
    * @param height physical height of the object / физическая высота объекта
    */
@@ -28,6 +29,7 @@ export class ImageAdaptive {
     protected readonly data: ImageData,
     protected readonly groupName: Ref<string>,
     protected readonly adaptive: Ref<boolean>,
+    protected readonly adaptiveAlways: Ref<boolean>,
     protected readonly width: Ref<number>,
     protected readonly height: Ref<number>
   ) {
@@ -76,6 +78,7 @@ export class ImageAdaptive {
         this.data.getItem() as Ref<ImageItemType>,
         this.groupName,
         this.adaptive,
+        this.adaptiveAlways,
         this.width,
         this.height
       )

@@ -14,11 +14,11 @@ export const propsImage = {
     default: 'main'
   },
   adaptive: Boolean,
+  adaptiveAlways: Boolean,
   objectWidth: Number,
   objectHeight: Number,
 
   // Status
-  disabled: Boolean,
 
   // Options
   url: {

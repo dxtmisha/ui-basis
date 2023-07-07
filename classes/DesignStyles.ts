@@ -5,6 +5,7 @@ import { DesignProperties } from './DesignProperties'
 import { AssociativeType } from '../constructors/types'
 import { RefOrNormalType } from '../constructors/typesRef'
 import { getRef } from '../functions/ref'
+import { isFilled } from '../functions/data'
 
 export type StylesListType = Record<string, string | null>
 export type StylesRefType = RefOrNormalType<StylesListType>
@@ -42,7 +43,7 @@ export class DesignStyles {
    *
    * Возвращает список всех пользовательских свойств
    */
-  get (): StylesListType {
+  get (): StylesListType | undefined {
     return this.styles.value
   }
 
@@ -51,7 +52,7 @@ export class DesignStyles {
    *
    * Возвращает список всех пользовательских свойств
    */
-  getItem (): ComputedRef<StylesListType> {
+  getItem (): ComputedRef<StylesListType | undefined> {
     return this.styles
   }
 
@@ -81,8 +82,10 @@ export class DesignStyles {
    * Список всех пользовательских свойств
    * @protected
    */
-  protected styles = computed<StylesListType>(() => {
-    const data: StylesListType = {}
+  protected styles = computed<StylesListType | undefined>(() => {
+    const data: StylesListType = {
+      ...getRef(this.extra.value || {})
+    }
 
     this.properties.get()?.forEach(item => {
       const prop = this.props?.[item.name]
@@ -92,10 +95,7 @@ export class DesignStyles {
       }
     })
 
-    return {
-      ...data,
-      ...getRef(this.extra.value || {})
-    }
+    return isFilled(data) ? data : undefined
   })
 
   /**
