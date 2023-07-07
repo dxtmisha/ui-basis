@@ -2,6 +2,7 @@ const { forEach } = require('../../functions/data')
 
 const DesignCommand = require('./DesignCommand')
 const PropertiesComponent = require('./PropertiesComponent')
+const DesignConstructor = require('./DesignConstructor')
 
 /**
  * Class for creating a component or updating data
@@ -14,7 +15,7 @@ module.exports = class DesignComponent extends DesignCommand {
   /**
    * Constructor
    * @param {string} name component name / названия компонента
-   * @param {{create:boolean, update:boolean}} options additional parameters / дополнительные параметры
+   * @param {{const:boolean, update:boolean}} options additional parameters / дополнительные параметры
    */
   constructor (
     name,
@@ -27,10 +28,20 @@ module.exports = class DesignComponent extends DesignCommand {
   }
 
   initMain () {
+    if (this.options.constr) {
+      new DesignConstructor(this.component.getComponent(), {}).init()
+
+      this
+        .__initIndexForConstructor()
+        .__initPropsForConstructor()
+    } else {
+      this
+        .__initIndex()
+        .__initProps()
+    }
+
     this
-      .__initIndex()
       .__initPropsDesign()
-      .__initProps()
       .__initProperties()
   }
 
@@ -125,21 +136,70 @@ module.exports = class DesignComponent extends DesignCommand {
     let sample
 
     if (this._isFile(file)) {
-      sample = this.__readIndex()
-        .replace(
-          /(name: ?['"])([^'"]+)(['"],? ?\/\/ name component)/,
-          `$1${this.component.getName()}$3`
-        )
+      sample = this.__initIndexUpdate()
     } else {
-      sample = this.__readSampleIndex()
-        .replaceAll('../../../', '../../')
-        .replace('DesignComponent', this.component.getName())
+      sample = this.__initIndexCreate()
     }
 
     this._console(file)
     this._createFile(file, sample)
 
     return this
+  }
+
+  /**
+   * Generating the index.vue file for the constructor
+   *
+   * Генерация файла index.vue для конструктора
+   * @return {this}
+   * @private
+   */
+  __initIndexForConstructor () {
+    const file = this.component.getFileIndex()
+    const name = this.component.getComponent()
+    let sample
+
+    if (this._isFile(file)) {
+      sample = this.__initIndexUpdate()
+    } else {
+      sample = this.__initIndexCreate()
+        .replace(/( |init)(Design)/g, `$1${name}Design`)
+        .replace('classes/Design', `constructors/${name}/${name}Design`)
+        .replace('styles/properties', `constructors/${name}/style`)
+    }
+
+    this._console(file)
+    this._createFile(file, sample)
+
+    return this
+  }
+
+  /**
+   * Updating the file index.vue
+   *
+   * Обновление файла index.vue
+   * @return {string}
+   * @private
+   */
+  __initIndexUpdate () {
+    return this.__readIndex()
+      .replace(
+        /(name: ?['"])([^'"]+)(['"],? ?\/\/ name component)/,
+        `$1${this.component.getName()}$3`
+      )
+  }
+
+  /**
+   * Creating the standard setting for index.vue
+   *
+   * Создание стандартной настройки index.vue
+   * @return {string}
+   * @private
+   */
+  __initIndexCreate () {
+    return this.__readSampleIndex()
+      .replaceAll('../../../', '../../')
+      .replace('DesignComponent', this.component.getName())
   }
 
   /**
@@ -154,6 +214,29 @@ module.exports = class DesignComponent extends DesignCommand {
 
     if (!this._isFile(file)) {
       const sample = this.__readSampleProps()
+
+      this._console(file)
+      this._createFile(file, sample)
+    }
+
+    return this
+  }
+
+  /**
+   * This code generates the props.ts
+   *
+   * Генерация файла props.ts для конструктора
+   * @return {this}
+   * @private
+   */
+  __initPropsForConstructor () {
+    const file = this.component.getFileProps()
+    const name = this.component.getComponent()
+
+    if (!this._isFile(file)) {
+      const sample = this.__readSampleProps()
+        .replace('props.design\'', `props.design'\r\nimport { props${name} } from '../../constructors/${name}/props'`)
+        .replace('...propsDesign', `...propsDesign,\r\n  ...props${name}`)
 
       this._console(file)
       this._createFile(file, sample)
