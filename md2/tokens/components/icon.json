@@ -1,0 +1,14 @@
+{
+  "size": {
+    "xs": {
+      "_size": "{ref.spacing.6}"
+    },
+    "sm": {
+      "_size": "{ref.spacing.8}"
+    },
+    "md": {
+      "_size": "{ref.spacing.10}",
+      "font": "{font.headline5}"
+    }
+  }
+}

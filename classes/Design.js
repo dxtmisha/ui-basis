@@ -4,8 +4,8 @@ exports.Design = void 0
 const vue_1 = require('vue')
 const data_1 = require('../functions/data')
 const To_1 = require('./To')
-const DesignProperties_1 = require('./DesignProperties')
 const DesignClasses_1 = require('./DesignClasses')
+const DesignProperties_1 = require('./DesignProperties')
 const DesignStyles_1 = require('./DesignStyles')
 /**
  * Main class for binding tokens and Vue components
@@ -39,6 +39,9 @@ class Design {
     this.properties = new DesignProperties_1.DesignProperties()
     this.classes = new DesignClasses_1.DesignClasses(this.name, this.properties, this.props)
     this.styles = new DesignStyles_1.DesignStyles(this.name, this.properties, this.props)
+    if (process.env.NODE_ENV !== 'production') {
+      (0, vue_1.onUpdated)(() => console.warn(this.getName()))
+    }
   }
 
   /**
@@ -96,6 +99,16 @@ class Design {
   }
 
   /**
+     * Adding additional styles
+     * Добавление дополнительных стилей
+     * @param data list of additional styles / список дополнительных стилей
+     */
+  setExtraStyles (data) {
+    this.styles.setExtra(data)
+    return this
+  }
+
+  /**
      * Returns props
      *
      * Возвращает свойства (props)
@@ -144,6 +157,17 @@ class Design {
   }
 
   /**
+     * The rendering method for the setup method
+     *
+     * Метод рендеринга для метода настройки
+     * @param dataCallback additional component properties / дополнительные свойства компонента
+     */
+  render (dataCallback) {
+    const setup = this.setup(dataCallback)
+    return () => this.initRender(setup)
+  }
+
+  /**
      * Method for generating additional properties
      *
      * Метод для генерации дополнительных свойств
@@ -151,6 +175,17 @@ class Design {
      */
   init () {
     return {}
+  }
+
+  /**
+     * A method for rendering
+     *
+     * Метод для рендеринга
+     * @param setup the result of executing the setup method / результат выполнения метода настройки
+     * @protected
+     */
+  initRender (setup) {
+    return (0, vue_1.h)('div', { class: setup.classes.value.main })
   }
 }
 exports.Design = Design

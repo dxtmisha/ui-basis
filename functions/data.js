@@ -236,8 +236,8 @@ function splice (data, item, start, isDelete) {
     if (start) {
       let init = false
       forEach(replaceRecursive({}, data), (value, index) => {
-        if (start === index ||
-                    start === value) {
+        if (!init && (start === index ||
+                    start === value)) {
           init = true
           replaceRecursive(data, item)
           if (isDelete) {
@@ -245,7 +245,6 @@ function splice (data, item, start, isDelete) {
           }
         } else if (init) {
           const valueData = data[index]
-          delete data[index]
           replaceRecursive(data, {
             [index]: isObject(valueData) && isObject(value)
               ? replaceRecursive(valueData, value)

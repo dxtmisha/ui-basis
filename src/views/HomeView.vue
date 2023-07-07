@@ -3,6 +3,9 @@
     <md2-button text="button"/>
     <md2-button text="button" disabled/>
   </div>
+  <div style="display: flex; gap: 16px;">
+    <md2-icon/>
+  </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image :value="'close'"/>
@@ -183,6 +186,7 @@ import { defineComponent, ref } from 'vue'
 import Md2Button from '../../md2/Button/index.vue'
 import Md2Image from '../../md2/Image/index.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
+import Md2Icon from '../../md2/Icon/index.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -190,6 +194,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md2Icon,
     Md2Button,
     Md2Image
   },

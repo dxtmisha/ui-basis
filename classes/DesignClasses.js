@@ -186,7 +186,7 @@ class DesignClasses {
      */
   getExtraByName (name) {
     const extra = {};
-    (0, data_1.forEach)(this.extra.value?.[name], (item, index) => {
+    (0, data_1.forEach)((0, ref_1.getRef)(this.extra.value?.[name]), (item, index) => {
       extra[index] = (0, ref_1.getRef)((0, data_1.executeFunction)(item))
     })
     return extra
