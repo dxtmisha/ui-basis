@@ -5,7 +5,8 @@ export const propsIcon = {
 
   // Status
   active: Boolean,
-  turn: Boolean
+  turn: Boolean,
+  disabled: Boolean
 
   // Options
 }

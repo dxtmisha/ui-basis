@@ -1,7 +1,9 @@
 {
-  "display": "inline-block",
+  "display": "inline-flex",
   "overflow": "hidden",
   "position": "relative",
+  "justify-content": "center",
+  "align-items": "center",
   "width": {
     "_type": "var"
   },

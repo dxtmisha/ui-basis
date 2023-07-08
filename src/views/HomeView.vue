@@ -3,8 +3,14 @@
     <md2-button text="button"/>
     <md2-button text="button" disabled/>
   </div>
-  <div style="display: flex; gap: 16px;">
-    <md2-icon/>
+  <div style="display: flex; gap: 16px; padding-top: 16px;">
+    <md2-icon style="border: solid 1px;"/>
+    <md2-icon
+      :animation-show="turn"
+      style="border: solid 1px;"
+      :icon="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
+      :icon-active="turn?'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db':undefined"
+    />
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
     <div style="position: relative; width: 160px; height: 160px;">

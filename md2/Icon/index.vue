@@ -4,19 +4,20 @@ import { props, subClasses } from './props'
 
 import { IconDesign } from '../../constructors/Icon/IconDesign'
 
+import Md2Image from '../Image/index.vue'
+
 export default defineComponent({
   name: 'Md2Icon', // name component
   props,
   setup (props, context) {
     return new IconDesign<typeof subClasses>(props, context)
-      .setup({})
+      .setComponents({
+        image: Md2Image
+      })
+      .render({})
   }
 })
 </script>
-
-<template>
-  <div :class="classes.main" :style="styles"></div>
-</template>
 
 <style lang="scss">
 @import "../../constructors/Icon/style";

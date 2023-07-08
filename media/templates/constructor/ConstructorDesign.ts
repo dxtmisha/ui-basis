@@ -1,4 +1,4 @@
-import { h, VNode } from 'vue'
+import { EmitsOptions, h, SlotsType, VNode } from 'vue'
 
 import {
   Design,
@@ -9,11 +9,19 @@ import { ClassesSubClassesType } from '../../../classes/DesignClasses'
 
 import { propsConstructor } from './props'
 
-interface ConstructorDesignInitInterface {
+export interface ConstructorDesignInitInterface {
   property: string
 }
 
-type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstructor>
+export interface ConstructorDesignComponentsInterface {
+  component: object
+}
+
+export type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstructor>
+export type ConstructorDesignEmitsType = EmitsOptions
+export type ConstructorDesignSlotsType = SlotsType<{
+  default?: () => VNode
+}>
 
 /**
  * ConstructorDesign
@@ -21,7 +29,15 @@ type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstruc
 export class ConstructorDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends ConstructorDesignPropsValueType = ConstructorDesignPropsValueType
-> extends Design<C, HTMLElement, P, ConstructorDesignInitInterface> {
+> extends Design<
+  C,
+  HTMLElement,
+  P,
+  ConstructorDesignInitInterface,
+  ConstructorDesignComponentsInterface,
+  ConstructorDesignEmitsType,
+  ConstructorDesignSlotsType
+> {
   /**
    * Method for generating additional properties
    *

@@ -1,14 +1,19 @@
 import {
+  computed,
   ComputedRef,
-  h, onUpdated,
+  EmitsOptions,
+  h,
+  onUpdated,
   Ref,
   ref,
   SetupContext,
+  SlotsType,
   ToRefs,
   toRefs,
   VNode
 } from 'vue'
 import { executeFunction } from '../functions/data'
+import { getRef } from '../functions/ref'
 import { To } from './To'
 
 import {
@@ -22,6 +27,7 @@ import { DesignProperties, PropertiesListType } from './DesignProperties'
 import { DesignStyles, StylesListType, StylesRefType } from './DesignStyles'
 
 import { AssociativeType, ElementType } from '../constructors/types'
+import { RefOrNormalType } from '../constructors/typesRef'
 
 export interface DesignSetupBasicInterface<C, E> {
   element: Ref<E | undefined>
@@ -48,7 +54,10 @@ export class Design<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   E extends ElementType = ElementType,
   P extends DesignPropsType = DesignPropsType,
-  I extends DesignPropsType = DesignPropsType
+  I extends DesignPropsType = DesignPropsType,
+  M extends AssociativeType = AssociativeType,
+  O extends EmitsOptions = EmitsOptions,
+  S extends SlotsType = SlotsType
 > {
   /**
    * Class name
@@ -57,6 +66,14 @@ export class Design<
    * @protected
    */
   protected name = ref<string>('design-component')
+
+  /**
+   * List of connected components
+   *
+   * Список подключенных компонентов
+   * @protected
+   */
+  protected components?: M
 
   protected properties: DesignProperties
   protected classes: DesignClasses<C>
@@ -72,7 +89,7 @@ export class Design<
    */
   constructor (
     protected readonly props: P,
-    protected readonly context: SetupContext
+    protected readonly context: SetupContext<O, S>
   ) {
     this.refs = toRefs(props)
     this.properties = new DesignProperties()
@@ -101,6 +118,16 @@ export class Design<
    */
   getName (): string {
     return this.classes.getName()
+  }
+
+  /**
+   * Returns the names of the user properties
+   *
+   * Возвращает название пользовательского свойства
+   * @param names class name / название класса
+   */
+  getNameByVar (names: string | string[]) {
+    return `--${this.getName()}${names.length > 0 ? `-${To.array(names).join('-')}` : ''}`
   }
 
   /**
@@ -168,16 +195,6 @@ export class Design<
   }
 
   /**
-   * Returns the names of the user properties
-   *
-   * Возвращает название пользовательского свойства
-   * @param names class name / название класса
-   */
-  getNameByVar (names: string | string[]) {
-    return `--${this.getName()}${names.length > 0 ? `-${To.array(names).join('-')}` : ''}`
-  }
-
-  /**
    * Add all component properties.
    * Are added automatically during build
    *
@@ -188,6 +205,91 @@ export class Design<
   setProperties (properties: PropertiesListType): this {
     this.properties.set(properties)
     return this
+  }
+
+  /**
+   * Changing the list of connected components
+   *
+   * Изменение списка подключенных компонентов
+   * @param components list of connected components / список подключенных компонентов
+   */
+  setComponents (components: M): this {
+    this.components = components
+    return this
+  }
+
+  getBind<T = any, R = AssociativeType> (value: Ref<T | R>): ComputedRef<R>
+  getBind<T = any, R = AssociativeType> (value: Ref<T | R>, name: string): ComputedRef<R>
+  getBind<T = any, R = AssociativeType> (value: Ref<T | R>, extra: RefOrNormalType<AssociativeType>): ComputedRef<R>
+  getBind<T = any, R = AssociativeType> (value: Ref<T | R>, extra: RefOrNormalType<AssociativeType>, name: string): ComputedRef<R>
+  /**
+   * A method for generating properties for a subcomponent
+   *
+   * Метод для генерации свойств для под компонента
+   * @param value input value. Can be an object if you need to pass multiple
+   * properties / входное значение. Может быть объектом, если надо передать
+   * несколько свойств
+   * @param nameExtra additional parameter or property name / дополнительный параметр или имя свойства
+   * @param name property name / имя свойства
+   */
+  getBind<T = any, R = AssociativeType> (
+    value: Ref<T | R>,
+    nameExtra: RefOrNormalType<AssociativeType> | string = {},
+    name = 'value' as string
+  ): ComputedRef<R> {
+    return computed(() => {
+      const isName = typeof nameExtra === 'string'
+      const index = isName ? nameExtra : name
+      const extra = isName ? {} : getRef(nameExtra)
+
+      if (
+        value.value &&
+        typeof value.value === 'object' &&
+        index in value.value
+      ) {
+        return {
+          ...extra,
+          ...value.value
+        } as R
+      } else {
+        return {
+          ...extra,
+          [index]: value.value
+        } as R
+      }
+    })
+  }
+
+  /**
+   * Initializes the slot
+   *
+   * Инициализирует слот
+   * @param name slot name / название слота
+   * @param children if you pass this element, the slot will be added to it / если передать
+   * @param props property for the slot / свойство для слота
+   * этот элемент, то слот добавится в него
+   */
+  initSlot (
+    name = 'default',
+    children?: any[],
+    props: Record<string, any> = {}
+  ): VNode | undefined {
+    const slots = this.context.slots
+
+    if (
+      slots?.[name] &&
+      typeof slots[name] === 'function'
+    ) {
+      const slot = (slots[name] as ((props?: Record<string, any>) => VNode))(props)
+
+      if (children) {
+        children.push(slot)
+      }
+
+      return slot
+    }
+
+    return undefined
   }
 
   /**
