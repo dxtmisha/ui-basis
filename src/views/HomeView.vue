@@ -190,7 +190,7 @@
 import { defineComponent, ref } from 'vue'
 
 import Md2Button from '../../md2/Button/index.vue'
-import Md2Image from '../../md2/Image/index.vue'
+import Md2Image from '../../md2/Image/Md2Image.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
 import Md2Icon from '../../md2/Icon/index.vue'
 

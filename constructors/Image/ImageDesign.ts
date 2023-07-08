@@ -1,21 +1,25 @@
-import { ComputedRef, h, onUnmounted, SetupContext, VNode } from 'vue'
+import { ComputedRef, h, onUnmounted, SlotsType, VNode } from 'vue'
 
 import {
   Design,
+  DesignEmitsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
+import { AssociativeType } from '../types'
 
 import { Image } from './Image'
 
 import { propsImage } from './props'
 
-interface ImageDesignInitInterface {
+export interface ImageDesignInitInterface {
   text: ComputedRef<string | undefined>
 }
 
-type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
+export type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
+export type ImageDesignEmitsType = DesignEmitsType
+export type ImageDesignSlotsType = SlotsType
 
 /**
  * ImageDesign
@@ -23,20 +27,16 @@ type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
 export class ImageDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends ImageDesignPropsValueType = ImageDesignPropsValueType
-> extends Design<C, HTMLElement, P, ImageDesignInitInterface> {
+> extends Design<
+  C,
+  HTMLSpanElement,
+  P,
+  ImageDesignInitInterface,
+  AssociativeType,
+  ImageDesignEmitsType,
+  ImageDesignSlotsType
+> {
   protected image?: Image
-
-  /**
-   * Constructor
-   * @param props properties / свойства
-   * @param context additional property / дополнительное свойство
-   */
-  constructor (
-    protected readonly props: P,
-    protected readonly context: SetupContext
-  ) {
-    super(props, context)
-  }
 
   /**
    * Method for generating additional properties
@@ -53,7 +53,7 @@ export class ImageDesign<
       this.refs.size,
       this.refs.x,
       this.refs.y,
-      this.refs.group,
+      this.refs.adaptiveGroup,
       this.refs.adaptive,
       this.refs.adaptiveAlways,
       this.refs.objectWidth,
@@ -81,7 +81,7 @@ export class ImageDesign<
   protected initRender<D = Record<string, any>> (
     setup: DesignSetupType<C, HTMLDivElement, D, ImageDesignInitInterface>
   ): VNode {
-    return h('div', {
+    return h('span', {
       ref: this.element,
       class: setup.classes.value.main,
       style: setup.styles.value,

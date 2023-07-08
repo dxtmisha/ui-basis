@@ -1,7 +1,6 @@
 import {
   computed,
   ComputedRef,
-  defineEmits,
   defineExpose,
   EmitsOptions,
   h,
@@ -40,7 +39,7 @@ export interface DesignSetupBasicInterface<C, E> {
 }
 
 export type DesignPropsType = Record<string, any>
-export type DesignPropsValueType<T = []> = Record<keyof T, any> & DesignPropsType
+export type DesignPropsValueType<T = Record<string, any>> = Record<keyof T, any> & DesignPropsType
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
 export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
@@ -59,8 +58,8 @@ export type DesignSetupType<
 export class Design<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   E extends ElementType = ElementType,
-  P extends DesignPropsType = DesignPropsType,
-  I extends DesignPropsType = DesignPropsType,
+  P extends DesignPropsValueType = DesignPropsValueType,
+  I extends Record<string, any> = Record<string, any>,
   M extends AssociativeType = AssociativeType,
   O extends DesignEmitsType = EmitsOptions,
   S extends SlotsType = SlotsType

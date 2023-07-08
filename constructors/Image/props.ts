@@ -2,18 +2,18 @@ import { PropType } from 'vue'
 
 export const propsImage = {
   // Values
-  value: [File, String],
+  value: [String, File],
   coordinator: Array as PropType<number[]>,
   size: [String, Number],
   x: [String, Number],
   y: [String, Number],
 
   // Adaptive
-  group: {
+  adaptive: Boolean,
+  adaptiveGroup: {
     type: String,
     default: 'main'
   },
-  adaptive: Boolean,
   adaptiveAlways: Boolean,
   objectWidth: Number,
   objectHeight: Number,

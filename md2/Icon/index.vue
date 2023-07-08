@@ -4,7 +4,7 @@ import { props, subClasses } from './props'
 
 import { IconDesign } from '../../constructors/Icon/IconDesign'
 
-import Md2Image from '../Image/index.vue'
+import Md2Image from '../Image/Md2Image.vue'
 
 export default defineComponent({
   name: 'Md2Icon', // name component

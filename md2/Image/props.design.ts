@@ -3,6 +3,9 @@
 export const subClassesDesign = { /* classes */ }
 
 export const propsDesign = {
+  disabled: {
+    type: [Boolean]
+  },
   adaptive: {
     type: [Boolean]
   },
@@ -10,9 +13,6 @@ export const propsDesign = {
     type: [Boolean]
   },
   hide: {
-    type: [Boolean]
-  },
-  disabled: {
     type: [Boolean]
   }
 }
