@@ -367,7 +367,7 @@ export class Design<
       return {
         attrs: useAttrs(),
         slots: useSlots(),
-        emit: contextEmit || defineEmits(),
+        emit: contextEmit || ((name: string, ...agr: any[]) => console.error(name, agr)),
         expose: defineExpose
       } as SetupContext<O, S>
     }

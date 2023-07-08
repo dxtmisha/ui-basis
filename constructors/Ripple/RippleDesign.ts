@@ -1,20 +1,24 @@
-import { h, VNode } from 'vue'
+import { h, SlotsType, VNode } from 'vue'
 import { createElement } from '../../functions/element'
 
 import {
   Design,
+  DesignEmitsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
+import { AssociativeType } from '../types'
 
 import { propsRipple } from './props'
 
-interface RippleDesignInitInterface {
+export interface RippleDesignInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
-type RippleDesignPropsValueType = DesignPropsValueType<typeof propsRipple>
+export type RippleDesignPropsValueType = DesignPropsValueType<typeof propsRipple>
+export type RippleDesignEmitsType = DesignEmitsType
+export type RippleDesignSlotsType = SlotsType
 
 /**
  * RippleDesign
@@ -22,7 +26,15 @@ type RippleDesignPropsValueType = DesignPropsValueType<typeof propsRipple>
 export class RippleDesign<
   C extends ClassesSubClassesType = ClassesSubClassesType,
   P extends RippleDesignPropsValueType = RippleDesignPropsValueType
-> extends Design<C, HTMLDivElement, P, RippleDesignInitInterface> {
+> extends Design<
+  C,
+  HTMLDivElement,
+  P,
+  RippleDesignInitInterface,
+  AssociativeType,
+  RippleDesignEmitsType,
+  RippleDesignSlotsType
+> {
   /**
    * Method for generating additional properties
    *

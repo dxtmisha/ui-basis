@@ -11,10 +11,4 @@ export const subClasses = {
 export const props = {
   ...propsDesign,
   ...propsRipple
-
-  // Values
-
-  // Status
-
-  // Options
 }

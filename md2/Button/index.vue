@@ -4,7 +4,7 @@ import { props, subClasses } from './props'
 
 import { Design } from '../../classes/Design'
 
-import Md2Ripple from '../Ripple/index.vue'
+import Md2Ripple from '../Ripple/Md2Ripple.vue'
 
 export default defineComponent({
   name: 'Md2Button',

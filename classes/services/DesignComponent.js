@@ -132,17 +132,17 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __initIndex () {
-    const file = this.component.getFileIndex(!this.options.options)
+    const main = this.component.getFileMain()
     let sample
 
-    if (this._isFile(file)) {
+    if (this._isFile(main)) {
       sample = this.__initIndexUpdate()
     } else {
       sample = this.__initIndexCreate()
     }
 
-    this._console(file)
-    this._createFile(this.component.getFileMain(), sample)
+    this._console(main)
+    this._createFile(main, sample)
 
     return this
   }
@@ -155,11 +155,11 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __initIndexForConstructor () {
-    const file = this.component.getFileIndex(!this.options.options)
+    const main = this.component.getFileMain()
     const name = this.component.getComponent()
     let sample
 
-    if (this._isFile(file)) {
+    if (this._isFile(main)) {
       sample = this.__initIndexUpdate()
     } else {
       sample = this.__initIndexCreate()
@@ -176,8 +176,8 @@ module.exports = class DesignComponent extends DesignCommand {
       }
     }
 
-    this._console(file)
-    this._createFile(this.component.getFileMain(), sample)
+    this._console(main)
+    this._createFile(main, sample)
 
     return this
   }
