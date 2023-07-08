@@ -21,6 +21,7 @@ const LIST_PROPS = [
 ]
 
 const FILE_INDEX = 'index.vue'
+const FILE_INDEX_COMPOSITION = 'index-composition.vue'
 const FILE_PROPS = 'props.ts'
 const FILE_PROPS_DESIGN = 'props.design.ts'
 const FILE_PROPERTIES = 'properties.json'
@@ -273,14 +274,20 @@ module.exports = class PropertiesComponent {
     }, true)
   }
 
+  getFileMain () {
+    return `${this.getName()}.vue`
+  }
+
   /**
    * Returns the filename index
    *
    * Возвращает название файла index
+   * @param {boolean} composition if true, returns a template of type composition / если true,
+   * возвращает шаблон типа composition
    * @return {string}
    */
-  getFileIndex () {
-    return FILE_INDEX
+  getFileIndex (composition = true) {
+    return composition ? FILE_INDEX_COMPOSITION : FILE_INDEX
   }
 
   /**

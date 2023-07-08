@@ -153,6 +153,29 @@ export function getColumn<T = any> (array: AssociativeOrArrayType, column: strin
 }
 
 /**
+ * Returns an object of values for a specific column of the input object
+ *
+ * Возвращает объект значений для определенного столбца входного объекта
+ * @param record an array of objects from which to pull a column of values from / массив
+ * объектов, из которого будет производиться выборка значений
+ * @param column ключ столбца, значения которого нужно вернуть / the column of values to return
+ */
+export function getColumnObject (
+  record: Record<NumberOrStringType, Record<NumberOrStringType, any>>,
+  column: string
+): Record<NumberOrStringType, any> {
+  const data: Record<NumberOrStringType, any> = {}
+
+  forEach(record, (item, index) => {
+    if (item?.[column]) {
+      data[index] = item[column]
+    }
+  })
+
+  return data
+}
+
+/**
  * The method retrieves drag data (as a string) for the specified type.
  * If the drag operation does not include data, this method returns an empty string
  *

@@ -1,7 +1,8 @@
-import { computed, ComputedRef, EmitsOptions, h, SlotsType, VNode } from 'vue'
+import { computed, ComputedRef, h, SlotsType, VNode } from 'vue'
 
 import {
   Design,
+  DesignEmitsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
@@ -21,7 +22,7 @@ export interface IconDesignComponentsInterface {
 }
 
 export type IconDesignPropsValueType = DesignPropsValueType<typeof propsIcon>
-export type IconDesignEmitsType = EmitsOptions
+export type IconDesignEmitsType = DesignEmitsType
 export type IconDesignSlotsType = SlotsType<{
   default?: () => VNode
 }>

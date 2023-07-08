@@ -1,6 +1,8 @@
 import {
   computed,
   ComputedRef,
+  defineEmits,
+  defineExpose,
   EmitsOptions,
   h,
   onUpdated,
@@ -10,6 +12,8 @@ import {
   SlotsType,
   ToRefs,
   toRefs,
+  useAttrs,
+  useSlots,
   VNode
 } from 'vue'
 import { executeFunction } from '../functions/data'
@@ -37,6 +41,8 @@ export interface DesignSetupBasicInterface<C, E> {
 
 export type DesignPropsType = Record<string, any>
 export type DesignPropsValueType<T = []> = Record<keyof T, any> & DesignPropsType
+export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
+export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
 export type DesignSetupType<
   C,
@@ -56,7 +62,7 @@ export class Design<
   P extends DesignPropsType = DesignPropsType,
   I extends DesignPropsType = DesignPropsType,
   M extends AssociativeType = AssociativeType,
-  O extends EmitsOptions = EmitsOptions,
+  O extends DesignEmitsType = EmitsOptions,
   S extends SlotsType = SlotsType
 > {
   /**
@@ -75,6 +81,7 @@ export class Design<
    */
   protected components?: M
 
+  protected context: SetupContext<O, S>
   protected properties: DesignProperties
   protected classes: DesignClasses<C>
   protected styles: DesignStyles
@@ -85,14 +92,15 @@ export class Design<
   /**
    * Constructor
    * @param props properties / свойства
-   * @param context additional property / дополнительное свойство
+   * @param contextEmit additional property / дополнительное свойство
    */
   constructor (
     protected readonly props: P,
-    protected readonly context: SetupContext<O, S>
+    contextEmit?: SetupContext<O, S> | SetupContext['emit']
   ) {
     this.refs = toRefs(props)
     this.properties = new DesignProperties()
+    this.context = this.initContext(contextEmit)
 
     this.classes = new DesignClasses<C>(
       this.name,
@@ -339,5 +347,29 @@ export class Design<
    */
   protected initRender<D = AssociativeType> (setup: DesignSetupType<C, E, D, I>): VNode {
     return h('div', { class: setup.classes.value.main })
+  }
+
+  /**
+   * Checks the values of the input context and converts them to the required format
+   *
+   * Проверяет значения входного context и преобразует в нужный формат
+   * @param contextEmit checked values / проверяемые значения
+   * @protected
+   */
+  protected initContext (contextEmit?: SetupContext<O, S> | SetupContext['emit']): SetupContext<O, S> {
+    if (
+      contextEmit &&
+      'attrs' in contextEmit &&
+      'slots' in contextEmit
+    ) {
+      return contextEmit
+    } else {
+      return {
+        attrs: useAttrs(),
+        slots: useSlots(),
+        emit: contextEmit || defineEmits(),
+        expose: defineExpose
+      } as SetupContext<O, S>
+    }
   }
 }

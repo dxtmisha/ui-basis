@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.intersectKey = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isObject = exports.isFilled = exports.isNull = void 0
+exports.random = exports.maxListLength = exports.minListLength = exports.strFill = exports.arrFill = exports.uniqueArray = exports.replaceRecursive = exports.splice = exports.intersectKey = exports.forEach = exports.executeFunction = exports.getClipboardData = exports.getColumnObject = exports.getColumn = exports.getExp = exports.isSelectedByList = exports.isSelected = exports.isIntegerBetween = exports.isFunction = exports.isObject = exports.isFilled = exports.isNull = void 0
 /**
  * Is the variable equal to null or undefined
  *
@@ -140,6 +140,22 @@ function getColumn (array, column) {
   return forEach(array, item => item?.[column])
 }
 exports.getColumn = getColumn
+/**
+ * Returns an object of values for a specific column of the input object
+ *
+ * Возвращает объект значений для определенного столбца входного объекта
+ * @param record an array of objects from which to pull a column of values from / массив
+ * объектов, из которого будет производиться выборка значений
+ * @param column ключ столбца, значения которого нужно вернуть / the column of values to return
+ */
+function getColumnObject (record, column) {
+  const data = {}
+  forEach(record, (item, index) => {
+    data[index] = item?.[column]
+  })
+  return data
+}
+exports.getColumnObject = getColumnObject
 /**
  * The method retrieves drag data (as a string) for the specified type.
  * If the drag operation does not include data, this method returns an empty string

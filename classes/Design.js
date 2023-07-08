@@ -3,6 +3,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 exports.Design = void 0
 const vue_1 = require('vue')
 const data_1 = require('../functions/data')
+const ref_1 = require('../functions/ref')
 const To_1 = require('./To')
 const DesignClasses_1 = require('./DesignClasses')
 const DesignProperties_1 = require('./DesignProperties')
@@ -22,6 +23,13 @@ class Design {
      * @protected
      */
   name = (0, vue_1.ref)('design-component')
+  /**
+     * List of connected components
+     *
+     * Список подключенных компонентов
+     * @protected
+     */
+  components
   properties
   classes
   styles
@@ -40,7 +48,7 @@ class Design {
     this.classes = new DesignClasses_1.DesignClasses(this.name, this.properties, this.props)
     this.styles = new DesignStyles_1.DesignStyles(this.name, this.properties, this.props)
     if (process.env.NODE_ENV !== 'production') {
-      (0, vue_1.onUpdated)(() => console.warn(this.getName()))
+      (0, vue_1.onUpdated)(() => console.warn(`Updated: ${this.getName()}`))
     }
   }
 
@@ -51,6 +59,16 @@ class Design {
      */
   getName () {
     return this.classes.getName()
+  }
+
+  /**
+     * Returns the names of the user properties
+     *
+     * Возвращает название пользовательского свойства
+     * @param names class name / название класса
+     */
+  getNameByVar (names) {
+    return `--${this.getName()}${names.length > 0 ? `-${To_1.To.array(names).join('-')}` : ''}`
   }
 
   /**
@@ -118,16 +136,6 @@ class Design {
   }
 
   /**
-     * Returns the names of the user properties
-     *
-     * Возвращает название пользовательского свойства
-     * @param names class name / название класса
-     */
-  getNameByVar (names) {
-    return `--${this.getName()}${names.length > 0 ? `-${To_1.To.array(names).join('-')}` : ''}`
-  }
-
-  /**
      * Add all component properties.
      * Are added automatically during build
      *
@@ -138,6 +146,70 @@ class Design {
   setProperties (properties) {
     this.properties.set(properties)
     return this
+  }
+
+  /**
+     * Changing the list of connected components
+     *
+     * Изменение списка подключенных компонентов
+     * @param components list of connected components / список подключенных компонентов
+     */
+  setComponents (components) {
+    this.components = components
+    return this
+  }
+
+  /**
+     * A method for generating properties for a subcomponent
+     *
+     * Метод для генерации свойств для под компонента
+     * @param value input value. Can be an object if you need to pass multiple
+     * properties / входное значение. Может быть объектом, если надо передать
+     * несколько свойств
+     * @param nameExtra additional parameter or property name / дополнительный параметр или имя свойства
+     * @param name property name / имя свойства
+     */
+  getBind (value, nameExtra = {}, name = 'value') {
+    return (0, vue_1.computed)(() => {
+      const isName = typeof nameExtra === 'string'
+      const index = isName ? nameExtra : name
+      const extra = isName ? {} : (0, ref_1.getRef)(nameExtra)
+      if (value.value &&
+                typeof value.value === 'object' &&
+                index in value.value) {
+        return {
+          ...extra,
+          ...value.value
+        }
+      } else {
+        return {
+          ...extra,
+          [index]: value.value
+        }
+      }
+    })
+  }
+
+  /**
+     * Initializes the slot
+     *
+     * Инициализирует слот
+     * @param name slot name / название слота
+     * @param children if you pass this element, the slot will be added to it / если передать
+     * @param props property for the slot / свойство для слота
+     * этот элемент, то слот добавится в него
+     */
+  initSlot (name = 'default', children, props = {}) {
+    const slots = this.context.slots
+    if (slots?.[name] &&
+            typeof slots[name] === 'function') {
+      const slot = slots[name](props)
+      if (children) {
+        children.push(slot)
+      }
+      return slot
+    }
+    return undefined
   }
 
   /**

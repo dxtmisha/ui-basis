@@ -8,9 +8,10 @@ export const subClasses = {
 }
 
 export const props = {
-  ...propsDesign
+  ...propsDesign,
 
   // Values
+  value: String
 
   // Status
 

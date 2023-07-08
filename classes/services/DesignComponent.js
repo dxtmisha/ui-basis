@@ -15,7 +15,7 @@ module.exports = class DesignComponent extends DesignCommand {
   /**
    * Constructor
    * @param {string} name component name / названия компонента
-   * @param {{const:boolean, update:boolean}} options additional parameters / дополнительные параметры
+   * @param {{const:boolean, options:boolean}} options additional parameters / дополнительные параметры
    */
   constructor (
     name,
@@ -77,7 +77,7 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __readIndex () {
-    return this._read(this.component.getFileIndex())
+    return this._read(this.component.getFileMain())
   }
 
   /**
@@ -88,7 +88,7 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __readSampleIndex () {
-    return this._readSample(this.component.getFileIndex())
+    return this._readSample(this.component.getFileIndex(!this.options.options))
   }
 
   /**
@@ -132,7 +132,7 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __initIndex () {
-    const file = this.component.getFileIndex()
+    const file = this.component.getFileIndex(!this.options.options)
     let sample
 
     if (this._isFile(file)) {
@@ -142,7 +142,7 @@ module.exports = class DesignComponent extends DesignCommand {
     }
 
     this._console(file)
-    this._createFile(file, sample)
+    this._createFile(this.component.getFileMain(), sample)
 
     return this
   }
@@ -155,7 +155,7 @@ module.exports = class DesignComponent extends DesignCommand {
    * @private
    */
   __initIndexForConstructor () {
-    const file = this.component.getFileIndex()
+    const file = this.component.getFileIndex(!this.options.options)
     const name = this.component.getComponent()
     let sample
 
@@ -166,10 +166,18 @@ module.exports = class DesignComponent extends DesignCommand {
         .replace(/( |init)(Design)/g, `$1${name}Design`)
         .replace('classes/Design', `constructors/${name}/${name}Design`)
         .replace('styles/properties', `constructors/${name}/style`)
+
+      if (!this.options.options) {
+        sample = sample
+          .replace('Design } from', `Design, ${name}DesignEmitsType, ${name}DesignSlotsType } from`)
+          .replace('defineEmits([])', `defineEmits<${name}DesignEmitsType>()`)
+          .replace('// defineSlots,', 'defineSlots,')
+          .replace('// defineSlots()', `defineSlots<${name}DesignSlotsType>()`)
+      }
     }
 
     this._console(file)
-    this._createFile(file, sample)
+    this._createFile(this.component.getFileMain(), sample)
 
     return this
   }
@@ -236,7 +244,7 @@ module.exports = class DesignComponent extends DesignCommand {
     if (!this._isFile(file)) {
       const sample = this.__readSampleProps()
         .replace('props.design\'', `props.design'\r\nimport { props${name} } from '../../constructors/${name}/props'`)
-        .replace('...propsDesign', `...propsDesign,\r\n  ...props${name}`)
+        .replace('...propsDesign,', `...propsDesign,\r\n  ...props${name},`)
 
       this._console(file)
       this._createFile(file, sample)

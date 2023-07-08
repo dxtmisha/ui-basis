@@ -11,7 +11,7 @@ program
   .command('component <name>')
   .description('Adding or updating a component in accordance with design tokens\r\nДобавление или обновление компонента в соответствии с дизайн-токенами')
   .option('-c, --constr', 'together a constructor is created / вместе создается и конструктор')
-  .option('-u, --update', 'only updating existing data / только обновление существующих данных')
+  .option('-o, --options', 'returns a classic template / возвращает классический шаблон')
   .action((name, options) => new DesignComponent(name, options).init())
 
 program
