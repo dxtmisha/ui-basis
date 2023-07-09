@@ -1,24 +1,24 @@
-import { ComputedRef, h, onUnmounted, SlotsType, VNode } from 'vue'
+import { ComputedRef, h, onUnmounted, SlotsType, VNode, watch } from 'vue'
 
 import {
   Design,
-  DesignEmitsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
-import { AssociativeType } from '../types'
 
 import { Image } from './Image'
 
-import { propsImage } from './props'
+import { PropsImageInterface } from './props'
 
 export interface ImageDesignInitInterface {
   text: ComputedRef<string | undefined>
 }
 
-export type ImageDesignPropsValueType = DesignPropsValueType<typeof propsImage>
-export type ImageDesignEmitsType = DesignEmitsType
+export type ImageDesignPropsValueType = DesignPropsValueType<PropsImageInterface>
+export type ImageDesignEmitsType = {
+  ['on-load']: [value: any]
+}
 export type ImageDesignSlotsType = SlotsType
 
 /**
@@ -32,7 +32,7 @@ export class ImageDesign<
   HTMLSpanElement,
   P,
   ImageDesignInitInterface,
-  AssociativeType,
+  Record<string, any>,
   ImageDesignEmitsType,
   ImageDesignSlotsType
 > {
@@ -65,6 +65,8 @@ export class ImageDesign<
     this.setExtraStyles(this.image.styles)
 
     onUnmounted(() => this.image?.destructor())
+
+    watch(this.image.getDataImage(), value => this.context.emit('on-load', value))
 
     return {
       text: this.image.text

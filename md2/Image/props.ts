@@ -1,6 +1,10 @@
-import { DesignPropsPrototypeType } from '../../classes/Design'
-import { propsDesign, subClassesDesign } from './props.design'
-import { propsImage } from '../../constructors/Image/props'
+import {
+  PropsDesignInterface,
+  defaultsDesign,
+  // propsDesign,
+  subClassesDesign
+} from './props.design'
+import { PropsImageInterface, defaultsImage } from '../../constructors/Image/props'
 
 export const subClasses = {
   ...subClassesDesign
@@ -9,9 +13,11 @@ export const subClasses = {
 
 }
 
-export const props = {
-  ...propsDesign,
-  ...propsImage
+export type PropsInterface = PropsDesignInterface & PropsImageInterface
+
+export const defaults = {
+  ...defaultsDesign,
+  ...defaultsImage
 }
 
-export type propsType = DesignPropsPrototypeType<typeof props>
+// export const props = { ...propsDesign }

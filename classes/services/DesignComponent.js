@@ -246,12 +246,21 @@ module.exports = class DesignComponent extends DesignCommand {
 
       if (this.options.options) {
         sample = sample
-          .replace('props.design\'', `props.design'\r\nimport { props${name} } from '${this.getRoot()}constructors/${name}/props'`)
+          .replace(
+            'props.design\'',
+            `props.design'\r\nimport { props${name} } from '${this.getRoot()}constructors/${name}/props'`
+          )
           .replace(' ...propsDesign ', `\r\n  ...propsDesign,\r\n  ...props${name}\r\n`)
       } else {
         sample = sample
-          .replace('props.design\'', `props.design'\r\nimport { Props${name}Interface, defaults${name} } from '${this.getRoot()}constructors/${name}/props'`)
-          .replace('extends PropsDesignInterface', `extends PropsDesignInterface, Props${name}Interface`)
+          .replace(
+            'props.design\'',
+            `props.design'\r\nimport { Props${name}Interface, defaults${name} } from '${this.getRoot()}constructors/${name}/props'`
+          )
+          .replace(
+            'export interface PropsInterface extends PropsDesignInterface',
+            `export type PropsInterface = PropsDesignInterface & Props${name}Interface`
+          )
           .replace(' ...defaultsDesign ', `\r\n  ...defaultsDesign,\r\n  ...defaults${name}\r\n`)
       }
 

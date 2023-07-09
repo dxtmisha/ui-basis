@@ -2,17 +2,13 @@
 
 export const subClassesDesign = { /* classes */ }
 
-export const propsDesign = {
-  disabled: {
-    type: [Boolean]
-  },
-  adaptive: {
-    type: [Boolean]
-  },
-  turn: {
-    type: [Boolean]
-  },
-  hide: {
-    type: [Boolean]
-  }
+export interface PropsDesignInterface {
+  disabled?: boolean,
+  adaptive?: boolean,
+  turn?: boolean,
+  hide?: boolean
 }
+export const defaultsDesign = {
+}
+
+// export const propsDesign = { /* sample */ }

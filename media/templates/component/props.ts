@@ -13,6 +13,7 @@ export const subClasses = {
 }
 
 // export interface PropsInterface extends PropsDesignInterface {}
+
 // export const defaults = { ...defaultsDesign }
 
 // export const props = { ...propsDesign }

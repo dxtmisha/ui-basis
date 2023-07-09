@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { defineOptions } from 'vue'
 
-import { propsType, subClasses } from './props'
+import { PropsInterface, defaults, subClasses } from './props'
 
-import { ImageDesign } from '../../constructors/Image/ImageDesign'
+import { ImageDesign, ImageDesignEmitsType } from '../../constructors/Image/ImageDesign'
 
 defineOptions({
   name: 'Md2Image' // name component
 })
 
-const props = defineProps<propsType>()
+const props = withDefaults(defineProps<PropsInterface>(), defaults)
+const emit = defineEmits<ImageDesignEmitsType>()
 
-const design = new ImageDesign<typeof subClasses>(props)
+const design = new ImageDesign<typeof subClasses>(props, emit)
 const render = design.render({})
 </script>
 

@@ -12,6 +12,7 @@ import { StylesListType } from '../../classes/DesignStyles'
 
 import {
   ImageCoordinatorType,
+  ImageDataType,
   ImageElementType,
   ImageOptionType,
   ImageValueType
@@ -101,6 +102,15 @@ export class Image {
    */
   destructor (): void {
     this.adaptiveItem.remove()
+  }
+
+  /**
+   * A method for obtaining an object with values for an image
+   *
+   * Метод для получения объекта с значениями для изображения
+   */
+  getDataImage (): Ref<ImageDataType> {
+    return this.data.getItem()
   }
 
   /**
