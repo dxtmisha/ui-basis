@@ -4,7 +4,7 @@ import {
   defineOptions
 } from 'vue'
 
-import { props as propsImport, subClasses } from './props'
+import { PropsInterface, defaults, subClasses } from './props'
 
 import { Design } from '../../../classes/Design'
 
@@ -12,7 +12,7 @@ defineOptions({
   name: 'DesignComponent' // name component
 })
 
-const props = defineProps(propsImport)
+const props = withDefaults(defineProps<PropsInterface>(), defaults)
 const emit = defineEmits([])
 
 // defineSlots()

@@ -24,7 +24,7 @@ export interface IconDesignComponentsInterface {
 export type IconDesignPropsValueType = DesignPropsValueType<typeof propsIcon>
 export type IconDesignEmitsType = DesignEmitsType
 export type IconDesignSlotsType = SlotsType<{
-  default?: () => VNode
+  default? (): VNode
 }>
 
 /**
@@ -35,7 +35,7 @@ export class IconDesign<
   P extends IconDesignPropsValueType = IconDesignPropsValueType
 > extends Design<
   C,
-  HTMLDivElement,
+  HTMLElement,
   P,
   IconDesignInitInterface,
   IconDesignComponentsInterface,

@@ -47,6 +47,22 @@ module.exports = class DesignCommand {
   }
 
   /**
+   * Returns the path for importing the module
+   *
+   * Возвращает путь для подключения модуля
+   * @return {string}
+   */
+  getRoot () {
+    const path = __filename.match(/node_modules\/([^/]+)/)
+
+    if (path) {
+      return `${path?.[1]}/`
+    } else {
+      return '../../'
+    }
+  }
+
+  /**
    * Checks the presence of a file
    *
    * Проверяет наличие файла

@@ -1,3 +1,4 @@
+import { DesignPropsPrototypeType } from '../../classes/Design'
 import { propsDesign, subClassesDesign } from './props.design'
 import { propsImage } from '../../constructors/Image/props'
 
@@ -11,10 +12,6 @@ export const subClasses = {
 export const props = {
   ...propsDesign,
   ...propsImage
-
-  // Values
-
-  // Status
-
-  // Options
 }
+
+export type propsType = DesignPropsPrototypeType<typeof props>

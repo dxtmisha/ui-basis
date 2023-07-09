@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineOptions } from 'vue'
 
-import { props as propsImport, subClasses } from './props'
+import { propsType, subClasses } from './props'
 
 import { ImageDesign } from '../../constructors/Image/ImageDesign'
 
@@ -9,9 +9,9 @@ defineOptions({
   name: 'Md2Image' // name component
 })
 
-const props = defineProps(propsImport)
+const props = defineProps<propsType>()
 
-const design = new ImageDesign<typeof subClasses>(props as typeof propsImport)
+const design = new ImageDesign<typeof subClasses>(props)
 const render = design.render({})
 </script>
 

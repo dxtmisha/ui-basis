@@ -1,4 +1,9 @@
-import { propsDesign, subClassesDesign } from './props.design'
+import {
+  // PropsDesignInterface,
+  // defaultsDesign,
+  // propsDesign,
+  subClassesDesign
+} from './props.design'
 
 export const subClasses = {
   ...subClassesDesign
@@ -7,13 +12,7 @@ export const subClasses = {
 
 }
 
-export const props = {
-  ...propsDesign,
+// export interface PropsInterface extends PropsDesignInterface {}
+// export const defaults = { ...defaultsDesign }
 
-  // Values
-  value: String
-
-  // Status
-
-  // Options
-}
+// export const props = { ...propsDesign }

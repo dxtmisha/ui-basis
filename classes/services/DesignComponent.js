@@ -221,7 +221,7 @@ module.exports = class DesignComponent extends DesignCommand {
     const file = this.component.getFileProps()
 
     if (!this._isFile(file)) {
-      const sample = this.__readSampleProps()
+      const sample = this.__initPropsForLink()
 
       this._console(file)
       this._createFile(file, sample)
@@ -242,15 +242,50 @@ module.exports = class DesignComponent extends DesignCommand {
     const name = this.component.getComponent()
 
     if (!this._isFile(file)) {
-      const sample = this.__readSampleProps()
-        .replace('props.design\'', `props.design'\r\nimport { props${name} } from '../../constructors/${name}/props'`)
-        .replace('...propsDesign,', `...propsDesign,\r\n  ...props${name},`)
+      let sample = this.__initPropsForLink()
+
+      if (this.options.options) {
+        sample = sample
+          .replace('props.design\'', `props.design'\r\nimport { props${name} } from '${this.getRoot()}constructors/${name}/props'`)
+          .replace(' ...propsDesign ', `\r\n  ...propsDesign,\r\n  ...props${name}\r\n`)
+      } else {
+        sample = sample
+          .replace('props.design\'', `props.design'\r\nimport { Props${name}Interface, defaults${name} } from '${this.getRoot()}constructors/${name}/props'`)
+          .replace('extends PropsDesignInterface', `extends PropsDesignInterface, Props${name}Interface`)
+          .replace(' ...defaultsDesign ', `\r\n  ...defaultsDesign,\r\n  ...defaults${name}\r\n`)
+      }
 
       this._console(file)
       this._createFile(file, sample)
     }
 
     return this
+  }
+
+  /**
+   * Returns the content of the props.ts file with the corrected path
+   *
+   * Возвращает содержимое файла props.ts с исправленным путем
+   * @return {string}
+   * @private
+   */
+  __initPropsForLink () {
+    let sample = this.__readSampleProps()
+      .replaceAll('../../../', this.getRoot())
+
+    if (this.options.options) {
+      sample = sample
+        .replace('// propsDesign,', 'propsDesign,')
+        .replace('// export const props', 'export const props')
+    } else {
+      sample = sample
+        .replace('// PropsDesignInterface', 'PropsDesignInterface')
+        .replace('// defaultsDesign', 'defaultsDesign')
+        .replace('// export interface PropsInterface', 'export interface PropsInterface')
+        .replace('// export const defaults', 'export const defaults')
+    }
+
+    return sample
   }
 
   /**
@@ -264,7 +299,10 @@ module.exports = class DesignComponent extends DesignCommand {
     const file = this.component.getFilePropsDesign()
     let sample = this.__readSamplePropsDesign()
 
-    sample = this.__initPropsDesignForProps(sample)
+    sample = this.options.options
+      ? this.__initPropsDesignForPropsByOptions(sample)
+      : this.__initPropsDesignForProps(sample)
+
     sample = this.__initPropsDesignForClasses(sample)
 
     this._console(file)
@@ -284,19 +322,57 @@ module.exports = class DesignComponent extends DesignCommand {
   __initPropsDesignForProps (sample) {
     const props = this.component.getProps()
     const templates = []
+    const defaults = []
+
+    forEach(props, prop => {
+      templates.push(
+        `\r\n  ${prop.name}?: ${this.__getType(prop.valueAll, prop?.style)}`
+      )
+
+      if (prop.default !== undefined) {
+        defaults.push(
+          `\r\n  ${prop.name}: ${this.__getDefault(prop.default)}`
+        )
+      }
+    })
+
+    if (templates.length > 0) {
+      return sample
+        .replace('// export interface PropsDesignInterface', 'export interface PropsDesignInterface')
+        .replace('// export const defaultsDesign', 'export const defaultsDesign')
+        .replace(' /* interface */ ', `${templates.join(',')}\r\n`)
+        .replace(' /* defaults */ ', `${defaults.join(',')}\r\n`)
+    } else {
+      return sample
+    }
+  }
+
+  /**
+   * Generation of properties for a component
+   *
+   * Генерация свойств для компонента
+   * @param {string} sample base template / базовый шаблон
+   * @return {string}
+   * @private
+   */
+  __initPropsDesignForPropsByOptions (sample) {
+    const props = this.component.getProps()
+    const templates = []
     let newSample = sample
 
     forEach(props, prop => {
       templates.push(
         `\r\n  ${prop.name}: {` +
-        `\r\n    type: ${this.__getType(prop.valueAll, prop?.style)}` +
+        `\r\n    type: ${this.__getTypeByOptions(prop.valueAll, prop?.style)}` +
         (prop.default !== undefined ? `,\r\n    default: ${this.__getDefault(prop.default)}` : '') +
         '\r\n  }'
       )
     })
 
     if (templates.length > 0) {
-      newSample = sample.replace(' /* sample */ ', `${templates.join(',')}\r\n`)
+      newSample = sample
+        .replace('// export const propsDesign', 'export const propsDesign')
+        .replace(' /* sample */ ', `${templates.join(',')}\r\n`)
 
       if (newSample.match('as PropType')) {
         newSample = newSample.replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
@@ -385,7 +461,38 @@ module.exports = class DesignComponent extends DesignCommand {
    */
   __getType (value, style) {
     const type = []
-    const typeValue = []
+
+    if (this.__isBoolean(value)) {
+      type.push('boolean')
+    }
+
+    if (style) {
+      type.push('string')
+    }
+
+    if (this.__isString(value)) {
+      value.forEach(item => type.push(item === true ? 'true' : `'${item}'`))
+    }
+
+    if (type.length === 0) {
+      type.push('boolean')
+    }
+
+    return type.join(' | ')
+  }
+
+  /**
+   * Returns a string with the data type
+   *
+   * Возвращает строку с типом данных
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @param {boolean} style is the property style present / является ли свойство style
+   * @return {string}
+   * @private
+   */
+  __getTypeByOptions (value, style) {
+    const type = []
+    const typeValue = this.__getType(value, style)
 
     if (this.__isBoolean(value)) {
       type.push('Boolean')
@@ -393,18 +500,13 @@ module.exports = class DesignComponent extends DesignCommand {
 
     if (this.__isString(value)) {
       type.push('String')
-      value.forEach(item => typeValue.push(item === true ? 'true' : `'${item}'`))
-    }
-
-    if (style) {
-      typeValue.push('string')
     }
 
     if (type.length === 0) {
       type.push('Boolean')
     }
 
-    return `[${type.join(', ')}]${typeValue.length > 0 ? ` as PropType<${typeValue.join(' | ')}>` : ''}`
+    return `[${type.join(', ')}]${typeValue !== '' && typeValue !== 'boolean' ? ` as PropType<${typeValue}>` : ''}`
   }
 
   /**

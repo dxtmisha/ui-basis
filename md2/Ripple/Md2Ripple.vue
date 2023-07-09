@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineOptions } from 'vue'
 
-import { props as propsImport, subClasses } from './props'
+import { propsType, subClasses } from './props'
 
 import { RippleDesign } from '../../constructors/Ripple/RippleDesign'
 
@@ -9,7 +9,7 @@ defineOptions({
   name: 'Md2Ripple' // name component
 })
 
-const props = defineProps(propsImport)
+const props = defineProps<propsType>()
 
 const design = new RippleDesign<typeof subClasses>(props)
 const render = design.render({})

@@ -106,7 +106,7 @@ module.exports = class DesignConstructor extends DesignCommand {
     if (!this._isFile(file)) {
       const sample = this.__readSampleClass()
         .replaceAll('../../../', '../../')
-        .replaceAll('propsConstructor', To.camelCase(`props-${this.name}`))
+        .replaceAll('PropsConstructorInterface', To.camelCaseFirst(`props-${this.name}-interface`))
         .replaceAll('ConstructorDesign', To.camelCaseFirst(`${this.name}-design`))
 
       this._console(file)
@@ -128,6 +128,8 @@ module.exports = class DesignConstructor extends DesignCommand {
 
     if (!this._isFile(file)) {
       const sample = this.__readSampleProps()
+        .replace('PropsConstructorInterface', To.camelCaseFirst(`props-${this.name}-interface`))
+        .replace('defaultsConstructor', To.camelCase(`defaults-${this.name}`))
         .replace('propsConstructor', To.camelCase(`props-${this.name}`))
 
       this._console(file)

@@ -11,6 +11,7 @@
       :icon="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
       :icon-active="turn?'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db':undefined"
     />
+    <md2-test :height="'custom'"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
     <div style="position: relative; width: 160px; height: 160px;">
@@ -192,7 +193,8 @@ import { defineComponent, ref } from 'vue'
 import Md2Button from '../../md2/Button/index.vue'
 import Md2Image from '../../md2/Image/Md2Image.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
-import Md2Icon from '../../md2/Icon/index.vue'
+import Md2Icon from '../../md2/Icon/Md2Icon.vue'
+import Md2Test from '../../md2/Test/Md2Test.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -200,6 +202,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md2Test,
     Md2Icon,
     Md2Button,
     Md2Image

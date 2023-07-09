@@ -17,6 +17,8 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-static-block": "^7.21.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-typescript": "^7.22.5",
     "@types/jest": "^29.5.2",
     "@typescript-eslint/eslint-plugin": "^5.61.0",

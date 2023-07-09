@@ -8,7 +8,7 @@ import {
 } from '../../../classes/Design'
 import { ClassesSubClassesType } from '../../../classes/DesignClasses'
 
-import { propsConstructor } from './props'
+import { PropsConstructorInterface } from './props'
 
 export interface ConstructorDesignInitInterface {
   property: string
@@ -18,7 +18,7 @@ export interface ConstructorDesignComponentsInterface {
   component: object
 }
 
-export type ConstructorDesignPropsValueType = DesignPropsValueType<typeof propsConstructor>
+export type ConstructorDesignPropsValueType = DesignPropsValueType<PropsConstructorInterface>
 export type ConstructorDesignEmitsType = DesignEmitsType
 export type ConstructorDesignSlotsType = SlotsType<{
   default? (): VNode

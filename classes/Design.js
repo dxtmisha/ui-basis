@@ -15,7 +15,6 @@ const DesignStyles_1 = require('./DesignStyles')
  */
 class Design {
   props
-  context
   /**
      * Class name
      *
@@ -30,6 +29,7 @@ class Design {
      * @protected
      */
   components
+  context
   properties
   classes
   styles
@@ -38,13 +38,13 @@ class Design {
   /**
      * Constructor
      * @param props properties / свойства
-     * @param context additional property / дополнительное свойство
+     * @param contextEmit additional property / дополнительное свойство
      */
-  constructor (props, context) {
+  constructor (props, contextEmit) {
     this.props = props
-    this.context = context
     this.refs = (0, vue_1.toRefs)(props)
     this.properties = new DesignProperties_1.DesignProperties()
+    this.context = this.initContext(contextEmit)
     this.classes = new DesignClasses_1.DesignClasses(this.name, this.properties, this.props)
     this.styles = new DesignStyles_1.DesignStyles(this.name, this.properties, this.props)
     if (process.env.NODE_ENV !== 'production') {
@@ -258,6 +258,28 @@ class Design {
      */
   initRender (setup) {
     return (0, vue_1.h)('div', { class: setup.classes.value.main })
+  }
+
+  /**
+     * Checks the values of the input context and converts them to the required format
+     *
+     * Проверяет значения входного context и преобразует в нужный формат
+     * @param contextEmit checked values / проверяемые значения
+     * @protected
+     */
+  initContext (contextEmit) {
+    if (contextEmit &&
+            'attrs' in contextEmit &&
+            'slots' in contextEmit) {
+      return contextEmit
+    } else {
+      return {
+        attrs: (0, vue_1.useAttrs)(),
+        slots: (0, vue_1.useSlots)(),
+        emit: contextEmit || ((name, ...agr) => console.error(name, agr)),
+        expose: vue_1.defineExpose
+      }
+    }
   }
 }
 exports.Design = Design

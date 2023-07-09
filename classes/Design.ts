@@ -9,7 +9,6 @@ import {
   ref,
   SetupContext,
   SlotsType,
-  ToRefs,
   toRefs,
   useAttrs,
   useSlots,
@@ -39,7 +38,14 @@ export interface DesignSetupBasicInterface<C, E> {
 }
 
 export type DesignPropsType = Record<string, any>
-export type DesignPropsValueType<T = Record<string, any>> = Record<keyof T, any> & DesignPropsType
+export type DesignPropsPrototypeType<T extends DesignPropsType> = Partial<T>
+export type DesignPropsValueType<T extends DesignPropsType = DesignPropsType> =
+  DesignPropsPrototypeType<T>
+  & DesignPropsType
+export type DesignPropsRefsType<T> = {
+  [K in keyof T]-?: Ref<any>
+}
+
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
 export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
@@ -86,7 +92,7 @@ export class Design<
   protected styles: DesignStyles
 
   protected element = ref<E>()
-  protected refs: ToRefs<P>
+  protected refs: DesignPropsRefsType<P>
 
   /**
    * Constructor
@@ -97,7 +103,7 @@ export class Design<
     protected readonly props: P,
     contextEmit?: SetupContext<O, S> | SetupContext['emit']
   ) {
-    this.refs = toRefs(props)
+    this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()
     this.context = this.initContext(contextEmit)
 

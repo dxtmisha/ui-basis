@@ -151,7 +151,9 @@ exports.getColumn = getColumn
 function getColumnObject (record, column) {
   const data = {}
   forEach(record, (item, index) => {
-    data[index] = item?.[column]
+    if (item?.[column]) {
+      data[index] = item[column]
+    }
   })
   return data
 }

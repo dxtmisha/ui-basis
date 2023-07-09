@@ -2,4 +2,7 @@
 
 export const subClassesDesign = { /* classes */ }
 
-export const propsDesign = { /* sample */ }
+// export interface PropsDesignInterface { /* interface */ }
+// export const defaultsDesign = { /* defaults */ }
+
+// export const propsDesign = { /* sample */ }
