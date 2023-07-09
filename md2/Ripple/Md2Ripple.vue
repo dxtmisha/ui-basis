@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { defineOptions } from 'vue'
 
-import { propsType, subClasses } from './props'
+import { defaults, subClasses } from './props'
 
 import { RippleDesign } from '../../constructors/Ripple/RippleDesign'
+import { PropsRippleInterface } from '../../constructors/Ripple/props'
 
 defineOptions({
   name: 'Md2Ripple' // name component
 })
 
-const props = defineProps<propsType>()
+const props = withDefaults(defineProps<PropsRippleInterface>(), defaults)
 
 const design = new RippleDesign<typeof subClasses>(props)
 const render = design.render({})

@@ -1,8 +1,9 @@
+export interface PropsRippleInterface {
+  disabled?: boolean
+}
+
+export const defaultsRipple = {}
+
 export const propsRipple = {
-  // Values
-
-  // Status
   disabled: Boolean
-
-  // Options
 }

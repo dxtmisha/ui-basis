@@ -8,15 +8,14 @@ import {
   DesignSetupType
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
-import { AssociativeType } from '../types'
 
-import { propsRipple } from './props'
+import { PropsRippleInterface } from './props'
 
 export interface RippleDesignInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
-export type RippleDesignPropsValueType = DesignPropsValueType<typeof propsRipple>
+export type RippleDesignPropsValueType = DesignPropsValueType<PropsRippleInterface>
 export type RippleDesignEmitsType = DesignEmitsType
 export type RippleDesignSlotsType = SlotsType
 
@@ -31,7 +30,7 @@ export class RippleDesign<
   HTMLDivElement,
   P,
   RippleDesignInitInterface,
-  AssociativeType,
+  Record<string, any>,
   RippleDesignEmitsType,
   RippleDesignSlotsType
 > {

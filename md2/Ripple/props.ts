@@ -1,6 +1,10 @@
-import { DesignPropsPrototypeType } from '../../classes/Design'
-import { propsDesign, subClassesDesign } from './props.design'
-import { propsRipple } from '../../constructors/Ripple/props'
+import {
+  // PropsDesignInterface,
+  // defaultsDesign,
+  // propsDesign,
+  subClassesDesign
+} from './props.design'
+import { /* PropsRippleInterface, */ defaultsRipple } from '../../constructors/Ripple/props'
 
 export const subClasses = {
   ...subClassesDesign
@@ -9,9 +13,11 @@ export const subClasses = {
 
 }
 
-export const props = {
-  ...propsDesign,
-  ...propsRipple
+// export interface PropsInterface extends PropsDesignInterface, PropsRippleInterface {}
+
+export const defaults = {
+  // ...defaultsDesign,
+  ...defaultsRipple
 }
 
-export type propsType = DesignPropsPrototypeType<typeof props>
+// export const props = { ...propsDesign }
