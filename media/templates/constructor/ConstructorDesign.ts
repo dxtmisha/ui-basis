@@ -1,8 +1,9 @@
-import { h, SlotsType, VNode } from 'vue'
+import { h, VNode } from 'vue'
 
 import {
   Design,
   DesignEmitsType,
+  DesignPropsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../../classes/Design'
@@ -20,9 +21,9 @@ export interface ConstructorDesignComponentsInterface {
 
 export type ConstructorDesignPropsValueType = DesignPropsValueType<PropsConstructorInterface>
 export type ConstructorDesignEmitsType = DesignEmitsType
-export type ConstructorDesignSlotsType = SlotsType<{
-  default? (): VNode
-}>
+export type ConstructorDesignSlotsType = DesignPropsType & {
+  default?: () => VNode
+}
 
 /**
  * ConstructorDesign

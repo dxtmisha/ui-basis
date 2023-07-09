@@ -48,6 +48,8 @@ export type DesignPropsRefsType<T> = {
 
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
 export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
+export type DesignSlotNamesType<T extends DesignPropsType> = keyof T
+export type DesignSetupContextType<O extends DesignEmitsType, S extends DesignPropsType> = SetupContext<O, SlotsType<S>>
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
 export type DesignSetupType<
   C,
@@ -68,7 +70,7 @@ export class Design<
   I extends Record<string, any> = Record<string, any>,
   M extends AssociativeType = AssociativeType,
   O extends DesignEmitsType = EmitsOptions,
-  S extends SlotsType = SlotsType
+  S extends DesignPropsType = DesignPropsType
 > {
   /**
    * Class name
@@ -86,7 +88,7 @@ export class Design<
    */
   protected components?: M
 
-  protected context: SetupContext<O, S>
+  protected context: DesignSetupContextType<O, S>
   protected properties: DesignProperties
   protected classes: DesignClasses<C>
   protected styles: DesignStyles
@@ -101,7 +103,7 @@ export class Design<
    */
   constructor (
     protected readonly props: P,
-    contextEmit?: SetupContext<O, S> | SetupContext['emit']
+    contextEmit?: DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']
   ) {
     this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()
@@ -283,9 +285,9 @@ export class Design<
    * этот элемент, то слот добавится в него
    */
   initSlot (
-    name = 'default',
+    name: DesignSlotNamesType<S>,
     children?: any[],
-    props: Record<string, any> = {}
+    props: DesignPropsType = {}
   ): VNode | undefined {
     const slots = this.context.slots
 
@@ -293,7 +295,7 @@ export class Design<
       slots?.[name] &&
       typeof slots[name] === 'function'
     ) {
-      const slot = (slots[name] as ((props?: Record<string, any>) => VNode))(props)
+      const slot = (slots[name] as ((props?: DesignPropsType) => VNode))(props)
 
       if (children) {
         children.push(slot)
@@ -361,9 +363,10 @@ export class Design<
    * @param contextEmit checked values / проверяемые значения
    * @protected
    */
-  protected initContext (contextEmit?: SetupContext<O, S> | SetupContext['emit']): SetupContext<O, S> {
+  protected initContext (contextEmit?: DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']): DesignSetupContextType<O, S> {
     if (
       contextEmit &&
+      typeof contextEmit === 'object' &&
       'attrs' in contextEmit &&
       'slots' in contextEmit
     ) {
@@ -374,7 +377,7 @@ export class Design<
         slots: useSlots(),
         emit: contextEmit || ((name: string, ...agr: any[]) => console.error(name, agr)),
         expose: defineExpose
-      } as SetupContext<O, S>
+      } as DesignSetupContextType<O, S>
     }
   }
 }

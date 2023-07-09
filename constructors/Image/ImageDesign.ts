@@ -1,7 +1,8 @@
-import { ComputedRef, h, onUnmounted, SlotsType, VNode, watch } from 'vue'
+import { ComputedRef, h, onUnmounted, VNode, watch } from 'vue'
 
 import {
   Design,
+  DesignPropsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
@@ -17,9 +18,9 @@ export interface ImageDesignInitInterface {
 
 export type ImageDesignPropsValueType = DesignPropsValueType<PropsImageInterface>
 export type ImageDesignEmitsType = {
-  ['on-load']: [value: any]
+  load: [value: any]
 }
-export type ImageDesignSlotsType = SlotsType
+export type ImageDesignSlotsType = DesignPropsType
 
 /**
  * ImageDesign
@@ -66,7 +67,7 @@ export class ImageDesign<
 
     onUnmounted(() => this.image?.destructor())
 
-    watch(this.image.getDataImage(), value => this.context.emit('on-load', value))
+    watch(this.image.getDataImage(), value => this.context.emit('load', value))
 
     return {
       text: this.image.text

@@ -1,9 +1,10 @@
-import { h, SlotsType, VNode } from 'vue'
+import { h, VNode } from 'vue'
 import { createElement } from '../../functions/element'
 
 import {
   Design,
   DesignEmitsType,
+  DesignPropsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
@@ -17,7 +18,7 @@ export interface RippleDesignInitInterface {
 
 export type RippleDesignPropsValueType = DesignPropsValueType<PropsRippleInterface>
 export type RippleDesignEmitsType = DesignEmitsType
-export type RippleDesignSlotsType = SlotsType
+export type RippleDesignSlotsType = DesignPropsType
 
 /**
  * RippleDesign

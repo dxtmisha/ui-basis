@@ -4,21 +4,22 @@ import {
   defineOptions
 } from 'vue'
 
-import { propsType, pTest, subClasses } from './props'
+import { PropsInterface, defaults, subClasses } from './props'
 
-import { IconDesign, IconDesignSlotsType } from '../../constructors/Icon/IconDesign'
+import { IconDesign, IconDesignEmitsType, IconDesignSlotsType } from '../../constructors/Icon/IconDesign'
 
 import Md2Image from '../Image/Md2Image.vue'
 
 defineOptions({
-  name: 'Md2Icon' // name component,
+  name: 'Md2Icon' // name component
 })
 
-const props = defineProps<pTest>()
+const props = withDefaults(defineProps<PropsInterface>(), defaults)
+const emit = defineEmits<IconDesignEmitsType>()
 
 defineSlots<IconDesignSlotsType>()
 
-const design = new IconDesign<typeof subClasses>(props)
+const design = new IconDesign<typeof subClasses>(props, emit)
   .setComponents({
     image: Md2Image
   })
@@ -27,9 +28,7 @@ const render = design.render({})
 </script>
 
 <template>
-  <render>
-    <slot/>
-  </render>
+  <render/>
 </template>
 
 <style lang="scss">

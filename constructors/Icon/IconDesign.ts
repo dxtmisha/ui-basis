@@ -1,31 +1,32 @@
-import { computed, ComputedRef, h, SlotsType, VNode } from 'vue'
+import { computed, ComputedRef, h, VNode } from 'vue'
 
 import {
   Design,
-  DesignEmitsType,
+  DesignPropsType,
   DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
-import { AssociativeType } from '../types'
 
-import { propsIcon } from './props'
+import { PropsIconInterface } from './props'
 
 export interface IconDesignInitInterface {
   isActive: ComputedRef<boolean>
-  iconBind: ComputedRef<AssociativeType>
-  iconActiveBind: ComputedRef<AssociativeType>
+  iconBind: ComputedRef<Record<string, any>>
+  iconActiveBind: ComputedRef<Record<string, any>>
 }
 
 export interface IconDesignComponentsInterface {
   image: object
 }
 
-export type IconDesignPropsValueType = DesignPropsValueType<typeof propsIcon>
-export type IconDesignEmitsType = DesignEmitsType
-export type IconDesignSlotsType = SlotsType<{
-  default? (): VNode
-}>
+export type IconDesignPropsValueType = DesignPropsValueType<PropsIconInterface>
+export type IconDesignEmitsType = {
+  load: [value: any]
+}
+export type IconDesignSlotsType = DesignPropsType & {
+  default?: () => any
+}
 
 /**
  * IconDesign
@@ -35,7 +36,7 @@ export class IconDesign<
   P extends IconDesignPropsValueType = IconDesignPropsValueType
 > extends Design<
   C,
-  HTMLElement,
+  HTMLSpanElement,
   P,
   IconDesignInitInterface,
   IconDesignComponentsInterface,
@@ -51,8 +52,8 @@ export class IconDesign<
   protected init (): IconDesignInitInterface {
     return {
       isActive: this.isActive,
-      iconBind: this.getBind(this.refs.icon, this.imageBind),
-      iconActiveBind: this.getBind(this.refs.iconActive, this.imageBind)
+      iconBind: this.getBind(this.refs.icon, this.iconBind),
+      iconActiveBind: this.getBind(this.refs.iconActive, this.iconActiveBind)
     }
   }
 
@@ -81,7 +82,7 @@ export class IconDesign<
     }
 
     return h(
-      'div',
+      'span',
       {
         ref: this.element,
         class: setup.classes.value.main
@@ -107,7 +108,34 @@ export class IconDesign<
   protected readonly imageBind = computed(() => {
     return {
       disabled: this.props.disabled,
-      turn: this.props.turn
+      turn: this.props.turn,
+      onLoad: (value: any) => this.context.emit('load', value)
+    }
+  })
+
+  /**
+   * Basic input data for the first image
+   *
+   * Базовые входные данные для первого изображения
+   * @protected
+   */
+  protected readonly iconBind = computed(() => {
+    return {
+      ...this.imageBind.value,
+      hide: this.isActive.value
+    }
+  })
+
+  /**
+   * Basic input data for the active icon
+   *
+   * Базовые входные данные для активной иконки
+   * @protected
+   */
+  protected readonly iconActiveBind = computed(() => {
+    return {
+      ...this.imageBind.value,
+      hide: !this.isActive.value
     }
   })
 }

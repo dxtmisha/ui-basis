@@ -2,21 +2,21 @@ import { PropType } from 'vue'
 
 export interface PropsImageInterface {
   // Values
-  value: string | File
-  coordinator: [number, number?, number?, number?]
-  size: string | number
-  x: string | number
-  y: string | number
+  value?: string | File
+  coordinator?: [number, number?, number?, number?]
+  size?: string | number
+  x?: string | number
+  y?: string | number
 
   // Adaptive
-  adaptive: boolean
-  adaptiveGroup: string
-  adaptiveAlways: boolean
-  objectWidth: number
-  objectHeight: number
+  adaptive?: boolean
+  adaptiveGroup?: string
+  adaptiveAlways?: boolean
+  objectWidth?: number
+  objectHeight?: number
 
   // Options
-  url: string
+  url?: string
 }
 
 export const defaultsImage = {
