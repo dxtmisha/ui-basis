@@ -25,10 +25,20 @@
 
   appearance: none;
 
+  &--visible,
   &--hide,
-  &--value,
-  &--visible {
+  &--value {
     display: block;
+  }
+
+  &--visible {
+    transition-duration: v('d.sys.transition-duration.fade.enter');
+    animation-duration: v('d.sys.transition-duration.fade.enter');
+  }
+
+  &--hide {
+    transition-duration: v('d.sys.transition-duration.fade.exit');
+    animation-duration: v('d.sys.transition-duration.fade.exit');
   }
 }
 
@@ -72,14 +82,15 @@
       @include background(v('??palette'));
 
       transition-property: background-color;
-    }
-
-    @include state('hide') {
-      animation-name: n('??linear-hidden');
+      transition-duration: inherit;
     }
 
     @include state('visible') {
       animation-name: n('??linear-visible');
+    }
+
+    @include state('hide') {
+      animation-name: n('??linear-hidden');
     }
 
     @include state('value') {
@@ -104,6 +115,12 @@
           animation-fill-mode: forwards;
         }
 
+        @include state('visible') {
+          &::after {
+            animation-name: #{n('??linear-type1')}
+          }
+        }
+
         @include state('hide') {
           animation-delay: v('d.sys.transitionDuration.sm');
 
@@ -114,12 +131,6 @@
           &::before {
             right: 0;
             transition-property: right;
-          }
-        }
-
-        @include state('visible') {
-          &::after {
-            animation-name: #{n('??linear-type1')}
           }
         }
       }
@@ -143,12 +154,12 @@
     @include initByCustom('circular.length', #{calc(2 * 3.1415926535 * ((v('??width') - (2 * v('??padding')) / 2)))});
     @include initByCustom('circular.dasharray', #{calc(v('??circular.length') / 100)});
 
-    @include state('hide') {
-      animation-name: n('??circle-hidden');
-    }
-
     @include state('visible') {
       animation-name: n('??circle-visible');
+    }
+
+    @include state('hide') {
+      animation-name: n('??circle-hidden');
     }
   }
 }

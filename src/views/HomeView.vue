@@ -281,7 +281,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
-      <md2-progress visible/>
+      <md2-progress :visible="turn"/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -292,6 +292,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress indeterminate="type2" :visible="!turn"/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -302,6 +303,7 @@
         @click="turn=!turn"
         @load="console.log($event)"
       />
+      <md2-progress circular :visible="!turn"/>
     </div>
   </div>
   <div style="height: 1200px"></div>

@@ -93,7 +93,7 @@ export class ProgressDesign<
       ref: this.element,
       class: setup.classes.value.main,
       viewBox: '0 0 48 48',
-      onAnimationendStop: setup.onAnimation
+      onAnimationend: setup.onAnimation
     }, children)
   }
 
@@ -157,6 +157,7 @@ export class ProgressDesign<
    * @protected
    */
   protected onAnimation ({ animationName }: AnimationEvent): void {
+    console.log('animationName', animationName)
     if (animationName.match('-hidden')) {
       this.hide.value = false
     }

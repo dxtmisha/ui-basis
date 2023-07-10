@@ -253,7 +253,8 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
         is && (
           prop === true ||
           this.properties.isBool(item)
-        )
+        ) &&
+        this.checkByCategory(item)
       ) ||
       this.properties.isExceptions(item, prop)
     ) {
@@ -315,6 +316,37 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     } else {
       return className
     }
+  }
+
+  /**
+   * Checks if there are similar elements by property, if there are, then does not add a class for work
+   *
+   * Проверяет, есть ли схожие элементы по свойству, если есть, то не добавляет класс для работы
+   * @param item current property / текущее свойство
+   * @private
+   */
+  private checkByCategory (item: PropertiesItemType | PropertiesStateType) {
+    if (this.properties.isDefault(item)) {
+      const category = this.properties.getCategoryName(item)
+
+      if (category) {
+        let active = true
+
+        this.properties.getByCategory(category)
+          ?.forEach(property => {
+            if (
+              item.name !== property.name &&
+              this.props?.[property.name]
+            ) {
+              active = false
+            }
+          })
+
+        return active
+      }
+    }
+
+    return true
   }
 
   /**

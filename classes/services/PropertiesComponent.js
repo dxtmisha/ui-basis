@@ -47,7 +47,8 @@ module.exports = class PropertiesComponent {
    *     state:Object<string,*>[]
    *   }[],
    *   style?:boolean,
-   *   default?:boolean
+   *   default?:boolean,
+   *   category?:string
    * }>}
    */
   props
@@ -183,7 +184,8 @@ module.exports = class PropertiesComponent {
    *     state:Object<string,*>[]
    *   }[],
    *   style?:boolean,
-   *   default?:boolean
+   *   default?:boolean,
+   *   category?:string
    * }>}
    */
   getProps () {
@@ -255,7 +257,8 @@ module.exports = class PropertiesComponent {
    *       state:Object<string,*>[]
    *     }[],
    *     style?:boolean,
-   *     default?:boolean
+   *     default?:boolean,
+   *     category?:string
    *   }
    * }[]}
    */
@@ -356,12 +359,14 @@ module.exports = class PropertiesComponent {
    *     state:Object<string,*>[]
    *   }[],
    *   style?:boolean,
-   *   default?:boolean
+   *   default?:boolean,
+   *   category?:string
    * }>}
    * @private
    */
   __getProps () {
     const keyDefault = PropertiesTool.getKeyDefault()
+    const keyCategory = PropertiesTool.getKeyCategory()
     const properties = {}
 
     this.getState().forEach(({
@@ -379,7 +384,8 @@ module.exports = class PropertiesComponent {
         valueAll: [],
         state: [],
         style: undefined,
-        default: item?.[keyDefault]
+        default: item?.[keyDefault],
+        category: item?.[keyCategory]
       }
     })
 

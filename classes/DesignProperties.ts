@@ -18,7 +18,8 @@ export interface PropertiesItemType extends PropertiesStateType {
   className?: string,
   valueAll: BooleanOrStringType[]
   style?: boolean,
-  default?: boolean
+  default?: boolean,
+  category?: string
 }
 
 export type PropertiesListType = PropertiesItemType[]
@@ -66,6 +67,16 @@ export class DesignProperties {
   }
 
   /**
+   * Returns a list of properties by category
+   *
+   * Возвращает список свойств по категории
+   * @param category category name / название категории
+   */
+  getByCategory (category: string): AnyOrUndefinedType<PropertiesListType> {
+    return this.item.value.filter(item => item?.category === category)
+  }
+
+  /**
    * Gets a property by its name or returns the property if the input is the property itself
    *
    * Получает свойство по его имени или возвращает свойство, если на входе является само свойство
@@ -81,6 +92,21 @@ export class DesignProperties {
   }
 
   /**
+   * Returns the category name of the property
+   *
+   * Возвращает название категории у свойства
+   * @param nameItem property names or the property instance itself / названия свойств
+   * или сам экземпляр свойства
+   */
+  getCategoryName (
+    nameItem: string | PropertiesItemType | PropertiesStateType
+  ): string | undefined {
+    const item = this.getOrItem(nameItem)
+
+    return item && 'category' in item ? item.category : undefined
+  }
+
+  /**
    * Property modification
    *
    * Изменение свойства
@@ -92,6 +118,27 @@ export class DesignProperties {
     }
 
     return this
+  }
+
+  isDefault (name: string): boolean
+  isDefault (item: PropertiesItemType | PropertiesStateType): boolean
+  /**
+   * Checks if the property has a default value
+   *
+   * Проверяет, есть ли у свойства значение по умолчанию
+   * @param nameItem property names or the property instance itself / названия свойств
+   * или сам экземпляр свойства
+   */
+  isDefault (
+    nameItem: string | PropertiesItemType | PropertiesStateType
+  ) {
+    const item = this.getOrItem(nameItem)
+
+    return !!(
+      item &&
+      'default' in item &&
+      item.default
+    )
   }
 
   isValue (name: string, value: BooleanOrStringType): boolean

@@ -14,8 +14,7 @@ export interface PropsProgressInterface {
 
 export const defaultsProgress = {
   max: 100,
-  delay: 480,
-  linear: (props: PropsProgressInterface) => !props.circular
+  delay: 480
 }
 
 export const propsProgress = {
@@ -30,10 +29,7 @@ export const propsProgress = {
   visible: Boolean,
 
   // Options
-  linear: {
-    type: Boolean,
-    default: defaultsProgress.linear
-  },
+  linear: Boolean,
   circular: Boolean,
   delay: {
     type: Number,
