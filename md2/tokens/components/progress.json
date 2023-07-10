@@ -1,0 +1,11 @@
+{
+  "height": "{ref.spacing.1}",
+  "background-color": "{sys.palette.primary}",
+  "linear": {
+    "background-opacity": "{sys.opacity.pressed}"
+  },
+  "circular": {
+    "padding": "{ref.spacing.1}",
+    "width": "{ref.spacing.12}"
+  }
+}

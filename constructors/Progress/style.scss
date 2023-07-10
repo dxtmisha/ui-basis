@@ -1,0 +1,171 @@
+@import "../../styles/properties";
+
+@mixin initProgressDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinProgress;
+    @include mixinProgressCircle;
+
+    @include mixinProgressLinear;
+    @include mixinProgressLinearIndeterminate;
+
+    @include mixinProgressCircular;
+    @include mixinProgressCircularIndeterminate;
+
+    @content;
+  }
+}
+
+@mixin mixinProgress {
+  display: none;
+  overflow: hidden;
+  position: absolute;
+
+  transition-property: background-color;
+  animation-fill-mode: forwards;
+
+  appearance: none;
+
+  &--hide,
+  &--value,
+  &--visible {
+    display: block;
+  }
+}
+
+@mixin mixinProgressCircle {
+  &__circle {
+    transition-property: background-color, stroke-dasharray;
+
+    fill: transparent;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    stroke-opacity: 1;
+    stroke-width: v('??height');
+  }
+
+  &--value {
+    @include subclass('circle') {
+      animation-name: none;
+      stroke-dasharray: calc(#{v('??value')} * #{v('??circular.dasharray')}) #{v('??circular.length')};
+      stroke-linecap: butt;
+    }
+  }
+}
+
+@mixin mixinProgressLinear {
+  &--linear {
+    @include paddingX(0);
+
+    width: 100%;
+    height: v('??height');
+
+    &::after,
+    &::before {
+      @include absolute;
+
+      content: ' ';
+      @include background(v('??palette'));
+
+      transition-property: background-color;
+    }
+
+    @include state('hide') {
+      animation-name: n('??linear-hidden');
+    }
+
+    @include state('visible') {
+      animation-name: n('??linear-visible');
+    }
+
+    @include state('value') {
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        right: v('??value');
+        transition-property: right;
+      }
+    }
+  }
+}
+
+@mixin mixinProgressLinearIndeterminate {
+  &--linear {
+    @include state('indeterminate') {
+      &--type1 {
+        &::after {
+          animation-duration: v('??transition-duration');
+          animation-fill-mode: forwards;
+        }
+
+        @include state('hide') {
+          animation-delay: v('d.sys.transitionDuration.sm');
+
+          &::after {
+            animation-name: #{n('??linear-type1')}
+          }
+
+          &::before {
+            right: 0;
+            transition-property: right;
+          }
+        }
+
+        @include state('visible') {
+          &::after {
+            animation-name: #{n('??linear-type1')}
+          }
+        }
+      }
+
+      &--type2 {
+        &::after {
+          animation: #{n('??linear-type3')} 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+          animation-delay: 1.15s;
+        }
+
+        &::before {
+          animation: #{n('??linear-type2')} 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+      }
+    }
+  }
+}
+
+@mixin mixinProgressCircular {
+  &--circular {
+    @include initByCustom('circular.length', #{calc(2 * 3.1415926535 * ((v('??width') - (2 * v('??padding')) / 2)))});
+    @include initByCustom('circular.dasharray', #{calc(v('??circular.length') / 100)});
+
+    @include state('hide') {
+      animation-name: n('??circle-hidden');
+    }
+
+    @include state('visible') {
+      animation-name: n('??circle-visible');
+    }
+  }
+}
+
+@mixin mixinProgressCircularIndeterminate {
+  &--circular {
+    @include state('indeterminate') {
+      &--type1 {
+        @include subclass('circle') {
+          animation-name: n('??circle-type1');
+          animation-duration: v('??transition-duration');
+          animation-fill-mode: forwards;
+        }
+      }
+
+      &--type2 {
+        @include subclass('circle') {
+          transform-origin: center;
+          animation: #{n('??circle-type2')} 2s linear infinite, #{n('??circle-type3')} 1.5s ease-in-out infinite;
+        }
+      }
+    }
+  }
+}

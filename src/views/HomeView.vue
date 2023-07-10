@@ -272,6 +272,7 @@
     </div>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
+    progress
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
         style="border:black solid 1px;"
@@ -280,6 +281,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress visible/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -322,6 +324,7 @@ import Md2Button from '../../md2/Button/index.vue'
 import Md2Image from '../../md2/Image/Md2Image.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
 import Md2Icon from '../../md2/Icon/Md2Icon.vue'
+import Md2Progress from '../../md2/Progress/Md2Progress.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -329,6 +332,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md2Progress,
     Md2Icon,
     Md2Button,
     Md2Image

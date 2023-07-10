@@ -8,7 +8,7 @@
 @mixin propertiesGlobal {
   @include dirInit;
 
-  * {
+  *, *::after, *::before {
     @include paletteGlobal;
     @include marginGlobal;
     @include paddingGlobal;
