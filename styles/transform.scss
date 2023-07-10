@@ -1,6 +1,6 @@
 @mixin transformGlobal {
-  --sys-transform-translateX: 0;
-  --sys-transform-translateY: 0;
+  --sys-transform-translateX: 0px;
+  --sys-transform-translateY: 0px;
   --sys-transform-scale: 1;
   --sys-transform-rotate: 0;
 }
@@ -26,5 +26,5 @@
 }
 
 @mixin translateInit {
-  transform: translateX(#{calc(var(--sys-transform-translateX, 0) * var(--d-dir))}) translateY(var(--sys-transform-translateY, 0)) scale(var(--sys-transform-scale, 1)) rotate(var(--sys-transform-rotate, 0));
+  transform: translateX(#{calc(var(--sys-transform-translateX, 0px) * var(--d-dir))}) translateY(var(--sys-transform-translateY, 0px)) scale(var(--sys-transform-scale, 1)) rotate(var(--sys-transform-rotate, 0));
 }

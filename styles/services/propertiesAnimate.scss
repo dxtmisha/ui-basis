@@ -9,12 +9,6 @@
     $name: map.get($property, 'name');
     $value: map.get($property, 'value');
 
-    @at-root {
-      :root {
-        --#{$name}: #{$name};
-      }
-    }
-
     @keyframes #{$name} {
       @each $frame, $item in $value {
         @if (map.has-key($item, 'value')) {
