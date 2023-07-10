@@ -315,6 +315,7 @@
       />
     </div>
   </div>
+  <div class="is-test"></div>
 </template>
 
 <script lang="ts">
@@ -353,4 +354,18 @@ export default defineComponent({
 })
 </script>
 
-<style/>
+<style lang="scss">
+@import "styles/properties";
+
+.is-test {
+  position: fixed;
+
+  top: 64px;
+  @include left(64px);
+
+  width: 128px;
+  height: 128px;
+
+  background-color: red;
+}
+</style>

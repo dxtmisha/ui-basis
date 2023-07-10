@@ -26,5 +26,5 @@
 }
 
 @mixin translateInit {
-  transform: translateX(var(--sys-transform-translateX, 0)) translateY(var(--sys-transform-translateY, 0)) scale(var(--sys-transform-scale, 1)) rotate(var(--sys-transform-rotate, 0));
+  transform: translateX(#{calc(var(--sys-transform-translateX, 0) * var(--d-dir))}) translateY(var(--sys-transform-translateY, 0)) scale(var(--sys-transform-scale, 1)) rotate(var(--sys-transform-rotate, 0));
 }

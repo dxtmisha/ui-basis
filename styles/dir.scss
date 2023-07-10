@@ -9,6 +9,15 @@
     --d-dir-text-left: left;
     --d-dir-text-right: right;
 
+    *, *:after, *:before {
+      --d-dir-position-left: var(--sys-position-left, initial);
+      --d-dir-position-right: var(--sys-position-right, initial);
+      --d-dir-margin-left: var(--sys-margin-left, 0);
+      --d-dir-margin-right: var(--sys-margin-right, 0);
+      --d-dir-padding-left: var(--sys-padding-left, 0);
+      --d-dir-padding-right: var(--sys-padding-right, 0);
+    }
+
     &[dir="rtl"] {
       --d-dir: -1;
       --d-dir-left: 0;
@@ -20,6 +29,15 @@
       --d-dir-text-left: right;
       --d-dir-text-right: left;
       direction: rtl;
+
+      *, *:after, *:before {
+        --d-dir-position-left: var(--sys-position-right, initial);
+        --d-dir-position-right: var(--sys-position-left, initial);
+        --d-dir-margin-left: var(--sys-margin-right, 0);
+        --d-dir-margin-right: var(--sys-margin-left, 0);
+        --d-dir-padding-left: var(--sys-padding-right, 0);
+        --d-dir-padding-right: var(--sys-padding-left, 0);
+      }
     }
   }
 }

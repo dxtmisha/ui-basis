@@ -1,10 +1,5 @@
 @import "dir";
 
-@mixin marginGlobal {
-  --sys-margin-left: 0;
-  --sys-margin-right: 0;
-}
-
 @mixin margin($value) {
   margin: $value;
 }
@@ -30,8 +25,8 @@
 }
 
 @mixin __marginDir() {
-  margin-left: dirToLeft(--sys-margin-left, --sys-margin-right);
-  margin-right: dirToRight(--sys-margin-left, --sys-margin-right);
+  margin-left: var(--d-dir-margin-left);
+  margin-right: var(--d-dir-margin-right);
 }
 
 @mixin marginTop($value) {

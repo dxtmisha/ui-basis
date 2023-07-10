@@ -1,10 +1,5 @@
 @import "dir";
 
-@mixin positionGlobal {
-  --sys-position-left: auto;
-  --sys-position-right: auto;
-}
-
 @mixin inset($value: 0) {
   inset: $value;
 
@@ -47,8 +42,8 @@
 }
 
 @mixin __positionDir() {
-  left: dirToLeft(--sys-position-left, --sys-position-right);
-  right: dirToRight(--sys-position-left, --sys-position-right);
+  left: var(--d-dir-position-left);
+  right: var(--d-dir-position-right);
 }
 
 @mixin absolute($value: 0) {

@@ -1,10 +1,5 @@
 @import "dir";
 
-@mixin paddingGlobal {
-  --sys-padding-left: 0;
-  --sys-padding-right: 0;
-}
-
 @mixin padding($value) {
   padding: $value;
 }
@@ -30,8 +25,8 @@
 }
 
 @mixin __paddingDir() {
-  padding-left: dirToLeft(--sys-padding-left, --sys-padding-right);
-  padding-right: dirToRight(--sys-padding-left, --sys-padding-right);
+  padding-left: var(--d-dir-padding-left);
+  padding-right: var(--d-dir-padding-right);
 }
 
 @mixin paddingTop($value) {
