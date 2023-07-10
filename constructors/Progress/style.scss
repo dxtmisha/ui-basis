@@ -62,7 +62,11 @@
 
     &::after,
     &::before {
-      @include absolute;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 100%;
 
       content: ' ';
       @include background(v('??palette'));

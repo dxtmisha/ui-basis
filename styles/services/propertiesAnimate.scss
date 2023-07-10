@@ -1,5 +1,7 @@
 @use "sass:map";
 
+$designsAnimate: false !default;
+
 /// Mixin for generating an element state
 ///
 /// Миксин для генерации анимация
@@ -8,6 +10,8 @@
   @if ($property != null) {
     $name: map.get($property, 'name');
     $value: map.get($property, 'value');
+
+    $designsAnimate: true !global;
 
     @keyframes #{$name} {
       @each $frame, $item in $value {
@@ -18,5 +22,7 @@
         }
       }
     }
+
+    $designsAnimate: false !global;
   }
 }

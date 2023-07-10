@@ -315,7 +315,6 @@
       />
     </div>
   </div>
-  <div class="is-test"></div>
 </template>
 
 <script lang="ts">

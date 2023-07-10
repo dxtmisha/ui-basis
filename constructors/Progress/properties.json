@@ -64,11 +64,11 @@
   },
   "indeterminate": {
     "type1": {
-      "content": "'type1'",
+      "content": "type1",
       "_type": "state"
     },
     "type2": {
-      "content": "'type2'",
+      "content": "type2",
       "_type": "state"
     },
     "_type": "state",

@@ -1,6 +1,7 @@
 @use "sass:map";
 
 $designsClassIndex: 'class' !default;
+$designsAnimate: false !default;
 
 @import "../color";
 @import "../dimension";
@@ -11,6 +12,13 @@ $designsClassIndex: 'class' !default;
 @import "../position";
 @import "../rules";
 @import "../transform";
+
+@function isAnimate($name) {
+  @return $designsAnimate and (
+    $name == 'left' or
+    $name == 'right'
+  )
+}
 
 /// Generating value
 ///
@@ -28,10 +36,10 @@ $designsClassIndex: 'class' !default;
       #{'--'}#{$designsClassIndex}-#{$index}: #{$value};
     }
 
-    @if ($modification) {
-      @include initPropertyValue($name, $value);
-    } @else {
+    @if (not $modification or isAnimate($name)) {
       #{$name}: #{$value};
+    } @else {
+      @include initPropertyValue($name, $value);
     }
   }
 }
