@@ -19,6 +19,7 @@
   display: none;
   overflow: hidden;
   position: absolute;
+  box-sizing: border-box;
 
   transition-property: background-color;
   animation-fill-mode: forwards;
@@ -56,7 +57,7 @@
 
   &--value {
     @include subclass('circle') {
-      animation-name: none;
+      animation-name: none !important;
       stroke-dasharray: calc(#{v('??value')} * #{v('??circular.dasharray')}) #{v('??circular.length')};
       stroke-linecap: butt;
     }
@@ -122,7 +123,7 @@
         }
 
         @include state('hide') {
-          animation-delay: v('d.sys.transitionDuration.sm');
+          animation-delay: v('d.sys.transition-duration.fade.exit');
 
           &::after {
             animation-name: #{n('??linear-type1')}
@@ -151,8 +152,11 @@
 
 @mixin mixinProgressCircular {
   &--circular {
-    @include initByCustom('circular.length', #{calc(2 * 3.1415926535 * ((v('??width') - (2 * v('??padding')) / 2)))});
+    @include initByCustom('circular.length', #{calc(2 * 3.1415926535 * 20px)});
     @include initByCustom('circular.dasharray', #{calc(v('??circular.length') / 100)});
+
+    @include squared(v('??width'));
+    max-width: #{calc(100% - 2 * v('??inset'))};
 
     @include state('visible') {
       animation-name: n('??circle-visible');

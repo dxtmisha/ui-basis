@@ -15,10 +15,13 @@
     "_type": "var"
   },
   "#circle": {
-    "palette-stroke": "{??palette}"
+    "stroke": "{??palette}"
   },
   "linear": {
-    "palette-background": "{??palette}",
+    "background-color": {
+      "value": "{??palette}",
+      "_type": "property"
+    },
     "position": {
       "top": {
         "top": {
@@ -43,19 +46,17 @@
     "_default": true
   },
   "circular": {
-    "inset": "0",
-    "padding": {
+    "inset": {
       "_var": true
     },
     "margin": "auto",
     "width": {
       "_type": "var"
     },
-    "squared": "{??circular.width}",
     "rotate": "-90deg",
     "dense": {
-      "padding": {
-        "value": "0",
+      "inset": {
+        "value": "0px",
         "_var": true
       }
     },

@@ -58,7 +58,7 @@ export class ProgressDesign<
     this.classes.setExtraMain(this.classesStatus)
     this.styles.setExtra(this.stylesStatus)
 
-    watch(this.refs.visible, () => this.watchVisible(), { immediate: true })
+    watch([this.refs.visible, this.refs.value], () => this.watchVisible(), { immediate: true })
 
     return {
       tag: this.tag,
@@ -92,6 +92,7 @@ export class ProgressDesign<
     return h(setup.tag.value, {
       ref: this.element,
       class: setup.classes.value.main,
+      style: setup.styles.value,
       viewBox: '0 0 48 48',
       onAnimationend: setup.onAnimation
     }, children)
@@ -157,7 +158,6 @@ export class ProgressDesign<
    * @protected
    */
   protected onAnimation ({ animationName }: AnimationEvent): void {
-    console.log('animationName', animationName)
     if (animationName.match('-hidden')) {
       this.hide.value = false
     }
@@ -172,7 +172,10 @@ export class ProgressDesign<
   protected watchVisible () {
     clearTimeout(this.timeout)
 
-    if (this.visible.value !== this.refs.visible.value) {
+    if (this.props.value) {
+      this.hide.value = false
+      this.visible.value = false
+    } else if (this.visible.value !== this.refs.visible.value) {
       if (this.refs.visible.value) {
         this.timeout = setTimeout(() => this.updateVisible(), this.props.delay || 0)
       } else {

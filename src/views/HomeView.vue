@@ -204,6 +204,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress :value="50" :delay="0" :visible="turn" position="top" inverse/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -213,6 +214,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress :value="50" :max="200" :delay="0" :visible="turn" position="bottom"/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -242,6 +244,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress circular :value="50" :delay="0" :visible="turn" dense/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -251,6 +254,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress circular :value="50" :max="200" :delay="0" :visible="turn"/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -260,6 +264,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress circular indeterminate="type2" :delay="0" :visible="turn"/>
     </div>
     <div style="position: relative; width: 160px; height: 160px;">
       <md2-image
@@ -269,6 +274,7 @@
         :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
         @click="turn=!turn"
       />
+      <md2-progress circular indeterminate="type2" :visible="turn"/>
     </div>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 24px;">
