@@ -1,33 +1,9 @@
 {
-  "overflow": "hidden",
-  "position": "absolute",
-  "inset": "0",
-  "z-index": "8",
   "background-color": {
     "_type": "var"
   },
   "background-opacity": {
     "_type": "var"
   },
-  "border-radius": "inherit",
-  "#item": {
-    "position": "absolute",
-    "inset": "0",
-    "background-color": "var(--??sys-color, var(--sys-color, var(--??background-color)))",
-    "background-opacity": "{??background-opacity}"
-  },
-  "animate|start": {
-    "0%": {
-      "gradient-opacity": "0",
-      "clip-path": "circle(000% at {??x} {??y})"
-    },
-    "50%": {
-      "gradient-opacity": "{??background-opacity}",
-      "clip-path": "circle(075% at {??x} {??y})"
-    },
-    "100%": {
-      "gradient-opacity": "{??background-opacity}",
-      "clip-path": "circle(150% at {??x} {??y})"
-    }
-  }
+  "#item": {}
 }

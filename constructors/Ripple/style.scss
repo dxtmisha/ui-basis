@@ -1,9 +1,34 @@
 @import "../../styles/properties";
+@import "./styleAnimation";
 
 @mixin initRippleDesign($component: 'design.component') {
   @include initDesign($component) {
+    @include mixinRipple;
+    @include mixinRippleItem;
+
     @include mixinRippleAnimation;
+    @include mixinRippleAnimationStart;
+
     @content;
+  }
+}
+
+@mixin mixinRipple {
+  overflow: hidden;
+  @include absolute;
+  z-index: 8;
+
+  border-radius: inherit;
+}
+
+@mixin mixinRippleItem {
+  &__item {
+    @include absolute;
+
+    @include background(
+                    v('??sys.color', var(--sys-color, v('??background-color'))),
+                    v('??background-opacity')
+    )
   }
 }
 

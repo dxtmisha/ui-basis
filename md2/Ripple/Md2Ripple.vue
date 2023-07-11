@@ -12,8 +12,8 @@ defineOptions({
 
 const props = withDefaults(defineProps<PropsRippleInterface>(), defaults)
 
-const design = new RippleDesign<typeof subClasses>(props)
-const render = design.render({})
+const render = new RippleDesign<typeof subClasses>(props)
+  .render({})
 </script>
 
 <template>

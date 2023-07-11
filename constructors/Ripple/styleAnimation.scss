@@ -1,0 +1,18 @@
+@import "../../styles/properties";
+
+@mixin mixinRippleAnimationStart {
+  @keyframes #{n('??start')} {
+    0% {
+      @include gradientOpacity(0);
+      clip-path: circle(000% at v('??x') v('??y'));
+    }
+    50% {
+      @include gradientOpacity(v('??background-opacity'));
+      clip-path: circle(075% at v('??x') v('??y'));
+    }
+    100% {
+      @include gradientOpacity(v('??background-opacity'));
+      clip-path: circle(150% at v('??x') v('??y'));
+    }
+  }
+}
