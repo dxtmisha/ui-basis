@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; gap: 16px;">
-    <md2-button text="button"/>
+    <md2-button text="button" value="test" @click="(event, options) => console.error(event, options)"/>
     <md2-button text="button" disabled/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px;">
@@ -328,7 +328,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import Md2Button from '../../md2/Button/index.vue'
+import Md2Button from '../../md2/Button/Md2Button.vue'
 import Md2Image from '../../md2/Image/Md2Image.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
 import Md2Icon from '../../md2/Icon/Md2Icon.vue'

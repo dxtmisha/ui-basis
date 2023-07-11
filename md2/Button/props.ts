@@ -1,4 +1,10 @@
-import { propsDesign, subClassesDesign } from './props.design'
+import {
+  PropsDesignInterface,
+  defaultsDesign,
+  // propsDesign,
+  subClassesDesign
+} from './props.design'
+import { PropsButtonInterface, defaultsButton } from '../../constructors/Button/props'
 
 export const subClasses = {
   ...subClassesDesign
@@ -7,13 +13,11 @@ export const subClasses = {
 
 }
 
-export const props = {
-  ...propsDesign,
+export type PropsInterface = PropsDesignInterface & PropsButtonInterface
 
-  // Values
-  text: String
-
-  // Status
-
-  // Options
+export const defaults = {
+  ...defaultsDesign,
+  ...defaultsButton
 }
+
+// export const props = { ...propsDesign }

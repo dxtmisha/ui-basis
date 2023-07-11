@@ -2,6 +2,7 @@ import { h, VNode } from 'vue'
 
 import {
   Design,
+  DesignContextEmitType,
   DesignEmitsType,
   DesignPropsType,
   DesignPropsValueType,
@@ -11,13 +12,15 @@ import { ClassesSubClassesType } from '../../../classes/DesignClasses'
 
 import { PropsConstructorInterface } from './props'
 
+export interface ConstructorDesignComponentsInterface {
+  component: object
+}
+
 export interface ConstructorDesignInitInterface {
   property: string
 }
 
-export interface ConstructorDesignComponentsInterface {
-  component: object
-}
+export type ConstructorDesignSubClassesType = ClassesSubClassesType
 
 export type ConstructorDesignPropsValueType = DesignPropsValueType<PropsConstructorInterface>
 export type ConstructorDesignEmitsType = DesignEmitsType
@@ -29,7 +32,7 @@ export type ConstructorDesignSlotsType = DesignPropsType & {
  * ConstructorDesign
  */
 export class ConstructorDesign<
-  C extends ClassesSubClassesType = ClassesSubClassesType,
+  C extends ConstructorDesignSubClassesType = ConstructorDesignSubClassesType,
   P extends ConstructorDesignPropsValueType = ConstructorDesignPropsValueType
 > extends Design<
   C,
@@ -40,6 +43,18 @@ export class ConstructorDesign<
   ConstructorDesignEmitsType,
   ConstructorDesignSlotsType
 > {
+  /**
+   * Constructor
+   * @param props properties / свойства
+   * @param contextEmit additional property / дополнительное свойство
+   */
+  constructor (
+    protected readonly props: P,
+    contextEmit?: DesignContextEmitType<ConstructorDesignEmitsType, ConstructorDesignSlotsType>
+  ) {
+    super(props, contextEmit)
+  }
+
   /**
    * Method for generating additional properties
    *
@@ -62,6 +77,8 @@ export class ConstructorDesign<
   protected initRender<D = Record<string, any>> (
     setup: DesignSetupType<C, HTMLDivElement, D, ConstructorDesignInitInterface>
   ): VNode {
+    // const children: any[] = []
+
     return h('div', {
       ref: this.element,
       class: setup.classes.value.main

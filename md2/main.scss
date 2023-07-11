@@ -1,0 +1,14 @@
+@import "../styles/properties";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons+Outlined");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons+Round");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons+Sharp");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone");
+
+@mixin initMd2 {
+  @include initDesign('md2.component') {
+    @include initByLink('font.body1');
+  }
+}

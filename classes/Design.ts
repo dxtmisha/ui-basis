@@ -42,14 +42,24 @@ export type DesignPropsPrototypeType<T extends DesignPropsType> = Partial<T>
 export type DesignPropsValueType<T extends DesignPropsType = DesignPropsType> =
   DesignPropsPrototypeType<T>
   & DesignPropsType
-export type DesignPropsRefsType<T> = {
+export type DesignPropsRefsType<T = DesignPropsType> = {
   [K in keyof T]-?: Ref<any>
 }
 
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
 export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
 export type DesignSlotNamesType<T extends DesignPropsType> = keyof T
-export type DesignSetupContextType<O extends DesignEmitsType, S extends DesignPropsType> = SetupContext<O, SlotsType<S>>
+
+export type DesignSetupContextType<
+  O extends DesignEmitsType = DesignEmitsType,
+  S extends DesignPropsType = DesignPropsType
+> = SetupContext<O, SlotsType<S>>
+
+export type DesignContextEmitType<
+  O extends DesignEmitsType = DesignEmitsType,
+  S extends DesignPropsType = DesignPropsType
+> = DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']
+
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
 export type DesignSetupType<
   C,
@@ -103,7 +113,7 @@ export class Design<
    */
   constructor (
     protected readonly props: P,
-    contextEmit?: DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']
+    contextEmit?: DesignContextEmitType<O, S>
   ) {
     this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()

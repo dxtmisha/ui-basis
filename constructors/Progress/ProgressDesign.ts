@@ -10,10 +10,6 @@ import {
 
 import { PropsProgressInterface } from './props'
 
-export interface ProgressDesignComponentsInterface {
-  component: object
-}
-
 export interface ProgressDesignInitInterface {
   tag: ComputedRef<string>
   valueInPercent: ComputedRef<string | null>
@@ -39,7 +35,7 @@ export class ProgressDesign<
   HTMLDivElement,
   P,
   ProgressDesignInitInterface,
-  ProgressDesignComponentsInterface,
+  Record<string, any>,
   ProgressDesignEmitsType,
   ProgressDesignSlotsType
 > {
