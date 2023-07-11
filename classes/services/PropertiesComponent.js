@@ -1,6 +1,7 @@
 const {
   forEach,
-  uniqueArray
+  uniqueArray,
+  isFilled
 } = require('../../functions/data')
 
 const { To } = require('../To')
@@ -525,6 +526,14 @@ module.exports = class PropertiesComponent {
     }) => {
       props.valueAll = uniqueArray(props.valueAll)
       props.style = this.__isStyle(item)
+
+      if (!isFilled(props.value)) {
+        props.value = [true]
+      }
+
+      if (!isFilled(props.valueAll)) {
+        props.valueAll = [true]
+      }
     })
 
     return this

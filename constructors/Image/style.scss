@@ -4,14 +4,34 @@ $designsClassName: 'class' !default;
 
 @mixin initImageDesign($component: 'design.component') {
   @include initDesign($component) {
+    @include mixinImage;
     @include mixinImageType;
+    @include mixinImageAdaptive;
+
+    @include mixinImageTurn;
     @include mixinImageDisabled;
+    @include mixinImageHide;
 
     @include mixinImageMaterial;
     @include mixinImageLineAwesome;
 
     @content;
   }
+}
+
+@mixin mixinImage {
+  direction: ltr;
+  @include flexCenter;
+  @include absolute;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: inherit;
+
+  transition-property: background-size, filter, opacity, transform;
+  transition-duration: v('d.sys.transition-duration.standard');
+  transform: none;
 }
 
 @mixin mixinImageType {
@@ -33,9 +53,28 @@ $designsClassName: 'class' !default;
   }
 }
 
+@mixin mixinImageAdaptive {
+  &--adaptive {
+    background-size: 100%;
+  }
+}
+
+@mixin mixinImageTurn {
+  &--turn {
+    @include rotate(180deg);
+  }
+}
+
 @mixin mixinImageDisabled {
   &--disabled {
     color: rgba(var(--sys-color, v('??color')), var(--sys-color-opacity, v('??color-opacity')));
+  }
+}
+
+@mixin mixinImageHide {
+  &--hide {
+    opacity: 0;
+    scale: .8;
   }
 }
 
