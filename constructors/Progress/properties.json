@@ -5,6 +5,7 @@
   "background-color": {
     "_type": "var"
   },
+  "#circle": {},
   "linear": {
     "_type": "state",
     "_category": "appearance",
