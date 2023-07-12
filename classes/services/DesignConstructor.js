@@ -153,6 +153,7 @@ module.exports = class DesignConstructor extends DesignCommand {
       const sample = this.__readSampleStyle()
         .replaceAll('../../../', '../../')
         .replace('initConstructorDesign', To.camelCase(`init-${this.name}-design`))
+        .replace('mixinConstructor', To.camelCase(`mixin-${this.name}`))
 
       this._console(file)
       this._createFile(file, sample)

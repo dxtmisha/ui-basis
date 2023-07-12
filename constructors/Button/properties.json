@@ -1,24 +1,19 @@
 {
-  "display": "flex",
-  "position": "relative",
-  "justify-content": "center",
-  "align-items": "center",
-  "border-radius": "0px",
-  "border": "solid transparent 0px",
+  "#inscription": {},
+  "disabled": {
+    "_type": "state"
+  },
   "align": {
     "left": {
-      "justify-content": "flex-start",
       "_type": "state"
     },
     "right": {
-      "justify-content": "flex-end",
       "_type": "state"
     },
     "center": {
-      "justify-content": "center",
       "_type": "state"
-    }
-  },
-  "#inscription": {
+    },
+    "_type": "state",
+    "_default": "center"
   }
 }

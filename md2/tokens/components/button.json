@@ -1,12 +1,11 @@
 {
-  "padding": "0px {ref.spacing.4}",
+  "padding": "0 {ref.spacing.4}",
   "height": {
     "sm": "{ref.spacing.7}",
     "md": "{ref.spacing.9}",
     "lg": "{ref.spacing.12}"
   },
   "font": "{font.button}",
-  "border-radius": "{ref.spacing.1}",
   "contained": {
     "color": "{sys.palette.onPrimary}",
     "color-opacity": "{sys.opacity.primary.high}",
@@ -28,5 +27,8 @@
       "background-color": "{sys.palette.disabled}",
       "background-opacity": "{sys.opacity.disabled}"
     }
+  },
+  "rounded": {
+    "border-radius": "{rounded}"
   }
 }

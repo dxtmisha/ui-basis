@@ -1,29 +1,16 @@
-import { computed, Ref } from 'vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { EventItem } from '../../classes/EventItem'
 
-import { DesignPropsRefsType, DesignSetupContextType } from '../../classes/Design'
+import { DesignSetupContextType } from '../../classes/Design'
 import { UseEnabled } from '../../uses/UseEnabled'
 
-export type ButtonEventType = DesignPropsRefsType & {
-  to?: Ref<string>
-  value?: Ref<any>
-  detail?: Ref<Record<string, any>>
-}
-
-export type ButtonEventOptionsType = {
-  type: string
-  value?: any
-  detail?: Record<string, any>
-}
-
-export type ButtonDesignEmitsType = {
-  click: [
-    event: MouseEvent,
-    value: ButtonEventOptionsType
-  ]
-}
+import {
+  ButtonDesignEmitsType,
+  ButtonDesignPropsValueType,
+  ButtonEventOptionsType
+} from './types'
 
 /**
  * Base class for working with button events
@@ -36,16 +23,16 @@ export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType
   /**
    * Constructor
    * @param emit function for calling an event / функция для вызова события
-   * @param refs input property / входное свойство
+   * @param props input property / входное свойство
    * @param enabled object of the activity management class / объект класса управления активности
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly emit: DesignSetupContextType<O>['emit'],
-    protected readonly refs: ButtonEventType,
+    protected readonly props: ButtonDesignPropsValueType,
     enabled?: UseEnabled
   ) {
-    this.enabled = enabled || new UseEnabled(this.refs)
+    this.enabled = enabled || new UseEnabled(this.props)
   }
 
   /**
@@ -57,8 +44,8 @@ export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType
   protected readonly options = computed<ButtonEventOptionsType>(() => {
     return {
       type: 'click',
-      value: this.refs?.value?.value,
-      detail: this.refs?.detail?.value
+      value: this.props?.value,
+      detail: this.props?.detail
     }
   })
 
@@ -100,8 +87,8 @@ export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType
    * @protected
    */
   protected router () {
-    if (this.refs?.to?.value) {
-      useRouter().push(this.refs?.to?.value).then()
+    if (this.props?.to) {
+      useRouter().push(this.props?.to).then()
       return true
     }
 

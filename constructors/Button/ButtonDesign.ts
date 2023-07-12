@@ -3,15 +3,19 @@ import { ComputedRef, h, VNode } from 'vue'
 import {
   Design,
   DesignContextEmitType,
-  DesignPropsType,
-  DesignPropsValueType,
   DesignSetupType
 } from '../../classes/Design'
 
-import { PropsButtonInterface } from './props'
-
-import { ButtonDesignEmitsType, ButtonEvent } from './ButtonEvent'
 import { UseEnabled } from '../../uses/UseEnabled'
+import { ButtonEvent } from './ButtonEvent'
+
+import {
+  ButtonDesignEmitsType,
+  ButtonDesignPropsValueType,
+  ButtonDesignSlotsType,
+  ButtonDesignSubClassesType
+} from './types'
+import { ButtonInscription } from './ButtonInscription'
 
 export interface ButtonDesignComponentsInterface {
   icon?: object
@@ -21,18 +25,12 @@ export interface ButtonDesignComponentsInterface {
 
 export interface ButtonDesignInitInterface {
   isEnabled: ComputedRef<boolean>
+  isInscription: ComputedRef<boolean>
+
   disabledBind: ComputedRef<boolean | undefined>
+
   onClick: (event: MouseEvent) => void
   onTrailing: (event: MouseEvent) => void
-}
-
-export type ButtonDesignSubClassesType = {
-  inscription: 'inscription'
-}
-
-export type ButtonDesignPropsValueType = DesignPropsValueType<PropsButtonInterface>
-export type ButtonDesignSlotsType = DesignPropsType & {
-  default?: () => VNode
 }
 
 /**
@@ -53,6 +51,7 @@ export class ButtonDesign<
   protected readonly enabled: UseEnabled
 
   protected readonly event: ButtonEvent
+  protected readonly inscription: ButtonInscription
 
   /**
    * Constructor
@@ -65,8 +64,9 @@ export class ButtonDesign<
   ) {
     super(props, contextEmit)
 
-    this.enabled = new UseEnabled(this.refs)
-    this.event = new ButtonEvent(this.context.emit, this.refs, this.enabled)
+    this.enabled = new UseEnabled(this.props)
+    this.event = new ButtonEvent(this.context.emit, this.props, this.enabled)
+    this.inscription = new ButtonInscription(this.context.slots, this.props)
   }
 
   /**
@@ -76,9 +76,16 @@ export class ButtonDesign<
    * @protected
    */
   protected init (): ButtonDesignInitInterface {
+    this.classes.setExtraMain({
+      [this.classes.getNameByState(['inscription'])]: this.inscription.isInscription
+    })
+
     return {
       isEnabled: this.enabled.item,
+      isInscription: this.inscription.isInscription,
+
       disabledBind: this.enabled.disabled,
+
       onClick: (event: MouseEvent) => this.event.onClick(event),
       onTrailing: (event: MouseEvent) => this.event.onTrailing(event)
     }
@@ -96,11 +103,11 @@ export class ButtonDesign<
   ): VNode {
     const children: any[] = []
 
-    if (this.props.inscription) {
-      children.push(h('span', { class: setup.classes.value.inscription }, this.props.inscription))
+    if (setup.isInscription.value) {
+      children.push(
+        this.inscription.render(setup.classes.value.inscription)
+      )
     }
-
-    this.initSlot('default', children)
 
     if (this.components?.ripple && setup.isEnabled.value) {
       children.push(h(this.components?.ripple))

@@ -1,11 +1,14 @@
-import { computed, Ref } from 'vue'
-import { DesignPropsRefsType } from '../classes/Design'
+import { computed } from 'vue'
 
-export type UseEnabledType = DesignPropsRefsType & {
-  disabled?: Ref<boolean>
-  readonly?: Ref<boolean>
-  progress?: Ref<boolean>
-}
+import { DesignPropsValueType } from '../classes/Design'
+
+import { PropsProgressInterface } from '../constructors/Progress/props'
+
+export type UseEnabledPropsType = DesignPropsValueType<{
+  progress?: boolean | PropsProgressInterface
+  readonly?: boolean
+  disabled?: boolean
+}>
 
 /**
  * Class for managing the activity of an element
@@ -15,18 +18,18 @@ export type UseEnabledType = DesignPropsRefsType & {
 export class UseEnabled {
   /**
    * Constructor
-   * @param refs input property / входное свойство
+   * @param props input property / входное свойство
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
-    protected readonly refs: UseEnabledType
+    protected readonly props: UseEnabledPropsType
   ) {
   }
 
   readonly item = computed<boolean>(
-    () => !this.refs?.disabled?.value &&
-      !this.refs?.readonly?.value &&
-      !this.refs?.progress?.value
+    () => !this.props?.disabled &&
+      !this.props?.readonly &&
+      !this.props?.progress
   )
 
   readonly disabled = computed<boolean | undefined>(() => this.isDisabled() || undefined)
@@ -46,7 +49,7 @@ export class UseEnabled {
    * Проверяет, выключен ли элемент
    */
   isDisabled (): boolean {
-    return !!this.refs?.disabled?.value
+    return !!this.props?.disabled
   }
 
   /**
@@ -55,7 +58,7 @@ export class UseEnabled {
    * Проверяет на статус только для чтения
    */
   isReadonly (): boolean {
-    return !!this.refs?.readonly?.value
+    return !!this.props?.readonly
   }
 
   /**
@@ -64,6 +67,6 @@ export class UseEnabled {
    * Проверяет наличие элемента для загрузки
    */
   isProgress (): boolean {
-    return !!this.refs?.progress?.value
+    return !!this.props?.progress
   }
 }

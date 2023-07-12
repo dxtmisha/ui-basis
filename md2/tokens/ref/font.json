@@ -1,6 +1,6 @@
 {
   "family": {
-    "roboto": "'Roboto'"
+    "roboto": "Roboto"
   },
   "size": {
     "xs": "{ref.spacing.px}*10",

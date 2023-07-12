@@ -7,7 +7,10 @@
     "background-color": {
       "_rename": "palette-background"
     },
+    "_category": "appearance",
     "_default": true
   },
-  "~disabled": {}
+  "rounded": {
+    "_default": "standard"
+  }
 }

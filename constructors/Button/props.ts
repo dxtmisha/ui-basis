@@ -1,5 +1,7 @@
 import { PropType } from 'vue'
+
 import { PropsIconInterface } from '../Icon/props'
+import { PropsProgressInterface } from '../Progress/props'
 
 export interface PropsButtonInterface {
   // Values
@@ -14,9 +16,12 @@ export interface PropsButtonInterface {
   iconTurn?: boolean
   iconHide?: boolean
 
+  // Progress
+  progress?: boolean | PropsProgressInterface,
+  progressPosition?: 'center' | 'icon' | 'trailing',
+
   // Status
   selected?: boolean,
-  progress?: boolean,
   disabled?: boolean,
 
   // Options
@@ -24,6 +29,7 @@ export interface PropsButtonInterface {
 }
 
 export const defaultsButton = {
+  progressPosition: 'center',
   tag: 'button'
 }
 
@@ -40,9 +46,15 @@ export const propsButton = {
   iconTurn: Boolean,
   iconHide: Boolean,
 
+  // Progress
+  progress: [Object, Boolean],
+  progressPosition: {
+    type: String as PropType<PropsButtonInterface['progressPosition']>,
+    default: defaultsButton.progressPosition
+  },
+
   // Status
   selected: Boolean,
-  progress: Boolean,
   disabled: Boolean,
 
   // Options

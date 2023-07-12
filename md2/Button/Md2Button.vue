@@ -6,8 +6,8 @@ import {
 
 import { PropsInterface, defaults, subClasses } from './props'
 
-import { ButtonDesign, ButtonDesignSlotsType } from '../../constructors/Button/ButtonDesign'
-import { ButtonDesignEmitsType } from '../../constructors/Button/ButtonEvent'
+import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
+import { ButtonDesignEmitsType, ButtonDesignSlotsType } from '../../constructors/Button/types'
 
 import Md2Ripple from '../Ripple/Md2Ripple.vue'
 
@@ -29,7 +29,9 @@ const render = design.render({})
 </script>
 
 <template>
-  <render/>
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">
