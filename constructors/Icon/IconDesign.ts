@@ -25,7 +25,7 @@ export type IconDesignEmitsType = {
   load: [value: any]
 }
 export type IconDesignSlotsType = DesignPropsType & {
-  default?: () => any
+  default (): any
 }
 
 /**

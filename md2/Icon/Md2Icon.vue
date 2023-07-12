@@ -28,7 +28,9 @@ const render = design.render({})
 </script>
 
 <template>
-  <render/>
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">

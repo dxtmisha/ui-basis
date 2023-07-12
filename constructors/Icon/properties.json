@@ -1,9 +1,4 @@
 {
-  "display": "inline-flex",
-  "overflow": "hidden",
-  "position": "relative",
-  "justify-content": "center",
-  "align-items": "center",
   "width": {
     "_type": "var"
   },
@@ -11,8 +6,7 @@
     "_type": "state"
   },
   "hide": {
-    "opacity": "0",
-    "transform": "scale(.8)"
+    "_type": "state"
   },
   "animation-type": {
     "type1": {
@@ -23,33 +17,15 @@
     }
   },
   "animation-show": {
-    "animation-name": "??show",
-    "animation-duration": "{d.sys.transitionDuration.standard}"
+    "_type": "state"
   },
   "overlay": {
-    "background-color": "var(--??sys-color, var(--sys-color))"
+    "_type": "state"
   },
   "dynamic": {
-    "gradient": "var(--??sys-color, var(--sys-color))",
-    "gradient-opacity": "0"
+    "_type": "state"
   },
   "end": {
-    "order": "999999"
-  },
-  "animate|show": {
-    "0%": {
-      "opacity": "0",
-      "transform": "scale(.6)"
-    },
-    "20%": {
-      "transform": "scale(.6)"
-    },
-    "60%": {
-      "opacity": "1"
-    },
-    "100%": {
-      "opacity": "1",
-      "transform": "none"
-    }
+    "_type": "state"
   }
 }

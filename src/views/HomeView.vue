@@ -4,7 +4,14 @@
     <md2-button text="button" disabled/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px;">
-    <md2-icon style="border: solid 1px;"/>
+    <md2-icon style="border: solid 1px;" @click="turn2=!turn2">
+      <template v-slot:default="{}">
+        <md2-image
+          :turn="turn2"
+          :value="'https://drscdn.500px.org/photo/1071692936/q%3D80_m%3D2000/v2?sig=b5cd016eee9a7eb4bd875d172c201e4e08097cdceac45d4fafaa070d0074e3db'"
+        />
+      </template>
+    </md2-icon>
     <md2-icon
       :animation-show="turn"
       :turn="turn"
@@ -348,9 +355,11 @@ export default defineComponent({
   setup () {
     const file = ref()
     const turn = ref()
+    const turn2 = ref()
     return {
       file,
       turn,
+      turn2,
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       image: require('../assets/02-top.png') as string,
       onInput (event: InputEvent) {

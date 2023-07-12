@@ -1,15 +1,33 @@
 @import "../../styles/properties";
 
+@import "./styleFrames";
+
 @mixin initIconDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinIcon;
+
+    @include mixinIconHide;
+
     @include mixinIconAnimation;
+    @include mixinIconAnimationShow;
+
+    @include mixinIconOverlay;
+    @include mixinIconDynamic;
+    @include mixinIconEnd;
+
+    @include mixinIconShowFrames;
 
     @content;
   }
 }
 
 @mixin mixinIcon {
+  display: inline-flex;
+  overflow: hidden;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
   @include squared(#{v('??width')});
   min-width: v('??width');
 
@@ -17,6 +35,13 @@
 
   transition-property: clip-path, margin, opacity, transform;
   transition-duration: v('d.sys.transition-duration.standard');
+}
+
+@mixin mixinIconHide {
+  &--hide {
+    opacity: 0;
+    transform: scale(.8);
+  }
 }
 
 @mixin mixinIconAnimation {
@@ -41,5 +66,30 @@
         transform: none;
       }
     }
+  }
+}
+
+@mixin mixinIconAnimationShow {
+  &--animation-show {
+    animation-name: n('??show');
+    animation-duration: v('d.sys.transition-duration.standard');
+  }
+}
+
+@mixin mixinIconOverlay {
+  &--overlay {
+    background-color: v('??sys.color', var(--sys-color));
+  }
+}
+
+@mixin mixinIconDynamic {
+  &--dynamic {
+    @include gradient(v('??sys.color', var(--sys-color)), 0);
+  }
+}
+
+@mixin mixinIconEnd {
+  &--end {
+    order: 999999;
   }
 }
