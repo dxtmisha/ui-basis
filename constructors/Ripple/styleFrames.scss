@@ -1,6 +1,6 @@
 @import "../../styles/properties";
 
-@mixin mixinRippleAnimationStart {
+@mixin mixinRippleStartFrames {
   @keyframes #{n('??start')} {
     0% {
       @include gradientOpacity(0);
