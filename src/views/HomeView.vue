@@ -1,14 +1,18 @@
 <template>
   <div style="display: flex; gap: 16px;">
     <md2-button
-      text="button"
       inscription="text 1"
       value="value"
       @click="(event, options) => console.log(event, options)"
     />
-    <md2-button text="button">slot</md2-button>
-    <md2-button text="button" inscription="text/">slot</md2-button>
-    <md2-button text="button" inscription="disabled" disabled/>
+    <md2-button>slot</md2-button>
+    <md2-button inscription="text/">slot</md2-button>
+    <md2-button :inscription="text" @click="text = text ? undefined : 'text'"/>
+    <md2-button inscription="disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button :icon="icon" @click="icon = icon === 'face' ? 'close' : 'face'"/>
+    <md2-button icon="face" inscription="text"/>
   </div>
 </template>
 
@@ -27,18 +31,9 @@ export default defineComponent({
     Md2Button
   },
   setup () {
-    const file = ref()
-    const turn = ref()
-    const turn2 = ref()
     return {
-      file,
-      turn,
-      turn2,
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      image: require('../assets/02-top.png') as string,
-      onInput (event: InputEvent) {
-        file.value = (event.target as HTMLInputElement)?.files?.[0]
-      }
+      text: ref<string | undefined>('text'),
+      icon: ref<string | undefined>('face')
     }
   }
 })

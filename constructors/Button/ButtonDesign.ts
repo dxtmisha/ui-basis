@@ -8,26 +8,26 @@ import {
 
 import { UseEnabled } from '../../uses/UseEnabled'
 import { ButtonEvent } from './ButtonEvent'
+import { ButtonInscription } from './ButtonInscription'
+
+import { PropsIconInterface } from '../Icon/props'
 
 import {
+  ButtonDesignComponentsInterface,
   ButtonDesignEmitsType,
   ButtonDesignPropsValueType,
   ButtonDesignSlotsType,
   ButtonDesignSubClassesType
 } from './types'
-import { ButtonInscription } from './ButtonInscription'
-
-export interface ButtonDesignComponentsInterface {
-  icon?: object
-  progress?: object
-  ripple?: object
-}
+import { ButtonIcon } from './ButtonIcon'
 
 export interface ButtonDesignInitInterface {
   isEnabled: ComputedRef<boolean>
   isInscription: ComputedRef<boolean>
 
   disabledBind: ComputedRef<boolean | undefined>
+  iconBind: ComputedRef<PropsIconInterface>
+  trailingBind: ComputedRef<PropsIconInterface>
 
   onClick: (event: MouseEvent) => void
   onTrailing: (event: MouseEvent) => void
@@ -53,6 +53,8 @@ export class ButtonDesign<
   protected readonly event: ButtonEvent
   protected readonly inscription: ButtonInscription
 
+  protected icon?: ButtonIcon
+
   /**
    * Constructor
    * @param props properties / свойства
@@ -76,8 +78,12 @@ export class ButtonDesign<
    * @protected
    */
   protected init (): ButtonDesignInitInterface {
+    this.icon = new ButtonIcon(this.props, this.components)
+
     this.classes.setExtraMain({
-      [this.classes.getNameByState(['inscription'])]: this.inscription.isInscription
+      [this.classes.getNameByState(['inscription'])]: this.inscription.isInscription,
+      [this.classes.getNameByState(['icon'])]: this.icon.isIcon,
+      [this.classes.getNameByState(['trailing'])]: this.icon.isTrailing
     })
 
     return {
@@ -85,6 +91,8 @@ export class ButtonDesign<
       isInscription: this.inscription.isInscription,
 
       disabledBind: this.enabled.disabled,
+      iconBind: this.icon.iconBind,
+      trailingBind: this.icon.trailingBind,
 
       onClick: (event: MouseEvent) => this.event.onClick(event),
       onTrailing: (event: MouseEvent) => this.event.onTrailing(event)
@@ -102,6 +110,10 @@ export class ButtonDesign<
     setup: DesignSetupType<C, HTMLDivElement, D, ButtonDesignInitInterface>
   ): VNode {
     const children: any[] = []
+
+    if (this.icon) {
+      children.push(...this.icon.render())
+    }
 
     if (setup.isInscription.value) {
       children.push(

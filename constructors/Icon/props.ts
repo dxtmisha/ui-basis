@@ -1,4 +1,5 @@
 import { PropsImageInterface } from '../Image/props'
+import { PropType } from 'vue'
 
 export interface PropsIconInterface {
   // Values
@@ -11,9 +12,13 @@ export interface PropsIconInterface {
   disabled?: boolean
 
   // Options
+  animationType?: 'type1' | 'type2'
+  end?: boolean
 }
 
-export const defaultsIcon = {}
+export const defaultsIcon = {
+  animationType: 'type1'
+}
 
 export const propsIcon = {
   // Values
@@ -23,5 +28,12 @@ export const propsIcon = {
   // Status
   active: Boolean,
   turn: Boolean,
-  disabled: Boolean
+  disabled: Boolean,
+
+  // Options
+  animationType: {
+    type: String as PropType<PropsIconInterface['animationType']>,
+    default: defaultsIcon.animationType
+  },
+  end: Boolean
 }

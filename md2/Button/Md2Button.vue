@@ -9,6 +9,7 @@ import { PropsInterface, defaults, subClasses } from './props'
 import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
 import { ButtonDesignEmitsType, ButtonDesignSlotsType } from '../../constructors/Button/types'
 
+import Md2Icon from '../Icon/Md2Icon.vue'
 import Md2Ripple from '../Ripple/Md2Ripple.vue'
 
 defineOptions({
@@ -22,6 +23,7 @@ defineSlots<ButtonDesignSlotsType>()
 
 const design = new ButtonDesign<typeof subClasses>(props, emit)
   .setComponents({
+    icon: Md2Icon,
     ripple: Md2Ripple
   })
 

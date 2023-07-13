@@ -1,12 +1,12 @@
-import { Ref, VNode } from 'vue'
-import { DesignPropsRefsType, DesignPropsType, DesignPropsValueType } from '../../classes/Design'
+import { VNode } from 'vue'
+import { DesignPropsType, DesignPropsValueType } from '../../classes/Design'
 
 import { PropsButtonInterface } from './props'
 
-export type ButtonEventType = DesignPropsRefsType & {
-  to?: Ref<string>
-  value?: Ref<any>
-  detail?: Ref<Record<string, any>>
+export interface ButtonDesignComponentsInterface {
+  icon?: object
+  progress?: object
+  ripple?: object
 }
 
 export type ButtonEventOptionsType = {

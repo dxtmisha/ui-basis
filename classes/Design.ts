@@ -262,6 +262,28 @@ export class Design<
     nameExtra: RefOrNormalType<AssociativeType> | string = {},
     name = 'value' as string
   ): ComputedRef<R> {
+    return Design.getBindStatic<T, R>(
+      value,
+      nameExtra,
+      name
+    )
+  }
+
+  /**
+   * A method for generating properties for a subcomponent
+   *
+   * Метод для генерации свойств для под компонента
+   * @param value input value. Can be an object if you need to pass multiple
+   * properties / входное значение. Может быть объектом, если надо передать
+   * несколько свойств
+   * @param nameExtra additional parameter or property name / дополнительный параметр или имя свойства
+   * @param name property name / имя свойства
+   */
+  static getBindStatic<T = any, R = AssociativeType> (
+    value: Ref<T | R>,
+    nameExtra: RefOrNormalType<AssociativeType> | string = {},
+    name = 'value' as string
+  ): ComputedRef<R> {
     return computed(() => {
       const isName = typeof nameExtra === 'string'
       const index = isName ? nameExtra : name
