@@ -58,13 +58,15 @@ module.exports = class PropertiesComponent {
    * Constructor
    * @param {string} name component name / названия компонента
    * @param {boolean} cache enabling caching / включение кэширования
+   * @param {string[]} designs list of design names / список названий дизайнов
    */
   constructor (
     name,
-    cache = true
+    cache = true,
+    designs = undefined
   ) {
     this.name = name
-    this.properties = new Properties(cache)
+    this.properties = new Properties(cache, designs)
 
     this.__initProps()
   }
@@ -204,6 +206,31 @@ module.exports = class PropertiesComponent {
   }
 
   /**
+   * Returns available types for property
+   *
+   * Возвращает доступные типы для свойства
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {string[]}
+   */
+  getPropsType (value) {
+    const type = []
+
+    if (this.isBoolean(value)) {
+      type.push('Boolean')
+    }
+
+    if (this.isString(value)) {
+      type.push('String')
+    }
+
+    if (type.length === 0) {
+      type.push('Boolean')
+    }
+
+    return type
+  }
+
+  /**
    * Returns records that meet state conditions
    *
    * Возвращает записи, удовлетворяющие условиям состояния
@@ -278,6 +305,66 @@ module.exports = class PropertiesComponent {
     }, true)
   }
 
+  /**
+   * Returns a string with the data type
+   *
+   * Возвращает строку с типом данных
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @param {boolean} style is the property style present / является ли свойство style
+   * @return {string}
+   */
+  getTypeByName (value, style) {
+    const type = []
+
+    if (this.isBoolean(value)) {
+      type.push('boolean')
+    }
+
+    if (style) {
+      type.push('string')
+    }
+
+    if (this.isString(value)) {
+      value.forEach(item => type.push(item === true ? 'true' : `'${item}'`))
+    }
+
+    if (type.length === 0) {
+      type.push('boolean')
+    }
+
+    return type.join(' | ')
+  }
+
+  /**
+   * Returns a string with the data type
+   *
+   * Возвращает строку с типом данных
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @param {boolean} style is the property style present / является ли свойство style
+   * @return {string}
+   */
+  getTypeOptionsByName (value, style) {
+    const type = this.getPropsType(value)
+    const typeValue = this.getTypeByName(value, style)
+
+    return `[${type.join(', ')}]${typeValue !== '' && typeValue !== 'boolean' ? ` as PropType<${typeValue}>` : ''}`
+  }
+
+  /**
+   * Returns default values
+   *
+   * Возвращает значения по умолчанию
+   * @param {string|boolean} value
+   * @return {string}
+   */
+  getDefault (value) {
+    if (typeof value === 'string') {
+      return `'${value}'`
+    } else {
+      return `${value}`
+    }
+  }
+
   getFileMain () {
     return `${this.getName()}.vue`
   }
@@ -322,6 +409,28 @@ module.exports = class PropertiesComponent {
    */
   getFileProperties () {
     return FILE_PROPERTIES
+  }
+
+  /**
+   * Checks if the data type is boolean
+   *
+   * Проверяет, является ли тип данных булевым
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {boolean}
+   */
+  isBoolean (value) {
+    return value.indexOf(true) !== -1
+  }
+
+  /**
+   * Checks if the data type is string
+   *
+   * Проверяет, является ли тип данных строковым
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {boolean}
+   */
+  isString (value) {
+    return value.length > 0 && value[0] !== true
   }
 
   /**

@@ -1,0 +1,37 @@
+@import "../../styles/properties";
+
+@mixin initButtonDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinButton;
+
+    @include mixinButtonAlign;
+
+    @content;
+  }
+}
+
+@mixin mixinButton {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 0;
+  border: solid transparent 0;
+}
+
+@mixin mixinButtonAlign {
+  &--align {
+    &--left {
+      @include justifyContent('flex-start');
+    }
+
+    &--left {
+      @include justifyContent('flex-end');
+    }
+
+    &--center {
+      @include justifyContent('center');
+    }
+  }
+}

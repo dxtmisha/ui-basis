@@ -2,46 +2,32 @@ import { h, VNode } from 'vue'
 
 import {
   Design,
-  DesignContextEmitType,
-  DesignEmitsType,
-  DesignPropsType,
-  DesignPropsValueType,
-  DesignSetupType
+  DesignSetupContextEmitType
 } from '../../../classes/Design'
-import { ClassesSubClassesType } from '../../../classes/DesignClasses'
 
-import { PropsConstructorInterface } from './props'
-
-export interface ConstructorDesignComponentsInterface {
-  component: object
-}
-
-export interface ConstructorDesignInitInterface {
-  property: string
-}
-
-export type ConstructorDesignSubClassesType = ClassesSubClassesType
-
-export type ConstructorDesignPropsValueType = DesignPropsValueType<PropsConstructorInterface>
-export type ConstructorDesignEmitsType = DesignEmitsType
-export type ConstructorDesignSlotsType = DesignPropsType & {
-  default?: () => VNode
-}
+import {
+  ConstructorComponentsInterface,
+  ConstructorEmitsType,
+  ConstructorInitInterface,
+  ConstructorPropsValueType,
+  ConstructorSlotsType,
+  ConstructorSubClassesType
+} from './types'
 
 /**
  * ConstructorDesign
  */
 export class ConstructorDesign<
-  C extends ConstructorDesignSubClassesType = ConstructorDesignSubClassesType,
-  P extends ConstructorDesignPropsValueType = ConstructorDesignPropsValueType
+  C extends ConstructorSubClassesType = ConstructorSubClassesType,
+  P extends ConstructorPropsValueType = ConstructorPropsValueType
 > extends Design<
   C,
   HTMLElement,
   P,
-  ConstructorDesignInitInterface,
-  ConstructorDesignComponentsInterface,
-  ConstructorDesignEmitsType,
-  ConstructorDesignSlotsType
+  ConstructorInitInterface,
+  ConstructorComponentsInterface,
+  ConstructorEmitsType,
+  ConstructorSlotsType
 > {
   /**
    * Constructor
@@ -50,7 +36,7 @@ export class ConstructorDesign<
    */
   constructor (
     protected readonly props: P,
-    contextEmit?: DesignContextEmitType<ConstructorDesignEmitsType, ConstructorDesignSlotsType>
+    contextEmit?: DesignSetupContextEmitType<ConstructorEmitsType, ConstructorSlotsType>
   ) {
     super(props, contextEmit)
   }
@@ -61,7 +47,7 @@ export class ConstructorDesign<
    * Метод для генерации дополнительных свойств
    * @protected
    */
-  protected init (): ConstructorDesignInitInterface {
+  protected init (): ConstructorInitInterface {
     return {
       property: 'constructor'
     }
@@ -71,17 +57,14 @@ export class ConstructorDesign<
    * A method for rendering
    *
    * Метод для рендеринга
-   * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = Record<string, any>> (
-    setup: DesignSetupType<C, HTMLDivElement, D, ConstructorDesignInitInterface>
-  ): VNode {
+  protected initRender (): VNode {
     // const children: any[] = []
 
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main
-    })
+      class: this.setupItem.classes.value.main
+    }/* , children */)
   }
 }

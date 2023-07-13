@@ -39,9 +39,9 @@ export interface DesignSetupBasicInterface<C, E> {
 
 export type DesignPropsType = Record<string, any>
 export type DesignPropsPrototypeType<T extends DesignPropsType> = Partial<T>
-export type DesignPropsValueType<T extends DesignPropsType = DesignPropsType> =
-  DesignPropsPrototypeType<T>
-  & DesignPropsType
+export type DesignPropsValueType<
+  T extends DesignPropsType = DesignPropsType
+> = DesignPropsPrototypeType<T> & DesignPropsType
 export type DesignPropsRefsType<T = DesignPropsType> = {
   [K in keyof T]-?: Ref<any>
 }
@@ -55,7 +55,7 @@ export type DesignSetupContextType<
   S extends DesignPropsType = DesignPropsType
 > = SetupContext<O, SlotsType<S>>
 
-export type DesignContextEmitType<
+export type DesignSetupContextEmitType<
   O extends DesignEmitsType = DesignEmitsType,
   S extends DesignPropsType = DesignPropsType
 > = DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']
@@ -96,15 +96,21 @@ export class Design<
    * Список подключенных компонентов
    * @protected
    */
-  protected components?: M
+  protected components = ref<M>({} as M) as Ref<M>
+  protected element = ref<E>()
+
+  protected refs: DesignPropsRefsType<P>
+  protected setupItem: DesignSetupType<C, E, AssociativeType, I>
 
   protected context: DesignSetupContextType<O, S>
+  protected attrs: DesignSetupContextType<O, S>['attrs']
+  protected slots: DesignSetupContextType<O, S>['slots']
+  protected emit: DesignSetupContextType<O, S>['emit']
+  protected expose: DesignSetupContextType<O, S>['expose']
+
   protected properties: DesignProperties
   protected classes: DesignClasses<C>
   protected styles: DesignStyles
-
-  protected element = ref<E>()
-  protected refs: DesignPropsRefsType<P>
 
   /**
    * Constructor
@@ -113,11 +119,16 @@ export class Design<
    */
   constructor (
     protected readonly props: P,
-    contextEmit?: DesignContextEmitType<O, S>
+    contextEmit?: DesignSetupContextEmitType<O, S>
   ) {
     this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()
+
     this.context = this.initContext(contextEmit)
+    this.attrs = this.context.attrs
+    this.slots = this.context.slots
+    this.emit = this.context.emit
+    this.expose = this.context.expose
 
     this.classes = new DesignClasses<C>(
       this.name,
@@ -130,6 +141,8 @@ export class Design<
       this.properties,
       this.props as AssociativeType
     )
+
+    this.setupItem = this.initSetupItem()
 
     if (process.env.NODE_ENV !== 'production') {
       onUpdated(() => console.warn(`Updated: ${this.getName()}`))
@@ -239,7 +252,7 @@ export class Design<
    * @param components list of connected components / список подключенных компонентов
    */
   setComponents (components: M): this {
-    this.components = components
+    this.components.value = components
     return this
   }
 
@@ -347,10 +360,7 @@ export class Design<
    */
   setup<D = AssociativeType> (dataCallback?: DesignSetupValueType<D>): DesignSetupType<C, E, D, I> {
     return {
-      element: this.element,
-      classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
-      styles: this.styles.getItem(),
-      ...this.init(),
+      ...this.setupItem,
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }
@@ -359,12 +369,9 @@ export class Design<
    * The rendering method for the setup method
    *
    * Метод рендеринга для метода настройки
-   * @param dataCallback additional component properties / дополнительные свойства компонента
    */
-  render<D = AssociativeType> (dataCallback?: DesignSetupValueType<D>): () => VNode {
-    const setup = this.setup<D>(dataCallback)
-
-    return () => this.initRender<D>(setup)
+  render (): () => VNode {
+    return () => this.initRender()
   }
 
   /**
@@ -377,15 +384,23 @@ export class Design<
     return {} as I
   }
 
+  protected initSetupItem (): DesignSetupType<C, E, AssociativeType, I> {
+    return {
+      element: this.element,
+      classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
+      styles: this.styles.getItem(),
+      ...this.init()
+    }
+  }
+
   /**
    * A method for rendering
    *
    * Метод для рендеринга
-   * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = AssociativeType> (setup: DesignSetupType<C, E, D, I>): VNode {
-    return h('div', { class: setup.classes.value.main })
+  protected initRender (): VNode {
+    return h('div', { class: this.setupItem.classes.value.main })
   }
 
   /**

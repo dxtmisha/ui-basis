@@ -206,7 +206,7 @@ module.exports = class DesignComponent extends DesignCommand {
    */
   __initIndexCreate () {
     return this.__readSampleIndex()
-      .replaceAll('../../../', '../../')
+      .replaceAll('../../../', this.getRoot())
       .replace('DesignComponent', this.component.getName())
   }
 
@@ -335,12 +335,12 @@ module.exports = class DesignComponent extends DesignCommand {
 
     forEach(props, prop => {
       templates.push(
-        `\r\n  ${prop.name}?: ${this.__getType(prop.valueAll, prop?.style)}`
+        `\r\n  ${prop.name}?: ${this.component.getTypeByName(prop.valueAll, prop?.style)}`
       )
 
       if (prop.default !== undefined) {
         defaults.push(
-          `\r\n  ${prop.name}: ${this.__getDefault(prop.default)}`
+          `\r\n  ${prop.name}: ${this.component.getDefault(prop.default)}`
         )
       }
     })
@@ -372,8 +372,8 @@ module.exports = class DesignComponent extends DesignCommand {
     forEach(props, prop => {
       templates.push(
         `\r\n  ${prop.name}: {` +
-        `\r\n    type: ${this.__getTypeByOptions(prop.valueAll, prop?.style)}` +
-        (prop.default !== undefined ? `,\r\n    default: ${this.__getDefault(prop.default)}` : '') +
+        `\r\n    type: ${this.component.getTypeOptionsByName(prop.valueAll, prop?.style)}` +
+        (prop.default !== undefined ? `,\r\n    default: ${this.component.getDefault(prop.default)}` : '') +
         '\r\n  }'
       )
     })
@@ -433,104 +433,5 @@ module.exports = class DesignComponent extends DesignCommand {
     }
 
     return this
-  }
-
-  /**
-   * Checks if the data type is boolean
-   *
-   * Проверяет, является ли тип данных булевым
-   * @param {(string|boolean)[]} value values to check / значения для проверки
-   * @return {boolean}
-   * @private
-   */
-  __isBoolean (value) {
-    return value.indexOf(true) !== -1
-  }
-
-  /**
-   * Checks if the data type is string
-   *
-   * Проверяет, является ли тип данных строковым
-   * @param {(string|boolean)[]} value values to check / значения для проверки
-   * @return {boolean}
-   * @private
-   */
-  __isString (value) {
-    return value.length > 0 && value[0] !== true
-  }
-
-  /**
-   * Returns a string with the data type
-   *
-   * Возвращает строку с типом данных
-   * @param {(string|boolean)[]} value values to check / значения для проверки
-   * @param {boolean} style is the property style present / является ли свойство style
-   * @return {string}
-   * @private
-   */
-  __getType (value, style) {
-    const type = []
-
-    if (this.__isBoolean(value)) {
-      type.push('boolean')
-    }
-
-    if (style) {
-      type.push('string')
-    }
-
-    if (this.__isString(value)) {
-      value.forEach(item => type.push(item === true ? 'true' : `'${item}'`))
-    }
-
-    if (type.length === 0) {
-      type.push('boolean')
-    }
-
-    return type.join(' | ')
-  }
-
-  /**
-   * Returns a string with the data type
-   *
-   * Возвращает строку с типом данных
-   * @param {(string|boolean)[]} value values to check / значения для проверки
-   * @param {boolean} style is the property style present / является ли свойство style
-   * @return {string}
-   * @private
-   */
-  __getTypeByOptions (value, style) {
-    const type = []
-    const typeValue = this.__getType(value, style)
-
-    if (this.__isBoolean(value)) {
-      type.push('Boolean')
-    }
-
-    if (this.__isString(value)) {
-      type.push('String')
-    }
-
-    if (type.length === 0) {
-      type.push('Boolean')
-    }
-
-    return `[${type.join(', ')}]${typeValue !== '' && typeValue !== 'boolean' ? ` as PropType<${typeValue}>` : ''}`
-  }
-
-  /**
-   * Returns default values
-   *
-   * Возвращает значения по умолчанию
-   * @param {string|boolean} value
-   * @return {string}
-   * @private
-   */
-  __getDefault (value) {
-    if (typeof value === 'string') {
-      return `'${value}'`
-    } else {
-      return `${value}`
-    }
   }
 }

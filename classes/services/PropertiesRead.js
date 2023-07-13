@@ -28,7 +28,7 @@ module.exports = class PropertiesRead {
    * названий дизайнов, соответствующих названиям папок
    */
   constructor (designs) {
-    this.designs = ['d', ...designs]
+    this.designs = designs
 
     this.fileImport = new PropertiesReadImport()
     this.separator = new PropertiesReadSeparator()
@@ -46,7 +46,7 @@ module.exports = class PropertiesRead {
     const components = this.getComponents()
     const data = replaceRecursive(components, main)
 
-    PropertiesCache.create([], FILE_CACHE_READ, data)
+    this.__initCache(FILE_CACHE_READ, data)
 
     return data
   }
@@ -99,7 +99,7 @@ module.exports = class PropertiesRead {
       })
     })
 
-    PropertiesCache.create([], FILE_CACHE_MAIN, data)
+    this.__initCache(FILE_CACHE_MAIN, data)
 
     return data
   }
@@ -127,7 +127,7 @@ module.exports = class PropertiesRead {
       }
     })
 
-    PropertiesCache.create([], FILE_CACHE_COMPONENTS, data)
+    this.__initCache(FILE_CACHE_COMPONENTS, data)
 
     return data
   }
@@ -154,7 +154,7 @@ module.exports = class PropertiesRead {
       })
     })
 
-    PropertiesCache.create([], FILE_CACHE_INFORMATION, data)
+    this.__initCache(FILE_CACHE_INFORMATION, data)
 
     return data
   }
@@ -203,5 +203,17 @@ module.exports = class PropertiesRead {
       path,
       properties: PropertiesFiles.readFile([path, FILE_NAME]) || {}
     }
+  }
+
+  /**
+   * Saving the result
+   *
+   * Сохранение результата
+   * @param {string} name file name / название файла
+   * @param {Object<string,*>|*[]|string} value values for storage / значения для хранения
+   * @private
+   */
+  __initCache (name, value) {
+    PropertiesCache.create(['read', this.designs.join('_')], name, value)
   }
 }

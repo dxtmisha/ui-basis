@@ -33,7 +33,7 @@ module.exports = class Properties {
     designs = undefined
   ) {
     this.cache = cache
-    this.designs = designs || PropertiesTool.getDesignsByEnv()
+    this.designs = ['d', ...(designs || PropertiesTool.getDesignsByEnv())]
     this.items = new PropertiesItems(
       cache ? this.__initCache() : this.__init()
     )
@@ -74,7 +74,7 @@ module.exports = class Properties {
   __init () {
     const data = this.__initGo()
 
-    PropertiesCache.create([], FILE_CACHE, data)
+    PropertiesCache.create([], `${this.designs.join('_')}_${FILE_CACHE}`, data)
     return data
   }
 
@@ -86,7 +86,7 @@ module.exports = class Properties {
    * @private
    */
   __initCache () {
-    return PropertiesCache.get([], FILE_CACHE, () => this.__initGo())
+    return PropertiesCache.get([], `${this.designs.join('_')}_${FILE_CACHE}`, () => this.__initGo())
   }
 
   /**

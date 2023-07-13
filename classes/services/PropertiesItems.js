@@ -138,7 +138,7 @@ module.exports = class PropertiesItems {
    * @return {Object<string,*>|string}
    */
   getCache (name, callback, extension = 'json') {
-    return PropertiesCache.get([], name, callback, extension)
+    return PropertiesCache.get([], `${this.getDesigns().join('_')}_${name}`, callback, extension)
   }
 
   /**
@@ -276,7 +276,7 @@ module.exports = class PropertiesItems {
    * @return {PropertiesItems}
    */
   cache (name, data = this.properties, extension = 'json') {
-    PropertiesCache.create([], `step--${step++}__${name}`, data, extension)
+    PropertiesCache.create(['step', this.getDesigns().join('_')], `step--${step++}__${name}`, data, extension)
 
     return this
   }
