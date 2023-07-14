@@ -23,9 +23,14 @@ export interface ButtonInitInterface {
 // Type describing subclasses
 // Тип, описывающий подклассы
 export type ButtonSubClassesType = {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
   // :subclass
   inscription: 'inscription'
   // :subclass
+} & {
+  // Subclass
+  subclass: 'subclass'
 }
 
 // Type describing incoming properties

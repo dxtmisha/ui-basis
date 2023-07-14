@@ -4,42 +4,49 @@ import {
   defineOptions
 } from 'vue'
 
-import { PropsInterface, defaults, subClasses } from './props'
-
 import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
-import { ButtonDesignEmitsType, ButtonDesignSlotsType } from '../../constructors/Button/types'
+import { ButtonEmitsType, ButtonSlotsType } from '../../constructors/Button/types'
 
-import Md2Icon from '../Icon/Md2Icon.vue'
-import Md2Ripple from '../Ripple/Md2Ripple.vue'
+import { defaults, PropsType, subClassesType } from './types'
 
 defineOptions({
-  name: 'Md2Button' // name component
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :name
+  name: 'Md2Button'
+  // :name
 })
 
-const props = withDefaults(defineProps<PropsInterface>(), defaults)
-const emit = defineEmits<ButtonDesignEmitsType>()
+const props = withDefaults(defineProps<PropsType>(), defaults)
+const emit = defineEmits<ButtonEmitsType>()
 
-defineSlots<ButtonDesignSlotsType>()
+defineSlots<ButtonSlotsType>()
 
-const design = new ButtonDesign<typeof subClasses>(props, emit)
-  .setComponents({
-    icon: Md2Icon,
-    ripple: Md2Ripple
-  })
+// Class for managing component, mainly this is for automatic generation of classes and styles
+// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
+const design = new ButtonDesign<subClassesType>(props, emit)
 
-const render = design.render({})
+// Calls all available variables in this component
+// Вызывает все доступные переменные в этом компоненте
+const {
+  classes,
+  styles
+} = design.setup({})
+
+// Property for render
+// Свойство для render
+// const render = design.render()
 </script>
 
 <template>
-  <render>
-    <slot/>
-  </render>
+  <div :class="classes.main" :style="styles"></div>
+  <!-- <render/> -->
 </template>
 
 <style lang="scss">
 @import "../../constructors/Button/style";
 
-@include initButtonDesign {
-
-}
+// Mixin for generating all classes, states and properties of component
+// Миксин для генерации всех классов, состояний и свойств компонента
+@include initButtonDesign {}
 </style>

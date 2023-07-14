@@ -27,6 +27,9 @@ export type ConstructorSubClassesType = {
   // [!] Системная метка, нельзя удалять
   // :subclass
   // :subclass
+} & {
+  // Subclass
+  subclass: 'subclass'
 }
 
 // Type describing incoming properties

@@ -1,7 +1,4 @@
-const { forEach } = require('../../functions/data')
-const { To } = require('../To')
-
-const DesignCommand = require('./DesignCommand')
+const DesignPrototype = require('./DesignPrototype')
 const PropertiesComponent = require('./PropertiesComponent')
 
 const DIR_NAME = 'constructors'
@@ -17,9 +14,8 @@ const FILE_PROPERTIES = 'properties.json'
  *
  * Класс для генерации файлов для компонентов
  */
-module.exports = class DesignConstructor extends DesignCommand {
+module.exports = class DesignConstructor extends DesignPrototype {
   dirSampleName = 'constructor'
-  properties = {}
 
   /**
    * Constructor
@@ -56,7 +52,7 @@ module.exports = class DesignConstructor extends DesignCommand {
     return [
       ...super._initDir(),
       DIR_NAME,
-      To.camelCaseFirst(this.name)
+      this.component.getComponent()
     ]
   }
 
@@ -145,14 +141,14 @@ module.exports = class DesignConstructor extends DesignCommand {
    * @private
    */
   __initClass () {
-    const file = FILE_CLASS.replace('Constructor', To.camelCaseFirst(this.name))
+    const file = FILE_CLASS.replace(this.replaceName, this.component.getComponent())
 
     if (!this._isFile(file)) {
-      const sample = this.__readSampleClass()
-        .replaceAll('../../../', this.getRoot())
-        .replace(/(Constructor)([A-Z])/g, To.camelCaseFirst(`${this.name}$2`))
+      let sample = this.__readSampleClass()
 
-      this._console(file)
+      sample = this._replacePath(sample)
+      sample = this._replaceNameForProperties(sample)
+
       this._createFile(file, sample)
     }
 
@@ -171,23 +167,16 @@ module.exports = class DesignConstructor extends DesignCommand {
     let sample
 
     if (this._isFile(file)) {
-      const classes = this.component.getClasses()
-      const templates = []
-
-      forEach(classes, (className, index) => {
-        templates.push(`\r\n  ${index}: '${className}'`)
-      })
-
       sample = this.__readTypes()
-        .replace(/(\/\/ :subclass)([\S\s]+)(\/\/ :subclass)/, `$1${templates.join(',')}\r\n  $3`)
     } else {
       sample = this.__readSampleTypes()
-        .replaceAll('../../../', this.getRoot())
-        .replaceAll('Constructor', To.camelCaseFirst(this.name))
+      sample = this._replacePath(sample)
+      sample = this._replaceName(sample)
     }
 
     if (sample) {
-      this._console(file)
+      sample = this._replaceSubclass(sample)
+
       this._createFile(file, sample)
     }
 
@@ -207,99 +196,23 @@ module.exports = class DesignConstructor extends DesignCommand {
 
     if (this._isFile(file)) {
       sample = this.__readProps()
-      sample = this.__initPropsType(sample)
-      sample = this.__initPropsDefault(sample)
-      sample = this.__initPropsProp(sample)
     } else {
       sample = this.__readSampleProps()
-        .replaceAll('Constructor', To.camelCaseFirst(this.name))
+      sample = this._replaceName(sample)
+      sample = this._replacementOnce(sample, 'constructor')
     }
 
     if (sample) {
-      this._console(file)
+      if (this._isFile(FILE_PROPERTIES)) {
+        sample = this._replacePropsType(sample)
+        sample = this._replacePropsDefault(sample)
+        sample = this._replaceProps(sample, this.component.getComponent())
+      }
+
       this._createFile(file, sample)
     }
 
     return this
-  }
-
-  /**
-   * Adding types for properties
-   *
-   * Добавление типов для свойств
-   * @param {string} sample property template / шаблон свойства
-   * @return {string}
-   * @private
-   */
-  __initPropsType (sample) {
-    const props = this.component.getProps()
-    const templates = []
-
-    forEach(props, (item, index) => {
-      if (sample.match(`:type.${index}`)) {
-        sample = sample.replace(
-          new RegExp(`(/[*] ?:type[.]${index} ?[*]/)[^\r\n]*`, 'g'),
-          `$1 | ${this.component.getTypeByName(item.valueAll, item?.style)}`
-        )
-      } else if (!sample.match(`:type.${index}.none`)) {
-        templates.push(`\r\n  ${index}?: ${this.component.getTypeByName(item.valueAll, item?.style)}`)
-      }
-    })
-
-    return sample.replace(/(\/\/ :type)([\S\s]+)(\/\/ :type)/, `$1${templates.join('')}\r\n  $3`)
-  }
-
-  /**
-   * Adding default values for properties
-   *
-   * Добавление значения по умолчанию для свойств
-   * @param {string} sample property template / шаблон свойства
-   * @return {string}
-   * @private
-   */
-  __initPropsDefault (sample) {
-    const props = this.component.getProps()
-    const templates = []
-
-    forEach(props, (item, index) => {
-      if (
-        item.default &&
-        !sample.match(`:default.${index}.none`)
-      ) {
-        templates.push(`\r\n  ${index}: ${this.component.getDefault(item.default)},`)
-      }
-    })
-
-    return sample.replace(/(\/\/ :default)([\S\s]+)(\/\/ :default)/, `$1${templates.join('')}\r\n  $3`)
-  }
-
-  /**
-   * Adding types for properties
-   *
-   * Добавление самих свойств
-   * @param {string} sample property template / шаблон свойства
-   * @return {string}
-   * @private
-   */
-  __initPropsProp (sample) {
-    const props = this.component.getProps()
-    const name = To.camelCaseFirst(this.name)
-    const templates = []
-
-    forEach(props, (item, index) => {
-      if (!sample.match(`:type.${index}.none`)) {
-        templates.push(
-          `\r\n  ${index}: {` +
-          `\r\n    type: [${this.component.getPropsType(item.valueAll).join(', ')}] as PropType<Props${name}Type['${index}']>` +
-          (item.default ? `,\r\n    default: defaults${name}?.${index}` : '') +
-          '\r\n  },'
-        )
-      }
-    })
-
-    return sample
-      .replace(/(\/\/ ?)(import \{[^{]+PropType[^}]+})/, '$2')
-      .replace(/(\/\/ :prop)([\S\s]+)(\/\/ :prop)/, `$1${templates.join('')}\r\n  $3`)
   }
 
   /**
@@ -313,11 +226,11 @@ module.exports = class DesignConstructor extends DesignCommand {
     const file = FILE_STYLE
 
     if (!this._isFile(file)) {
-      const sample = this.__readSampleStyle()
-        .replaceAll('../../../', this.getRoot())
-        .replaceAll('Constructor', To.camelCaseFirst(this.name))
+      let sample = this.__readSampleStyle()
 
-      this._console(file)
+      sample = this._replacePath(sample)
+      sample = this._replaceName(sample)
+
       this._createFile(file, sample)
     }
 
@@ -337,7 +250,6 @@ module.exports = class DesignConstructor extends DesignCommand {
     if (!this._isFile(file)) {
       const sample = this.__readSampleProperties()
 
-      this._console(file)
       this._createFile(file, sample)
     }
 

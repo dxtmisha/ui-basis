@@ -1,16 +1,3 @@
 {
-  "basic": "{d.button}",
-  "height": {
-    "_default": "md"
-  },
-  "contained": {
-    "background-color": {
-      "_rename": "palette-background"
-    },
-    "_category": "appearance",
-    "_default": true
-  },
-  "rounded": {
-    "_default": "standard"
-  }
+  "basic": "{d.button}"
 }

@@ -107,6 +107,8 @@ module.exports = class DesignCommand {
    * @protected
    */
   _createFile (name, value) {
+    this._console(name)
+
     PropertiesFiles.createFile(
       this.dir,
       name,
