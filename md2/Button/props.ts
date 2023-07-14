@@ -1,29 +1,33 @@
-// :basic.once import { PropType } from 'vue'
-// :constructor.once import { PropType } from 'vue'
-// :constructor.once import { defaultsConstructor, propsConstructor, PropsConstructorType, subClassesConstructor } from '../../../constructors/Constructor/props'
+import { PropType } from 'vue'
+import { defaultsButton, propsButton, PropsButtonType, subClassesButton } from '../../constructors/Button/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
 export const subClasses = {
-  /* :constructor.once ...subClassesConstructor, */
+  ...subClassesButton,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    inscription: 'inscription'
     // :subclass
   }
 }
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = /* :constructor.once PropsConstructorType & */ {
+export type PropsType = PropsButtonType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  height?: string | 'sm' | 'md' | 'lg' | 'custom'
+  contained?: boolean
+  rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  disabled?: boolean
+  align?: 'left' | 'right' | 'center'
   // :type
 } & {
   // Values
-  value?: string
 
   // Status
 
@@ -33,28 +37,35 @@ export type PropsType = /* :constructor.once PropsConstructorType & */ {
 // Default value for property
 // Значение по умолчанию для свойства
 export const defaults = {
-  /* :constructor.once ...defaultsConstructor, */
+  ...defaultsButton,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    align: 'center'
     // :default
-  },
-  value: 'value'
+  }
 }
 
 // Constructor for property
 // Конструктор для свойства
 export const props = {
-  /* :constructor.once ...propsConstructor, */
+  ...propsButton,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    height: String as PropType<PropsType['height']>,
+    contained: Boolean,
+    rounded: String as PropType<PropsType['rounded']>,
+    disabled: Boolean,
+    align: {
+      type: String as PropType<PropsType['align']>,
+      default: defaults?.align
+    }
     // :prop
-  },
+  }
   // Values
-  value: String
 
   // Status
 
