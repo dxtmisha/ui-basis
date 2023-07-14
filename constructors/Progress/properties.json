@@ -22,22 +22,14 @@
     "_category": "appearance"
   },
   "indeterminate": {
-    "type1": {
-      "_type": "state"
-    },
-    "type2": {
-      "_type": "state"
-    },
+    "~type1": {},
+    "~type2": {},
     "_type": "state",
     "_default": "type1"
   },
   "position": {
-    "top": {
-      "_type": "state"
-    },
-    "bottom": {
-      "_type": "state"
-    },
+    "~top": {},
+    "~bottom": {},
     "_type": "state",
     "_default": "top"
   },

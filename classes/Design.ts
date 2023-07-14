@@ -30,6 +30,7 @@ import { DesignStyles, StylesListType, StylesRefType } from './DesignStyles'
 
 import { AssociativeType, ElementType } from '../constructors/types'
 import { RefOrNormalType } from '../constructors/typesRef'
+import { DesignComponents } from './DesignComponents'
 
 export interface DesignSetupBasicInterface<C, E> {
   element: Ref<E | undefined>
@@ -96,7 +97,7 @@ export class Design<
    * Список подключенных компонентов
    * @protected
    */
-  protected components = ref<M>({} as M) as Ref<M>
+  protected components: DesignComponents<M>
   protected element = ref<E>()
 
   protected refs: DesignPropsRefsType<P>
@@ -123,6 +124,7 @@ export class Design<
   ) {
     this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()
+    this.components = new DesignComponents<M>()
 
     this.context = this.initContext(contextEmit)
     this.attrs = this.context.attrs
@@ -250,7 +252,7 @@ export class Design<
    * @param components list of connected components / список подключенных компонентов
    */
   setComponents (components: M): this {
-    this.components.value = components
+    this.components.set(components)
     return this
   }
 

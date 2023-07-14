@@ -9,12 +9,9 @@
     "_type": "state"
   },
   "animation-type": {
-    "type1": {
-      "_type": "state"
-    },
-    "type2": {
-      "_type": "state"
-    }
+    "~type1": {},
+    "~type2": {},
+    "_default": "type1"
   },
   "animation-show": {
     "_type": "state"

@@ -60,11 +60,12 @@ export class ButtonDesign<
    * @protected
    */
   protected initRender (): VNode {
+    const setup = this.getSetup()
     // const children: any[] = []
 
     return h('div', {
       ref: this.element,
-      class: this.setupItem.classes.value.main
+      class: setup.classes.value.main
     }/* , children */)
   }
 }

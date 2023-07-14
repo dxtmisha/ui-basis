@@ -1,55 +1,53 @@
-import { computed, ComputedRef, h, VNode } from 'vue'
+import { computed, h, VNode } from 'vue'
 
 import {
   Design,
-  DesignPropsType,
-  DesignPropsValueType,
-  DesignSetupType
+  DesignSetupContextEmitType
 } from '../../classes/Design'
-import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
-import { PropsIconInterface } from './props'
-
-export interface IconDesignInitInterface {
-  isActive: ComputedRef<boolean>
-  iconBind: ComputedRef<Record<string, any>>
-  iconActiveBind: ComputedRef<Record<string, any>>
-}
-
-export interface IconDesignComponentsInterface {
-  image: object
-}
-
-export type IconDesignPropsValueType = DesignPropsValueType<PropsIconInterface>
-export type IconDesignEmitsType = {
-  load: [value: any]
-}
-export type IconDesignSlotsType = DesignPropsType & {
-  default (): any
-}
+import {
+  IconComponentsInterface,
+  IconEmitsType,
+  IconInitInterface,
+  IconPropsValueType,
+  IconSlotsType,
+  IconSubClassesType
+} from './types'
 
 /**
  * IconDesign
  */
 export class IconDesign<
-  C extends ClassesSubClassesType = ClassesSubClassesType,
-  P extends IconDesignPropsValueType = IconDesignPropsValueType
+  C extends IconSubClassesType = IconSubClassesType,
+  P extends IconPropsValueType = IconPropsValueType
 > extends Design<
   C,
   HTMLSpanElement,
   P,
-  IconDesignInitInterface,
-  IconDesignComponentsInterface,
-  IconDesignEmitsType,
-  IconDesignSlotsType
+  IconInitInterface,
+  IconComponentsInterface,
+  IconEmitsType,
+  IconSlotsType
 > {
+  /**
+   * Constructor
+   * @param props properties / свойства
+   * @param contextEmit additional property / дополнительное свойство
+   */
+  constructor (
+    protected readonly props: P,
+    contextEmit?: DesignSetupContextEmitType<IconEmitsType, IconSlotsType>
+  ) {
+    super(props, contextEmit)
+  }
+
   /**
    * Method for generating additional properties
    *
    * Метод для генерации дополнительных свойств
    * @protected
    */
-  protected init (): IconDesignInitInterface {
+  protected init (): IconInitInterface {
     return {
       isActive: this.isActive,
       iconBind: this.getBind(this.refs.icon, this.iconBind),
@@ -61,24 +59,20 @@ export class IconDesign<
    * A method for rendering
    *
    * Метод для рендеринга
-   * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = Record<string, any>> (
-    setup: DesignSetupType<C, HTMLDivElement, D, IconDesignInitInterface>
-  ): VNode {
+  protected initRender (): VNode {
+    const setup = this.getSetup()
     const children: any[] = []
 
     this.initSlot('default', children)
 
-    if (this.components?.image) {
-      if (this.props.icon) {
-        children.push(h(this.components?.image, setup.iconBind.value))
-      }
+    if (this.props.icon) {
+      this.components.render(children, 'image', setup.iconBind.value)
+    }
 
-      if (this.props.iconActive) {
-        children.push(h(this.components?.image, setup.iconActiveBind.value))
-      }
+    if (this.props.iconActive) {
+      this.components.render(children, 'image', setup.iconActiveBind.value)
     }
 
     return h(
@@ -90,28 +84,6 @@ export class IconDesign<
       children
     )
   }
-
-  /**
-   * Switch the element to activity mode
-   *
-   * Переводить элемент в режим активности
-   * @protected
-   */
-  protected readonly isActive = computed<boolean>(() => !!(this.props.iconActive && this.props.active))
-
-  /**
-   * Basic input parameters for the image
-   *
-   * Базовые входные параметры для изображения
-   * @protected
-   */
-  protected readonly imageBind = computed(() => {
-    return {
-      disabled: this.props.disabled,
-      turn: this.props.turn,
-      onLoad: (value: any) => this.context.emit('load', value)
-    }
-  })
 
   /**
    * Basic input data for the first image
@@ -138,4 +110,26 @@ export class IconDesign<
       hide: !this.isActive.value
     }
   })
+
+  /**
+   * Basic input parameters for the image
+   *
+   * Базовые входные параметры для изображения
+   * @protected
+   */
+  protected readonly imageBind = computed(() => {
+    return {
+      disabled: this.props.disabled,
+      turn: this.props.turn,
+      onLoad: (value: any) => this.context.emit('load', value)
+    }
+  })
+
+  /**
+   * Switch the element to activity mode
+   *
+   * Переводить элемент в режим активности
+   * @protected
+   */
+  protected readonly isActive = computed<boolean>(() => !!(this.props.iconActive && this.props.active))
 }

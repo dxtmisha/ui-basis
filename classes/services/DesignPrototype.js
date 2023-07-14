@@ -1,6 +1,7 @@
 const { forEach } = require('../../functions/data')
 
 const DesignCommand = require('./DesignCommand')
+const { To } = require('../To')
 
 /**
  * Class with basic replacement for templates
@@ -134,7 +135,7 @@ module.exports = class DesignPrototype extends DesignCommand {
     const templates = []
 
     forEach(classes, (className, index) => {
-      templates.push(`\r\n  ${index}: '${className}'`)
+      templates.push(`\r\n  ${To.camelCase(index)}: '${className}'`)
     })
 
     return this._replacement(sample, 'subclass', templates.join(','))
@@ -155,22 +156,23 @@ module.exports = class DesignPrototype extends DesignCommand {
 
     forEach(props, (item, index) => {
       if (!sample.match(`:type.${index}.none`)) {
+        const indexName = To.camelCase(index)
         let type = this.component.getPropsType(item.valueAll)
         type = type.length > 1 ? `[${type.join(', ')}]` : type?.[0]
 
         if (type !== 'Boolean') {
-          type = `${type} as PropType<Props${name}Type['${index}']>`
+          type = `${type} as PropType<Props${name}Type['${indexName}']>`
         }
 
         if (item.default) {
           templates.push(
-            `\r\n    ${index}: {` +
+            `\r\n    ${indexName}: {` +
             `\r\n      type: ${type},` +
-            `\r\n      default: defaults${name}?.${index}` +
+            `\r\n      default: defaults${name}?.${indexName}` +
             '\r\n    }'
           )
         } else {
-          templates.push(`\r\n    ${index}: ${type}`)
+          templates.push(`\r\n    ${indexName}: ${type}`)
         }
       }
     })
@@ -203,7 +205,7 @@ module.exports = class DesignPrototype extends DesignCommand {
           `$1 | ${this.component.getTypeByName(item.valueAll, item?.style)}`
         )
       } else if (!sample.match(`:type.${index}.none`)) {
-        templates.push(`\r\n  ${index}?: ${this.component.getTypeByName(item.valueAll, item?.style)}`)
+        templates.push(`\r\n  ${To.camelCase(index)}?: ${this.component.getTypeByName(item.valueAll, item?.style)}`)
       }
     })
 
@@ -227,7 +229,7 @@ module.exports = class DesignPrototype extends DesignCommand {
         item.default &&
         !sample.match(`:default.${index}.none`)
       ) {
-        templates.push(`\r\n    ${index}: ${this.component.getDefault(item.default)}`)
+        templates.push(`\r\n    ${To.camelCase(index)}: ${this.component.getDefault(item.default)}`)
       }
     })
 

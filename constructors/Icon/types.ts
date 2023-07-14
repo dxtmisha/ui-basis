@@ -1,49 +1,47 @@
-import { VNode } from 'vue'
+import { ComputedRef, VNode } from 'vue'
 
 import {
-  DesignEmitsType,
   DesignPropsType,
   DesignPropsValueType
 } from '../../classes/Design'
 
-import { PropsButtonType } from './props'
+import { PropsIconType } from './props'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
-export interface ButtonComponentsInterface {
-  icon?: object
-  progress?: object
-  ripple?: object
+export interface IconComponentsInterface {
+  image?: object
 }
 
 // Interface for describing what property setup returns
 // Интерфейс для описания, какое свойство возвращает setup
-export interface ButtonInitInterface {
-  property: string
+export interface IconInitInterface {
+  isActive: ComputedRef<boolean>
+  iconBind: ComputedRef<Record<string, any>>
+  iconActiveBind: ComputedRef<Record<string, any>>
 }
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type ButtonSubClassesType = {
+export type IconSubClassesType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :subclass
   // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
 }
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type ButtonPropsValueType = DesignPropsValueType<PropsButtonType>
+export type IconPropsValueType = DesignPropsValueType<PropsIconType>
 
 // Type describing available events
 // Тип, описывающий доступные события
-export type ButtonEmitsType = DesignEmitsType
+export type IconEmitsType = {
+  load: [value: any]
+}
 
 // Type describing available slots
 // Тип, описывающий доступные слоты
-export type ButtonSlotsType = DesignPropsType & {
+export type IconSlotsType = DesignPropsType & {
   default?: () => VNode
 }

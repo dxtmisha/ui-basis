@@ -4,27 +4,43 @@ import {
   defineOptions
 } from 'vue'
 
-import { PropsInterface, defaults, subClasses } from './props'
+import { IconDesign } from '../../constructors/Icon/IconDesign'
+import { IconEmitsType, IconSlotsType } from '../../constructors/Icon/types'
 
-import { IconDesign, IconDesignEmitsType, IconDesignSlotsType } from '../../constructors/Icon/IconDesign'
+import { defaults, PropsType, subClassesType } from './types'
 
 import Md2Image from '../Image/Md2Image.vue'
 
 defineOptions({
-  name: 'Md2Icon' // name component
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :name
+  name: 'Md2Icon'
+  // :name
 })
 
-const props = withDefaults(defineProps<PropsInterface>(), defaults)
-const emit = defineEmits<IconDesignEmitsType>()
+const props = withDefaults(defineProps<PropsType>(), defaults)
+const emit = defineEmits<IconEmitsType>()
 
-defineSlots<IconDesignSlotsType>()
+defineSlots<IconSlotsType>()
 
-const design = new IconDesign<typeof subClasses>(props, emit)
+// Class for managing component, mainly this is for automatic generation of classes and styles
+// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
+const design = new IconDesign<subClassesType>(props, emit)
   .setComponents({
     image: Md2Image
   })
 
-const render = design.render({})
+// Calls all available variables in this component
+// Вызывает все доступные переменные в этом компоненте
+// const {
+//   classes,
+//   styles
+// } = design.setup({})
+
+// Property for render
+// Свойство для render
+const render = design.render()
 </script>
 
 <template>
@@ -36,6 +52,8 @@ const render = design.render({})
 <style lang="scss">
 @import "../../constructors/Icon/style";
 
+// Mixin for generating all classes, states and properties of component
+// Миксин для генерации всех классов, состояний и свойств компонента
 @include initIconDesign {
 
 }

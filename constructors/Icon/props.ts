@@ -1,39 +1,70 @@
-import { PropsImageInterface } from '../Image/props'
 import { PropType } from 'vue'
+import { PropsImageType } from '../Image/props'
 
-export interface PropsIconInterface {
+// Type describing incoming properties
+// Тип, описывающий входящие свойства
+export type PropsIconType = {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :type
+  disabled?: boolean
+  hide?: boolean
+  animationType?: 'type1' | 'type2'
+  animationShow?: boolean
+  overlay?: boolean
+  dynamic?: boolean
+  end?: boolean
+  // :type
+} & {
   // Values
-  icon?: string | PropsImageInterface
-  iconActive?: string | PropsImageInterface
+  icon?: string | PropsImageType
+  iconActive?: string | PropsImageType
 
   // Status
   active?: boolean
   turn?: boolean
-  disabled?: boolean
 
   // Options
-  animationType?: 'type1' | 'type2'
-  end?: boolean
 }
 
+// Default value for property
+// Значение по умолчанию для свойства
 export const defaultsIcon = {
-  animationType: 'type1'
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :default
+    animationType: 'type1'
+    // :default
+  }
 }
 
+// Icon for property
+// Конструктор для свойства
 export const propsIcon = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :prop
+    disabled: Boolean,
+    hide: Boolean,
+    animationType: {
+      type: String as PropType<PropsIconType['animationType']>,
+      default: defaultsIcon?.animationType
+    },
+    animationShow: Boolean,
+    overlay: Boolean,
+    dynamic: Boolean,
+    end: Boolean
+    // :prop
+  },
   // Values
   icon: [String, Object],
   iconActive: [String, Object],
 
   // Status
   active: Boolean,
-  turn: Boolean,
-  disabled: Boolean,
+  turn: Boolean
 
   // Options
-  animationType: {
-    type: String as PropType<PropsIconInterface['animationType']>,
-    default: defaultsIcon.animationType
-  },
-  end: Boolean
 }
