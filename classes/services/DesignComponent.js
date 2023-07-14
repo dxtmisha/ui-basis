@@ -192,7 +192,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       const sample = this.__readSampleProperties()
 
       if (this.options.constr) {
-        sample.basic = `{${this.component.getNameForStyle()}}`
+        sample.basic = `{d.${this.component.getComponent()}}`
       }
 
       this._createFile(file, sample)

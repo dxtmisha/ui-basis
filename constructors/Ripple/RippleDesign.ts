@@ -1,39 +1,30 @@
 import { h, VNode } from 'vue'
 import { createElement } from '../../functions/element'
 
+import { Design } from '../../classes/Design'
+
 import {
-  Design,
-  DesignEmitsType,
-  DesignPropsType,
-  DesignPropsValueType,
-  DesignSetupType
-} from '../../classes/Design'
-import { ClassesSubClassesType } from '../../classes/DesignClasses'
-
-import { PropsRippleInterface } from './props'
-
-export interface RippleDesignInitInterface {
-  onClick: (event: MouseEvent) => void
-}
-
-export type RippleDesignPropsValueType = DesignPropsValueType<PropsRippleInterface>
-export type RippleDesignEmitsType = DesignEmitsType
-export type RippleDesignSlotsType = DesignPropsType
+  RippleEmitsType,
+  RippleInitInterface,
+  RipplePropsValueType,
+  RippleSlotsType,
+  RippleSubClassesType
+} from './types'
 
 /**
  * RippleDesign
  */
 export class RippleDesign<
-  C extends ClassesSubClassesType = ClassesSubClassesType,
-  P extends RippleDesignPropsValueType = RippleDesignPropsValueType
+  C extends RippleSubClassesType = RippleSubClassesType,
+  P extends RipplePropsValueType = RipplePropsValueType
 > extends Design<
   C,
   HTMLDivElement,
   P,
-  RippleDesignInitInterface,
+  RippleInitInterface,
   Record<string, any>,
-  RippleDesignEmitsType,
-  RippleDesignSlotsType
+  RippleEmitsType,
+  RippleSlotsType
 > {
   /**
    * Method for generating additional properties
@@ -41,7 +32,7 @@ export class RippleDesign<
    * Метод для генерации дополнительных свойств
    * @protected
    */
-  protected init (): RippleDesignInitInterface {
+  protected init (): RippleInitInterface {
     return {
       onClick: (event: MouseEvent) => this.addItem(event.offsetX, event.offsetY)
     }
@@ -51,16 +42,13 @@ export class RippleDesign<
    * A method for rendering
    *
    * Метод для рендеринга
-   * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = Record<string, any>> (
-    setup: DesignSetupType<C, HTMLDivElement, D, RippleDesignInitInterface>
-  ): VNode {
+  protected initRender (): VNode {
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main,
-      onMousedown: setup.onClick
+      class: this.setupItem.classes.value.main,
+      onMousedown: this.setupItem.onClick
     })
   }
 

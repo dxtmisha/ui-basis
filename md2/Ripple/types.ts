@@ -1,61 +1,48 @@
-// :basic.once import { PropType } from 'vue'
-// :constructor.once import { PropType } from 'vue'
-// :constructor.once import { defaultsConstructor, propsConstructor, PropsConstructorType } from '../../../constructors/Constructor/props'
-// :constructor.once import { ConstructorSubClassesType } from '../../../constructors/Constructor/types'
+import { defaultsRipple, propsRipple, PropsRippleType } from '../../constructors/Ripple/props'
+import { RippleSubClassesType } from '../../constructors/Ripple/types'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = /* :constructor.once ConstructorSubClassesType & */ {
+export type subClassesType = RippleSubClassesType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :subclass
+  item: 'item'
   // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
 }
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = /* :constructor.once PropsConstructorType & */ {
+export type PropsType = PropsRippleType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
   // :type
-} & {
-  // Values
-  value?: string
-
-  // Status
-
-  // Options
 }
 
 // Default value for property
 // Значение по умолчанию для свойства
 export const defaults = {
-  /* :constructor.once ...defaultsConstructor, */
+  ...defaultsRipple,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  },
-  value: 'value'
+  }
 }
 
 // Constructor for property
 // Конструктор для свойства
 export const props = {
-  /* :constructor.once ...propsConstructor, */
+  ...propsRipple,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
     // :prop
-  },
+  }
   // Values
-  value: [String]
 
   // Status
 
