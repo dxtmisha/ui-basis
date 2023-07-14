@@ -1,10 +1,11 @@
-import { VNode } from 'vue'
+import { ComputedRef } from 'vue'
 
 import {
-  DesignEmitsType,
   DesignPropsType,
   DesignPropsValueType
 } from '../../classes/Design'
+
+// import { IconPropsValueType } from '../Icon/types'
 
 import { PropsButtonType } from './props'
 
@@ -19,7 +20,15 @@ export interface ButtonComponentsInterface {
 // Interface for describing what property setup returns
 // Интерфейс для описания, какое свойство возвращает setup
 export interface ButtonInitInterface {
-  property: string
+  isEnabled: ComputedRef<boolean>
+  isInscription: ComputedRef<boolean>
+
+  disabledBind: ComputedRef<boolean | undefined>
+  // iconBind: ComputedRef<IconPropsValueType>
+  // trailingBind: ComputedRef<IconPropsValueType>
+
+  onClick: (event: MouseEvent) => void
+  onTrailing: (event: MouseEvent) => void
 }
 
 // Type describing subclasses
@@ -28,22 +37,33 @@ export type ButtonSubClassesType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :subclass
+  inscription: 'inscription'
   // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
 }
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type ButtonPropsValueType = DesignPropsValueType<PropsButtonType>
 
+// Parameters for the button event
+// Параметры для события кнопка
+export type ButtonEventType = {
+  type: string
+  value?: any
+  detail?: Record<string, any>
+}
+
 // Type describing available events
 // Тип, описывающий доступные события
-export type ButtonEmitsType = DesignEmitsType
+export type ButtonEmitsType = {
+  click: [
+    event: MouseEvent,
+    value: ButtonEventType
+  ]
+}
 
 // Type describing available slots
 // Тип, описывающий доступные слоты
 export type ButtonSlotsType = DesignPropsType & {
-  default?: () => VNode
+  default? (): any
 }

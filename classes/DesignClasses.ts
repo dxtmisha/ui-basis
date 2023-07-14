@@ -102,6 +102,22 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
   }
 
   /**
+   * Returns the names of classes and their values by the list
+   *
+   * Возвращает название классов и их значения по списку
+   * @param values list of classes and their names / список классов и их названия
+   */
+  getNameByStateByList<V = any> (values: Record<string, V>): Record<string, V> {
+    const data = {}
+
+    forEach(values, (item, index) => {
+      data[this.classes.getNameByState([index])] = item
+    })
+
+    return data
+  }
+
+  /**
    * Возвращает название класса для подкласса
    *
    * Returns the class names for the subclass

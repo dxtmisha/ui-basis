@@ -8,10 +8,8 @@ export type subClassesType = ButtonSubClassesType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :subclass
+  inscription: 'inscription'
   // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
 }
 
 // Type describing incoming properties
@@ -23,14 +21,9 @@ export type PropsType = PropsButtonType & {
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
   contained?: boolean
   rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  disabled?: boolean
+  align?: 'left' | 'right' | 'center'
   // :type
-} & {
-  // Values
-  value?: string
-
-  // Status
-
-  // Options
 }
 
 // Default value for property
@@ -41,9 +34,9 @@ export const defaults = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    align: 'center'
     // :default
-  },
-  value: 'value'
+  }
 }
 
 // Constructor for property
@@ -56,11 +49,15 @@ export const props = {
     // :prop
     height: String as PropType<PropsType['height']>,
     contained: Boolean,
-    rounded: String as PropType<PropsType['rounded']>
+    rounded: String as PropType<PropsType['rounded']>,
+    disabled: Boolean,
+    align: {
+      type: String as PropType<PropsType['align']>,
+      default: defaults?.align
+    }
     // :prop
-  },
+  }
   // Values
-  value: [String]
 
   // Status
 

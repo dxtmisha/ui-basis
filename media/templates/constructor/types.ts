@@ -1,5 +1,3 @@
-import { VNode } from 'vue'
-
 import {
   DesignEmitsType,
   DesignPropsType,
@@ -43,5 +41,5 @@ export type ConstructorEmitsType = DesignEmitsType
 // Type describing available slots
 // Тип, описывающий доступные слоты
 export type ConstructorSlotsType = DesignPropsType & {
-  default?: () => VNode
+  default? (): any
 }

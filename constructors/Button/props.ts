@@ -1,4 +1,6 @@
 import { PropType } from 'vue'
+import { PropsIconType } from '../Icon/props'
+import { PropsProgressType } from '../Progress/props'
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
@@ -6,14 +8,31 @@ export type PropsButtonType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  disabled?: boolean
+  align?: 'left' | 'right' | 'center'
   // :type
 } & {
   // Values
-  value?: string
+  inscription?: string
+  icon?: string | PropsIconType
+  iconTrailing?: string | PropsIconType
+  to?: string
+  value?: any
+  detail?: Record<string, any>
+
+  // Icon
+  iconTurn?: boolean
+  iconHide?: boolean
+
+  // Progress
+  progress?: boolean | PropsProgressType
+  progressPosition?: 'center' | 'icon' | 'trailing'
 
   // Status
+  selected?: boolean
 
   // Options
+  tag?: 'button' | 'a' | 'span' | string
 }
 
 // Default value for property
@@ -23,9 +42,11 @@ export const defaultsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    align: 'center'
     // :default
   },
-  value: 'value'
+  progressPosition: 'center',
+  tag: 'button'
 }
 
 // Button for property
@@ -35,12 +56,39 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    disabled: Boolean,
+    align: {
+      type: String as PropType<PropsButtonType['align']>,
+      default: defaultsButton?.align
+    }
     // :prop
   },
   // Values
-  value: [String]
+  inscription: [Number, String],
+  icon: [Object, String],
+  iconTrailing: [Object, String],
+  to: String,
+  value: [Object, Number, String],
+  detail: [Object],
+
+  // Icon
+  iconTurn: Boolean,
+  iconHide: Boolean,
+
+  // Progress
+  progress: [Object, Boolean],
+  progressPosition: {
+    type: String as PropType<PropsButtonType['progressPosition']>,
+    default: defaultsButton?.progressPosition
+  },
 
   // Status
+  selected: Boolean,
+  disabled: Boolean,
 
   // Options
+  tag: {
+    type: String as PropType<PropsButtonType['tag']>,
+    default: defaultsButton?.tag
+  }
 }

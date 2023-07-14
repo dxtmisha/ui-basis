@@ -2,10 +2,10 @@ import { computed } from 'vue'
 
 import { DesignPropsValueType } from '../classes/Design'
 
-import { PropsProgressInterface } from '../constructors/Progress/props'
+import { PropsProgressType } from '../constructors/Progress/props'
 
 export type UseEnabledPropsType = DesignPropsValueType<{
-  progress?: boolean | PropsProgressInterface
+  progress?: boolean | PropsProgressType
   readonly?: boolean
   disabled?: boolean
 }>

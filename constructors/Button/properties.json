@@ -1,1 +1,13 @@
-{}
+{
+  "#inscription": {},
+  "disabled": {
+    "_type": "state"
+  },
+  "align": {
+    "~left": {},
+    "~right": {},
+    "~center": {},
+    "_type": "state",
+    "_default": "center"
+  }
+}

@@ -7,9 +7,9 @@ import { DesignSetupContextType } from '../../classes/Design'
 import { UseEnabled } from '../../uses/UseEnabled'
 
 import {
-  ButtonDesignEmitsType,
-  ButtonDesignPropsValueType,
-  ButtonEventOptionsType
+  ButtonEmitsType,
+  ButtonEventType,
+  ButtonPropsValueType
 } from './types'
 
 /**
@@ -17,7 +17,7 @@ import {
  *
  * Базовый класс для работы с событиями кнопки
  */
-export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType> {
+export class ButtonEvent<O extends ButtonEmitsType = ButtonEmitsType> {
   protected readonly enabled: UseEnabled
 
   /**
@@ -29,7 +29,7 @@ export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType
   // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly emit: DesignSetupContextType<O>['emit'],
-    protected readonly props: ButtonDesignPropsValueType,
+    protected readonly props: ButtonPropsValueType,
     enabled?: UseEnabled
   ) {
     this.enabled = enabled || new UseEnabled(this.props)
@@ -41,7 +41,7 @@ export class ButtonEvent<O extends ButtonDesignEmitsType = ButtonDesignEmitsType
    * Параметры для события
    * @protected
    */
-  protected readonly options = computed<ButtonEventOptionsType>(() => {
+  protected readonly options = computed<ButtonEventType>(() => {
     return {
       type: 'click',
       value: this.props?.value,

@@ -9,6 +9,10 @@ import { ButtonEmitsType, ButtonSlotsType } from '../../constructors/Button/type
 
 import { defaults, PropsType, subClassesType } from './types'
 
+import Md2Icon from '../Icon/Md2Icon.vue'
+import Md2Progress from '../Progress/Md2Progress.vue'
+import Md2Ripple from '../Ripple/Md2Ripple.vue'
+
 defineOptions({
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -25,22 +29,28 @@ defineSlots<ButtonSlotsType>()
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
 const design = new ButtonDesign<subClassesType>(props, emit)
+  .setComponents({
+    icon: Md2Icon,
+    ripple: Md2Ripple,
+    progress: Md2Progress
+  })
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте
-const {
-  classes,
-  styles
-} = design.setup({})
+// const {
+//   classes,
+//   styles
+// } = design.setup({})
 
 // Property for render
 // Свойство для render
-// const render = design.render()
+const render = design.render()
 </script>
 
 <template>
-  <div :class="classes.main" :style="styles"></div>
-  <!-- <render/> -->
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">
@@ -48,5 +58,7 @@ const {
 
 // Mixin for generating all classes, states and properties of component
 // Миксин для генерации всех классов, состояний и свойств компонента
-@include initButtonDesign {}
+@include initButtonDesign {
+
+}
 </style>

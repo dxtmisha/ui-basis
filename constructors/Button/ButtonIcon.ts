@@ -1,13 +1,6 @@
-import { computed, ComputedRef, h, toRef, toRefs } from 'vue'
+import { computed, ComputedRef, h, toRefs } from 'vue'
 
 import { Design } from '../../classes/Design'
-
-import { PropsIconInterface } from '../Icon/props'
-
-import {
-  ButtonDesignComponentsInterface,
-  ButtonDesignPropsValueType
-} from './types'
 
 export class ButtonIcon {
   readonly iconBind?: ComputedRef<PropsIconInterface>
