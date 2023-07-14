@@ -1,19 +1,41 @@
 <script setup lang="ts">
-import { defineOptions } from 'vue'
+import {
+  // defineSlots,
+  defineOptions
+} from 'vue'
 
-import { PropsInterface, defaults, subClasses } from './props'
+import { ImageDesign } from '../../constructors/Image/ImageDesign'
+import { ImageEmitsType/* , ImageSlotsType */ } from '../../constructors/Image/types'
 
-import { ImageDesign, ImageDesignEmitsType } from '../../constructors/Image/ImageDesign'
+import { defaults, PropsType, subClassesType } from './types'
 
 defineOptions({
-  name: 'Md2Image' // name component
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :name
+  name: 'Md2Image'
+  // :name
 })
 
-const props = withDefaults(defineProps<PropsInterface>(), defaults)
-const emit = defineEmits<ImageDesignEmitsType>()
+const props = withDefaults(defineProps<PropsType>(), defaults)
+const emit = defineEmits<ImageEmitsType>()
 
-const design = new ImageDesign<typeof subClasses>(props, emit)
-const render = design.render({})
+// defineSlots<ImageSlotsType>()
+
+// Class for managing component, mainly this is for automatic generation of classes and styles
+// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
+const design = new ImageDesign<subClassesType>(props, emit)
+
+// Calls all available variables in this component
+// Вызывает все доступные переменные в этом компоненте
+// const {
+//   classes,
+//   styles
+// } = design.setup({})
+
+// Property for render
+// Свойство для render
+const render = design.render()
 </script>
 
 <template>
@@ -23,6 +45,8 @@ const render = design.render({})
 <style lang="scss">
 @import "../../constructors/Image/style";
 
+// Mixin for generating all classes, states and properties of component
+// Миксин для генерации всех классов, состояний и свойств компонента
 @include initImageDesign {
 
 }

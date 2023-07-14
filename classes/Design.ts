@@ -319,6 +319,15 @@ export class Design<
   }
 
   /**
+   * Returns the basic data processed in setup
+   *
+   * Возвращает базовые данные, обрабатываемые в setup
+   */
+  getSetup (): DesignSetupType<C, E, AssociativeType, I> {
+    return this.setupItem as DesignSetupType<C, E, AssociativeType, I>
+  }
+
+  /**
    * Initializes the slot
    *
    * Инициализирует слот
@@ -360,7 +369,7 @@ export class Design<
     this.initSetupItem()
 
     return {
-      ...(this.setupItem || ({} as any)),
+      ...(this.getSetup()),
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }

@@ -97,12 +97,13 @@ export class ProgressDesign<
    * @protected
    */
   protected initRender (): VNode {
+    const setup = this.getSetup()
     const children: any[] = []
 
     if (this.props.circular) {
       children.push(
         h('circle', {
-          class: this.setupItem?.classes.value.circle,
+          class: setup.classes.value.circle,
           cx: '24',
           cy: '24',
           r: '20'
@@ -111,10 +112,10 @@ export class ProgressDesign<
 
     return h(this.tag.value, {
       ref: this.element,
-      class: this.setupItem?.classes.value.main,
-      style: this.setupItem?.styles.value,
+      class: setup.classes.value.main,
+      style: setup.styles.value,
       viewBox: '0 0 48 48',
-      onAnimationend: this.setupItem?.onAnimation
+      onAnimationend: setup.onAnimation
     }, children)
   }
 

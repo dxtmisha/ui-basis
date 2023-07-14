@@ -1,6 +1,17 @@
 import { PropType } from 'vue'
 
-export interface PropsImageInterface {
+// Type describing incoming properties
+// Тип, описывающий входящие свойства
+export type PropsImageType = {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :type
+  adaptive?: boolean
+  turn?: boolean
+  disabled?: boolean
+  hide?: boolean
+  // :type
+} & {
   // Values
   value?: string | File
   coordinator?: [number, number?, number?, number?]
@@ -9,7 +20,6 @@ export interface PropsImageInterface {
   y?: string | number
 
   // Adaptive
-  adaptive?: boolean
   adaptiveGroup?: string
   adaptiveAlways?: boolean
   objectWidth?: number
@@ -19,13 +29,32 @@ export interface PropsImageInterface {
   url?: string
 }
 
+// Default value for property
+// Значение по умолчанию для свойства
 export const defaultsImage = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :default
+    // :default
+  },
   adaptiveGroup: 'main',
   url: '/icons/'
 }
 
+// Image for property
+// Конструктор для свойства
 export const propsImage = {
-  // Values
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :prop
+    adaptive: Boolean,
+    turn: Boolean,
+    disabled: Boolean,
+    hide: Boolean
+    // :prop
+  },
   value: [String, File],
   coordinator: Array as PropType<number[]>,
   size: [String, Number],
@@ -33,7 +62,6 @@ export const propsImage = {
   y: [String, Number],
 
   // Adaptive
-  adaptive: Boolean,
   adaptiveGroup: {
     type: String,
     default: defaultsImage.adaptiveGroup
