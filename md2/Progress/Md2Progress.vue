@@ -7,7 +7,7 @@ import {
 import { ProgressDesign } from '../../constructors/Progress/ProgressDesign'
 // import { ProgressEmitsType, ProgressSlotsType } from '../../constructors/Progress/types'
 
-import { defaults, PropsType, subClasses } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 defineOptions({
   // [!] System label, cannot be deleted

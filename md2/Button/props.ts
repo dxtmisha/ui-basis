@@ -42,6 +42,9 @@ export const defaults = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    height: 'md',
+    contained: true,
+    rounded: 'standard',
     align: 'center'
     // :default
   }
@@ -55,9 +58,18 @@ export const props = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    height: String as PropType<PropsType['height']>,
-    contained: Boolean,
-    rounded: String as PropType<PropsType['rounded']>,
+    height: {
+      type: String as PropType<PropsType['height']>,
+      default: defaults?.height
+    },
+    contained: {
+      type: Boolean,
+      default: defaults?.contained
+    },
+    rounded: {
+      type: String as PropType<PropsType['rounded']>,
+      default: defaults?.rounded
+    },
     disabled: Boolean,
     align: {
       type: String as PropType<PropsType['align']>,

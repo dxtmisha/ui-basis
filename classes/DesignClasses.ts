@@ -108,10 +108,10 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * @param values list of classes and their names / список классов и их названия
    */
   getNameByStateByList<V = any> (values: Record<string, V>): Record<string, V> {
-    const data = {}
+    const data: Record<string, V> = {}
 
     forEach(values, (item, index) => {
-      data[this.classes.getNameByState([index])] = item
+      data[this.getNameByState([index.toString()])] = item
     })
 
     return data

@@ -1,4 +1,4 @@
-import { DefineComponent, h, Ref, ref } from 'vue'
+import { DefineComponent, h } from 'vue'
 
 export type DesignComponentsType = Record<string, DefineComponent>
 
@@ -8,7 +8,7 @@ export type DesignComponentsType = Record<string, DefineComponent>
  * Класс для работы с подключенными компонентами
  */
 export class DesignComponents<M extends DesignComponentsType = DesignComponentsType> {
-  protected item = ref<M>({} as M) as Ref<M>
+  protected item = {} as M
 
   /**
    * Check the presence of the component
@@ -17,7 +17,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param name name of the component / названия компонента
    */
   is<K extends keyof M> (name: K): name is K {
-    return name in this.item.value
+    return name in this.item
   }
 
   /**
@@ -27,7 +27,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param name name of the component / названия компонента
    */
   get<K extends keyof M> (name: K): M[K] {
-    return this.item.value?.[name]
+    return this.item?.[name]
   }
 
   /**
@@ -60,7 +60,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param components list of connected components / список подключенных компонентов
    */
   set (components: M): this {
-    this.item.value = components
+    this.item = components
     return this
   }
 }

@@ -7,7 +7,7 @@ import {
 import { ImageDesign } from '../../constructors/Image/ImageDesign'
 import { ImageEmitsType/* , ImageSlotsType */ } from '../../constructors/Image/types'
 
-import { defaults, PropsType, subClasses } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 defineOptions({
   // [!] System label, cannot be deleted

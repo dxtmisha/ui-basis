@@ -7,7 +7,7 @@ import {
 import { IconDesign } from '../../constructors/Icon/IconDesign'
 import { IconEmitsType, IconSlotsType } from '../../constructors/Icon/types'
 
-import { defaults, PropsType, subClasses } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 import Md2Image from '../Image/Md2Image.vue'
 

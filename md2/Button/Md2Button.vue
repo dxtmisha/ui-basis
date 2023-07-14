@@ -7,7 +7,7 @@ import {
 import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
 import { ButtonEmitsType, ButtonSlotsType } from '../../constructors/Button/types'
 
-import { defaults, PropsType, subClasses } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 import Md2Icon from '../Icon/Md2Icon.vue'
 import Md2Progress from '../Progress/Md2Progress.vue'

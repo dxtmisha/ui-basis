@@ -1,3 +1,12 @@
 {
-  "basic": "{d.button}"
+  "basic": "{d.button}",
+  "height": {
+    "_default": "md"
+  },
+  "contained": {
+    "_default": true
+  },
+  "rounded": {
+    "_default": "standard"
+  }
 }

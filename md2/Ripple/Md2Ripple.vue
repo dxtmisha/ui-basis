@@ -7,7 +7,7 @@ import {
 import { RippleDesign } from '../../constructors/Ripple/RippleDesign'
 // import { RippleEmitsType, RippleSlotsType } from '../../constructors/Ripple/types'
 
-import { defaults, PropsType, subClasses } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 defineOptions({
   // [!] System label, cannot be deleted
