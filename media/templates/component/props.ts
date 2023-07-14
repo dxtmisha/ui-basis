@@ -1,18 +1,23 @@
 // :basic.once import { PropType } from 'vue'
 // :constructor.once import { PropType } from 'vue'
-// :constructor.once import { defaultsConstructor, propsConstructor, PropsConstructorType } from '../../../constructors/Constructor/props'
-// :constructor.once import { ConstructorSubClassesType } from '../../../constructors/Constructor/types'
+// :constructor.once
+// :constructor.once import {
+// :constructor.once   defaultsConstructor,
+// :constructor.once   propsConstructor,
+// :constructor.once   PropsConstructorType,
+// :constructor.once   subClassesConstructor
+// :constructor.once } from '../../../constructors/Constructor/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = /* :constructor.once ConstructorSubClassesType & */ {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
+export const subClasses = {
+  /* :constructor.once ...subClassesConstructor, */
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    // :subclass
+  }
 }
 
 // Type describing incoming properties
@@ -55,7 +60,7 @@ export const props = {
     // :prop
   },
   // Values
-  value: [String]
+  value: String
 
   // Status
 

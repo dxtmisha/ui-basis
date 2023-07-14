@@ -135,10 +135,10 @@ module.exports = class DesignPrototype extends DesignCommand {
     const templates = []
 
     forEach(classes, (className, index) => {
-      templates.push(`\r\n  ${To.camelCase(index)}: '${className}'`)
+      templates.push(`\r\n    ${To.camelCase(index)}: '${className}'`)
     })
 
-    return this._replacement(sample, 'subclass', templates.join(','))
+    return this._replacement(sample, 'subclass', templates.join(','), '    ')
   }
 
   /**

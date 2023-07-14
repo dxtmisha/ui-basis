@@ -31,16 +31,6 @@ export interface ButtonInitInterface {
   onTrailing: (event: MouseEvent) => void
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type ButtonSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  inscription: 'inscription'
-  // :subclass
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type ButtonPropsValueType = DesignPropsValueType<PropsButtonType>

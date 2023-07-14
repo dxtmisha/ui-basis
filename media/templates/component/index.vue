@@ -6,7 +6,7 @@ import { Design } from '../../../classes/Design'
 /* :basic.once.end */
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
 
-import { props, subClassesType } from './types'
+import { props, subClasses } from './props'
 
 export default defineComponent({
   // [!] System label, cannot be deleted
@@ -18,7 +18,7 @@ export default defineComponent({
   setup (props, context) {
     // Class for managing component, mainly this is for automatic generation of classes and styles
     // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-    return new /* :constructor.once Constructor */Design<subClassesType>(props, context)
+    return new /* :constructor.once Constructor */Design<typeof subClasses>(props, context)
       .setup({})
   }
 })

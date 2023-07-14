@@ -4,16 +4,20 @@ import {
   Design,
   DesignSetupContextEmitType
 } from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
+
+import { subClassesButton } from './props'
 
 import {
   ButtonComponentsInterface,
   ButtonEmitsType,
   ButtonInitInterface,
   ButtonPropsValueType,
-  ButtonSlotsType,
-  ButtonSubClassesType
+  ButtonSlotsType
 } from './types'
+
 import { UseEnabled } from '../../uses/UseEnabled'
+
 import { ButtonEvent } from './ButtonEvent'
 import { ButtonInscription } from './ButtonInscription'
 
@@ -21,7 +25,7 @@ import { ButtonInscription } from './ButtonInscription'
  * ButtonDesign
  */
 export class ButtonDesign<
-  C extends ButtonSubClassesType = ButtonSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesButton,
   P extends ButtonPropsValueType = ButtonPropsValueType
 > extends Design<
   C,
@@ -52,6 +56,8 @@ export class ButtonDesign<
 
     this.event = new ButtonEvent(this.emit, this.props, this.enabled)
     this.inscription = new ButtonInscription(this.slots, this.props)
+
+    this.classes.setExtraMain(this.classesStatus)
   }
 
   /**

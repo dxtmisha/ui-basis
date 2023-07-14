@@ -4,22 +4,24 @@ import {
   Design,
   DesignSetupContextEmitType
 } from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
-import { Image } from './Image'
+import { subClassesImage } from './props'
 
 import {
   ImageEmitsType,
   ImageInitInterface,
   ImagePropsValueType,
-  ImageSlotsType,
-  ImageSubClassesType
+  ImageSlotsType
 } from './types'
+
+import { Image } from './Image'
 
 /**
  * ImageDesign
  */
 export class ImageDesign<
-  C extends ImageSubClassesType = ImageSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesImage,
   P extends ImagePropsValueType = ImagePropsValueType
 > extends Design<
   C,

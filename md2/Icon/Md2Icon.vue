@@ -7,7 +7,7 @@ import {
 import { IconDesign } from '../../constructors/Icon/IconDesign'
 import { IconEmitsType, IconSlotsType } from '../../constructors/Icon/types'
 
-import { defaults, PropsType, subClassesType } from './types'
+import { defaults, PropsType, subClasses } from './types'
 
 import Md2Image from '../Image/Md2Image.vue'
 
@@ -26,7 +26,7 @@ defineSlots<IconSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new IconDesign<subClassesType>(props, emit)
+const design = new IconDesign<typeof subClasses>(props, emit)
   .setComponents({
     image: Md2Image
   })

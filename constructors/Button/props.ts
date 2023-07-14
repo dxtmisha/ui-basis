@@ -2,6 +2,18 @@ import { PropType } from 'vue'
 import { PropsIconType } from '../Icon/props'
 import { PropsProgressType } from '../Progress/props'
 
+// Type describing subclasses
+// Тип, описывающий подклассы
+export const subClassesButton = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    inscription: 'inscription'
+    // :subclass
+  }
+}
+
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type PropsButtonType = {

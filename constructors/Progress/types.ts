@@ -20,16 +20,6 @@ export interface ProgressInitInterface {
   onAnimation: (event: AnimationEvent) => void
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type ProgressSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  circle: 'circle'
-  // :subclass
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type ProgressPropsValueType = DesignPropsValueType<PropsProgressType>

@@ -1,14 +1,21 @@
-import { defaultsRipple, propsRipple, PropsRippleType } from '../../constructors/Ripple/props'
-import { RippleSubClassesType } from '../../constructors/Ripple/types'
+import {
+  defaultsRipple,
+  propsRipple,
+  PropsRippleType,
+  subClassesRipple
+} from '../../constructors/Ripple/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = RippleSubClassesType & {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  item: 'item'
-  // :subclass
+export const subClasses = {
+  ...subClassesRipple,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    item: 'item'
+    // :subclass
+  }
 }
 
 // Type describing incoming properties

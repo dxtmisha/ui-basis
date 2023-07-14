@@ -4,20 +4,22 @@ import {
   Design,
   DesignSetupContextEmitType
 } from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
+
+import { subClassesProgress } from './props'
 
 import {
   ProgressEmitsType,
   ProgressInitInterface,
   ProgressPropsValueType,
-  ProgressSlotsType,
-  ProgressSubClassesType
+  ProgressSlotsType
 } from './types'
 
 /**
  * ProgressDesign
  */
 export class ProgressDesign<
-  C extends ProgressSubClassesType = ProgressSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesProgress,
   P extends ProgressPropsValueType = ProgressPropsValueType
 > extends Design<
   C,

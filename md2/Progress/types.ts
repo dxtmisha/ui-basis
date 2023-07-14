@@ -1,15 +1,23 @@
 import { PropType } from 'vue'
-import { defaultsProgress, propsProgress, PropsProgressType } from '../../constructors/Progress/props'
-import { ProgressSubClassesType } from '../../constructors/Progress/types'
+
+import {
+  defaultsProgress,
+  propsProgress,
+  PropsProgressType,
+  subClassesProgress
+} from '../../constructors/Progress/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = ProgressSubClassesType & {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  circle: 'circle'
-  // :subclass
+export const subClasses = {
+  ...subClassesProgress,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    circle: 'circle'
+    // :subclass
+  }
 }
 
 // Type describing incoming properties

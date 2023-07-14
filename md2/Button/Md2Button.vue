@@ -7,7 +7,7 @@ import {
 import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
 import { ButtonEmitsType, ButtonSlotsType } from '../../constructors/Button/types'
 
-import { defaults, PropsType, subClassesType } from './types'
+import { defaults, PropsType, subClasses } from './types'
 
 import Md2Icon from '../Icon/Md2Icon.vue'
 import Md2Progress from '../Progress/Md2Progress.vue'
@@ -28,7 +28,7 @@ defineSlots<ButtonSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new ButtonDesign<subClassesType>(props, emit)
+const design = new ButtonDesign<typeof subClasses>(props, emit)
   .setComponents({
     icon: Md2Icon,
     ripple: Md2Ripple,

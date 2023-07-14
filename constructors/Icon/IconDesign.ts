@@ -4,21 +4,23 @@ import {
   Design,
   DesignSetupContextEmitType
 } from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
+
+import { subClassesIcon } from './props'
 
 import {
   IconComponentsInterface,
   IconEmitsType,
   IconInitInterface,
   IconPropsValueType,
-  IconSlotsType,
-  IconSubClassesType
+  IconSlotsType
 } from './types'
 
 /**
  * IconDesign
  */
 export class IconDesign<
-  C extends IconSubClassesType = IconSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesIcon,
   P extends IconPropsValueType = IconPropsValueType
 > extends Design<
   C,

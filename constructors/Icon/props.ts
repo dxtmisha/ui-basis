@@ -1,6 +1,17 @@
 import { PropType } from 'vue'
 import { PropsImageType } from '../Image/props'
 
+// Type describing subclasses
+// Тип, описывающий подклассы
+export const subClassesIcon = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    // :subclass
+  }
+}
+
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type PropsIconType = {

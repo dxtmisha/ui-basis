@@ -2,20 +2,22 @@ import { h, VNode } from 'vue'
 import { createElement } from '../../functions/element'
 
 import { Design } from '../../classes/Design'
+import { ClassesSubClassesType } from '../../classes/DesignClasses'
+
+import { subClassesRipple } from './props'
 
 import {
   RippleEmitsType,
   RippleInitInterface,
   RipplePropsValueType,
-  RippleSlotsType,
-  RippleSubClassesType
+  RippleSlotsType
 } from './types'
 
 /**
  * RippleDesign
  */
 export class RippleDesign<
-  C extends RippleSubClassesType = RippleSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesRipple,
   P extends RipplePropsValueType = RipplePropsValueType
 > extends Design<
   C,

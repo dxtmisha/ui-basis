@@ -23,8 +23,7 @@ const LIST_PROPS = [
 
 const FILE_INDEX = 'index.vue'
 const FILE_INDEX_COMPOSITION = 'index-composition.vue'
-const FILE_TYPES = 'types.ts'
-const FILE_PROPS_DESIGN = 'props.design.ts'
+const FILE_PROPS = 'props.ts'
 const FILE_PROPERTIES = 'properties.json'
 
 /**
@@ -387,18 +386,8 @@ module.exports = class PropertiesComponent {
    * Возвращает название файла props
    * @return {string}
    */
-  getFileTypes () {
-    return FILE_TYPES
-  }
-
-  /**
-   * Returns the filename props.design
-   *
-   * Возвращает название файла props.design
-   * @return {string}
-   */
-  getFilePropsDesign () {
-    return FILE_PROPS_DESIGN
+  getFileProps () {
+    return FILE_PROPS
   }
 
   /**

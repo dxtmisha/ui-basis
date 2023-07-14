@@ -16,16 +16,6 @@ export interface RippleInitInterface {
   onClick: (event: MouseEvent) => void
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type RippleSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  item: 'item'
-  // :subclass
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type RipplePropsValueType = DesignPropsValueType<PropsRippleType>

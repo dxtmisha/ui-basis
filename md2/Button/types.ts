@@ -1,15 +1,22 @@
 import { PropType } from 'vue'
-import { defaultsButton, propsButton, PropsButtonType } from '../../constructors/Button/props'
-import { ButtonSubClassesType } from '../../constructors/Button/types'
+import {
+  defaultsButton,
+  propsButton,
+  PropsButtonType,
+  subClassesButton
+} from '../../constructors/Button/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = ButtonSubClassesType & {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  inscription: 'inscription'
-  // :subclass
+export const subClasses = {
+  ...subClassesButton,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    inscription: 'inscription'
+    // :subclass
+  }
 }
 
 // Type describing incoming properties

@@ -1,14 +1,22 @@
 import { PropType } from 'vue'
-import { defaultsIcon, propsIcon, PropsIconType } from '../../constructors/Icon/props'
-import { IconSubClassesType } from '../../constructors/Icon/types'
+
+import {
+  defaultsIcon,
+  propsIcon,
+  PropsIconType,
+  subClassesIcon
+} from '../../constructors/Icon/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = IconSubClassesType & {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
+export const subClasses = {
+  ...subClassesIcon,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    // :subclass
+  }
 }
 
 // Type describing incoming properties

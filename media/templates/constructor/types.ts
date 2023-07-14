@@ -18,18 +18,6 @@ export interface ConstructorInitInterface {
   property: string
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type ConstructorSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
-} & {
-  // Subclass
-  subclass: 'subclass'
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type ConstructorPropsValueType = DesignPropsValueType<PropsConstructorType>

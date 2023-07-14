@@ -32,7 +32,7 @@ module.exports = class DesignComponent extends DesignPrototype {
 
     this
       .__initIndex()
-      .__initTypes()
+      .__initProps()
       .__initProperties()
   }
 
@@ -72,14 +72,14 @@ module.exports = class DesignComponent extends DesignPrototype {
   }
 
   /**
-   *  Reading the types.ts file
+   *  Reading the props.ts file
    *
-   * Читает файл types.ts
+   * Читает файл props.ts
    * @return {string}
    * @private
    */
-  __readTypes () {
-    return this._read(this.component.getFileTypes())
+  __readProps () {
+    return this._read(this.component.getFileProps())
   }
 
   /**
@@ -100,8 +100,8 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @return {string}
    * @private
    */
-  __readSampleTypes () {
-    return this._readSample(this.component.getFileTypes())
+  __readSampleProps () {
+    return this._readSample(this.component.getFileProps())
   }
 
   /**
@@ -148,20 +148,20 @@ module.exports = class DesignComponent extends DesignPrototype {
   }
 
   /**
-   * This code generates the types.ts
+   * This code generates the props.ts
    *
-   * Генерация файла types.ts
+   * Генерация файла props.ts
    * @return {this}
    * @private
    */
-  __initTypes () {
-    const file = this.component.getFileTypes()
+  __initProps () {
+    const file = this.component.getFileProps()
     let sample
 
     if (this._isFile(file)) {
-      sample = this.__readTypes()
+      sample = this.__readProps()
     } else {
-      sample = this.__readSampleTypes()
+      sample = this.__readSampleProps()
       sample = this._replacementOnce(sample, 'basic', this.options.constr)
       sample = this._replacementOnce(sample, 'constructor', !this.options.constr)
     }

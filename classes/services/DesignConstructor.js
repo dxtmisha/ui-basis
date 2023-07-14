@@ -175,8 +175,6 @@ module.exports = class DesignConstructor extends DesignPrototype {
     }
 
     if (sample) {
-      sample = this._replaceSubclass(sample)
-
       this._createFile(file, sample)
     }
 
@@ -204,6 +202,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
 
     if (sample) {
       if (this._isFile(FILE_PROPERTIES)) {
+        sample = this._replaceSubclass(sample)
         sample = this._replacePropsType(sample)
         sample = this._replacePropsDefault(sample)
         sample = this._replaceProps(sample, this.component.getComponent())

@@ -19,15 +19,6 @@ export interface ImageInitInterface {
   text: ComputedRef<string | undefined>
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type ImageSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type ImagePropsValueType = DesignPropsValueType<PropsImageType>

@@ -1,3 +1,15 @@
+// Type describing subclasses
+// Тип, описывающий подклассы
+export const subClassesRipple = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    item: 'item'
+    // :subclass
+  }
+}
+
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type PropsRippleType = {

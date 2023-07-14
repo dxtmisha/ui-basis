@@ -21,15 +21,6 @@ export interface IconInitInterface {
   iconActiveBind: ComputedRef<Record<string, any>>
 }
 
-// Type describing subclasses
-// Тип, описывающий подклассы
-export type IconSubClassesType = {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
-}
-
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
 export type IconPropsValueType = DesignPropsValueType<PropsIconType>

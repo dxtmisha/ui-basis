@@ -1,13 +1,20 @@
-import { defaultsImage, propsImage, PropsImageType } from '../../constructors/Image/props'
-import { ImageSubClassesType } from '../../constructors/Image/types'
+import {
+  defaultsImage,
+  propsImage,
+  PropsImageType,
+  subClassesImage
+} from '../../constructors/Image/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export type subClassesType = ImageSubClassesType & {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :subclass
-  // :subclass
+export const subClasses = {
+  ...subClassesImage,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :subclass
+    // :subclass
+  }
 }
 
 // Type describing incoming properties

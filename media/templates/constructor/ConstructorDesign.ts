@@ -4,21 +4,23 @@ import {
   Design,
   DesignSetupContextEmitType
 } from '../../../classes/Design'
+import { ClassesSubClassesType } from '../../../classes/DesignClasses'
+
+import { subClassesConstructor } from './props'
 
 import {
   ConstructorComponentsInterface,
   ConstructorEmitsType,
   ConstructorInitInterface,
   ConstructorPropsValueType,
-  ConstructorSlotsType,
-  ConstructorSubClassesType
+  ConstructorSlotsType
 } from './types'
 
 /**
  * ConstructorDesign
  */
 export class ConstructorDesign<
-  C extends ConstructorSubClassesType = ConstructorSubClassesType,
+  C extends ClassesSubClassesType = typeof subClassesConstructor,
   P extends ConstructorPropsValueType = ConstructorPropsValueType
 > extends Design<
   C,

@@ -10,7 +10,7 @@ import { Design } from '../../../classes/Design'
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
 // :constructor.once import { ConstructorEmitsType, ConstructorSlotsType } from '../../../constructors/Constructor/types'
 
-import { defaults, PropsType, subClassesType } from './types'
+import { defaults, PropsType, subClasses } from './props'
 
 defineOptions({
   // [!] System label, cannot be deleted
@@ -27,7 +27,7 @@ defineSlots/* :constructor.once <ConstructorSlotsType> */()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new /* :constructor.once Constructor */Design<subClassesType>(props, emit)
+const design = new /* :constructor.once Constructor */Design<typeof subClasses>(props, emit)
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте

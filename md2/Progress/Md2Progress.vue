@@ -7,7 +7,7 @@ import {
 import { ProgressDesign } from '../../constructors/Progress/ProgressDesign'
 // import { ProgressEmitsType, ProgressSlotsType } from '../../constructors/Progress/types'
 
-import { defaults, PropsType, subClassesType } from './types'
+import { defaults, PropsType, subClasses } from './types'
 
 defineOptions({
   // [!] System label, cannot be deleted
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<PropsType>(), defaults)
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new ProgressDesign<subClassesType>(props/* , emit */)
+const design = new ProgressDesign<typeof subClasses>(props/* , emit */)
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте
