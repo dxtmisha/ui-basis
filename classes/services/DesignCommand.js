@@ -91,7 +91,7 @@ module.exports = class DesignCommand {
    *
    * Читает шаблона
    * @param {string} name file name / название файла
-   * @return {string}
+   * @return {string|Object<string,*>}
    * @protected
    */
   _readSample (name) {
@@ -103,7 +103,7 @@ module.exports = class DesignCommand {
    *
    * Создание или перезапись файла
    * @param {string} name file name / название файла
-   * @param {string} value values for storage / значения для хранения
+   * @param {string|Object<string,*>} value values for storage / значения для хранения
    * @protected
    */
   _createFile (name, value) {

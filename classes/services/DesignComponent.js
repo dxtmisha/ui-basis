@@ -108,7 +108,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * This code reads a template for the properties.json
    *
    * Читает шаблона для файла properties.json
-   * @return {string}
+   * @return {Object<string,*>}
    * @private
    */
   __readSampleProperties () {
@@ -135,7 +135,11 @@ module.exports = class DesignComponent extends DesignPrototype {
     }
 
     if (sample) {
-      sample = this._replacement(sample, 'name', `\r\n  name: '${this.component.getName()}'`)
+      sample = this._replacement(
+        sample,
+        'name',
+        `\r\n  name: '${this.component.getName()}'${this.options.options ? ',' : ''}`
+      )
 
       this._createFile(main, sample)
     }
@@ -158,6 +162,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       sample = this.__readTypes()
     } else {
       sample = this.__readSampleTypes()
+      sample = this._replacementOnce(sample, 'basic', this.options.constr)
       sample = this._replacementOnce(sample, 'constructor', !this.options.constr)
     }
 
@@ -184,10 +189,10 @@ module.exports = class DesignComponent extends DesignPrototype {
     const file = this.component.getFileProperties()
 
     if (!this._isFile(file)) {
-      let sample = this.__readSampleProperties()
+      const sample = this.__readSampleProperties()
 
       if (this.options.constr) {
-        sample = sample.replace('{', `{\r\b  "basic": "{${this.component.getNameForStyle()}}"`)
+        sample.basic = `{${this.component.getNameForStyle()}}`
       }
 
       this._createFile(file, sample)

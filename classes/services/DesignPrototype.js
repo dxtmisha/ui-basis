@@ -78,7 +78,7 @@ module.exports = class DesignPrototype extends DesignCommand {
     const replacement = (all, data, end) => {
       return remove
         ? ''
-        : `${this._replacePath(data.replaceAll(this.replaceName, this.component.getComponent()))}${end}`
+        : `${this._replacePath(data.trim().replaceAll(this.replaceName, this.component.getComponent()))}${end}`
     }
 
     return sample

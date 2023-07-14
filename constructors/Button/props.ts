@@ -6,8 +6,6 @@ export type PropsButtonType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
-  disabled?: boolean
-  align?: 'left' | 'right' | 'center'
   // :type
 } & {
   // Values
@@ -25,7 +23,6 @@ export const defaultsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
-    align: 'center'
     // :default
   },
   value: 'value'
@@ -38,13 +35,6 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    disabled: {
-      type: [Boolean] as PropType<PropsButtonType['disabled']>
-    },
-    align: {
-      type: [String] as PropType<PropsButtonType['align']>,
-      default: defaultsButton?.align
-    }
     // :prop
   },
   // Values

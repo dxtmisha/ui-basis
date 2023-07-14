@@ -26,7 +26,6 @@ export type ButtonSubClassesType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :subclass
-  inscription: 'inscription'
   // :subclass
 } & {
   // Subclass

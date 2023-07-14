@@ -1,3 +1,4 @@
+// :basic.once import { PropType } from 'vue'
 // :constructor.once import { PropType } from 'vue'
 // :constructor.once import { defaultsConstructor, propsConstructor, PropsConstructorType } from '../../../constructors/Constructor/props'
 // :constructor.once import { ConstructorSubClassesType } from '../../../constructors/Button/types'
