@@ -1,48 +1,80 @@
-import { computed, ComputedRef, h, ref, VNode, watch } from 'vue'
+import { computed, h, ref, VNode, watch } from 'vue'
 
 import {
   Design,
-  DesignEmitsType,
-  DesignPropsType,
-  DesignPropsValueType,
-  DesignSetupType
+  DesignSetupContextEmitType
 } from '../../classes/Design'
 
-import { PropsProgressInterface } from './props'
-
-export interface ProgressDesignInitInterface {
-  tag: ComputedRef<string>
-  valueInPercent: ComputedRef<string | null>
-  onAnimation: (event: AnimationEvent) => void
-}
-
-export type ProgressDesignSubClassesType = {
-  circle: 'circle'
-}
-
-export type ProgressDesignPropsValueType = DesignPropsValueType<PropsProgressInterface>
-export type ProgressDesignEmitsType = DesignEmitsType
-export type ProgressDesignSlotsType = DesignPropsType
+import {
+  ProgressEmitsType,
+  ProgressInitInterface,
+  ProgressPropsValueType,
+  ProgressSlotsType,
+  ProgressSubClassesType
+} from './types'
 
 /**
  * ProgressDesign
  */
 export class ProgressDesign<
-  C extends ProgressDesignSubClassesType = ProgressDesignSubClassesType,
-  P extends ProgressDesignPropsValueType = ProgressDesignPropsValueType
+  C extends ProgressSubClassesType = ProgressSubClassesType,
+  P extends ProgressPropsValueType = ProgressPropsValueType
 > extends Design<
   C,
-  HTMLDivElement,
+  HTMLElement,
   P,
-  ProgressDesignInitInterface,
+  ProgressInitInterface,
   Record<string, any>,
-  ProgressDesignEmitsType,
-  ProgressDesignSlotsType
+  ProgressEmitsType,
+  ProgressSlotsType
 > {
+  /**
+   * Defines the conditions for transitioning to a hidden state
+   *
+   * Определяет условия для перехода в скрытое состояние
+   * @protected
+   */
   protected readonly hide = ref<boolean>(false)
+
+  /**
+   * Defines the conditions for opening
+   *
+   * Определяет условия для открытия
+   * @protected
+   */
   protected readonly visible = ref<boolean>(false)
 
+  /**
+   * Time for delay control
+   *
+   * Время для управления задержкой
+   * @protected
+   */
   protected timeout?: NodeJS.Timeout
+
+  /**
+   * Constructor
+   * @param props properties / свойства
+   * @param contextEmit additional property / дополнительное свойство
+   */
+  constructor (
+    protected readonly props: P,
+    contextEmit?: DesignSetupContextEmitType<ProgressEmitsType, ProgressSlotsType>
+  ) {
+    super(props, contextEmit)
+
+    this.classes.setExtraMain(this.classesStatus)
+    this.styles.setExtra(this.stylesStatus)
+
+    watch(
+      [
+        this.refs.visible,
+        this.refs.value
+      ],
+      () => this.watchVisible(),
+      { immediate: true }
+    )
+  }
 
   /**
    * Method for generating additional properties
@@ -50,12 +82,7 @@ export class ProgressDesign<
    * Метод для генерации дополнительных свойств
    * @protected
    */
-  protected init (): ProgressDesignInitInterface {
-    this.classes.setExtraMain(this.classesStatus)
-    this.styles.setExtra(this.stylesStatus)
-
-    watch([this.refs.visible, this.refs.value], () => this.watchVisible(), { immediate: true })
-
+  protected init (): ProgressInitInterface {
     return {
       tag: this.tag,
       valueInPercent: this.valueInPercent,
@@ -67,56 +94,29 @@ export class ProgressDesign<
    * A method for rendering
    *
    * Метод для рендеринга
-   * @param setup the result of executing the setup method / результат выполнения метода настройки
    * @protected
    */
-  protected initRender<D = Record<string, any>> (
-    setup: DesignSetupType<C, HTMLDivElement, D, ProgressDesignInitInterface>
-  ): VNode {
+  protected initRender (): VNode {
     const children: any[] = []
 
     if (this.props.circular) {
       children.push(
         h('circle', {
-          class: setup.classes.value.circle,
+          class: this.setupItem?.classes.value.circle,
           cx: '24',
           cy: '24',
           r: '20'
         }))
     }
 
-    return h(setup.tag.value, {
+    return h(this.tag.value, {
       ref: this.element,
-      class: setup.classes.value.main,
-      style: setup.styles.value,
+      class: this.setupItem?.classes.value.main,
+      style: this.setupItem?.styles.value,
       viewBox: '0 0 48 48',
-      onAnimationend: setup.onAnimation
+      onAnimationend: this.setupItem?.onAnimation
     }, children)
   }
-
-  /**
-   * Determines the type of the main element
-   *
-   * Определяет, какой тип у главного элемента
-   * @protected
-   */
-  protected readonly tag = computed<string>(() => this.props.circular ? 'svg' : 'div')
-
-  /**
-   * Values are converted to percentages
-   *
-   * Значения преобразованы в проценты
-   * @protected
-   */
-  protected readonly valueInPercent = computed<string | null>(() => {
-    if (typeof this.props.value === 'number') {
-      return this.props.circular
-        ? `${(100 / (this.props.max || 100) * this.props.value)}`
-        : `${100 - (100 / (this.props.max || 100) * this.props.value)}%`
-    } else {
-      return null
-    }
-  })
 
   /**
    * List of classes for data display control
@@ -145,6 +145,30 @@ export class ProgressDesign<
   })
 
   /**
+   * Values are converted to percentages
+   *
+   * Значения преобразованы в проценты
+   * @protected
+   */
+  protected readonly valueInPercent = computed<string | null>(() => {
+    if (typeof this.props.value === 'number') {
+      return this.props.circular
+        ? `${(100 / (this.props.max || 100) * this.props.value)}`
+        : `${100 - (100 / (this.props.max || 100) * this.props.value)}%`
+    } else {
+      return null
+    }
+  })
+
+  /**
+   * Determines the type of the main element
+   *
+   * Определяет, какой тип у главного элемента
+   * @protected
+   */
+  protected readonly tag = computed<string>(() => this.props.circular ? 'svg' : 'div')
+
+  /**
    * Monitors the animation event for hiding the element
    *
    * Следит за событием анимации для скрытия элемента
@@ -171,8 +195,8 @@ export class ProgressDesign<
     if (this.props.value) {
       this.hide.value = false
       this.visible.value = false
-    } else if (this.visible.value !== this.refs.visible.value) {
-      if (this.refs.visible.value) {
+    } else if (this.visible.value !== this.props.visible) {
+      if (this.props.visible) {
         this.timeout = setTimeout(() => this.updateVisible(), this.props.delay || 0)
       } else {
         this.updateVisible()
@@ -187,8 +211,8 @@ export class ProgressDesign<
    * @protected
    */
   protected updateVisible () {
-    this.hide.value = !this.refs.visible.value
-    this.visible.value = !!this.refs.visible.value
+    this.hide.value = !this.props.visible
+    this.visible.value = !!this.props.visible
 
     return this
   }

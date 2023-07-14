@@ -47,8 +47,8 @@ export class RippleDesign<
   protected initRender (): VNode {
     return h('div', {
       ref: this.element,
-      class: this.setupItem.classes.value.main,
-      onMousedown: this.setupItem.onClick
+      class: this.setupItem?.classes.value.main,
+      onMousedown: this.setupItem?.onClick
     })
   }
 

@@ -1,18 +1,41 @@
 <script setup lang="ts">
-import { defineOptions } from 'vue'
-
-import { PropsInterface, defaults, subClasses } from './props'
+import {
+  // defineSlots,
+  defineOptions
+} from 'vue'
 
 import { ProgressDesign } from '../../constructors/Progress/ProgressDesign'
+// import { ProgressEmitsType, ProgressSlotsType } from '../../constructors/Progress/types'
+
+import { defaults, PropsType, subClassesType } from './types'
 
 defineOptions({
-  name: 'Md2Progress' // name component
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :name
+  name: 'Md2Progress'
+  // :name
 })
 
-const props = withDefaults(defineProps<PropsInterface>(), defaults)
+const props = withDefaults(defineProps<PropsType>(), defaults)
+// const emit = defineEmits<ProgressEmitsType>()
 
-const design = new ProgressDesign<typeof subClasses>(props)
-const render = design.render({})
+// defineSlots<ProgressSlotsType>()
+
+// Class for managing component, mainly this is for automatic generation of classes and styles
+// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
+const design = new ProgressDesign<subClassesType>(props/* , emit */)
+
+// Calls all available variables in this component
+// Вызывает все доступные переменные в этом компоненте
+// const {
+//   classes,
+//   styles
+// } = design.setup({})
+
+// Property for render
+// Свойство для render
+const render = design.render()
 </script>
 
 <template>
@@ -22,6 +45,8 @@ const render = design.render({})
 <style lang="scss">
 @import "../../constructors/Progress/style";
 
+// Mixin for generating all classes, states and properties of component
+// Миксин для генерации всех классов, состояний и свойств компонента
 @include initProgressDesign {
 
 }

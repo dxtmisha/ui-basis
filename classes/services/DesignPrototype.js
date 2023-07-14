@@ -155,12 +155,23 @@ module.exports = class DesignPrototype extends DesignCommand {
 
     forEach(props, (item, index) => {
       if (!sample.match(`:type.${index}.none`)) {
-        templates.push(
-          `\r\n    ${index}: {` +
-          `\r\n      type: [${this.component.getPropsType(item.valueAll).join(', ')}] as PropType<Props${name}Type['${index}']>` +
-          (item.default ? `,\r\n      default: defaults${name}?.${index}` : '') +
-          '\r\n    }'
-        )
+        let type = this.component.getPropsType(item.valueAll)
+        type = type.length > 1 ? `[${type.join(', ')}]` : type?.[0]
+
+        if (type !== 'Boolean') {
+          type = `${type} as PropType<Props${name}Type['${index}']>`
+        }
+
+        if (item.default) {
+          templates.push(
+            `\r\n    ${index}: {` +
+            `\r\n      type: ${type},` +
+            `\r\n      default: defaults${name}?.${index}` +
+            '\r\n    }'
+          )
+        } else {
+          templates.push(`\r\n    ${index}: ${type}`)
+        }
       }
     })
 

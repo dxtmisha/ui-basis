@@ -100,7 +100,7 @@ export class Design<
   protected element = ref<E>()
 
   protected refs: DesignPropsRefsType<P>
-  protected setupItem: DesignSetupType<C, E, AssociativeType, I>
+  protected setupItem?: DesignSetupType<C, E, AssociativeType, I>
 
   protected context: DesignSetupContextType<O, S>
   protected attrs: DesignSetupContextType<O, S>['attrs']
@@ -141,8 +141,6 @@ export class Design<
       this.properties,
       this.props as AssociativeType
     )
-
-    this.setupItem = this.initSetupItem()
 
     if (process.env.NODE_ENV !== 'production') {
       onUpdated(() => console.warn(`Updated: ${this.getName()}`))
@@ -359,8 +357,10 @@ export class Design<
    * @param dataCallback additional component properties / дополнительные свойства компонента
    */
   setup<D = AssociativeType> (dataCallback?: DesignSetupValueType<D>): DesignSetupType<C, E, D, I> {
+    this.initSetupItem()
+
     return {
-      ...this.setupItem,
+      ...(this.setupItem || ({} as any)),
       ...(executeFunction(dataCallback) || ({} as D))
     }
   }
@@ -371,6 +371,8 @@ export class Design<
    * Метод рендеринга для метода настройки
    */
   render (): () => VNode {
+    this.initSetupItem()
+
     return () => this.initRender()
   }
 
@@ -384,12 +386,20 @@ export class Design<
     return {} as I
   }
 
-  protected initSetupItem (): DesignSetupType<C, E, AssociativeType, I> {
-    return {
-      element: this.element,
-      classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
-      styles: this.styles.getItem(),
-      ...this.init()
+  /**
+   * Initialization of all the necessary properties for work
+   *
+   * Инициализация всех необходимых свойств для работы
+   * @protected
+   */
+  protected initSetupItem (): void {
+    if (!this.setupItem) {
+      this.setupItem = {
+        element: this.element,
+        classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
+        styles: this.styles.getItem(),
+        ...this.init()
+      }
     }
   }
 
@@ -400,7 +410,7 @@ export class Design<
    * @protected
    */
   protected initRender (): VNode {
-    return h('div', { class: this.setupItem.classes.value.main })
+    return h('div', { class: this.setupItem?.classes.value.main })
   }
 
   /**

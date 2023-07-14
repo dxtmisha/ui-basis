@@ -64,7 +64,7 @@ export class ConstructorDesign<
 
     return h('div', {
       ref: this.element,
-      class: this.setupItem.classes.value.main
+      class: this.setupItem?.classes.value.main
     }/* , children */)
   }
 }

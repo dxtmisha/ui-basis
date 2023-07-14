@@ -192,7 +192,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       const sample = this.__readSampleProperties()
 
       if (this.options.constr) {
-        sample.basic = `{d.${this.component.getComponent()}}`
+        sample.basic = `{d.${this.component.getComponent().toLowerCase()}}`
       }
 
       this._createFile(file, sample)
