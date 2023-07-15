@@ -46,9 +46,6 @@ export const defaults = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
-    rounded: 'full',
-    size: 'xs',
-    animationType: 'type1'
     // :default
   }
 }
@@ -61,22 +58,13 @@ export const props = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    rounded: {
-      type: String as PropType<PropsType['rounded']>,
-      default: defaults?.rounded
-    },
-    size: {
-      type: String as PropType<PropsType['size']>,
-      default: defaults?.size
-    },
+    rounded: String as PropType<PropsType['rounded']>,
+    size: String as PropType<PropsType['size']>,
     overlay: Boolean,
     dynamic: Boolean,
     disabled: Boolean,
     hide: Boolean,
-    animationType: {
-      type: String as PropType<PropsType['animationType']>,
-      default: defaults?.animationType
-    },
+    animationType: String as PropType<PropsType['animationType']>,
     animationShow: Boolean,
     end: Boolean,
     high: Boolean

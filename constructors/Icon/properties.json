@@ -10,8 +10,7 @@
   },
   "animation-type": {
     "~type1": {},
-    "~type2": {},
-    "_default": "type1"
+    "~type2": {}
   },
   "animation-show": {
     "_type": "state"

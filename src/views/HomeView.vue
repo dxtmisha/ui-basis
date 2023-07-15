@@ -21,8 +21,11 @@
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button
-      :icon="{icon: 'https://drscdn.500px.org/photo/1071900499/q%3D80_m%3D2000/v2?sig=b42037ebdec07ea7c5c0a0e8ea7422b942f25b10806885ba31b1c9e2a449d964', onLoad: (value) => console.log(value)}"
+      :icon="{icon: {value:'https://drscdn.500px.org/photo/1071900499/q%3D80_m%3D2000/v2?sig=b42037ebdec07ea7c5c0a0e8ea7422b942f25b10806885ba31b1c9e2a449d964', size: 'cover'}, onLoad: (value) => console.log(value)}"
     />
+    <md2-button progress icon="face" icon-trailing="home" inscription="inscription"/>
+    <md2-button progress progress-position="icon" icon="face" icon-trailing="home" inscription="inscription"/>
+    <md2-button progress progress-position="trailing" icon="face" icon-trailing="home" inscription="inscription"/>
   </div>
 </template>
 

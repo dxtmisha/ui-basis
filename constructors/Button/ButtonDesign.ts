@@ -21,6 +21,7 @@ import { UseEnabled } from '../../uses/UseEnabled'
 import { ButtonEvent } from './ButtonEvent'
 import { ButtonInscription } from './ButtonInscription'
 import { ButtonIcon } from './ButtonIcon'
+import { ButtonProgress } from './ButtonProgress'
 
 /**
  * ButtonDesign
@@ -42,6 +43,7 @@ export class ButtonDesign<
   protected readonly event: ButtonEvent
   protected readonly inscription: ButtonInscription
   protected readonly icon: ButtonIcon
+  protected readonly progress: ButtonProgress
 
   /**
    * Constructor
@@ -65,11 +67,11 @@ export class ButtonDesign<
       this.refs
     )
 
-    this.classes.setExtraState({
-      inscription: this.inscription.isInscription,
-      icon: this.icon.isIcon,
-      trailing: this.icon.isTrailing
-    })
+    this.progress = new ButtonProgress(
+      this.components,
+      this.props,
+      this.refs
+    )
   }
 
   /**
@@ -79,6 +81,13 @@ export class ButtonDesign<
    * @protected
    */
   protected init (): ButtonInitInterface {
+    this.classes.setExtraState({
+      inscription: this.inscription.isInscription,
+      icon: this.icon.isIcon,
+      trailing: this.icon.isTrailing,
+      progress: this.progress.is
+    })
+
     return {
       isEnabled: this.enabled.item,
       isInscription: this.inscription.isInscription,
@@ -101,6 +110,7 @@ export class ButtonDesign<
   protected initRender (): VNode {
     const setup = this.getSetup()
     const children: any[] = [
+      ...this.progress.render(),
       ...this.icon.render(),
       ...this.inscription.render(setup.classes.value.inscription)
     ]

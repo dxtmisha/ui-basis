@@ -23,16 +23,20 @@
 }
 
 @mixin mixinIcon {
+  @include initByCustom('_width', v('??width', #{calc(var(--sys-line-height, 16px) * 1.5)}));
+
   display: inline-flex;
   overflow: hidden;
   position: relative;
   justify-content: center;
   align-items: center;
 
-  @include squared(#{v('??width')});
-  min-width: v('??width');
+  @include squared(#{v('??_width')});
+  min-width: v('??_width');
 
   @include textSelectNone;
+
+  border-radius: v('??rounded', inherit);
 
   transition-property: clip-path, margin, opacity, transform;
   transition-duration: v('d.sys.transition-duration.standard');

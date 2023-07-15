@@ -2,7 +2,12 @@
 
 @mixin fontSize($value) {
   --sys-font-size: #{$value};
-  font-size: #{$value};
+  font-size: var(--sys-font-size);
+}
+
+@mixin lineHeight($value) {
+  --sys-line-height: #{$value};
+  line-height: var(--sys-line-height);
 }
 
 @mixin textAlign($value) {

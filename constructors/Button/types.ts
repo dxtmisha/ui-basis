@@ -8,13 +8,15 @@ import {
 import { PropsButtonType } from './props'
 
 import { IconPropsValueType } from '../Icon/types'
+import { PropsProgressType } from '../Progress/props'
+import { PropsRippleType } from '../Ripple/props'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
 export interface ButtonComponentsInterface {
-  icon?: object
-  progress?: object
-  ripple?: object
+  icon?: IconPropsValueType
+  progress?: PropsProgressType
+  ripple?: PropsRippleType
 }
 
 // Interface for describing what property setup returns

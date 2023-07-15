@@ -1,6 +1,6 @@
-import { ComputedRef, VNode } from 'vue'
+import { computed, ComputedRef, VNode } from 'vue'
 
-import { Design, DesignPropsRefsType } from '../../classes/Design'
+import { Design, DesignPropsExtendedType, DesignPropsRefsType } from '../../classes/Design'
 import { DesignComponents } from '../../classes/DesignComponents'
 
 import {
@@ -10,21 +10,47 @@ import {
 
 import { PropsProgressType } from '../Progress/props'
 
+/**
+ * ButtonProgress
+ */
 export class ButtonProgress<
-  P extends PropsProgressType
+  P extends DesignPropsExtendedType<PropsProgressType> = DesignPropsExtendedType<PropsProgressType>,
+  M extends ButtonPropsValueType = ButtonPropsValueType,
+  C extends ButtonComponentsInterface = ButtonComponentsInterface
 > {
   readonly bind: ComputedRef<P>
 
+  /**
+   * Constructor
+   * @param components object for working with components / объект для работы с компонентами
+   * @param props input parameter / входной параметр
+   * @param refs object for working with components / входной параметр в виде реактивной ссылки
+   */
   constructor (
-    protected readonly components: DesignComponents<ButtonComponentsInterface>,
-    protected readonly props: ButtonPropsValueType,
-    protected readonly refs: DesignPropsRefsType<ButtonPropsValueType>
+    protected readonly components: DesignComponents<C>,
+    protected readonly props: M,
+    protected readonly refs: DesignPropsRefsType<M>
   ) {
     this.bind = Design.getBindStatic<any, P>(refs.progress, this.options, 'visible')
   }
 
+  /**
+   * Checks if the element is active
+   *
+   * Проверяет, активен ли элемент
+   */
+  readonly is = computed<boolean>(
+    () => !!(this.components.is('progress') && this.props.progress)
+  )
+
+  /**
+   * Basic parameters
+   *
+   * Базовые параметры
+   */
   readonly options: P = {
-    circular: true
+    circular: true,
+    inverse: true
   } as P
 
   /**
@@ -33,17 +59,13 @@ export class ButtonProgress<
    * Метод для рендеринга
    * @protected
    */
-  render (): VNode {
-    const item: any[] = []
+  render (): VNode[] {
+    const elements: any[] = []
 
-    if (this.props.icon) {
-      this.components.render(children, 'icon', this.iconBind.value)
+    if (this.is.value) {
+      this.components.render(elements, 'progress', this.bind.value)
     }
 
-    if (this.props.iconTrailing) {
-      this.components.render(children, 'icon', this.trailingBind.value)
-    }
-
-    return children
+    return elements
   }
 }

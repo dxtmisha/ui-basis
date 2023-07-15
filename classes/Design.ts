@@ -47,6 +47,11 @@ export type DesignPropsRefsType<T = DesignPropsType> = {
   [K in keyof T]-?: Ref<any>
 }
 
+export type DesignPropsExtendedType<T extends DesignPropsType = DesignPropsType> = T & {
+  class: any
+  style: any
+}
+
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>
 export type DesignEmitsType = EmitsOptions | DesignEmitsCallbackType
 export type DesignSlotNamesType<T extends DesignPropsType> = keyof T

@@ -198,6 +198,7 @@
 
     @include squared(v('??width'));
     max-width: #{calc(100% - 2 * v('??inset'))};
+    max-height: #{calc(100% - 2 * v('??inset'))};
 
     @include rotate('-90deg');
 

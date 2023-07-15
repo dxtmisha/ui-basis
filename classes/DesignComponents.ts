@@ -43,26 +43,32 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
   render<K extends keyof M> (
     item: any[],
     name: K,
-    props?: Record<string, any>,
+    props?: M[K],
     children?: any[]
   ): this {
-    if (this.is(name)) {
-      item.push(h(this.get(name), props, children))
-    }
+    item.push(...this.renderItem(name, props, children))
 
     return this
   }
 
+  /**
+   * Rendering a component by its name and returning an array with one component
+   *
+   * Рендеринг компонента по его имени и возвращение массива с одним компонентом
+   * @param name name of the component / названия компонента
+   * @param props property of the component / свойство компонента
+   * @param children sub-elements of the component / под элементы компонента
+   */
   renderItem<K extends keyof M> (
     name: K,
-    props?: Record<string, any>,
+    props?: M[K],
     children?: any[]
-  ): VNode | undefined {
+  ): VNode[] {
     if (this.is(name)) {
-      return h(this.get(name), props, children)
+      return [h(this.get(name), props, children)]
     }
 
-    return undefined
+    return []
   }
 
   /**

@@ -124,6 +124,8 @@ $designsAnimate: false !default;
           $name == 'font-size'
   ) {
     @include fontSize(#{$value});
+  } @else if ($name == 'line-height') {
+    @include lineHeight(#{$value});
   } @else if ($name == 'text-align') {
     @include textAlign(#{$value});
   } @else if ($name == 'clamp') {

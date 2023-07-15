@@ -26,7 +26,7 @@ export type PropsImageType = {
   // Values
   value?: string | File
   coordinator?: [number, number?, number?, number?]
-  size?: string | number
+  size?: 'auto' | 'contain' | 'cover' | string | number
   x?: string | number
   y?: string | number
 
