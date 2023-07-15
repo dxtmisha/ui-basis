@@ -100,15 +100,10 @@ export class ButtonDesign<
    */
   protected initRender (): VNode {
     const setup = this.getSetup()
-    const children: any[] = []
-
-    if (setup.iconBind.value || setup.trailingBind.value) {
-      children.push(...this.icon.render())
-    }
-
-    if (setup.isInscription.value) {
-      children.push(this.inscription.render(setup.classes.value.inscription))
-    }
+    const children: any[] = [
+      ...this.icon.render(),
+      ...this.inscription.render(setup.classes.value.inscription)
+    ]
 
     if (setup.isEnabled.value) {
       this.components.render(children, 'ripple')

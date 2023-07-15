@@ -83,16 +83,16 @@ export class ButtonIcon<
    * @protected
    */
   render (): VNode[] {
-    const children: any[] = []
+    const elements: any[] = []
 
-    if (this.props.icon) {
-      this.components.render(children, 'icon', this.iconBind.value)
+    if (this.isIcon.value) {
+      this.components.render(elements, 'icon', this.iconBind.value)
     }
 
-    if (this.props.iconTrailing) {
-      this.components.render(children, 'icon', this.trailingBind.value)
+    if (this.isTrailing.value) {
+      this.components.render(elements, 'icon', this.trailingBind.value)
     }
 
-    return children
+    return elements
   }
 }

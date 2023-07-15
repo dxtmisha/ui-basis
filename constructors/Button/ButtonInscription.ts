@@ -37,15 +37,23 @@ export class ButtonInscription<S extends ButtonSlotsType = ButtonSlotsType> {
    * @param className class name / название класса
    * @protected
    */
-  render (className: ClassesItemType): VNode {
-    const children: any[] = [
-      this.props.inscription
-    ]
+  render (className: ClassesItemType): VNode[] {
+    const elements: any[] = []
 
-    if (this.slots?.default) {
-      children.push(this.slots.default?.())
+    if (this.isInscription.value) {
+      const children: any[] = []
+
+      if (this.props.inscription) {
+        children.push(this.props.inscription)
+      }
+
+      if (this.slots?.default) {
+        children.push(this.slots.default?.())
+      }
+
+      elements.push(h('span', { class: className }, children))
     }
 
-    return h('span', { class: className }, children)
+    return elements
   }
 }
