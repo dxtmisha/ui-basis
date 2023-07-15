@@ -5,9 +5,9 @@ import {
   DesignPropsValueType
 } from '../../classes/Design'
 
-// import { IconPropsValueType } from '../Icon/types'
-
 import { PropsButtonType } from './props'
+
+import { IconPropsValueType } from '../Icon/types'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
@@ -24,8 +24,8 @@ export interface ButtonInitInterface {
   isInscription: ComputedRef<boolean>
 
   disabledBind: ComputedRef<boolean | undefined>
-  // iconBind: ComputedRef<IconPropsValueType>
-  // trailingBind: ComputedRef<IconPropsValueType>
+  iconBind: ComputedRef<IconPropsValueType>
+  trailingBind: ComputedRef<IconPropsValueType>
 
   onClick: (event: MouseEvent) => void
   onTrailing: (event: MouseEvent) => void

@@ -34,6 +34,7 @@ export type PropsType = PropsIconType & {
   animationType?: 'type1' | 'type2'
   animationShow?: boolean
   end?: boolean
+  high?: boolean
   // :type
 }
 
@@ -77,7 +78,8 @@ export const props = {
       default: defaults?.animationType
     },
     animationShow: Boolean,
-    end: Boolean
+    end: Boolean,
+    high: Boolean
     // :prop
   }
   // Values

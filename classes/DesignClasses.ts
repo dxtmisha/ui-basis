@@ -107,7 +107,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * Возвращает название классов и их значения по списку
    * @param values list of classes and their names / список классов и их названия
    */
-  getNameByStateByList<V = any> (values: Record<string, V>): Record<string, V> {
+  getNameByStateByList<V = Ref<boolean>> (values: Record<string, V>): Record<string, V> {
     const data: Record<string, V> = {}
 
     forEach(values, (item, index) => {
@@ -156,6 +156,16 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    */
   setExtraMain (data: ClassesExtraRefType): this {
     this.extra.value.main = data
+    return this
+  }
+
+  /**
+   * List of classes for data display control
+   *
+   * Список классов для управления отображением данных
+   */
+  setExtraState<V = Ref<boolean>> (values: Record<string, V>): this {
+    this.setExtraMain(this.getNameByStateByList<V>(values) as ClassesExtraRefType)
     return this
   }
 

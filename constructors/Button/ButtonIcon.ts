@@ -1,55 +1,96 @@
-import { computed, ComputedRef, h, toRefs } from 'vue'
+import { computed, ComputedRef, VNode } from 'vue'
 
-import { Design } from '../../classes/Design'
+import { Design, DesignPropsRefsType } from '../../classes/Design'
+import { DesignComponents } from '../../classes/DesignComponents'
 
-export class ButtonIcon {
-  readonly iconBind?: ComputedRef<PropsIconInterface>
-  readonly trailingBind: ComputedRef<PropsIconInterface>
+import { ButtonComponentsInterface, ButtonPropsValueType } from './types'
+import { PropsIconType } from '../Icon/props'
 
+/**
+ * Class for rendering icon on the button
+ *
+ * Класс для рендеринга иконки у кнопки
+ */
+export class ButtonIcon<
+  I extends PropsIconType = PropsIconType
+> {
+  readonly iconBind: ComputedRef<I>
+  readonly trailingBind: ComputedRef<I>
+
+  /**
+   * Constructor
+   * @param components object for working with components / объект для работы с компонентами
+   * @param props input parameter / входной параметр
+   * @param refs object for working with components / входной параметр в виде реактивной ссылки
+   */
   constructor (
-    protected readonly props: ButtonDesignPropsValueType,
-    protected readonly components?: ButtonDesignComponentsInterface
+    protected readonly components: DesignComponents<ButtonComponentsInterface>,
+    protected readonly props: ButtonPropsValueType,
+    protected readonly refs: DesignPropsRefsType<ButtonPropsValueType>
   ) {
-    const {
-      icon,
-      iconTrailing
-    } = toRefs(this.props)
-
-    if (icon.value) {
-      this.iconBind = Design.getBindStatic<any, PropsIconInterface>(icon, this.optionsIcon, 'icon')
-    }
-    this.trailingBind = Design.getBindStatic<any | undefined, PropsIconInterface>(iconTrailing, this.optionsTrailing, 'icon')
+    this.iconBind = Design.getBindStatic<any, I>(refs.icon, this.optionsIcon, 'icon')
+    this.trailingBind = Design.getBindStatic<any | undefined, I>(refs.iconTrailing, this.optionsTrailing, 'icon')
   }
 
-  readonly isIcon = computed<boolean>(() => !!this.props.icon)
-  readonly isTrailing = computed<boolean>(() => !!this.props.iconTrailing)
+  /**
+   * Checks if there is a main icon
+   *
+   * Проверяет, есть ли главная иконка
+   */
+  readonly isIcon = computed<boolean>(
+    () => !!(this.components.is('icon') && this.props.icon)
+  )
 
-  readonly optionsIcon = computed<PropsIconInterface>(() => {
+  /**
+   * Checks if there is an additional icon
+   *
+   * Проверяет, есть ли дополнительная иконка
+   */
+  readonly isTrailing = computed<boolean>(
+    () => !!(this.components.is('icon') && this.props.iconTrailing)
+  )
+
+  /**
+   * Parameters for the main icon
+   *
+   * Параметры для главной иконки
+   */
+  readonly optionsIcon = computed<I>(() => {
     return {
-      active: this.props?.selected,
-      hide: this.props?.iconHide,
+      active: this.props?.selected || false,
+      hide: this.props?.iconHide || false,
       animationType: 'type2'
-    }
+    } as I
   })
 
-  readonly optionsTrailing = computed<PropsIconInterface>(() => {
+  /**
+   * Parameter for the secondary icon
+   *
+   * Параметр для вторичной иконки
+   */
+  readonly optionsTrailing = computed<I>(() => {
     return {
-      turn: this.props?.iconTurn,
-      end: true
-    }
+      turn: this.props?.iconTurn || false,
+      end: true,
+      high: true
+    } as I
   })
 
-  render () {
+  /**
+   * A method for rendering
+   *
+   * Метод для рендеринга
+   * @protected
+   */
+  render (): VNode[] {
     const children: any[] = []
-    console.log('this.props.icon', this.components?.icon, this.props.icon, this.iconBind.value)
-    if (this.components?.icon) {
-      if (this.props.icon) {
-        children.push(h(this.components.icon, this.iconBind.value))
-      }
 
-      if (this.props.iconTrailing) {
-        children.push(h(this.components.icon, this.trailingBind.value))
-      }
+    if (this.props.icon) {
+      this.components.render(children, 'icon', this.iconBind.value)
+    }
+
+    if (this.props.iconTrailing) {
+      this.components.render(children, 'icon', this.trailingBind.value)
     }
 
     return children

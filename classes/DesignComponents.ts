@@ -1,6 +1,6 @@
-import { DefineComponent, h } from 'vue'
+import { h, VNode } from 'vue'
 
-export type DesignComponentsType = Record<string, DefineComponent>
+export type DesignComponentsType = Record<string, any>
 
 /**
  * Class for working with connected components
@@ -45,12 +45,24 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
     name: K,
     props?: Record<string, any>,
     children?: any[]
-  ) {
+  ): this {
     if (this.is(name)) {
       item.push(h(this.get(name), props, children))
     }
 
     return this
+  }
+
+  renderItem<K extends keyof M> (
+    name: K,
+    props?: Record<string, any>,
+    children?: any[]
+  ): VNode | undefined {
+    if (this.is(name)) {
+      return h(this.get(name), props, children)
+    }
+
+    return undefined
   }
 
   /**

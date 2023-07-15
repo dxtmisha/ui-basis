@@ -12,7 +12,17 @@
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button :icon="icon" @click="icon = icon === 'face' ? 'close' : 'face'"/>
+    <md2-button :icon="icon" :icon-hide="hide" @click="hide = !hide"/>
+    <md2-button :icon="iconToNone" @click="iconToNone = iconToNone?  undefined : 'home'"/>
+    <md2-button :icon-trailing="icon" :icon-turn="turn" @click="turn = !turn"/>
     <md2-button icon="face" inscription="text"/>
+    <md2-button icon-trailing="close" inscription="text"/>
+    <md2-button icon="face" icon-trailing="close" inscription="text"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button
+      :icon="{icon: 'https://drscdn.500px.org/photo/1071900499/q%3D80_m%3D2000/v2?sig=b42037ebdec07ea7c5c0a0e8ea7422b942f25b10806885ba31b1c9e2a449d964', onLoad: (value) => console.log(value)}"
+    />
   </div>
 </template>
 
@@ -33,7 +43,10 @@ export default defineComponent({
   setup () {
     return {
       text: ref<string | undefined>('text'),
-      icon: ref<string | undefined>('face')
+      icon: ref<string | undefined>('face'),
+      iconToNone: ref<string | undefined>('home'),
+      hide: ref<boolean>(false),
+      turn: ref<boolean>(false)
     }
   }
 })

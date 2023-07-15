@@ -25,6 +25,7 @@ export type PropsIconType = {
   overlay?: boolean
   dynamic?: boolean
   end?: boolean
+  high?: boolean
   // :type
 } & {
   // Values
@@ -66,7 +67,8 @@ export const propsIcon = {
     animationShow: Boolean,
     overlay: Boolean,
     dynamic: Boolean,
-    end: Boolean
+    end: Boolean,
+    high: Boolean
     // :prop
   },
   // Values

@@ -24,5 +24,8 @@
   },
   "end": {
     "_type": "state"
+  },
+  "high": {
+    "_type": "state"
   }
 }

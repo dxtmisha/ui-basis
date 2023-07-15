@@ -1,4 +1,4 @@
-import { computed, h, VNode } from 'vue'
+import { h, VNode } from 'vue'
 
 import {
   Design,
@@ -20,6 +20,7 @@ import { UseEnabled } from '../../uses/UseEnabled'
 
 import { ButtonEvent } from './ButtonEvent'
 import { ButtonInscription } from './ButtonInscription'
+import { ButtonIcon } from './ButtonIcon'
 
 /**
  * ButtonDesign
@@ -40,6 +41,7 @@ export class ButtonDesign<
 
   protected readonly event: ButtonEvent
   protected readonly inscription: ButtonInscription
+  protected readonly icon: ButtonIcon
 
   /**
    * Constructor
@@ -57,7 +59,17 @@ export class ButtonDesign<
     this.event = new ButtonEvent(this.emit, this.props, this.enabled)
     this.inscription = new ButtonInscription(this.slots, this.props)
 
-    this.classes.setExtraMain(this.classesStatus)
+    this.icon = new ButtonIcon(
+      this.components,
+      this.props,
+      this.refs
+    )
+
+    this.classes.setExtraState({
+      inscription: this.inscription.isInscription,
+      icon: this.icon.isIcon,
+      trailing: this.icon.isTrailing
+    })
   }
 
   /**
@@ -72,8 +84,8 @@ export class ButtonDesign<
       isInscription: this.inscription.isInscription,
 
       disabledBind: this.enabled.disabled,
-      // iconBind: this.icon.iconBind,
-      // trailingBind: this.icon.trailingBind,
+      iconBind: this.icon.iconBind,
+      trailingBind: this.icon.trailingBind,
 
       onClick: (event: MouseEvent) => this.event.onClick(event),
       onTrailing: (event: MouseEvent) => this.event.onTrailing(event)
@@ -89,6 +101,10 @@ export class ButtonDesign<
   protected initRender (): VNode {
     const setup = this.getSetup()
     const children: any[] = []
+
+    if (setup.iconBind.value || setup.trailingBind.value) {
+      children.push(...this.icon.render())
+    }
 
     if (setup.isInscription.value) {
       children.push(this.inscription.render(setup.classes.value.inscription))
@@ -108,16 +124,4 @@ export class ButtonDesign<
       onClick: setup.onClick
     }, children)
   }
-
-  /**
-   * List of classes for data display control
-   *
-   * Список классов для управления отображением данных
-   * @protected
-   */
-  protected readonly classesStatus = computed<Record<string, boolean>>(() => {
-    return this.classes.getNameByStateByList<boolean>({
-      inscription: this.inscription.isInscription.value
-    })
-  })
 }

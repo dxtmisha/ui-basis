@@ -81,6 +81,7 @@ $designsClassName: 'class' !default;
 @mixin mixinImageMaterial {
   &.material-icons {
     direction: ltr;
+    display: inline-flex;
     font-size: v('??font-size', 1.5em);
   }
 
