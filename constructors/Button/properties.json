@@ -9,5 +9,10 @@
     "~center": {},
     "_type": "state",
     "_default": "center"
-  }
+  },
+  "_components": [
+    "icon",
+    "progress",
+    "ripple"
+  ]
 }

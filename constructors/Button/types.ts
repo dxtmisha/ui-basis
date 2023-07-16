@@ -7,14 +7,14 @@ import {
 
 import { PropsButtonType } from './props'
 
-import { IconPropsValueType } from '../Icon/types'
+import { PropsIconType } from '../Icon/props'
 import { PropsProgressType } from '../Progress/props'
 import { PropsRippleType } from '../Ripple/props'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
 export interface ButtonComponentsInterface {
-  icon?: IconPropsValueType
+  icon?: PropsIconType
   progress?: PropsProgressType
   ripple?: PropsRippleType
 }
@@ -26,8 +26,8 @@ export interface ButtonInitInterface {
   isInscription: ComputedRef<boolean>
 
   disabledBind: ComputedRef<boolean | undefined>
-  iconBind: ComputedRef<IconPropsValueType>
-  trailingBind: ComputedRef<IconPropsValueType>
+  iconBind: ComputedRef<PropsIconType>
+  trailingBind: ComputedRef<PropsIconType>
 
   onClick: (event: MouseEvent) => void
   onTrailing: (event: MouseEvent) => void

@@ -1,5 +1,8 @@
+const { To } = require('../To')
+
 const DesignPrototype = require('./DesignPrototype')
 const PropertiesComponent = require('./PropertiesComponent')
+const PropertiesTool = require('./PropertiesTool')
 
 const DIR_NAME = 'constructors'
 
@@ -8,6 +11,7 @@ const FILE_TYPES = 'types.ts'
 const FILE_PROPS = 'props.ts'
 const FILE_STYLE = 'style.scss'
 const FILE_PROPERTIES = 'properties.json'
+const FILE_COMPONENT = 'ConstructorComponent.ts'
 
 /**
  * Class for generating files for components
@@ -39,6 +43,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
       .__initProps()
       .__initStyle()
       .__initProperties()
+      .__initComponent()
   }
 
   /**
@@ -76,6 +81,17 @@ module.exports = class DesignConstructor extends DesignPrototype {
    */
   __readProps () {
     return this._read(FILE_PROPS)
+  }
+
+  /**
+   * Reads the file properties.ts
+   *
+   * Читает файл properties.ts
+   * @return {string}
+   * @private
+   */
+  __readProperties () {
+    return this._read(FILE_PROPERTIES)
   }
 
   /**
@@ -131,6 +147,17 @@ module.exports = class DesignConstructor extends DesignPrototype {
    */
   __readSampleProperties () {
     return this._readSample(FILE_PROPERTIES)
+  }
+
+  /**
+   * This code reads a template for the ConstructorComponent.ts
+   *
+   * Читает шаблона для файла ConstructorComponent.ts
+   * @return {string}
+   * @private
+   */
+  __readSampleComponent () {
+    return this._readSample(FILE_COMPONENT)
   }
 
   /**
@@ -253,5 +280,37 @@ module.exports = class DesignConstructor extends DesignPrototype {
     }
 
     return this
+  }
+
+  __initComponent () {
+    if (this._isFile(FILE_PROPERTIES)) {
+      const key = PropertiesTool.getKeyComponents()
+      const data = this.__readProperties()
+
+      if (key in data) {
+        data[key].forEach(name => {
+          const fullName = To.camelCaseFirst(`${this.component.getComponent()}-${name}`)
+          const file = `${fullName}.ts`
+
+          if (!this._isFile(file)) {
+            this._createFile(file, this.__initComponentItem(fullName))
+          }
+        })
+      }
+    }
+
+    return this
+  }
+
+  __initComponentItem (name) {
+    let sample = this.__readSampleComponent()
+
+    sample = this._replacePath(sample)
+    sample = this._replaceNameForProperties(sample)
+    sample = this._replacementOnce(sample, 'component', (data) => {
+      return data.replace(/[Cc]omponent(?<!s)/g, name)
+    })
+
+    return sample
   }
 }

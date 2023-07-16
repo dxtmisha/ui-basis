@@ -163,6 +163,14 @@ const KEY_SIMPLIFICATION = '_simplification'
 const KEY_WRAP = '_wrap'
 
 /**
+ * Indicates which components need to be used
+ *
+ * Указывает, какие компоненты надо использовать
+ * @type {string}
+ */
+const KEY_COMPONENTS = '_components'
+
+/**
  * The key for storing the path to the component
  *
  * Ключ для хранения пути к компоненту
@@ -195,6 +203,7 @@ const KEYS_SPECIAL = [
   KEY_SEPARATOR,
   KEY_SIMPLIFICATION,
   KEY_WRAP,
+  KEY_COMPONENTS,
   KEY_PATH
 ]
 
@@ -613,6 +622,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyWrap () {
     return KEY_WRAP
+  }
+
+  /**
+   * Returns a key indicating the list of available classes
+   *
+   * Возвращает ключ, указывающий список доступных классов
+   * @return {string}
+   */
+  static getKeyComponents () {
+    return KEY_COMPONENTS
   }
 
   /**

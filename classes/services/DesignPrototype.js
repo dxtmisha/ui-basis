@@ -67,19 +67,23 @@ module.exports = class DesignPrototype extends DesignCommand {
    * Заменяет значения на выбранную метку только 1 раз
    * @param {string} sample template with data / шаблон с данными
    * @param {string} name label name / название метки
-   * @param {boolean} remove data deletion / удаление данных
+   * @param {boolean|Function} removeReplacement data deletion / удаление данных
    * @return {string}
    * @protected
    */
-  _replacementOnce (sample, name, remove = false) {
+  _replacementOnce (sample, name, removeReplacement = false) {
     const exp1 = new RegExp(`\\/\\/ :${name}\\.once ([^\r\n]+)([\r\n ]*)`, 'g')
     const exp2 = new RegExp(`\\/\\* :${name}\\.once \\*\\/([\\S\\s]*?)\\/\\* :${name}\\.once\\.end \\*\\/([\r\n ]*)`, 'g')
     const exp3 = new RegExp(`\\/\\* :${name}\\.once (.*?) \\*\\/([\r\n ]*)`, 'g')
 
     const replacement = (all, data, end) => {
-      return remove
-        ? ''
-        : `${this._replacePath(data.trim().replaceAll(this.replaceName, this.component.getComponent()))}${end}`
+      if (typeof removeReplacement === 'function') {
+        return `${removeReplacement(data.trim())}${end}`
+      } else {
+        return removeReplacement === true
+          ? ''
+          : `${this._replacePath(data.trim().replaceAll(this.replaceName, this.component.getComponent()))}${end}`
+      }
     }
 
     return sample
