@@ -6,6 +6,12 @@
   "height": {
     "_default": "md"
   },
+  "color": {
+    "_rename": "palette-color"
+  },
+  "gradient": {
+    "_rename": "palette-gradient"
+  },
   "#inscription": {
     "padding-left": "{??padding}",
     "padding-right": "{??padding}"
@@ -14,6 +20,9 @@
     "_type": "state"
   },
   "contained": {
+    "background-color": {
+      "_rename": "palette-background"
+    },
     "_category": "appearance",
     "_default": true
   },
@@ -25,5 +34,6 @@
   },
   "rounded": {
     "_default": "standard"
-  }
+  },
+  "@@palette": "{palette}"
 }

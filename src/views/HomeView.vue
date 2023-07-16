@@ -68,6 +68,24 @@
     <md2-button inscription="text" icon="home"/>
     <md2-button inscription="text" icon="home" outlined/>
     <md2-button inscription="text" icon="home" text/>
+    <md2-button inscription="text a" icon="home" tag="a"/>
+    <md2-button inscription="text a" icon="home" outlined tag="a"/>
+    <md2-button inscription="text a" icon="home" text tag="a"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" icon="home" palette="deep-orange"/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" outlined/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" icon="home" palette="brown"/>
+    <md2-button inscription="text" icon="home" palette="brown" outlined/>
+    <md2-button inscription="text" icon="home" palette="brown" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" icon="home" palette="deep-orange" disabled/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" disabled outlined/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" disabled text/>
   </div>
 </template>
 

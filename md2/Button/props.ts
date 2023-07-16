@@ -30,6 +30,7 @@ export type PropsType = PropsButtonType & {
   rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   focus?: boolean
   disabled?: boolean
+  palette?: 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'grey-blue' | 'white' | 'black' | 'black-light'
   align?: 'left' | 'right' | 'center'
   // :type
   /* :type.progress.none */
@@ -82,6 +83,7 @@ export const props = {
     },
     focus: Boolean,
     disabled: Boolean,
+    palette: String as PropType<PropsType['palette']>,
     align: {
       type: String as PropType<PropsType['align']>,
       default: defaults?.align

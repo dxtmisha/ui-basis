@@ -6,6 +6,7 @@
     "lg": "{ref.spacing.12}"
   },
   "font": "{font.button}",
+  "text-decoration": "none",
   "color": "{sys.palette.primary}",
   "color-opacity": "{sys.opacity.surface.high}",
   "background-color": "transparent",
