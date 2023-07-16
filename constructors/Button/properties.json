@@ -5,17 +5,24 @@
   "disabled": {
     "_type": "state"
   },
-  "align": {
-    "~left": {},
-    "~right": {},
-    "~center": {},
-    "_type": "state",
-    "_default": "center"
-  },
   "progress": {
     "color-opacity": {
       "_type": "var"
     }
+  },
+  "adaptive": {
+    "~icon": {
+      "#inscription": {
+        "display": "none"
+      }
+    },
+    "~inscription": {}
+  },
+  "align": {
+    "~left": {},
+    "~right": {},
+    "~center": {},
+    "_type": "state"
   },
   "_components": [
     "icon",

@@ -87,6 +87,11 @@
     <md2-button inscription="text" icon="home" palette="deep-orange" disabled outlined/>
     <md2-button inscription="text" icon="home" palette="deep-orange" disabled text/>
   </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" icon="home" palette="deep-orange" adaptive="sm"/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" adaptive="md"/>
+    <md2-button inscription="text" icon="home" palette="deep-orange" adaptive="lg"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -97,6 +102,12 @@ import { ImageIcon } from '../../constructors/Image/ImageIcon'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
+
+type a = { k1: 'a' | 'b', k2: 'c' | 'd' }
+type b = { k1: 'e' | 'f', k3: 'i' | 'h' }
+type c<a, b> = b & Omit<a, keyof b>
+
+const d: c<a, b> = {}
 
 export default defineComponent({
   name: 'HomeView',

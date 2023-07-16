@@ -16,9 +16,6 @@
     "padding-left": "{??padding}",
     "padding-right": "{??padding}"
   },
-  "dragged": {
-    "_type": "state"
-  },
   "contained": {
     "background-color": {
       "_rename": "palette-background"
@@ -32,8 +29,31 @@
   "text": {
     "_category": "appearance"
   },
-  "rounded": {
-    "_default": "standard"
+  "adaptive": {
+    "sm": {
+      "media-max|sm": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    },
+    "md": {
+      "media-max|md": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    },
+    "lg": {
+      "media-max|lg": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    }
   },
   "@@palette": "{palette}"
 }

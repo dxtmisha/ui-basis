@@ -1,4 +1,5 @@
 import { PropType } from 'vue'
+import { DesignPropsUnionType } from '../../classes/Design'
 import { defaultsButton, propsButton, PropsButtonType, subClassesButton } from '../../constructors/Button/props'
 
 // Type describing subclasses
@@ -18,29 +19,24 @@ export const subClasses = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = PropsButtonType & {
+export type PropsType = DesignPropsUnionType<PropsButtonType, {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
-  dragged?: boolean
   contained?: boolean
   outlined?: boolean
   text?: boolean
-  rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  focus?: boolean
-  disabled?: boolean
+  adaptive?: 'sm' | 'md' | 'lg' | 'icon' | 'inscription'
   palette?: 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'grey-blue' | 'white' | 'black' | 'black-light'
+  focus?: boolean
+  dragged?: boolean
+  disabled?: boolean
+  rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   align?: 'left' | 'right' | 'center'
   // :type
   /* :type.progress.none */
-} & {
-  // Values
-
-  // Status
-
-  // Options
-}
+}>
 
 // Default value for property
 // Значение по умолчанию для свойства
@@ -51,9 +47,7 @@ export const defaults = {
     // [!] Системная метка, нельзя удалять
     // :default
     height: 'md',
-    contained: true,
-    rounded: 'standard',
-    align: 'center'
+    contained: true
     // :default
   }
 }
@@ -70,24 +64,19 @@ export const props = {
       type: String as PropType<PropsType['height']>,
       default: defaults?.height
     },
-    dragged: Boolean,
     contained: {
       type: Boolean,
       default: defaults?.contained
     },
     outlined: Boolean,
     text: Boolean,
-    rounded: {
-      type: String as PropType<PropsType['rounded']>,
-      default: defaults?.rounded
-    },
-    focus: Boolean,
-    disabled: Boolean,
+    adaptive: String as PropType<PropsType['adaptive']>,
     palette: String as PropType<PropsType['palette']>,
-    align: {
-      type: String as PropType<PropsType['align']>,
-      default: defaults?.align
-    }
+    focus: Boolean,
+    dragged: Boolean,
+    disabled: Boolean,
+    rounded: String as PropType<PropsType['rounded']>,
+    align: String as PropType<PropsType['align']>
     // :prop
   }
   // Values

@@ -12,6 +12,7 @@
   "background-color": "transparent",
   "gradient": "{sys.palette.primary}",
   "gradient-opacity": "0",
+  "border-radius": "{sys.rounded.standard}",
   "box-shadow": "none",
   "transition-property": "border, box-shadow",
   "transition-duration": "{d.sys.transitionDuration.lg.close}",

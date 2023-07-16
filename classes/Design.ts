@@ -47,6 +47,7 @@ export type DesignPropsRefsType<T = DesignPropsType> = {
   [K in keyof T]-?: Ref<any>
 }
 
+export type DesignPropsUnionType<B extends DesignPropsType, N extends DesignPropsType> = N & Omit<B, keyof N>
 export type DesignPropsExtendedType<T extends DesignPropsType = DesignPropsType> = T & {
   class?: any
   style?: any
