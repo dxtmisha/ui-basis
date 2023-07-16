@@ -20,6 +20,9 @@
   "outlined": {
     "_category": "appearance"
   },
+  "text": {
+    "_category": "appearance"
+  },
   "rounded": {
     "_default": "standard"
   }

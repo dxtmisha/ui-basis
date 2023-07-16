@@ -46,9 +46,6 @@
     "active": {
       "box-shadow": "{ref.shadow.8}"
     },
-    "dragged": {
-      "box-shadow": "{ref.shadow.8}"
-    },
     "disabled": {
       "color-opacity": "{sys.opacity.primary.disabled}",
       "background-color": "{sys.palette.disabled}",
@@ -70,15 +67,19 @@
       "border-opacity": "0",
       "transition": "inherit"
     },
-    "box-shadow": "none",
     "active": {
       "after": {
-        "border-opacity": "{sys.opacity.scrim}"
+        "border-opacity": "{sys.opacity.pressed}"
       }
+    }
+  },
+  "text": {
+    "padding": "{ref.spacing.2}",
+    "after": {
+      "basic": "{??outlined.after}"
     },
-    "dragged": {
-      "gradient-opacity": "{sys.opacity.pressed}",
-      "box-shadow": "{ref.shadow.8}"
+    "active": {
+      "basic": "{??outlined.active}"
     }
   },
   "rounded": {

@@ -25,9 +25,10 @@ export type PropsType = PropsButtonType & {
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
   dragged?: boolean
   contained?: boolean
+  outlined?: boolean
+  text?: boolean
   rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   focus?: boolean
-  outlined?: boolean
   disabled?: boolean
   align?: 'left' | 'right' | 'center'
   // :type
@@ -73,12 +74,13 @@ export const props = {
       type: Boolean,
       default: defaults?.contained
     },
+    outlined: Boolean,
+    text: Boolean,
     rounded: {
       type: String as PropType<PropsType['rounded']>,
       default: defaults?.rounded
     },
     focus: Boolean,
-    outlined: Boolean,
     disabled: Boolean,
     align: {
       type: String as PropType<PropsType['align']>,

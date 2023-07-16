@@ -25,6 +25,19 @@
     <md2-button outlined inscription="dragged" dragged/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button
+      text
+      inscription="text 1"
+      value="value"
+      @click="(event, options) => console.log(event, options)"
+    />
+    <md2-button text>slot</md2-button>
+    <md2-button text inscription="text/">slot</md2-button>
+    <md2-button text :inscription="text" @click="text = text ? undefined : 'text'"/>
+    <md2-button text inscription="disabled" disabled/>
+    <md2-button text inscription="dragged" dragged/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button :icon="icon" @click="icon = icon === 'face' ? 'close' : 'face'"/>
     <md2-button :icon="icon" :icon-hide="hide" @click="hide = !hide"/>
     <md2-button :icon="iconToNone" @click="iconToNone = iconToNone?  undefined : 'home'"/>
@@ -50,6 +63,11 @@
     <md2-button inscription="text" height="sm"/>
     <md2-button inscription="text" height="md"/>
     <md2-button inscription="text" height="lg"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" icon="home"/>
+    <md2-button inscription="text" icon="home" outlined/>
+    <md2-button inscription="text" icon="home" text/>
   </div>
 </template>
 
