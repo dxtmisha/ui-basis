@@ -21,6 +21,9 @@
   "dynamic": {
     "_type": "state"
   },
+  "start": {
+    "_type": "state"
+  },
   "end": {
     "_type": "state"
   },

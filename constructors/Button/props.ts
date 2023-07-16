@@ -9,7 +9,9 @@ export const subClassesButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription'
+    inscription: 'inscription',
+    icon: 'icon',
+    trailing: 'trailing'
     // :subclass
   }
 }
@@ -37,8 +39,7 @@ export type PropsButtonType = {
   iconHide?: boolean
 
   // Progress
-  progress?: boolean | PropsProgressType
-  progressPosition?: 'center' | 'icon' | 'trailing'
+  progress?: PropsProgressType /* :type.progress */ | boolean
 
   // Status
   selected?: boolean
@@ -57,7 +58,6 @@ export const defaultsButton = {
     align: 'center'
     // :default
   },
-  progressPosition: 'center',
   tag: 'button'
 }
 
@@ -72,7 +72,8 @@ export const propsButton = {
     align: {
       type: String as PropType<PropsButtonType['align']>,
       default: defaultsButton?.align
-    }
+    },
+    progress: Boolean
     // :prop
   },
   // Values
@@ -89,10 +90,6 @@ export const propsButton = {
 
   // Progress
   progress: [Object, Boolean],
-  progressPosition: {
-    type: String as PropType<PropsButtonType['progressPosition']>,
-    default: defaultsButton?.progressPosition
-  },
 
   // Status
   selected: Boolean,

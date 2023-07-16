@@ -67,7 +67,8 @@ export class ButtonIcon<
     return {
       active: this.props?.selected,
       hide: this.props?.iconHide,
-      animationType: 'type2'
+      animationType: 'type2',
+      start: true
     } as P
   })
 

@@ -1,10 +1,24 @@
 {
   "basic": "{d.button}",
+  "padding": {
+    "_type": "var"
+  },
   "height": {
     "_default": "md"
   },
+  "#inscription": {
+    "padding-left": "{??padding}",
+    "padding-right": "{??padding}"
+  },
+  "dragged": {
+    "_type": "state"
+  },
   "contained": {
+    "_category": "appearance",
     "_default": true
+  },
+  "outlined": {
+    "_category": "appearance"
   },
   "rounded": {
     "_default": "standard"

@@ -3,6 +3,9 @@
 @mixin initButtonDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinButton;
+    @include mixinButtonInscription;
+    @include mixinButtonIcon;
+    @include mixinButtonProgress;
 
     @include mixinButtonAlign;
 
@@ -16,8 +19,42 @@
   justify-content: center;
   align-items: center;
 
+  padding: 0;
+
+  min-width: var(--sys-height, 0);
+
   border-radius: 0;
   border: solid transparent 0;
+}
+
+@mixin mixinButtonInscription {
+  &__inscription {
+    order: 4;
+
+    transition-property: opacity;
+    transition-duration: v('d.sys.transition-duration.standard');
+  }
+}
+
+@mixin mixinButtonIcon {
+  &__icon,
+  &__trailing {
+    @include marginX(#{calc((var(--sys-height) - v('?icon._width')) / 2)})
+  }
+
+  &__icon ~ &__inscription {
+    padding-left: 0;
+  }
+
+  &__trailing ~ &__inscription {
+    padding-right: 0;
+  }
+}
+
+@mixin mixinButtonProgress {
+  &__progress.#{n('?progress--visible')} ~ * {
+    opacity: v('??color-opacity', 0);
+  }
 }
 
 @mixin mixinButtonAlign {

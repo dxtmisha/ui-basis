@@ -11,7 +11,7 @@
 /// @param {List} $parent
 @mixin selector($name, $parent: &) {
   @if ($name == 'focus') {
-    &:focus, &:focus-within, &#{$parent}--focus, &--focus {
+    &:focus, &:focus-within, &#{$parent}--focus {
       @content;
     }
   } @else {
@@ -33,7 +33,7 @@
     @content;
   } @else if ($first == #{$parent}) {
     @at-root
-    #{selector.replace(&, $parent, #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'})} {
+    #{selector.replace(&, $parent, #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly,#{$parent}--progress)'})} {
       @content;
     }
   } @else {
@@ -42,7 +42,7 @@
     }
 
     @at-root
-    #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly)'}#{$separator}#{&} {
+    #{$parent}#{':not(:disabled,#{$parent}--disabled,#{$parent}--readonly,#{$parent}--progress)'}#{$separator}#{&} {
       @content;
     }
   }

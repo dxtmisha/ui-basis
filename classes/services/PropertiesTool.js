@@ -709,7 +709,8 @@ module.exports = class PropertiesTool {
   static toFull (value, design, component, designs) {
     if (value.match(/(?<=\{)\?/)) {
       return value
-        .replace(/(?<=\{)\?\?/g, `${design}.${component}.`)
+        .replace(/(?<=\{)\?\?(?![_-])/g, `${design}.${component}.`)
+        .replace(/(?<=\{)\?\?(?=[_-])/g, `${design}.${component}`)
         .replace(/(?<=\{)\?/g, `${design}.`)
     } else {
       return this.toFullByDesigns(value, design, designs)
@@ -728,7 +729,8 @@ module.exports = class PropertiesTool {
   static toFullForName (value, design, component) {
     if (this.isMarkFull(value)) {
       return value
-        .replace(/\?\?/g, `${design}-${component}-`)
+        .replace(/\?\?(?![_-])/g, `${design}-${component}-`)
+        .replace(/\?\?(?=[_-])/g, `${design}-${component}`)
         .replace(/\?/g, `${design}-`)
     } else {
       return value

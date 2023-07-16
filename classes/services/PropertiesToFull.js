@@ -28,7 +28,8 @@ module.exports = class PropertiesToFull {
     return this.__toFullValueFix(
       FILE_CACHE_FULL,
       /(?<=\{)\?/g,
-      /(?<=\{)\?\?/g
+      /(?<=\{)\?\?(?![_-])/g,
+      /(?<=\{)\?\?(?=[_-])/g
     )
   }
 
@@ -42,7 +43,8 @@ module.exports = class PropertiesToFull {
     return this.__toFullValueFix(
       FILE_CACHE_FULL_FIX,
       /(?<=\{)#/g,
-      /(?<=\{)##/g
+      /(?<=\{)##(?![_-])/g,
+      /(?<=\{)##(?=[_-])/g
     )
   }
 
@@ -90,6 +92,7 @@ module.exports = class PropertiesToFull {
    * @param {string} value property names for processing / названия свойств для обработки
    * @param {RegExp} designSymbol regular expression for design / регулярное выражение для дизайна
    * @param {RegExp} componentSymbol regular expression for component / регулярное выражение для компонента
+   * @param {RegExp} componentSymbolSub regular expression for subclass / регулярное выражение для подкласса
    * @param {string} design design name / название дизайна
    * @param {string} component component name / название компонента
    * @return {*}
@@ -99,12 +102,14 @@ module.exports = class PropertiesToFull {
     value,
     designSymbol,
     componentSymbol,
+    componentSymbolSub,
     design,
     component
   ) {
     if (componentSymbol) {
       value = value
         .replace(componentSymbol, `${design}.${component}.`)
+        .replace(componentSymbolSub, `${design}.${component}`)
     }
 
     value = value
@@ -120,13 +125,15 @@ module.exports = class PropertiesToFull {
    * @param {string} cache cache file name / название файла кеша
    * @param {RegExp} designSymbol regular expression for design / регулярное выражение для дизайна
    * @param {RegExp} componentSymbol regular expression for component / регулярное выражение для компонента
+   * @param {RegExp} componentSymbolSub regular expression for subclass / регулярное выражение для подкласса
    * @return {this}
    * @private
    */
   __toFullValueFix (
     cache,
     designSymbol,
-    componentSymbol
+    componentSymbol,
+    componentSymbolSub
   ) {
     const keyDefault = PropertiesTool.getKeyDefault()
 
@@ -140,6 +147,7 @@ module.exports = class PropertiesToFull {
           item[keyDefault],
           designSymbol,
           componentSymbol,
+          componentSymbolSub,
           design,
           component
         )
@@ -150,6 +158,7 @@ module.exports = class PropertiesToFull {
           item.value,
           designSymbol,
           componentSymbol,
+          componentSymbolSub,
           design,
           component
         )

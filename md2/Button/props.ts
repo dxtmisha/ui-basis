@@ -9,7 +9,9 @@ export const subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription'
+    inscription: 'inscription',
+    icon: 'icon',
+    trailing: 'trailing'
     // :subclass
   }
 }
@@ -21,11 +23,15 @@ export type PropsType = PropsButtonType & {
   // [!] Системная метка, нельзя удалять
   // :type
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
+  dragged?: boolean
   contained?: boolean
   rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  focus?: boolean
+  outlined?: boolean
   disabled?: boolean
   align?: 'left' | 'right' | 'center'
   // :type
+  /* :type.progress.none */
 } & {
   // Values
 
@@ -62,6 +68,7 @@ export const props = {
       type: String as PropType<PropsType['height']>,
       default: defaults?.height
     },
+    dragged: Boolean,
     contained: {
       type: Boolean,
       default: defaults?.contained
@@ -70,6 +77,8 @@ export const props = {
       type: String as PropType<PropsType['rounded']>,
       default: defaults?.rounded
     },
+    focus: Boolean,
+    outlined: Boolean,
     disabled: Boolean,
     align: {
       type: String as PropType<PropsType['align']>,

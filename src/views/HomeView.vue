@@ -9,6 +9,20 @@
     <md2-button inscription="text/">slot</md2-button>
     <md2-button :inscription="text" @click="text = text ? undefined : 'text'"/>
     <md2-button inscription="disabled" disabled/>
+    <md2-button inscription="dragged" dragged/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button
+      outlined
+      inscription="text 1"
+      value="value"
+      @click="(event, options) => console.log(event, options)"
+    />
+    <md2-button outlined>slot</md2-button>
+    <md2-button outlined inscription="text/">slot</md2-button>
+    <md2-button outlined :inscription="text" @click="text = text ? undefined : 'text'"/>
+    <md2-button outlined inscription="disabled" disabled/>
+    <md2-button outlined inscription="dragged" dragged/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button :icon="icon" @click="icon = icon === 'face' ? 'close' : 'face'"/>
@@ -22,10 +36,20 @@
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button
       :icon="{icon: {value:'https://drscdn.500px.org/photo/1071900499/q%3D80_m%3D2000/v2?sig=b42037ebdec07ea7c5c0a0e8ea7422b942f25b10806885ba31b1c9e2a449d964', size: 'cover'}, onLoad: (value) => console.log(value)}"
+      @click="progress = !progress"
     />
-    <md2-button progress icon="face" icon-trailing="home" inscription="inscription"/>
-    <md2-button progress progress-position="icon" icon="face" icon-trailing="home" inscription="inscription"/>
-    <md2-button progress progress-position="trailing" icon="face" icon-trailing="home" inscription="inscription"/>
+    <md2-button :progress="progress" icon="face" icon-trailing="home" inscription="inscription"
+                @click="progress = !progress"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button icon="face" icon-trailing="close" inscription="text" height="sm"/>
+    <md2-button icon="face" icon-trailing="close" inscription="text" height="md"/>
+    <md2-button icon="face" icon-trailing="close" inscription="text" height="lg"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="text" height="sm"/>
+    <md2-button inscription="text" height="md"/>
+    <md2-button inscription="text" height="lg"/>
   </div>
 </template>
 
@@ -49,7 +73,8 @@ export default defineComponent({
       icon: ref<string | undefined>('face'),
       iconToNone: ref<string | undefined>('home'),
       hide: ref<boolean>(false),
-      turn: ref<boolean>(false)
+      turn: ref<boolean>(false),
+      progress: ref<boolean>(false)
     }
   }
 })

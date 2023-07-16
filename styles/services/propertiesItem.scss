@@ -92,7 +92,7 @@ $designsClassName: 'class' !default;
   $this: null
 ) {
   @each $index, $property in $properties {
-    @if (__isSelector($parent)) {
+    @if (__isSelector($parent) and not __isSelector($property)) {
       @include __toBySelector($property, $this);
     } @else {
       @include __to($property);

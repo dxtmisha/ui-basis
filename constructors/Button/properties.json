@@ -1,5 +1,7 @@
 {
   "#inscription": {},
+  "#icon": {},
+  "#trailing": {},
   "disabled": {
     "_type": "state"
   },
@@ -9,6 +11,11 @@
     "~center": {},
     "_type": "state",
     "_default": "center"
+  },
+  "progress": {
+    "color-opacity": {
+      "_type": "var"
+    }
   },
   "_components": [
     "icon",

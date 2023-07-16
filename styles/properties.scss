@@ -115,6 +115,20 @@ $designsInit: false !default;
   @include __toPropertyVar(#{'??'}#{$name}, $value, $default, $important);
 }
 
+/// Mixin for generating custom properties at the design level
+///
+/// Миксин для генерации пользовательских свойств на уровне дизайна
+/// @param {String} $name property names / названия свойств
+/// @param {String} $value property values / значения свойства
+/// @param {Bool} $important high priority / высокий приоритет
+@mixin initByCustomDesign(
+  $name,
+  $value,
+  $important: false
+) {
+  @include __toProperty(#{'?'}#{$name}, $value, $important);
+}
+
 /// Mixin for generating a sub-class
 ///
 /// Миксин для генерации класса статуса

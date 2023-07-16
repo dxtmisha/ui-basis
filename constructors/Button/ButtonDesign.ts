@@ -26,7 +26,6 @@ import { ButtonInscription } from './ButtonInscription'
 // :components-import
 import { ButtonIcon } from './ButtonIcon'
 import { ButtonProgress } from './ButtonProgress'
-
 // :components-import
 
 /**
@@ -54,7 +53,6 @@ export class ButtonDesign<
   // :components-variable
   protected readonly icon: ButtonIcon
   protected readonly progress: ButtonProgress
-
   // :components-variable
 
   /**
@@ -100,9 +98,6 @@ export class ButtonDesign<
    */
   protected init (): ButtonInitInterface {
     this.classes.setExtraState({
-      inscription: this.inscription.isInscription,
-      icon: this.icon.isIcon,
-      trailing: this.icon.isTrailing,
       progress: this.progress.is
     })
 
@@ -129,8 +124,8 @@ export class ButtonDesign<
     const setup = this.getSetup()
     const children: any[] = [
       ...this.progress.render(),
-      ...this.inscription.render(setup.classes.value.inscription),
-      ...this.icon.render()
+      ...this.icon.render(),
+      ...this.inscription.render(setup.classes.value.inscription)
     ]
 
     if (setup.isEnabled.value) {

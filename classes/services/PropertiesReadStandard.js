@@ -75,7 +75,9 @@ module.exports = class PropertiesReadStandard {
         break
     }
 
-    return PropertiesTool.toIndex(key)
+    // TODO: проверить еще раз
+    // return PropertiesTool.toIndex(key)
+    return key
   }
 
   /**
