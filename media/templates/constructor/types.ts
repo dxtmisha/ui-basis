@@ -6,9 +6,18 @@ import {
 
 import { PropsConstructorType } from './props'
 
+// [!] System label, cannot be deleted
+// [!] Системная метка, нельзя удалять
+// :components-import
+// :components-import
+
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
 export interface ConstructorComponentsInterface {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :components-include
+  // :components-include
   component: object
 }
 

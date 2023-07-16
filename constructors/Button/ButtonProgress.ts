@@ -7,6 +7,7 @@ import {
   ButtonComponentsInterface,
   ButtonPropsValueType
 } from './types'
+import { DesignClasses } from '../../classes/DesignClasses'
 
 import { PropsProgressType } from '../Progress/props'
 
@@ -22,16 +23,22 @@ export class ButtonProgress<
 
   /**
    * Constructor
+   * @param classes class name for the component / название класса для компонента
    * @param components object for working with components / объект для работы с компонентами
    * @param props input parameter / входной параметр
    * @param refs object for working with components / входной параметр в виде реактивной ссылки
    */
+  // eslint-disable-next-line no-useless-constructor
   constructor (
+    protected readonly classes: DesignClasses,
     protected readonly components: DesignComponents<C>,
     protected readonly props: M,
     protected readonly refs: DesignPropsRefsType<M>
   ) {
-    this.bind = Design.getBindStatic<any, P>(refs.progress, this.options, 'visible')
+    this.bind = Design.getBindStatic<any, P>(refs?.progress, {
+      circular: true,
+      inverse: true
+    }, 'visible')
   }
 
   /**
@@ -44,16 +51,6 @@ export class ButtonProgress<
   )
 
   /**
-   * Basic parameters
-   *
-   * Базовые параметры
-   */
-  readonly options: P = {
-    circular: true,
-    inverse: true
-  } as P
-
-  /**
    * A method for rendering
    *
    * Метод для рендеринга
@@ -61,9 +58,13 @@ export class ButtonProgress<
    */
   render (): VNode[] {
     const elements: any[] = []
+    const props = {
+      class: this.classes.getNameBySubclass(['progress']),
+      ...this.bind.value
+    }
 
     if (this.is.value) {
-      this.components.render(elements, 'progress', this.bind.value)
+      this.components.render(elements, 'progress', props)
     }
 
     return elements

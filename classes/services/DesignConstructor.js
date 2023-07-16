@@ -62,6 +62,28 @@ module.exports = class DesignConstructor extends DesignPrototype {
   }
 
   /**
+   * Returns the names of the classes
+   *
+   * Возвращает названия классов
+   * @return {string}
+   * @private
+   */
+  __getClassName () {
+    return FILE_CLASS.replace(this.replaceName, this.component.getComponent())
+  }
+
+  /**
+   * Reads the file class.ts
+   *
+   * Читает файл class.ts
+   * @return {string}
+   * @private
+   */
+  __readClass () {
+    return this._read(this.__getClassName())
+  }
+
+  /**
    * Reads the file types.ts
    *
    * Читает файл types.ts
@@ -168,7 +190,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
    * @private
    */
   __initClass () {
-    const file = FILE_CLASS.replace(this.replaceName, this.component.getComponent())
+    const file = this.__getClassName()
 
     if (!this._isFile(file)) {
       let sample = this.__readSampleClass()
@@ -282,10 +304,18 @@ module.exports = class DesignConstructor extends DesignPrototype {
     return this
   }
 
+  /**
+   * Updates the list of connected components
+   *
+   * Обновляет список подключенных компонентов
+   * @return {this}
+   * @private
+   */
   __initComponent () {
     if (this._isFile(FILE_PROPERTIES)) {
       const key = PropertiesTool.getKeyComponents()
       const data = this.__readProperties()
+      const list = []
 
       if (key in data) {
         data[key].forEach(name => {
@@ -293,23 +323,101 @@ module.exports = class DesignConstructor extends DesignPrototype {
           const file = `${fullName}.ts`
 
           if (!this._isFile(file)) {
-            this._createFile(file, this.__initComponentItem(fullName))
+            this._createFile(file, this.__initComponentItem(name))
           }
+
+          list.push({
+            name,
+            nameFirst: To.camelCaseFirst(name),
+            fullName
+          })
         })
+
+        this._createFile(this.__getClassName(), this.__initComponentClass(list))
+        this._createFile(FILE_TYPES, this.__initComponentType(list))
       }
     }
 
     return this
   }
 
+  /**
+   * Generates a class for working with components
+   *
+   * Генерирует класс для работы с компонентами
+   * @param {string} name names of the classes / названия классов
+   * @return {string}
+   * @private
+   */
   __initComponentItem (name) {
+    const nameFirst = To.camelCaseFirst(name)
     let sample = this.__readSampleComponent()
 
     sample = this._replacePath(sample)
-    sample = this._replaceNameForProperties(sample)
     sample = this._replacementOnce(sample, 'component', (data) => {
-      return data.replace(/[Cc]omponent(?<!s)/g, name)
+      return data
+        .replace(/component(?!s)/g, name)
+        .replace(/Component/g, nameFirst)
     })
+    sample = this._replaceNameForProperties(sample)
+
+    return sample
+  }
+
+  /**
+   * Генерация подключения классы компоненты
+   * @param {{name:string, fullName:string}[]} list list of classes for connection / список классов для подключения
+   * @return {string}
+   * @private
+   */
+  __initComponentClass (list) {
+    const imports = []
+    const variables = []
+    const inits = []
+
+    let sample = this.__readClass()
+
+    list.forEach(item => {
+      imports.push(`\r\nimport { ${item.fullName} } from './${item.fullName}'`)
+      variables.push(`\r\n  protected readonly ${item.name}: ${item.fullName}`)
+      inits.push(
+        `\r\n    this.${item.name} = new ${item.fullName}(` +
+        '\r\n      this.classes,' +
+        '\r\n      this.components,' +
+        '\r\n      this.props,' +
+        '\r\n      this.refs' +
+        '\r\n    )'
+      )
+    })
+
+    sample = this._replacement(sample, 'components-import', imports.join(''), '')
+    sample = this._replacement(sample, 'components-variable', variables.join(''))
+    sample = this._replacement(sample, 'components-init', inits.join('\r\n'), '    ')
+
+    return sample
+  }
+
+  /**
+   * Generation of connection and addition to the list of used components
+   *
+   * Генерация подключения и добавления в список использованных компонентов
+   * @param {{name:string, nameFirst:string}[]} list list of classes for connection / список классов для подключения
+   * @return {string}
+   * @private
+   */
+  __initComponentType (list) {
+    const imports = []
+    const includes = []
+
+    let sample = this.__readTypes()
+
+    list.forEach(item => {
+      imports.push(`\r\nimport { Props${item.nameFirst}Type } from '../${item.nameFirst}/props'`)
+      includes.push(`\r\n  ${item.name}?: Props${item.nameFirst}Type`)
+    })
+
+    sample = this._replacement(sample, 'components-import', imports.join(''), '')
+    sample = this._replacement(sample, 'components-include', includes.join(''))
 
     return sample
   }

@@ -48,8 +48,8 @@ export type DesignPropsRefsType<T = DesignPropsType> = {
 }
 
 export type DesignPropsExtendedType<T extends DesignPropsType = DesignPropsType> = T & {
-  class: any
-  style: any
+  class?: any
+  style?: any
 }
 
 export type DesignEmitsCallbackType = ((...args: any[]) => any) | Record<string, any[]>

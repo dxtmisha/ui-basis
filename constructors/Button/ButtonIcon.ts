@@ -1,35 +1,43 @@
 import { computed, ComputedRef, VNode } from 'vue'
 
-import { Design, DesignPropsRefsType } from '../../classes/Design'
+import { Design, DesignPropsExtendedType, DesignPropsRefsType } from '../../classes/Design'
 import { DesignComponents } from '../../classes/DesignComponents'
 
-import { ButtonComponentsInterface, ButtonPropsValueType } from './types'
+import {
+  ButtonComponentsInterface,
+  ButtonPropsValueType
+} from './types'
+import { DesignClasses } from '../../classes/DesignClasses'
+
 import { PropsIconType } from '../Icon/props'
 
 /**
- * Class for rendering icon on the button
- *
- * Класс для рендеринга иконки у кнопки
+ * ButtonIcon
  */
 export class ButtonIcon<
-  I extends PropsIconType = PropsIconType
+  P extends DesignPropsExtendedType<PropsIconType> = DesignPropsExtendedType<PropsIconType>,
+  M extends ButtonPropsValueType = ButtonPropsValueType,
+  C extends ButtonComponentsInterface = ButtonComponentsInterface
 > {
-  readonly iconBind: ComputedRef<I>
-  readonly trailingBind: ComputedRef<I>
+  readonly iconBind: ComputedRef<P>
+  readonly trailingBind: ComputedRef<P>
 
   /**
    * Constructor
+   * @param classes class name for the component / название класса для компонента
    * @param components object for working with components / объект для работы с компонентами
    * @param props input parameter / входной параметр
    * @param refs object for working with components / входной параметр в виде реактивной ссылки
    */
+  // eslint-disable-next-line no-useless-constructor
   constructor (
-    protected readonly components: DesignComponents<ButtonComponentsInterface>,
-    protected readonly props: ButtonPropsValueType,
-    protected readonly refs: DesignPropsRefsType<ButtonPropsValueType>
+    protected readonly classes: DesignClasses,
+    protected readonly components: DesignComponents<C>,
+    protected readonly props: M,
+    protected readonly refs: DesignPropsRefsType<M>
   ) {
-    this.iconBind = Design.getBindStatic<any, I>(refs.icon, this.optionsIcon, 'icon')
-    this.trailingBind = Design.getBindStatic<any | undefined, I>(refs.iconTrailing, this.optionsTrailing, 'icon')
+    this.iconBind = Design.getBindStatic<any, P>(refs.icon, this.iconOptions, 'icon')
+    this.trailingBind = Design.getBindStatic<any, P>(refs.iconTrailing, this.trailingOptions, 'icon')
   }
 
   /**
@@ -55,12 +63,12 @@ export class ButtonIcon<
    *
    * Параметры для главной иконки
    */
-  readonly optionsIcon = computed<I>(() => {
+  readonly iconOptions = computed<P>(() => {
     return {
-      active: this.props?.selected || false,
-      hide: this.props?.iconHide || false,
+      active: this.props?.selected,
+      hide: this.props?.iconHide,
       animationType: 'type2'
-    } as I
+    } as P
   })
 
   /**
@@ -68,12 +76,12 @@ export class ButtonIcon<
    *
    * Параметр для вторичной иконки
    */
-  readonly optionsTrailing = computed<I>(() => {
+  readonly trailingOptions = computed<P>(() => {
     return {
-      turn: this.props?.iconTurn || false,
+      turn: this.props?.iconTurn,
       end: true,
       high: true
-    } as I
+    } as P
   })
 
   /**
@@ -86,11 +94,17 @@ export class ButtonIcon<
     const elements: any[] = []
 
     if (this.isIcon.value) {
-      this.components.render(elements, 'icon', this.iconBind.value)
+      this.components.render(elements, 'icon', {
+        class: this.classes.getNameBySubclass(['icon']),
+        ...this.iconBind.value
+      })
     }
 
     if (this.isTrailing.value) {
-      this.components.render(elements, 'icon', this.trailingBind.value)
+      this.components.render(elements, 'icon', {
+        class: this.classes.getNameBySubclass(['trailing']),
+        ...this.trailingBind.value
+      })
     }
 
     return elements

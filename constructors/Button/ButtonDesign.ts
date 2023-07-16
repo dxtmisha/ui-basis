@@ -20,8 +20,14 @@ import { UseEnabled } from '../../uses/UseEnabled'
 
 import { ButtonEvent } from './ButtonEvent'
 import { ButtonInscription } from './ButtonInscription'
+
+// [!] System label, cannot be deleted
+// [!] Системная метка, нельзя удалять
+// :components-import
 import { ButtonIcon } from './ButtonIcon'
 import { ButtonProgress } from './ButtonProgress'
+
+// :components-import
 
 /**
  * ButtonDesign
@@ -42,8 +48,14 @@ export class ButtonDesign<
 
   protected readonly event: ButtonEvent
   protected readonly inscription: ButtonInscription
+
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :components-variable
   protected readonly icon: ButtonIcon
   protected readonly progress: ButtonProgress
+
+  // :components-variable
 
   /**
    * Constructor
@@ -61,17 +73,23 @@ export class ButtonDesign<
     this.event = new ButtonEvent(this.emit, this.props, this.enabled)
     this.inscription = new ButtonInscription(this.slots, this.props)
 
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :components-init
     this.icon = new ButtonIcon(
+      this.classes,
       this.components,
       this.props,
       this.refs
     )
 
     this.progress = new ButtonProgress(
+      this.classes,
       this.components,
       this.props,
       this.refs
     )
+    // :components-init
   }
 
   /**
@@ -111,8 +129,8 @@ export class ButtonDesign<
     const setup = this.getSetup()
     const children: any[] = [
       ...this.progress.render(),
-      ...this.icon.render(),
-      ...this.inscription.render(setup.classes.value.inscription)
+      ...this.inscription.render(setup.classes.value.inscription),
+      ...this.icon.render()
     ]
 
     if (setup.isEnabled.value) {

@@ -7,15 +7,24 @@ import {
 
 import { PropsButtonType } from './props'
 
+// [!] System label, cannot be deleted
+// [!] Системная метка, нельзя удалять
+// :components-import
 import { PropsIconType } from '../Icon/props'
 import { PropsProgressType } from '../Progress/props'
+// :components-import
+
 import { PropsRippleType } from '../Ripple/props'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
 export interface ButtonComponentsInterface {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :components-include
   icon?: PropsIconType
   progress?: PropsProgressType
+  // :components-include
   ripple?: PropsRippleType
 }
 

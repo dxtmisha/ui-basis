@@ -16,6 +16,11 @@ import {
   ConstructorSlotsType
 } from './types'
 
+// [!] System label, cannot be deleted
+// [!] Системная метка, нельзя удалять
+// :components-import
+// :components-import
+
 /**
  * ConstructorDesign
  */
@@ -31,6 +36,11 @@ export class ConstructorDesign<
   ConstructorEmitsType,
   ConstructorSlotsType
 > {
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :components-variable
+  // :components-variable
+
   /**
    * Constructor
    * @param props properties / свойства
@@ -41,6 +51,11 @@ export class ConstructorDesign<
     contextEmit?: DesignSetupContextEmitType<ConstructorEmitsType, ConstructorSlotsType>
   ) {
     super(props, contextEmit)
+
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :components-init
+    // :components-init
   }
 
   /**
