@@ -22,10 +22,11 @@ export type PropsButtonType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  selected?: boolean
   disabled?: boolean
-  adaptive?: 'icon' | 'inscription'
   align?: 'left' | 'right' | 'center'
   // :type
+  /* :type.adaptive.none */
 } & {
   // Values
   inscription?: string
@@ -68,9 +69,9 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    selected: Boolean,
     disabled: Boolean,
     progress: Boolean,
-    adaptive: String as PropType<PropsButtonType['adaptive']>,
     align: String as PropType<PropsButtonType['align']>
     // :prop
   },

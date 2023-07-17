@@ -1,5 +1,4 @@
 import { PropType } from 'vue'
-import { DesignPropsUnionType } from '../../classes/Design'
 import { defaultsButton, propsButton, PropsButtonType, subClassesButton } from '../../constructors/Button/props'
 
 // Type describing subclasses
@@ -19,7 +18,7 @@ export const subClasses = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = DesignPropsUnionType<PropsButtonType, {
+export type PropsType = PropsButtonType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
@@ -31,12 +30,13 @@ export type PropsType = DesignPropsUnionType<PropsButtonType, {
   palette?: 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'grey-blue' | 'white' | 'black' | 'black-light'
   focus?: boolean
   dragged?: boolean
+  selected?: boolean
   disabled?: boolean
   rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
   align?: 'left' | 'right' | 'center'
   // :type
   /* :type.progress.none */
-}>
+}
 
 // Default value for property
 // Значение по умолчанию для свойства
@@ -74,6 +74,7 @@ export const props = {
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
+    selected: Boolean,
     disabled: Boolean,
     rounded: String as PropType<PropsType['rounded']>,
     align: String as PropType<PropsType['align']>

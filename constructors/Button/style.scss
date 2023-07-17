@@ -43,11 +43,11 @@
   }
 
   &__icon ~ &__inscription {
-    padding-left: 0;
+    @include paddingLeft(0);
   }
 
   &__trailing ~ &__inscription {
-    padding-right: 0;
+    @include paddingRight(0);
   }
 }
 

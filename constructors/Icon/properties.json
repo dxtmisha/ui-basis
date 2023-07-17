@@ -22,10 +22,12 @@
     "_type": "state"
   },
   "start": {
-    "_type": "state"
+    "_type": "state",
+    "_category": "order"
   },
   "end": {
-    "_type": "state"
+    "_type": "state",
+    "_category": "order"
   },
   "high": {
     "_type": "state"

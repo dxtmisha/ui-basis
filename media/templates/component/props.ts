@@ -1,6 +1,5 @@
 // :basic.once import { PropType } from 'vue'
 // :constructor.once import { PropType } from 'vue'
-// :constructor.once import { DesignPropsUnionType } from '../../../classes/Design'
 // :constructor.once import { defaultsConstructor, propsConstructor, PropsConstructorType, subClassesConstructor } from '../../../constructors/Constructor/props'
 
 // Type describing subclasses
@@ -17,12 +16,12 @@ export const subClasses = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = /* :constructor.once DesignPropsUnionType<PropsConstructorType, */ {
+export type PropsType = /* :constructor.once PropsConstructorType & */ {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
   // :type
-}/* :constructor.once > */ & {
+} & {
   // Values
   value?: string
 

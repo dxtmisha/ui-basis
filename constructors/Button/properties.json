@@ -2,6 +2,9 @@
   "#inscription": {},
   "#icon": {},
   "#trailing": {},
+  "selected": {
+    "_type": "state"
+  },
   "disabled": {
     "_type": "state"
   },
@@ -12,7 +15,7 @@
   },
   "adaptive": {
     "~icon": {
-      "#inscription": {
+      "& .??__inscription": {
         "display": "none"
       }
     },

@@ -8,6 +8,7 @@
     --d-dir-end: flex-end;
     --d-dir-text-left: left;
     --d-dir-text-right: right;
+    --d-dir-order: 1;
 
     *, *:after, *:before {
       --d-dir-position-left: var(--sys-position-left, initial);
@@ -19,6 +20,8 @@
     }
 
     &[dir="rtl"] {
+      direction: rtl;
+
       --d-dir: -1;
       --d-dir-left: 0;
       --d-dir-right: 1;
@@ -28,7 +31,7 @@
       --d-dir-end: flex-start;
       --d-dir-text-left: right;
       --d-dir-text-right: left;
-      direction: rtl;
+      --d-dir-order: 999999;
 
       *, *:after, *:before {
         --d-dir-position-left: var(--sys-position-right, initial);
@@ -132,4 +135,13 @@
 /// @return {String}
 @function dirToRight($left, $right) {
   @return calc((isDirLeft() * var($right, 0px)) + (isDirRight() * var($left, 0px)));
+}
+
+/// Returns a string calculated by sorting
+///
+/// Возвращает строку, вычисленную с помощью сортировки
+/// @param {String/Number} $value
+/// @return {String}
+@function dirOrder($value) {
+  @return calc(var(--d-dir-order) + (var(--d-dir) * #{$value}));
 }

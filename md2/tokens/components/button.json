@@ -48,6 +48,9 @@
     "active": {
       "box-shadow": "{ref.shadow.8}"
     },
+    "selected": {
+      "background-color": "{sys.palette.primaryVariant}"
+    },
     "disabled": {
       "color-opacity": "{sys.opacity.primary.disabled}",
       "background-color": "{sys.palette.disabled}",
@@ -73,6 +76,9 @@
       "after": {
         "border-opacity": "{sys.opacity.pressed}"
       }
+    },
+    "selected": {
+      "color": "{sys.palette.primaryVariant}"
     }
   },
   "text": {
@@ -82,6 +88,9 @@
     },
     "active": {
       "basic": "{??outlined.active}"
+    },
+    "selected": {
+      "basic": "{??outlined.selected}"
     }
   },
   "rounded": {

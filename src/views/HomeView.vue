@@ -45,6 +45,7 @@
     <md2-button icon="face" inscription="text"/>
     <md2-button icon-trailing="close" inscription="text"/>
     <md2-button icon="face" icon-trailing="close" inscription="text"/>
+    <md2-button icon="face" icon-trailing="close"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button
@@ -78,6 +79,22 @@
     <md2-button inscription="text" icon="home" palette="deep-orange" text/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="selected" icon="home" palette="deep-orange" :selected="selected" @click="selected=!selected"/>
+    <md2-button inscription="selected" icon="home" palette="deep-orange" :selected="selected" outlined/>
+    <md2-button inscription="selected" icon="home" palette="deep-orange" :selected="selected" text/>
+    <md2-button inscription="selected" icon="home" palette="deep-orange"/>
+    <md2-button inscription="selected" icon="home" palette="deep-orange" outlined/>
+    <md2-button inscription="selected" icon="home" palette="deep-orange" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button inscription="selected" :icon="{icon:'home',iconActive:'face'}" :selected="selected"/>
+    <md2-button inscription="selected" icon="home" :selected="selected" outlined/>
+    <md2-button inscription="selected" icon="home" :selected="selected" text/>
+    <md2-button inscription="selected" icon="home"/>
+    <md2-button inscription="selected" icon="home" outlined/>
+    <md2-button inscription="selected" icon="home" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button inscription="text" icon="home" palette="brown"/>
     <md2-button inscription="text" icon="home" palette="brown" outlined/>
     <md2-button inscription="text" icon="home" palette="brown" text/>
@@ -92,6 +109,34 @@
     <md2-button inscription="text" icon="home" palette="deep-orange" adaptive="md"/>
     <md2-button inscription="text" icon="home" palette="deep-orange" adaptive="lg"/>
   </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button icon="home" rounded="sm"/>
+    <md2-button icon="home" rounded="md"/>
+    <md2-button icon="home" rounded="lg"/>
+    <md2-button icon="home" rounded="full"/>
+    <md2-button inscription="sm" icon="home" rounded="sm"/>
+    <md2-button inscription="md" icon="home" rounded="md"/>
+    <md2-button inscription="lg" icon="home" rounded="lg"/>
+    <md2-button inscription="full" icon="home" rounded="full"/>
+    <md2-button inscription="sm" rounded="sm"/>
+    <md2-button inscription="md" rounded="md"/>
+    <md2-button inscription="lg" rounded="lg"/>
+    <md2-button inscription="full" rounded="full"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-button text icon="home" rounded="sm"/>
+    <md2-button text icon="home" rounded="md"/>
+    <md2-button text icon="home" rounded="lg"/>
+    <md2-button text icon="home" rounded="full"/>
+    <md2-button text inscription="sm" icon="home" rounded="sm"/>
+    <md2-button text inscription="md" icon="home" rounded="md"/>
+    <md2-button text inscription="lg" icon="home" rounded="lg"/>
+    <md2-button text inscription="full" icon="home" rounded="full"/>
+    <md2-button text inscription="sm" rounded="sm"/>
+    <md2-button text inscription="md" rounded="md"/>
+    <md2-button text inscription="lg" rounded="lg"/>
+    <md2-button text inscription="full" rounded="full"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -102,12 +147,6 @@ import { ImageIcon } from '../../constructors/Image/ImageIcon'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
-
-type a = { k1: 'a' | 'b', k2: 'c' | 'd' }
-type b = { k1: 'e' | 'f', k3: 'i' | 'h' }
-type c<a, b> = b & Omit<a, keyof b>
-
-const d: c<a, b> = {}
 
 export default defineComponent({
   name: 'HomeView',
@@ -121,6 +160,7 @@ export default defineComponent({
       iconToNone: ref<string | undefined>('home'),
       hide: ref<boolean>(false),
       turn: ref<boolean>(false),
+      selected: ref<boolean>(false),
       progress: ref<boolean>(false)
     }
   }
