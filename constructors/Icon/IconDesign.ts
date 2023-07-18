@@ -95,6 +95,7 @@ export class IconDesign<
    */
   protected readonly iconBind = computed(() => {
     return {
+      class: this.classes.getNameBySubclass(['icon']),
       ...this.imageBind.value,
       hide: this.isActive.value
     }
@@ -108,6 +109,7 @@ export class IconDesign<
    */
   protected readonly iconActiveBind = computed(() => {
     return {
+      class: this.classes.getNameBySubclass(['active']),
       ...this.imageBind.value,
       hide: !this.isActive.value
     }
