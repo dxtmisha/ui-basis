@@ -4,6 +4,7 @@ import {
   defineExpose,
   EmitsOptions,
   h,
+  // onMounted,
   onUpdated,
   Ref,
   ref,
@@ -47,7 +48,7 @@ export type DesignPropsRefsType<T = DesignPropsType> = {
   [K in keyof T]-?: Ref<any>
 }
 
-export type DesignPropsUnionType<B, N> = N & Omit<B, keyof N>
+// export type DesignPropsUnionType<B, N> = N & Omit<B, keyof N>
 export type DesignPropsExtendedType<T extends DesignPropsType = DesignPropsType> = T & {
   class?: any
   style?: any
@@ -149,10 +150,6 @@ export class Design<
       this.properties,
       this.props as AssociativeType
     )
-
-    if (process.env.NODE_ENV !== 'production') {
-      onUpdated(() => console.warn(`Updated: ${this.getName()}`))
-    }
   }
 
   /**
@@ -162,6 +159,15 @@ export class Design<
    */
   getName (): string {
     return this.classes.getName()
+  }
+
+  /**
+   * Returns the names of the design
+   *
+   * Возвращает названия дизайна
+   */
+  getNameDesign (): string {
+    return this.classes.getName().split('-', 2)?.[0]
   }
 
   /**
@@ -416,6 +422,11 @@ export class Design<
         classes: this.classes.getItem() as ComputedRef<ClassesListType<C>>,
         styles: this.styles.getItem(),
         ...this.init()
+      }
+
+      if (process.env.NODE_ENV !== 'production') {
+        // onMounted(() => console.warn(`Mounted: ${this.getName()}`))
+        onUpdated(() => console.warn(`Updated: ${this.getName()}`))
       }
     }
   }

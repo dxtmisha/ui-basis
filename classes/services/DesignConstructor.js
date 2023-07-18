@@ -32,6 +32,8 @@ module.exports = class DesignConstructor extends DesignPrototype {
   ) {
     super(name, options)
 
+    console.log('name', name)
+
     this.component = new PropertiesComponent(`d.${name}`, false, [])
     this.dir = this._initDir()
   }
@@ -197,6 +199,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
 
       sample = this._replacePath(sample)
       sample = this._replaceNameForProperties(sample)
+        .replaceAll('subClassesConstructor', `subClasses${this.component.getComponent()}`)
 
       this._createFile(file, sample)
     }

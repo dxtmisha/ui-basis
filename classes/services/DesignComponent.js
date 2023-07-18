@@ -1,6 +1,7 @@
 const DesignPrototype = require('./DesignPrototype')
 const PropertiesComponent = require('./PropertiesComponent')
 const DesignConstructor = require('./DesignConstructor')
+const { To } = require('../To')
 
 /**
  * Class for creating a component or updating data
@@ -27,7 +28,7 @@ module.exports = class DesignComponent extends DesignPrototype {
 
   initMain () {
     if (this.options.constr) {
-      new DesignConstructor(this.component.getComponent().toLowerCase(), {}).init()
+      new DesignConstructor(To.kebabCase(this.component.getComponent()), {}).init()
     }
 
     this
@@ -192,7 +193,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       const sample = this.__readSampleProperties()
 
       if (this.options.constr) {
-        sample.basic = `{d.${this.component.getComponent().toLowerCase()}}`
+        sample.basic = `{d.${To.kebabCase(this.component.getComponent())}}`
       }
 
       this._createFile(file, sample)

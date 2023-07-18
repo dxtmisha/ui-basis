@@ -1,16 +1,136 @@
 <!DOCTYPE html>
 <html lang="">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+</head>
+<body>
+<noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+        Please enable it to continue.</strong>
+</noscript>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<section aria-labelledby="конструктор"><h2 id="конструктор"><a href="#конструктор">Конструктор</a></h2>
+    <div class="section-content">
+        <dl>
+            <dt id="mutationobserver_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
+                                               href="/en-US/docs/Web/API/MutationObserver/MutationObserver"><code>MutationObserver()</code>
+                <small>(en-US)</small></a></dt>
+            <dd>
+                <p>Создаёт и возвращает новый <code>MutationObserver</code>, который вызовет определённую колбэк-функцию
+                    при изменении в DOM.</p>
+            </dd>
+        </dl>
+    </div>
+</section>
+<section aria-labelledby="параметры"><h2 id="параметры"><a href="#параметры">Параметры</a></h2>
+    <div class="section-content">
+        <dl>
+            <dt id="callback"><code>callback</code></dt>
+            <dd>
+                <p>Вызывается при каждом изменении DOM-элемента. Наблюдатель вызывает данную функцию с двумя
+                    аргументами. Первым аргументом является массив объектов <a href="/en-US/docs/Web/API/MutationRecord"
+                                                                               class="only-in-en-us"
+                                                                               title="Currently only available in English (US)">MutationRecord
+                        <small>(en-US)<small></small></small></a>, вторым аргументом является экземпляр <code>MutationObserver.</code>
+                </p>
+            </dd>
+        </dl>
+    </div>
+</section>
+<section aria-labelledby="методы_экземпляра"><h2 id="методы_экземпляра"><a href="#методы_экземпляра">Методы
+    экземпляра</a></h2>
+    <div class="section-content">
+        <dl>
+            <dt id="disconnect_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
+                                         href="/en-US/docs/Web/API/MutationObserver/disconnect"><code>disconnect()</code>
+                <small>(en-US)</small></a></dt>
+            <dd>
+                <p>Прекращает получение уведомлений об изменении DOM-элемента экземпляром <code>MutationObserver</code>,
+                    до того момента пока не будет вызван метод <a href="#observe()">observe()</a>.</p>
+            </dd>
+            <dt id="observe_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
+                                      href="/en-US/docs/Web/API/MutationObserver/observe"><code>observe()</code> <small>(en-US)</small></a>
+            </dt>
+            <dd>
+                <p>Подписывает экземпляр <code>MutationObserver</code> на получение уведомлений о манипуляциях с
+                    DOM-элементом.</p>
+            </dd>
+            <dt id="takerecords_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
+                                          href="/en-US/docs/Web/API/MutationObserver/takeRecords"><code>takeRecords()</code>
+                <small>(en-US)</small></a></dt>
+            <dd>
+                <p>Возвращает текущий <a
+                        href="/ru/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> очереди
+                    экземпляра <code>MutationObserver</code>, затем очищает её.</p>
+            </dd>
+        </dl>
+    </div>
+</section>
+<section aria-labelledby="mutationobserverinit"><h2 id="mutationobserverinit"><a href="#mutationobserverinit"><code>MutationObserverInit</code></a>
+</h2>
+    <div class="section-content"><p><code>MutationObserverInit</code> — объект, который может содержать следующие
+        свойства:</p>
+        <div class="notecard note" id="sect1">
+            <span
+                    data-md2="button"
+                    data-inscription="button"
+                    data-icon="home"
+            ></span>
+            <p><strong>Примечание:</strong> Так или иначе необходимо установить <code>true</code> для одного из
+                следующих свойств: <code>childList</code>, <code>attributes</code>, <code>characterData</code>. В
+                противном случае будет вызвана ошибка "An invalid or illegal string was specified"</p>
+        </div>
+        <figure class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>childList</code></td>
+                    <td>true, если необходимо наблюдать за добавлением или удалением дочерних элементов (Включая
+                        текстовые узлы (text nodes))
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>attributes</code></td>
+                    <td>true, если необходимо наблюдать за изменениями атрибутов целевого элемента.</td>
+                </tr>
+                <tr>
+                    <td><code>characterData</code></td>
+                    <td>true, если необходимо наблюдать за изменениями значения текстового содержимого целевого узла
+                        (текстовых узлов дочернего элемента).
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>subtree</code></td>
+                    <td>true, если необходимо наблюдать за потомками целевого элемента.</td>
+                </tr>
+                <tr>
+                    <td><code>attributeOldValue</code></td>
+                    <td>true, если необходимо возвращать предыдущее значение атрибута.</td>
+                </tr>
+                <tr>
+                    <td><code>characterDataOldValue</code></td>
+                    <td>true, если необходимо возвращать предыдущее значение Data атрибута.</td>
+                </tr>
+                <tr>
+                    <td><code>attributeFilter</code></td>
+                    <td>Устанавливает массив названий атрибутов (без указания пространства имён), если требуется
+                        наблюдать за изменениями конкретных атрибутов.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+</section>
+</body>
 </html>
