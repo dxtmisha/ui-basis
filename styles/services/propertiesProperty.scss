@@ -128,6 +128,8 @@ $designsAnimate: false !default;
     @include lineHeight(#{$value});
   } @else if ($name == 'text-align') {
     @include textAlign(#{$value});
+  } @else if ($name == 'text-overflow') {
+    @include textOverflow(#{$value});
   } @else if ($name == 'clamp') {
     @include clamp(#{$value});
   } @else if ($name == 'text-select-none') {

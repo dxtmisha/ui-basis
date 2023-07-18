@@ -29,9 +29,6 @@
 
 @mixin mixinButtonInscription {
   &__inscription {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     order: 4;
 
     transition-property: opacity;

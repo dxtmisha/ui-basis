@@ -37,7 +37,8 @@ export class ButtonProgress<
   ) {
     this.bind = Design.getBindStatic<any, P>(refs?.progress, {
       circular: true,
-      inverse: true
+      inverse: true,
+      delay: 128
     }, 'visible')
   }
 
