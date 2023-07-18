@@ -1,4 +1,4 @@
-import { h, VNode } from 'vue'
+import { computed, h, onBeforeMount, onUnmounted, ref, resolveComponent, VNode } from 'vue'
 
 import {
   Design,
@@ -14,6 +14,7 @@ import {
   MutationItemPropsValueType,
   MutationItemSlotsType
 } from './types'
+import { MutationItemControl, MutationItemControlInterface } from './MutationItemControl'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -28,13 +29,15 @@ export class MutationItemDesign<
   P extends MutationItemPropsValueType = MutationItemPropsValueType
 > extends Design<
   C,
-  HTMLElement,
+  HTMLDivElement,
   P,
   MutationItemInitInterface,
   Record<string, any>,
   MutationItemEmitsType,
   MutationItemSlotsType
 > {
+  protected item = ref<MutationItemControlInterface>()
+
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :components-variable
@@ -64,9 +67,12 @@ export class MutationItemDesign<
    * @protected
    */
   protected init (): MutationItemInitInterface {
+    onBeforeMount(() => this.collect())
+    onUnmounted(() => this.disconnect())
+
     return {
-      tag: 'div',
-      binds: {}
+      tag: this.tag,
+      binds: this.binds
     }
   }
 
@@ -78,11 +84,56 @@ export class MutationItemDesign<
    */
   protected initRender (): VNode {
     const setup = this.getSetup()
-    // const children: any[] = []
+    const component = resolveComponent(this.item.value?.name || 'div')
+    const children: any[] = []
+
+    if (this.item.value) {
+      children.push(h(
+        component,
+        this.item.value?.binds
+      ))
+    }
 
     return h('div', {
       ref: this.element,
       class: setup.classes.value.main
-    }/* , children */)
+    }, children)
+  }
+
+  protected tag = computed<string>(() => this.item.value?.name || 'div')
+
+  protected binds = computed<Record<string, any> | undefined>(
+    () => {
+      console.info(this.item.value?.binds?.value)
+      return this.item.value?.binds?.value
+    }
+  )
+
+  /**
+   * Beginning of initialization for tracking and searching the element
+   *
+   * Начало инициализации за слежения и поиска элемента
+   * @protected
+   */
+  protected collect (): this {
+    if (this.props.element) {
+      this.item.value = MutationItemControl.registration(this.props.element)
+    }
+
+    return this
+  }
+
+  /**
+   * Termination of observation of changes
+   *
+   * Прекращения наблюдения за изменения
+   * @protected
+   */
+  protected disconnect (): this {
+    if (this.props.element) {
+      MutationItemControl.disconnect(this.props.element)
+    }
+
+    return this
   }
 }

@@ -1,3 +1,4 @@
+import { ComputedRef } from 'vue'
 import {
   DesignPropsType,
   DesignPropsValueType
@@ -17,8 +18,8 @@ import { PropsMutationItemType } from './props'
 // Interface for describing what property setup returns
 // Интерфейс для описания, какое свойство возвращает setup
 export interface MutationItemInitInterface {
-  tag: string
-  binds: Record<string, any>
+  tag: ComputedRef<string>
+  binds: ComputedRef<Record<string, any> | undefined>
 }
 
 // Type describing incoming properties
@@ -33,6 +34,4 @@ export type MutationItemEmitsType = {
 
 // Type describing available slots
 // Тип, описывающий доступные слоты
-export type MutationItemSlotsType = DesignPropsType & {
-  default? (): any
-}
+export type MutationItemSlotsType = DesignPropsType

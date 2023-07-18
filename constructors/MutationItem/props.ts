@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+// import { PropType } from 'vue'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
@@ -20,11 +20,7 @@ export type PropsMutationItemType = {
   // :type
 } & {
   // Values
-  element?: Element
-
-  // Status
-
-  // Options
+  element: HTMLElement
 }
 
 // Default value for property
@@ -48,9 +44,5 @@ export const propsMutationItem = {
     // :prop
   },
   // Values
-  element: Element
-
-  // Status
-
-  // Options
+  element: HTMLElement
 }

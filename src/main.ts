@@ -9,7 +9,14 @@ import store from './store'
 import './main.scss'
 // import './assets/tailwind.css'
 
-createApp(App)
+import Md2Button from '../md2/Button/Md2Button.vue'
+import Md2Image from '../md2/Image/Md2Image.vue'
+
+const vueItem = createApp(App)
   .use(store)
   .use(router)
-  .mount('#app')
+
+vueItem.component('md2-button', Md2Button)
+vueItem.component('md2-image', Md2Image)
+
+vueItem.mount('#app')

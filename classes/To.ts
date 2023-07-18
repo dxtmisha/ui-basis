@@ -88,6 +88,44 @@ export class To {
   }
 
   /**
+   * Converts the input value to one of the available types
+   *
+   * Преобразует входное значение в один из доступных типов
+   * @param value входной значения
+   */
+  static transformation (value: any): any {
+    if (typeof value === 'string') {
+      value = value.trim()
+
+      if (value === 'true') {
+        return true
+      } else if (value === 'false') {
+        return false
+      } else if (value === 'undefined') {
+        return undefined
+      } else if (value === 'null') {
+        return null
+      } else if (value.match(/^[{[]/)) {
+        try {
+          return JSON.parse(value)
+        } catch (e) {
+        }
+      } else if (value.match(/^[0-9]+\.[0-9.]+$/)) {
+        return parseFloat(value)
+      } else if (value.match(/^[0-9]+$/)) {
+        return parseInt(value)
+      } else if (
+        value in window &&
+        typeof window[value as any] === 'function'
+      ) {
+        return window[value as any]
+      }
+    }
+
+    return value
+  }
+
+  /**
    * Method for processing a number
    *
    * Метод для обработки числа

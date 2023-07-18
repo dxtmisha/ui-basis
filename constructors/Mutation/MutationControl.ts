@@ -16,7 +16,9 @@ export interface MutationCollectInterface {
 export type MutationControlListType = MutationControlInterface[]
 export type MutationCollectListType = MutationCollectInterface[]
 
-const KEY_INIT = 'init'
+export const KEY_DESIGN = 'design'
+export const KEY_INIT = 'init'
+export const KEY_END = 'end'
 
 /**
  * A class for global monitoring of changes and searching for new elements to transform into components
@@ -156,6 +158,16 @@ export class MutationControl {
   }
 
   /**
+   * Returns the names of attributes for the label that the element has already been processed
+   *
+   * Возвращает названия атрибутов для метки, что элемент уже обработан
+   * @protected
+   */
+  protected static getAttributeEnd (): string {
+    return `data-${KEY_END}`
+  }
+
+  /**
    * A list of attributes to watch for
    *
    * Список атрибутов, за которыми надо следить
@@ -179,6 +191,16 @@ export class MutationControl {
     } else {
       return `*[${this.getAttributeByName(name)}]:not([${this.getAttributeInit()}])`
     }
+  }
+
+  /**
+   * Returns a selector for finding an element in processing
+   *
+   * Возвращает селектор для поиска элемента в обработке
+   * @protected
+   */
+  protected static getSelectorFindInit (): string {
+    return `*[${this.getAttributeInit()}]:not([${this.getAttributeEnd()}])`
   }
 
   /**
@@ -254,10 +276,12 @@ export class MutationControl {
   ): void {
     if (
       item &&
-      item.list.value.indexOf(element) === -1
+      item.list.value.indexOf(element) === -1 &&
+      !element.closest(this.getSelectorFindInit())
     ) {
       item.list.value.push(element)
-      element.dataset[KEY_INIT] = KEY_INIT
+      element.dataset[KEY_DESIGN] = item.code
+      element.dataset[KEY_INIT] = `${item.code}-${element.dataset[item.code]}`
 
       console.info('Mutation: add', element)
     }
