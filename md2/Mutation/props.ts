@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+// import { PropType } from 'vue'
 import {
   defaultsMutation,
   propsMutation,
@@ -25,13 +25,6 @@ export type PropsType = PropsMutationType & {
   // [!] Системная метка, нельзя удалять
   // :type
   // :type
-} & {
-  // Values
-  value?: string
-
-  // Status
-
-  // Options
 }
 
 // Default value for property
@@ -43,8 +36,7 @@ export const defaults = {
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  },
-  value: 'value'
+  }
 }
 
 // Constructor for property
@@ -57,9 +49,4 @@ export const props = {
     // :prop
     // :prop
   }
-  // Values
-
-  // Status
-
-  // Options
 }

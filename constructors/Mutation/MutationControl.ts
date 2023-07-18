@@ -235,7 +235,7 @@ export class MutationControl {
    * @param element element for deletion / элемент для удаления
    * @protected
    */
-  protected static async add (element: HTMLElement) {
+  protected static async add (element: HTMLElement): Promise<void> {
     this.addItem(this.getItemByElement(element), element)
     this.addList(element)
   }
@@ -284,7 +284,7 @@ export class MutationControl {
    * @param element element for deletion / элемент для удаления
    * @protected
    */
-  protected static remove (element: HTMLElement): void {
+  protected static async remove (element: HTMLElement): Promise<void> {
     this.removeItem(this.getItemByElement(element), element)
     this.removeList(element)
   }

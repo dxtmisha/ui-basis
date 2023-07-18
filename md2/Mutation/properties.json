@@ -1,1 +1,3 @@
-{"basic":"{d.mutation}"}
+{
+  "basic": "{d.mutation}"
+}

@@ -1,4 +1,4 @@
-import { computed, h, VNode } from 'vue'
+import { computed, VNode } from 'vue'
 
 import { DesignEmitsType, DesignSetupContextType } from '../../classes/Design'
 import { DesignComponents } from '../../classes/DesignComponents'

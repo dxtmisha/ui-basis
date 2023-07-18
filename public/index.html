@@ -13,124 +13,96 @@
 </noscript>
 <div id="app"></div>
 <!-- built files will be auto injected -->
-<section aria-labelledby="конструктор"><h2 id="конструктор"><a href="#конструктор">Конструктор</a></h2>
-    <div class="section-content">
-        <dl>
-            <dt id="mutationobserver_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
-                                               href="/en-US/docs/Web/API/MutationObserver/MutationObserver"><code>MutationObserver()</code>
-                <small>(en-US)</small></a></dt>
-            <dd>
-                <p>Создаёт и возвращает новый <code>MutationObserver</code>, который вызовет определённую колбэк-функцию
-                    при изменении в DOM.</p>
-            </dd>
-        </dl>
-    </div>
-</section>
-<section aria-labelledby="параметры"><h2 id="параметры"><a href="#параметры">Параметры</a></h2>
-    <div class="section-content">
-        <dl>
-            <dt id="callback"><code>callback</code></dt>
-            <dd>
-                <p>Вызывается при каждом изменении DOM-элемента. Наблюдатель вызывает данную функцию с двумя
-                    аргументами. Первым аргументом является массив объектов <a href="/en-US/docs/Web/API/MutationRecord"
-                                                                               class="only-in-en-us"
-                                                                               title="Currently only available in English (US)">MutationRecord
-                        <small>(en-US)<small></small></small></a>, вторым аргументом является экземпляр <code>MutationObserver.</code>
-                </p>
-            </dd>
-        </dl>
-    </div>
-</section>
-<section aria-labelledby="методы_экземпляра"><h2 id="методы_экземпляра"><a href="#методы_экземпляра">Методы
-    экземпляра</a></h2>
-    <div class="section-content">
-        <dl>
-            <dt id="disconnect_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
-                                         href="/en-US/docs/Web/API/MutationObserver/disconnect"><code>disconnect()</code>
-                <small>(en-US)</small></a></dt>
-            <dd>
-                <p>Прекращает получение уведомлений об изменении DOM-элемента экземпляром <code>MutationObserver</code>,
-                    до того момента пока не будет вызван метод <a href="#observe()">observe()</a>.</p>
-            </dd>
-            <dt id="observe_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
-                                      href="/en-US/docs/Web/API/MutationObserver/observe"><code>observe()</code> <small>(en-US)</small></a>
-            </dt>
-            <dd>
-                <p>Подписывает экземпляр <code>MutationObserver</code> на получение уведомлений о манипуляциях с
-                    DOM-элементом.</p>
-            </dd>
-            <dt id="takerecords_en-us"><a class="only-in-en-us" title="Currently only available in English (US)"
-                                          href="/en-US/docs/Web/API/MutationObserver/takeRecords"><code>takeRecords()</code>
-                <small>(en-US)</small></a></dt>
-            <dd>
-                <p>Возвращает текущий <a
-                        href="/ru/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> очереди
-                    экземпляра <code>MutationObserver</code>, затем очищает её.</p>
-            </dd>
-        </dl>
-    </div>
-</section>
-<section aria-labelledby="mutationobserverinit"><h2 id="mutationobserverinit"><a href="#mutationobserverinit"><code>MutationObserverInit</code></a>
-</h2>
-    <div class="section-content"><p><code>MutationObserverInit</code> — объект, который может содержать следующие
-        свойства:</p>
-        <div class="notecard note" id="sect1">
-            <span
-                    data-md2="button"
-                    data-inscription="button"
-                    data-icon="home"
-            ></span>
-            <p><strong>Примечание:</strong> Так или иначе необходимо установить <code>true</code> для одного из
-                следующих свойств: <code>childList</code>, <code>attributes</code>, <code>characterData</code>. В
-                противном случае будет вызвана ошибка "An invalid or illegal string was specified"</p>
-        </div>
-        <figure class="table-container">
-            <table>
-                <thead>
-                <tr>
-                    <th>Property</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><code>childList</code></td>
-                    <td>true, если необходимо наблюдать за добавлением или удалением дочерних элементов (Включая
-                        текстовые узлы (text nodes))
-                    </td>
-                </tr>
-                <tr>
-                    <td><code>attributes</code></td>
-                    <td>true, если необходимо наблюдать за изменениями атрибутов целевого элемента.</td>
-                </tr>
-                <tr>
-                    <td><code>characterData</code></td>
-                    <td>true, если необходимо наблюдать за изменениями значения текстового содержимого целевого узла
-                        (текстовых узлов дочернего элемента).
-                    </td>
-                </tr>
-                <tr>
-                    <td><code>subtree</code></td>
-                    <td>true, если необходимо наблюдать за потомками целевого элемента.</td>
-                </tr>
-                <tr>
-                    <td><code>attributeOldValue</code></td>
-                    <td>true, если необходимо возвращать предыдущее значение атрибута.</td>
-                </tr>
-                <tr>
-                    <td><code>characterDataOldValue</code></td>
-                    <td>true, если необходимо возвращать предыдущее значение Data атрибута.</td>
-                </tr>
-                <tr>
-                    <td><code>attributeFilter</code></td>
-                    <td>Устанавливает массив названий атрибутов (без указания пространства имён), если требуется
-                        наблюдать за изменениями конкретных атрибутов.
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </figure>
-    </div>
-</section>
+<h1 id="firstHeading" class="firstHeading mw-first-heading"><span
+        class="mw-page-title-main">Пушкин, Александр Сергеевич</span></h1>
+<h3><span id=".D0.9F.D1.80.D0.BE.D0.B8.D1.81.D1.85.D0.BE.D0.B6.D0.B4.D0.B5.D0.BD.D0.B8.D0.B5"></span><span
+        class="mw-headline" id="Происхождение">Происхождение</span></h3>
+<p>Происхождение Александра Сергеевича Пушкина идёт от разветвлённого нетитулованного дворянского рода <a
+        href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD%D1%8B" title="Пушкины">Пушкиных</a>, восходившего по
+    генеалогической легенде к «мужу честну» <a href="/wiki/%D0%A0%D0%B0%D1%82%D1%88%D0%B0" title="Ратша">Ратше</a><sup
+            id="cite_ref-Лукомский_8-0" class="reference"><a href="#cite_note-Лукомский-8">[6]</a></sup><sup
+            id="cite_ref-10" class="reference"><a href="#cite_note-10">[~ 3]</a></sup>.
+    <span
+            data-md2="button"
+            data-inscription="button"
+            data-icon="home"
+    ></span>Пушкин неоднократно писал о
+    своей родословной в стихах и <a href="/wiki/%D0%9F%D1%80%D0%BE%D0%B7%D0%B0" title="Проза">прозе</a>; он видел в
+    своих предках образец истинной «аристократии», древнего рода, честно служившего отечеству, но не снискавшего
+    благосклонности правителей и «гонимого». Не раз он обращался (в том числе в художественной форме) и к образу своего
+    прадеда по матери&nbsp;— африканца <a
+            href="/wiki/%D0%93%D0%B0%D0%BD%D0%BD%D0%B8%D0%B1%D0%B0%D0%BB,_%D0%90%D0%B1%D1%80%D0%B0%D0%BC_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+            title="Ганнибал, Абрам Петрович">Абрама Петровича Ганнибала</a>, ставшего слугой и воспитанником <a
+            href="/wiki/%D0%9F%D1%91%D1%82%D1%80_I" title="Пётр I">Петра I</a>, а потом военным инженером и
+    генералом<sup id="cite_ref-Старк_11-0" class="reference"><a href="#cite_note-Старк-11">[8]</a></sup>.
+</p>
+<p>В XVII веке предки Пушкина по отцу не поднимались выше придворного чина <a
+        href="/wiki/%D0%A1%D1%82%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA" title="Стольник">стольника</a>. Прадед, живший в
+    эпоху <a href="/wiki/%D0%9F%D1%91%D1%82%D1%80_I" title="Пётр I">Петра I</a>, <a
+            href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD,_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+            title="Пушкин, Александр Петрович">Александр Петрович Пушкин</a>, был сержантом гвардии и в 1725 году в
+    припадке безумия убил
+    <span
+            data-md2="button"
+            data-inscription="button"
+            data-icon="home"
+    ></span><a
+            href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD%D0%B0,_%D0%95%D0%B2%D0%B4%D0%BE%D0%BA%D0%B8%D1%8F_%D0%98%D0%B2%D0%B0%D0%BD%D0%BE%D0%B2%D0%BD%D0%B0"
+            title="Пушкина, Евдокия Ивановна">свою жену</a>; дед, <a
+            href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD,_%D0%9B%D0%B5%D0%B2_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+            title="Пушкин, Лев Александрович">Лев Александрович</a>, был полковником артиллерии, капитаном гвардии. Отец&nbsp;—
+    <a href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD,_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9B%D1%8C%D0%B2%D0%BE%D0%B2%D0%B8%D1%87"
+       title="Пушкин, Сергей Львович">Сергей Львович Пушкин</a> (1770—1848), светский острослов и поэт-любитель. Мать
+    Пушкина&nbsp;— <a
+            href="/wiki/%D0%93%D0%B0%D0%BD%D0%BD%D0%B8%D0%B1%D0%B0%D0%BB,_%D0%9D%D0%B0%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0_%D0%9E%D1%81%D0%B8%D0%BF%D0%BE%D0%B2%D0%BD%D0%B0"
+            class="mw-redirect" title="Ганнибал, Надежда Осиповна">Надежда Осиповна</a> (1775—1836), внучка Ганнибала.
+    Дядя по отцу, <a
+            href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD,_%D0%92%D0%B0%D1%81%D0%B8%D0%BB%D0%B8%D0%B9_%D0%9B%D1%8C%D0%B2%D0%BE%D0%B2%D0%B8%D1%87"
+            title="Пушкин, Василий Львович">Василий Львович</a> (1766—1830), был известным поэтом круга <a
+            href="/wiki/%D0%9A%D0%B0%D1%80%D0%B0%D0%BC%D0%B7%D0%B8%D0%BD,_%D0%9D%D0%B8%D0%BA%D0%BE%D0%BB%D0%B0%D0%B9_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
+            title="Карамзин, Николай Михайлович">Карамзина</a>. Из детей Сергея Львовича и Надежды Осиповны, кроме
+    Александра, выжили <a
+            href="/wiki/%D0%9F%D0%B0%D0%B2%D0%BB%D0%B8%D1%89%D0%B5%D0%B2%D0%B0,_%D0%9E%D0%BB%D1%8C%D0%B3%D0%B0_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B5%D0%B2%D0%BD%D0%B0"
+            title="Павлищева, Ольга Сергеевна">дочь Ольга</a> (в замужестве Павлищева, 1797—1868) и <a
+            href="/wiki/%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD,_%D0%9B%D0%B5%D0%B2_%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B5%D0%B2%D0%B8%D1%87"
+            title="Пушкин, Лев Сергеевич">сын Лев</a> (1805—1852)<sup id="cite_ref-_983ffe9e55961ffd_12-0"
+                                                                      class="reference"><a
+            href="#cite_note-_983ffe9e55961ffd-12">[9]</a></sup>.
+</p>
+<h3><span id=".D0.94.D0.B5.D1.82.D1.81.D1.82.D0.B2.D0.BE"></span><span class="mw-headline" id="Детство">Детство</span>
+</h3>
+<p>Пушкин родился <abbr title="по юлианскому календарю">26&nbsp;мая</abbr> (<a href="/wiki/6_%D0%B8%D1%8E%D0%BD%D1%8F"
+                                                                               title="6 июня">6&nbsp;июня</a>)&nbsp;<a
+        href="/wiki/1799_%D0%B3%D0%BE%D0%B4" title="1799 год">1799</a> г. в <a
+        href="/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0" title="Москва">Москве</a>, в <a
+        href="/wiki/%D0%9D%D0%B5%D0%BC%D0%B5%D1%86%D0%BA%D0%B0%D1%8F_%D1%81%D0%BB%D0%BE%D0%B1%D0%BE%D0%B4%D0%B0"
+        title="Немецкая слобода">Немецкой слободе</a><sup id="cite_ref-НЖ_13-0" class="reference"><a
+        href="#cite_note-НЖ-13">[10]</a></sup><sup id="cite_ref-14" class="reference"><a
+        href="#cite_note-14">[11]</a></sup><sup id="cite_ref-NKJ201709_15-0" class="reference"><a
+        href="#cite_note-NKJ201709-15">[12]</a></sup>. В метрической книге <a
+        href="/wiki/%D0%91%D0%BE%D0%B3%D0%BE%D1%8F%D0%B2%D0%BB%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9_%D1%81%D0%BE%D0%B1%D0%BE%D1%80_%D0%B2_%D0%95%D0%BB%D0%BE%D1%85%D0%BE%D0%B2%D0%B5"
+        title="Богоявленский собор в Елохове">церкви Богоявления в Елохове</a> на дату <abbr
+        title="по юлианскому календарю">8</abbr>&nbsp;<a href="/wiki/19_%D0%B8%D1%8E%D0%BD%D1%8F" title="19 июня">(19)&nbsp;июня</a>&nbsp;<a
+        href="/wiki/1799_%D0%B3%D0%BE%D0%B4" title="1799 год">1799 года</a><sup id="cite_ref-НЖ_13-1" class="reference"><a
+        href="#cite_note-НЖ-13">[10]</a></sup>, в числе прочих, приходится такая запись:
+</p>
+<p>Летом родители увезли сына в <a
+        href="/wiki/%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5_(%D0%BC%D1%83%D0%B7%D0%B5%D0%B9-%D0%B7%D0%B0%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA)"
+        title="Михайловское (музей-заповедник)">Михайловское</a>, а затем до весны 1801 года семья жила в Петербурге, у
+    тёщи&nbsp;— Марии Алексеевны Ганнибал (1745—1818, урождённой <i>Пушкиной</i><sup id="cite_ref-18" class="reference"><a
+            href="#cite_note-18">[14]</a></sup>, из другой ветви рода). В этот период вполне могла состояться часто
+    упоминаемая встреча c <a href="/wiki/%D0%9F%D0%B0%D0%B2%D0%B5%D0%BB_I" title="Павел I">Павлом I</a>, о которой
+    Пушкин пишет в строках «Видел я трёх царей…»<sup id="cite_ref-19" class="reference"><a href="#cite_note-19">[15]</a></sup>
+</p>
+<p>Летние месяцы 1805—1810&nbsp;годов будущий поэт обычно проводил у своей бабушки по матери&nbsp;— той же Марии
+    Алексеевны, в подмосковном селе <a
+            href="/wiki/%D0%97%D0%B0%D1%85%D0%B0%D1%80%D0%BE%D0%B2%D0%BE_(%D0%9E%D0%B4%D0%B8%D0%BD%D1%86%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D1%80%D0%B0%D0%B9%D0%BE%D0%BD)"
+            title="Захарово (Одинцовский район)">Захарове</a>, близ <a
+            href="/wiki/%D0%97%D0%B2%D0%B5%D0%BD%D0%B8%D0%B3%D0%BE%D1%80%D0%BE%D0%B4" title="Звенигород">Звенигорода</a>.
+    Ранние детские впечатления отразились в первых опытах пушкинских поэм, написанных несколько позже («<a
+            href="https://ru.wikisource.org/wiki/ru:%D0%9C%D0%BE%D0%BD%D0%B0%D1%85_(%D0%9F%D1%83%D1%88%D0%BA%D0%B8%D0%BD)"
+            class="extiw" title="s:ru:Монах (Пушкин)">Монах</a>», 1813; «Бова», 1814), в лицейских стихотворениях
+    «Послание к Юдину» (1815), «Сон» (1816). Бабушка писала о своём внуке следующее:
+</p>
 </body>
 </html>

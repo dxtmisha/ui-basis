@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
-  defineSlots,
+  // defineSlots,
   defineOptions
 } from 'vue'
 
 import { MutationDesign } from '../../constructors/Mutation/MutationDesign'
-import { MutationEmitsType, MutationSlotsType } from '../../constructors/Mutation/types'
+import { MutationEmitsType/* , MutationSlotsType */ } from '../../constructors/Mutation/types'
 
 import { defaults, PropsType, subClasses } from './props'
 
@@ -22,7 +22,7 @@ defineOptions({
 const props = withDefaults(defineProps<PropsType>(), defaults)
 const emit = defineEmits<MutationEmitsType>()
 
-defineSlots<MutationSlotsType>()
+// defineSlots<MutationSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей

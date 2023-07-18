@@ -97,14 +97,16 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param name name of the component / названия компонента
    * @param props property of the component / свойство компонента
    * @param children sub-elements of the component / под элементы компонента
+   * @param index the name of the key / названия ключа
    */
   render<K extends keyof M> (
     item: any[],
     name: K,
     props?: M[K],
-    children?: any[]
+    children?: any[],
+    index?: string
   ): this {
-    item.push(...this.renderItem(name, props, children))
+    item.push(...this.renderItem(name, props, children, index))
 
     return this
   }
@@ -116,14 +118,16 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param name name of the component / названия компонента
    * @param props property of the component / свойство компонента
    * @param children sub-elements of the component / под элементы компонента
+   * @param index the name of the key / названия ключа
    */
   renderItem<K extends keyof M> (
     name: K,
     props?: M[K],
-    children?: any[]
+    children?: any[],
+    index?: string
   ): VNode[] {
     if (this.is(name)) {
-      return [this.getNode(this.get(name), props, children, name as string)]
+      return [this.getNode(this.get(name), props, children, index || (name as string))]
     }
 
     return []

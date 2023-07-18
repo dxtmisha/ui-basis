@@ -8,7 +8,7 @@ import {
 import { Design } from '../../../classes/Design'
 /* :basic.once.end */
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
-// :constructor.once import { ConstructorEmitsType, ConstructorSlotsType } from '../../../constructors/Constructor/types'
+// :constructor.once import { /* ConstructorEmitsType,  */ConstructorSlotsType } from '../../../constructors/Constructor/types'
 
 import { defaults, PropsType, subClasses } from './props'
 
@@ -21,13 +21,13 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<PropsType>(), defaults)
-const emit = defineEmits/* :constructor.once <ConstructorEmitsType> */(/* :basic.once */[]/* :basic.once.end */)
+// const emit = defineEmits/* :constructor.once <ConstructorEmitsType> */(/* :basic.once */[]/* :basic.once.end */)
 
 defineSlots/* :constructor.once <ConstructorSlotsType> */()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new /* :constructor.once Constructor */Design<typeof subClasses>(props, emit)
+const design = new /* :constructor.once Constructor */Design<typeof subClasses>(props/* , emit */)
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте

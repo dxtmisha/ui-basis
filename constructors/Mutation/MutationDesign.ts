@@ -1,4 +1,5 @@
 import { h, onBeforeMount, onUnmounted, ref, VNode, watch } from 'vue'
+import { getIdElement } from '../../functions/element'
 
 import {
   Design,
@@ -85,19 +86,21 @@ export class MutationDesign<
    * @protected
    */
   protected initRender (): VNode {
-    const setup = this.getSetup()
     const children: any[] = []
 
     this.list.value?.forEach(element => {
-      console.log('element', element)
-      this.components.render(children, 'mutationItem', { element })
+      this.components.render(
+        children,
+        'mutationItem',
+        { element },
+        undefined,
+        getIdElement(element)
+      )
     })
-
-    console.log('children', this.list.value, children, this.components.is('mutationItem'))
 
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main
+      class: this.setupItem?.classes.value.main
     }, children)
   }
 
