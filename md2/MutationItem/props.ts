@@ -1,4 +1,3 @@
-import { PropType } from 'vue'
 import {
   defaultsMutationItem,
   propsMutationItem,
@@ -49,9 +48,4 @@ export const props = {
     // :prop
     // :prop
   }
-  // Values
-
-  // Status
-
-  // Options
 }

@@ -1,4 +1,3 @@
-// import { PropType } from 'vue'
 import {
   defaultsMutation,
   propsMutation,

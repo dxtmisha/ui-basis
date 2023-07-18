@@ -92,8 +92,9 @@ export class To {
    *
    * Преобразует входное значение в один из доступных типов
    * @param value входной значения
+   * @param isFunction преобразовывать в функция
    */
-  static transformation (value: any): any {
+  static transformation (value: any, isFunction = true): any {
     if (typeof value === 'string') {
       value = value.trim()
 
@@ -115,6 +116,7 @@ export class To {
       } else if (value.match(/^[0-9]+$/)) {
         return parseInt(value)
       } else if (
+        isFunction &&
         value in window &&
         typeof window[value as any] === 'function'
       ) {

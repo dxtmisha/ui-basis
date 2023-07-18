@@ -102,7 +102,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
   render<K extends keyof M> (
     item: any[],
     name: K,
-    props?: M[K],
+    props?: M[K] & Record<string, any>,
     children?: any[],
     index?: string
   ): this {
@@ -122,7 +122,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    */
   renderItem<K extends keyof M> (
     name: K,
-    props?: M[K],
+    props?: M[K] & Record<string, any>,
     children?: any[],
     index?: string
   ): VNode[] {

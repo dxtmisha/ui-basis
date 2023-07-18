@@ -29,6 +29,9 @@
 
 @mixin mixinButtonInscription {
   &__inscription {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     order: 4;
 
     transition-property: opacity;
@@ -54,6 +57,7 @@
 @mixin mixinButtonProgress {
   &__progress.#{n('?progress--visible')} ~ * {
     opacity: v('??color-opacity', 0);
+    cursor: default;
   }
 }
 

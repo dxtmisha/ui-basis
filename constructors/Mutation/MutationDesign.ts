@@ -17,6 +17,7 @@ import {
   MutationSlotsType
 } from './types'
 import { MutationControl, MutationControlInterface } from './MutationControl'
+import { MutationItemControlInterface } from '../MutationItem/MutationItemControl'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -92,7 +93,10 @@ export class MutationDesign<
       this.components.render(
         children,
         'mutationItem',
-        { element },
+        {
+          element,
+          onLoad: (item: MutationItemControlInterface) => this.emit('load', item)
+        },
         undefined,
         getIdElement(element)
       )

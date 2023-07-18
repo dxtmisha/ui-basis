@@ -9,6 +9,7 @@ import { PropsMutationType } from './props'
 import { PropsMutationItemType } from '../MutationItem/props'
 
 import { MutationControlInterface } from './MutationControl'
+import { MutationItemControlInterface } from '../MutationItem/MutationItemControl'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -39,7 +40,7 @@ export type MutationPropsValueType = DesignPropsValueType<PropsMutationType>
 // Type describing available events
 // Тип, описывающий доступные события
 export type MutationEmitsType = {
-  load: [name: string]
+  load: [item: MutationItemControlInterface]
 }
 
 // Type describing available slots

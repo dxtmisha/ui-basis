@@ -48,9 +48,8 @@ export class MutationControl {
       }
 
       this.items.push(newItem)
-
       this.addList()
-      requestAnimationFrame(() => this.start())
+      this.start()
 
       return newItem
     }
@@ -128,10 +127,11 @@ export class MutationControl {
    *
    * Возвращает объект с информацией по элементу
    * @param element element for verification / элемент для проверки
+   * @param init searching for initialized elements / искать инициализированных элементов
    * @protected
    */
-  protected static getItemByElement (element: Node | HTMLElement): MutationControlInterface | undefined {
-    return 'dataset' in element && !(KEY_INIT in element.dataset)
+  protected static getItemByElement (element: Node | HTMLElement, init = false): MutationControlInterface | undefined {
+    return 'dataset' in element && (init || !(KEY_INIT in element.dataset))
       ? this.items.find(item => item.code in element.dataset)
       : undefined
   }
@@ -212,8 +212,8 @@ export class MutationControl {
    */
   protected static callback (record: MutationRecord[]) {
     record.forEach(item => {
-      item.addedNodes.forEach(node => this.add(node as HTMLElement))
       item.removedNodes.forEach(node => this.remove(node as HTMLElement))
+      item.addedNodes.forEach(node => this.add(node as HTMLElement))
     })
   }
 
@@ -283,7 +283,9 @@ export class MutationControl {
       element.dataset[KEY_DESIGN] = item.code
       element.dataset[KEY_INIT] = `${item.code}-${element.dataset[item.code]}`
 
-      console.info('Mutation: add', element)
+      if (process.env.NODE_ENV !== 'production') {
+        console.info('Mutation: add', element)
+      }
     }
   }
 
@@ -309,7 +311,7 @@ export class MutationControl {
    * @protected
    */
   protected static async remove (element: HTMLElement): Promise<void> {
-    this.removeItem(this.getItemByElement(element), element)
+    this.removeItem(this.getItemByElement(element, true), element)
     this.removeList(element)
   }
 
@@ -331,7 +333,9 @@ export class MutationControl {
       if (key !== -1) {
         item.list.value.splice(key, 1)
 
-        console.info('Mutation: remove', element)
+        if (process.env.NODE_ENV !== 'production') {
+          console.info('Mutation: remove', element)
+        }
       }
     }
   }

@@ -1,10 +1,11 @@
-import { ComputedRef } from 'vue'
+import { Ref } from 'vue'
 import {
   DesignPropsType,
   DesignPropsValueType
 } from '../../classes/Design'
 
 import { PropsMutationItemType } from './props'
+import { MutationItemControlInterface } from './MutationItemControl'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -18,8 +19,8 @@ import { PropsMutationItemType } from './props'
 // Interface for describing what property setup returns
 // Интерфейс для описания, какое свойство возвращает setup
 export interface MutationItemInitInterface {
-  tag: ComputedRef<string>
-  binds: ComputedRef<Record<string, any> | undefined>
+  item: Ref<MutationItemControlInterface | undefined>
+  children?: Record<string, any>
 }
 
 // Type describing incoming properties
@@ -29,7 +30,7 @@ export type MutationItemPropsValueType = DesignPropsValueType<PropsMutationItemT
 // Type describing available events
 // Тип, описывающий доступные события
 export type MutationItemEmitsType = {
-  load: [name: string]
+  load: [item: MutationItemControlInterface]
 }
 
 // Type describing available slots

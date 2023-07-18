@@ -139,7 +139,6 @@
     <md2-button text inscription="lg" rounded="lg"/>
     <md2-button text inscription="full" rounded="full"/>
   </div>
-  <md2-mutation/>
 </template>
 
 <script lang="ts">
@@ -147,7 +146,6 @@ import { defineComponent, ref } from 'vue'
 
 import Md2Button from '../../md2/Button/Md2Button.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
-import Md2Mutation from '../../md2/Mutation/Md2Mutation.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -155,7 +153,6 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
-    Md2Mutation,
     Md2Button
   },
   setup () {

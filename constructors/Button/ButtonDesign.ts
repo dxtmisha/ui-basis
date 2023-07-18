@@ -26,7 +26,6 @@ import { ButtonInscription } from './ButtonInscription'
 // :components-import
 import { ButtonIcon } from './ButtonIcon'
 import { ButtonProgress } from './ButtonProgress'
-
 // :components-import
 
 /**
@@ -54,7 +53,6 @@ export class ButtonDesign<
   // :components-variable
   protected readonly icon: ButtonIcon
   protected readonly progress: ButtonProgress
-
   // :components-variable
 
   /**

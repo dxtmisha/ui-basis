@@ -1,9 +1,7 @@
-import { computed, h, onBeforeMount, onUnmounted, ref, resolveComponent, VNode } from 'vue'
+import { h, onBeforeMount, onUnmounted, ref, resolveComponent, Teleport, VNode, withCtx } from 'vue'
+import { forEach } from '../../functions/data'
 
-import {
-  Design,
-  DesignSetupContextEmitType
-} from '../../classes/Design'
+import { Design } from '../../classes/Design'
 import { ClassesSubClassesType } from '../../classes/DesignClasses'
 
 import { subClassesMutationItem } from './props'
@@ -14,7 +12,12 @@ import {
   MutationItemPropsValueType,
   MutationItemSlotsType
 } from './types'
-import { MutationItemControl, MutationItemControlInterface } from './MutationItemControl'
+
+import {
+  MutationItemChildrenListType,
+  MutationItemControl,
+  MutationItemControlInterface
+} from './MutationItemControl'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -37,28 +40,12 @@ export class MutationItemDesign<
   MutationItemSlotsType
 > {
   protected item = ref<MutationItemControlInterface>()
+  protected children = ref<Record<string, any> | undefined>(undefined)
 
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :components-variable
   // :components-variable
-
-  /**
-   * Constructor
-   * @param props properties / свойства
-   * @param contextEmit additional property / дополнительное свойство
-   */
-  constructor (
-    protected readonly props: P,
-    contextEmit?: DesignSetupContextEmitType<MutationItemEmitsType, MutationItemSlotsType>
-  ) {
-    super(props, contextEmit)
-
-    // [!] System label, cannot be deleted
-    // [!] Системная метка, нельзя удалять
-    // :components-init
-    // :components-init
-  }
 
   /**
    * Method for generating additional properties
@@ -71,8 +58,8 @@ export class MutationItemDesign<
     onUnmounted(() => this.disconnect())
 
     return {
-      tag: this.tag,
-      binds: this.binds
+      item: this.item,
+      children: this.children
     }
   }
 
@@ -83,31 +70,52 @@ export class MutationItemDesign<
    * @protected
    */
   protected initRender (): VNode {
-    const setup = this.getSetup()
-    const component = resolveComponent(this.item.value?.name || 'div')
     const children: any[] = []
 
     if (this.item.value) {
       children.push(h(
-        component,
-        this.item.value?.binds
+        Teleport,
+        { to: `#${this.item.value.id}` },
+        [h(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          resolveComponent(this.item.value.name),
+          this.item.value.binds,
+          this.children.value
+        )]
       ))
     }
 
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main
+      class: this.setupItem?.classes.value.main
     }, children)
   }
 
-  protected tag = computed<string>(() => this.item.value?.name || 'div')
+  /**
+   * A method for generating an object for working with slots
+   *
+   * Метод для генерации объекта для работы со слотами
+   * @param children an object with descendants / объект с потомками
+   * @protected
+   */
+  protected initChildren (children?: Record<string, MutationItemChildrenListType>) {
+    if (children) {
+      const data: Record<string, any> = {}
 
-  protected binds = computed<Record<string, any> | undefined>(
-    () => {
-      console.info(this.item.value?.binds?.value)
-      return this.item.value?.binds?.value
+      forEach(children, (item, index) => {
+        data[index] = withCtx(() => {
+          return forEach(item, child => {
+            return typeof child === 'string' ? child : h(child.tag, child?.attributes)
+          })
+        })
+      })
+
+      return data
     }
-  )
+
+    return undefined
+  }
 
   /**
    * Beginning of initialization for tracking and searching the element
@@ -118,6 +126,9 @@ export class MutationItemDesign<
   protected collect (): this {
     if (this.props.element) {
       this.item.value = MutationItemControl.registration(this.props.element)
+      this.children.value = this.initChildren(this.item.value?.children)
+
+      this.emit('load', this.item.value)
     }
 
     return this

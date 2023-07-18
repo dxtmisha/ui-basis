@@ -19,6 +19,20 @@ export function getElement (element?: ElementOrStringType): ElementOrUndefinedTy
 }
 
 /**
+ * Получает список атрибуты у элемента
+ * @param element
+ */
+export function getAttributes (element: HTMLElement): Record<string, string | null> {
+  const attributes: Record<string, string | null> = {}
+
+  for (const attribute of element.attributes) {
+    attributes[attribute.name] = attribute?.value || attribute?.textContent
+  }
+
+  return attributes
+}
+
+/**
  * Counter generator of ID number of element
  *
  * Счетчик генератор номера ID элемента

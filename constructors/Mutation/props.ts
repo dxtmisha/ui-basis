@@ -1,5 +1,3 @@
-// import { PropType } from 'vue'
-
 // Type describing subclasses
 // Тип, описывающий подклассы
 export const subClassesMutation = {

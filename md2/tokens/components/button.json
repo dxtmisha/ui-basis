@@ -37,7 +37,8 @@
   "disabled": {
     "color": "{sys.palette.disabled}",
     "color-opacity": "{sys.opacity.surface.disabled}",
-    "box-shadow": "none"
+    "box-shadow": "none",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
   },
   "contained": {
     "color": "{sys.palette.onPrimary}",

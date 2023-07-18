@@ -1,16 +1,23 @@
 import { Ref, ref } from 'vue'
-import { forEach, isFilled } from '../../functions/data'
-import { getIdElement } from '../../functions/element'
+import { forEach } from '../../functions/data'
+import { getAttributes, getIdElement } from '../../functions/element'
 import { To } from '../../classes/To'
 
 import { KEY_DESIGN, KEY_END, KEY_INIT } from '../Mutation/MutationControl'
+
+export interface MutationItemChildrenInterface {
+  tag: string
+  attributes?: Record<string, string | null>
+}
+
+export type MutationItemChildrenListType = (MutationItemChildrenInterface | string)[]
 
 export interface MutationItemControlInterface {
   id: string
   name: string
   element: HTMLElement
   binds: Ref<Record<string, any>>
-  children: Node[]
+  children?: Record<string, MutationItemChildrenListType>
 }
 
 export type MutationItemControlListType = MutationItemControlInterface[]
@@ -47,15 +54,15 @@ export class MutationItemControl {
         name: element.dataset?.init || element.localName,
         element,
         binds: ref(this.getBinds(element)),
-        children: [...element.childNodes]
+        children: this.getChildren(element)
       }
 
+      this.removeChildren(element)
       this.items.push(newItem)
 
-      this.removeChildren(element)
-      requestAnimationFrame(() => this.start())
-
       element.dataset[KEY_END] = 'end'
+
+      requestAnimationFrame(() => this.start())
 
       return newItem
     }
@@ -140,11 +147,66 @@ export class MutationItemControl {
     const data: Record<string, any> = {}
 
     forEach<string | undefined, string, void>(element.dataset, (value, index) => {
-      if (
-        isFilled(value) &&
-        NONE_KEYS.indexOf(index) === -1
-      ) {
-        data[index] = To.transformation(value)
+      if (NONE_KEYS.indexOf(index) === -1) {
+        data[index] = To.transformation(value, !!index.match(/^on/i))
+      }
+    })
+
+    return data
+  }
+
+  /**
+   * Gets the list of available slots
+   *
+   * Получает список доступных слотов
+   * @param element input value / входное значение
+   * @protected
+   */
+  protected static getChildren (element: HTMLElement) {
+    if (element.innerHTML.trim()) {
+      const data: Record<string, MutationItemChildrenListType> = {}
+      let isSlot
+
+      for (const item of element.children) {
+        const name = (item as HTMLElement)?.dataset?.slot
+
+        if (name) {
+          isSlot = true
+          data[name] = this.getChildrenItem(item)
+        }
+      }
+
+      if (isSlot) {
+        return data
+      } else {
+        return { default: this.getChildrenItem(element) }
+      }
+    } else {
+      return undefined
+    }
+  }
+
+  /**
+   * A class for getting the list of descendants
+   *
+   * Класс для получения списка потомков
+   * @param item an element for checking / элемент для проверки
+   * @protected
+   */
+  protected static getChildrenItem (item: Node) {
+    const data: MutationItemChildrenListType = []
+
+    item.childNodes.forEach(child => {
+      if (child instanceof HTMLElement) {
+        data.push({
+          tag: child.nodeName,
+          attributes: {
+            ...getAttributes(child),
+            innerHTML: child?.innerHTML
+          }
+        })
+      } else if (child?.textContent) {
+        data.push(child?.textContent)
       }
     })
 
