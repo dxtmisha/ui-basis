@@ -26,6 +26,7 @@ import { ButtonInscription } from './ButtonInscription'
 // :components-import
 import { ButtonIcon } from './ButtonIcon'
 import { ButtonProgress } from './ButtonProgress'
+
 // :components-import
 
 /**
@@ -53,6 +54,7 @@ export class ButtonDesign<
   // :components-variable
   protected readonly icon: ButtonIcon
   protected readonly progress: ButtonProgress
+
   // :components-variable
 
   /**
@@ -69,7 +71,7 @@ export class ButtonDesign<
     this.enabled = new UseEnabled(this.props)
 
     this.event = new ButtonEvent(this.emit, this.props, this.enabled)
-    this.inscription = new ButtonInscription(this.slots, this.props)
+    this.inscription = new ButtonInscription(this.components, this.slots, this.props)
 
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять

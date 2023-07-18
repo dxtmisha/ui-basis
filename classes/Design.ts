@@ -426,7 +426,7 @@ export class Design<
 
       if (process.env.NODE_ENV !== 'production') {
         // onMounted(() => console.warn(`Mounted: ${this.getName()}`))
-        onUpdated(() => console.warn(`Updated: ${this.getName()}`))
+        onUpdated(() => console.warn(`Updated: ${this.getName()}`, this.element?.value))
       }
     }
   }

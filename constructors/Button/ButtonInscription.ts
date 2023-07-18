@@ -1,23 +1,29 @@
 import { computed, h, VNode } from 'vue'
 
 import { DesignEmitsType, DesignSetupContextType } from '../../classes/Design'
+import { DesignComponents } from '../../classes/DesignComponents'
 import { ClassesItemType } from '../../classes/DesignClasses'
 
-import { ButtonPropsValueType, ButtonSlotsType } from './types'
+import { ButtonComponentsInterface, ButtonPropsValueType, ButtonSlotsType } from './types'
 
 /**
  * Class for working with text on the button
  *
  * Класс для работы с текстом на кнопке
  */
-export class ButtonInscription<S extends ButtonSlotsType = ButtonSlotsType> {
+export class ButtonInscription<
+  C extends ButtonComponentsInterface = ButtonComponentsInterface,
+  S extends ButtonSlotsType = ButtonSlotsType
+> {
   /**
    * Constructor
+   * @param components object for working with components / объект для работы с компонентами
    * @param slots object for working with slots / объект для работы со слотами
    * @param props input property / входное свойство
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
+    protected readonly components: DesignComponents<C>,
     protected readonly slots: DesignSetupContextType<DesignEmitsType, S>['slots'],
     protected readonly props: ButtonPropsValueType
   ) {
@@ -51,7 +57,9 @@ export class ButtonInscription<S extends ButtonSlotsType = ButtonSlotsType> {
         children.push(this.slots.default?.())
       }
 
-      elements.push(h('span', { class: className }, children))
+      elements.push(
+        this.components.getNode('span', { class: className }, children, 'inscription')
+      )
     }
 
     return elements

@@ -31,6 +31,64 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
   }
 
   /**
+   * Getting cached, immutable data
+   *
+   * Получение кешированных, неизменяемых данных
+   * @param name name of the component / названия компонента
+   * @param props property of the component / свойство компонента
+   * @param children sub-elements of the component / под элементы компонента
+   * @param index the name of the key / названия ключа
+   */
+  getNode (
+    name: string,
+    props?: Record<string, any>,
+    children?: any[],
+    index?: string
+  ): VNode {
+    const code = this.getIndex(name, props, index)
+
+    return h(name, { key: code, ...props }, children)
+  }
+
+  /**
+   * Returns or generates a new element
+   *
+   * Возвращает или генерирует новый элемент
+   * @param name name of the component / названия компонента
+   * @param props property of the component / свойство компонента
+   * @param index the name of the key / названия ключа
+   * @protected
+   */
+  protected getIndex (
+    name: string,
+    props?: Record<string, any>,
+    index?: string
+  ) {
+    const className = this.getClassName(props)
+
+    if (index && className) {
+      return `${index}.${className}`
+    } else if (index) {
+      return index
+    } else if (className) {
+      return className
+    } else {
+      return name
+    }
+  }
+
+  /**
+   * Returns the name of the class from the property
+   *
+   * Возвращает название класса из свойства
+   * @param props property of the component / свойство компонента
+   * @protected
+   */
+  protected getClassName (props?: Record<string, any>): string | undefined {
+    return props && 'class' in props && typeof props.class === 'string' ? props.class : undefined
+  }
+
+  /**
    * Rendering the component by its name
    *
    * Рендеринг компонента по его имени
@@ -65,7 +123,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
     children?: any[]
   ): VNode[] {
     if (this.is(name)) {
-      return [h(this.get(name), props, children)]
+      return [this.getNode(this.get(name), props, children, name as string)]
     }
 
     return []
