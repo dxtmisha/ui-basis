@@ -29,7 +29,7 @@ export type PropsButtonType = {
   /* :type.adaptive.none */
 } & {
   // Values
-  inscription?: string
+  label?: string
   icon?: string | PropsIconType
   iconTrailing?: string | PropsIconType
   to?: string
@@ -76,7 +76,7 @@ export const propsButton = {
     // :prop
   },
   // Values
-  inscription: [Number, String],
+  label: [Number, String],
   icon: [Object, String],
   iconTrailing: [Object, String],
   to: String,

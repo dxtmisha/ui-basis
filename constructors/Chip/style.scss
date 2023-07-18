@@ -1,0 +1,12 @@
+@import "../../styles/properties";
+
+@mixin initChipDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinChip;
+    @content;
+  }
+}
+
+@mixin mixinChip {
+
+}

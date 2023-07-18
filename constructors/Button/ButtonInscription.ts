@@ -34,7 +34,7 @@ export class ButtonInscription<
    *
    * Проверка, доступен ли текст
    */
-  readonly isInscription = computed<boolean>(() => !!this.props.inscription || 'default' in this.slots)
+  readonly isInscription = computed<boolean>(() => !!this.props.label || 'default' in this.slots)
 
   /**
    * A method for rendering
@@ -49,8 +49,8 @@ export class ButtonInscription<
     if (this.isInscription.value) {
       const children: any[] = []
 
-      if (this.props.inscription) {
-        children.push(this.props.inscription)
+      if (this.props.label) {
+        children.push(this.props.label)
       }
 
       if (this.slots?.default) {
