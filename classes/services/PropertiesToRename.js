@@ -101,7 +101,8 @@ module.exports = class PropertiesToRename {
       item,
       name,
       parents,
-      design
+      design,
+      component
     }) => {
       switch (item?.[keyVariable]) {
         case 'component':
@@ -121,6 +122,9 @@ module.exports = class PropertiesToRename {
           break
         case 'animate':
           item[key] = this.__toNameForAnimate(parents, item, name)
+          break
+        case 'root':
+          item[key] = this.__toNameForRoot(name, design, component)
           break
       }
     })
@@ -345,5 +349,17 @@ module.exports = class PropertiesToRename {
     } else {
       return `${this.__getParentsName(parents).join('-')}-${name}`
     }
+  }
+
+  /**
+   * Модификация имя для тип root
+   * @param {string} name base property name / базовое название свойства
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
+   * @return {string}
+   * @private
+   */
+  __toNameForRoot (name, design, component) {
+    return `${PropertiesTool.toFullForName(name, design, component)} &`
   }
 }

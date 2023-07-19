@@ -1,0 +1,10 @@
+{
+  "normal": "{ref.shade.80}",
+  "container": "{ref.shade.30}",
+  "on": "{ref.shade.20}",
+  "onContainer": "{ref.shade.90}",
+  "fixed": "{ref.shade.90}",
+  "fixedDim": "{ref.shade.80}",
+  "onFixed": "{ref.shade.10}",
+  "onFixedVariant": "{ref.shade.30}"
+}

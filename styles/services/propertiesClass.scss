@@ -41,3 +41,17 @@
     }
   }
 }
+
+/// Mixin for generating an element root
+///
+/// Миксин для генерации root элемента
+/// @param {Map} $property
+@mixin initAtRoot($property) {
+  @if ($property != null) {
+    $name: map.get($property, 'name');
+
+    @at-root #{$name} {
+      @content;
+    }
+  }
+}

@@ -182,20 +182,62 @@ module.exports = class PropertiesPalette {
     return palettes[className].value
   }
 
+  /**
+   * Adding a default value
+   *
+   * Добавление значения по умолчанию
+   * @param palette list of classes / список классов
+   * @param classItem list of available values for the class / список доступных значений у класса
+   * @private
+   */
   __addDefault (palette, classItem) {
-    const keyName = PropertiesTool.getKeyName()
-    const keyDefault = PropertiesTool.getKeyDefault()
-    const keyFull = PropertiesTool.getKeyFull()
+    const keyVariable = PropertiesTool.getKeyVariable()
 
-    if (
-      keyDefault in palette?.item &&
-      palette?.item[keyDefault] in classItem
-    ) {
-      classItem['sys-palette'] = {
-        ...classItem?.[palette?.item[keyDefault]],
-        [keyName]: 'sys-palette',
-        [keyFull]: true
-      }
+    if (PropertiesTool.getKeyDefault() in palette?.item) {
+      forEach(this.__getDefaultList(palette.item), (item, index) => {
+        if (item in classItem) {
+          if (index === 'basic') {
+            classItem['sys-palette'] = this.__getDefaultData(classItem, item)
+          } else {
+            classItem[`${index}`] = {
+              value: {
+                'sys-palette': this.__getDefaultData(classItem, item)
+              },
+              [keyVariable]: 'root'
+            }
+          }
+        }
+      })
+    }
+  }
+
+  /**
+   * Checking the default value
+   *
+   * Проверка значения по умолчанию
+   * @param {Object<string,string>|string} item the value to be checked / проверяемое значение
+   * @return {Object<string,string>}
+   * @private
+   */
+  __getDefaultList (item) {
+    const keyDefault = PropertiesTool.getKeyDefault()
+    return typeof item[keyDefault] === 'object' ? item[keyDefault] : { basic: item[keyDefault] }
+  }
+
+  /**
+   * Returns a new record for the default value
+   *
+   * Возвращает новую запись для значения по умолчанию
+   * @param classItem list of available values for the class / список доступных значений у класса
+   * @param {string} item the name of the property / название свойства
+   * @return {Object<string,*>}
+   * @private
+   */
+  __getDefaultData (classItem, item) {
+    return {
+      ...classItem?.[item],
+      [PropertiesTool.getKeyName()]: 'sys-palette',
+      [PropertiesTool.getKeyFull()]: true
     }
   }
 }

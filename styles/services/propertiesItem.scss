@@ -173,6 +173,10 @@ $designsClassName: 'class' !default;
     @include initScss($property) {
       @content($value);
     }
+  } @else if ($type =='root') {
+    @include initAtRoot($property) {
+      @content($value);
+    }
   }
 }
 

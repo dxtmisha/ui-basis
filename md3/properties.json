@@ -1,0 +1,51 @@
+{
+  "ref": {
+    "value": {
+      "file|main": "tokens/ref.json",
+      "shade": {
+        "_category": "shade"
+      },
+      "color": {
+        "_category": "palette",
+        "_default": {
+          "basic": "40",
+          ".?theme--dark": "80"
+        }
+      }
+    },
+    "_type": "var",
+    "_category": "root"
+  },
+  "sys": {
+    "value": {
+      "file|main": "tokens/sys.json"
+    },
+    "_type": "var",
+    "_category": "root"
+  },
+  "dark": {
+    "value": {
+      "file|main": "tokens/dark.json"
+    },
+    "_type": "var",
+    "_category": "root"
+  },
+  "theme": {
+    "value": {
+      "dark": {
+        "sys": {
+          "basic": {
+            "value": "{?dark.sys.color}",
+            "_type": "link",
+            "_modification": "link"
+          },
+          "_type": "var"
+        },
+        "_type": "state"
+      }
+    },
+    "_type": "class",
+    "_category": "class",
+    "_name": "?theme"
+  }
+}

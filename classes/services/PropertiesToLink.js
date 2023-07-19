@@ -1,4 +1,7 @@
-const { splice } = require('../../functions/data')
+const {
+  splice,
+  forEach
+} = require('../../functions/data')
 
 // const PropertiesItems = require('./PropertiesItems')
 const PropertiesTool = require('./PropertiesTool')
@@ -91,8 +94,7 @@ module.exports = class PropertiesToLink {
    *   name?: string,
    *   design?: string,
    *   component?: string,
-   *   properties?:
-   *   Object<string,*>
+   *   properties?: Object<string,*>
    * }} property object for conversion / объект для преобразования
    * @return {boolean}
    * @private
@@ -104,7 +106,6 @@ module.exports = class PropertiesToLink {
       property.component,
       this.items.getDesigns()
     )
-
     const properties = this.items.getItemByValue(index)
     let update = false
 
@@ -117,7 +118,7 @@ module.exports = class PropertiesToLink {
 
         splice(
           property.properties.value,
-          To.copy(item.property.value),
+          this.__toLink(property, item),
           property.name,
           true
         )
@@ -125,5 +126,40 @@ module.exports = class PropertiesToLink {
     })
 
     return update
+  }
+
+  /**
+   * Transforms the data matches the value of modification
+   *
+   * Преобразует данные соответствия значения modification
+   * @param {{
+   *   item?: Object<string,*>,
+   *   name?: string,
+   *   design?: string,
+   *   component?: string,
+   *   properties?: Object<string,*>
+   * }} property object for conversion / объект для преобразования
+   * @param {Object<string,*>} item object for transformation / объект для преобразования
+   * @return {Object<string,*>}
+   * @private
+   */
+  __toLink (property, item) {
+    const keyType = PropertiesTool.getKeyType()
+    const copy = To.copy(item.property.value)
+
+    if (property.item?.[PropertiesTool.getKeyModification()] === 'link') {
+      const data = {}
+
+      forEach(copy, (value, name) => {
+        data[name] = {
+          value: property.item.value?.replace?.(/}$/, `.${name}}`),
+          [keyType]: 'var'
+        }
+      })
+
+      return data
+    } else {
+      return copy
+    }
   }
 }
