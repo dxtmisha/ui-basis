@@ -124,6 +124,8 @@ module.exports = class PropertiesPalette {
             [keyName]: code
           }
         })
+
+        this.__addDefault(palette, classItem)
       })
     })
 
@@ -178,5 +180,22 @@ module.exports = class PropertiesPalette {
     }
 
     return palettes[className].value
+  }
+
+  __addDefault (palette, classItem) {
+    const keyName = PropertiesTool.getKeyName()
+    const keyDefault = PropertiesTool.getKeyDefault()
+    const keyFull = PropertiesTool.getKeyFull()
+
+    if (
+      keyDefault in palette?.item &&
+      palette?.item[keyDefault] in classItem
+    ) {
+      classItem['sys-palette'] = {
+        ...classItem?.[palette?.item[keyDefault]],
+        [keyName]: 'sys-palette',
+        [keyFull]: true
+      }
+    }
   }
 }

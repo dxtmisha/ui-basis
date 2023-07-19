@@ -16,6 +16,7 @@
   },
   "adaptive": {
     "~icon": {
+      "padding": "0px",
       "& .??__inscription": {
         "display": "none"
       }

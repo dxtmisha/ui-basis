@@ -7,12 +7,28 @@
     <md2-chip :label="text" @click="text = text ? undefined : 'text'"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px;">
+    <md2-chip outlined icon="face"/>
+    <md2-chip outlined label="label"/>
+    <md2-chip outlined icon="face" label="label"/>
+    <md2-chip outlined >slot</md2-chip>
+    <md2-chip outlined :label="text" @click="text = text ? undefined : 'text'"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px;">
     <md2-chip icon="face" label="dragged" dragged/>
     <md2-chip icon="face" label="readonly" readonly/>
     <md2-chip icon="face" label="disabled" disabled/>
     <md2-chip icon="face" label="disabled click" :disabled="disabled" @click="disabled=!disabled"/>
     <md2-chip icon="face" label="selected" selected/>
     <md2-chip :icon="{icon:'face',iconActive:'home'}" label="selected click" :selected="selected"
+              @click="selected=!selected"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px;">
+    <md2-chip outlined icon="face" label="dragged" dragged/>
+    <md2-chip outlined icon="face" label="readonly" readonly/>
+    <md2-chip outlined icon="face" label="disabled" disabled/>
+    <md2-chip outlined icon="face" label="disabled click" :disabled="disabled" @click="disabled=!disabled"/>
+    <md2-chip outlined icon="face" label="selected" selected/>
+    <md2-chip outlined :icon="{icon:'face',iconActive:'home'}" label="selected click" :selected="selected"
               @click="selected=!selected"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px;">
@@ -48,6 +64,46 @@
       @click="progress = !progress"
     />
     <md2-chip
+      :progress="progress"
+      :selected="selected"
+      choice
+      icon="face"
+      icon-trailing="home"
+      label="progress"
+      @click="progress = !progress"
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px;">
+    <md2-chip outlined icon="face" label="label" palette="cyan"/>
+    <md2-chip outlined icon="face" label="label" palette="green"/>
+    <md2-chip outlined icon="face" label="hide" palette="green" :icon-hide="hide"/>
+    <md2-chip
+      outlined
+      :icon="{icon:'face',iconActive:'home'}"
+      :selected="selected"
+      label="selected click"
+      palette="deep-purple"
+      @click="selected=!selected"
+    />
+    <md2-chip
+      outlined
+      :icon="{icon:'face',iconActive:'home'}"
+      :selected="selected"
+      choice
+      label="selected click"
+      palette="deep-purple"
+      @click="selected=!selected"
+    />
+    <md2-chip
+      outlined
+      :progress="progress"
+      icon="face"
+      icon-trailing="home"
+      label="progress"
+      @click="progress = !progress"
+    />
+    <md2-chip
+      outlined
       :progress="progress"
       :selected="selected"
       choice

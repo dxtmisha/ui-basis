@@ -63,9 +63,10 @@
       "position": "absolute",
       "inset": "0",
       "border-radius": "inherit",
-      "border": "1px solid",
+      "border-width": "1px",
       "border-color": "{sys.palette.outline}",
-      "border-opacity": "{sys.opacity.outline}"
+      "border-opacity": "{sys.opacity.outline}",
+      "border-style": "solid"
     },
     "after": {
       "basic": "{??outlined.before}",

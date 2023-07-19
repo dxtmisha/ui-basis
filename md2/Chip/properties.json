@@ -18,6 +18,9 @@
     "padding-right": "{??padding}",
     "text-overflow": "truncate"
   },
+  "selected": {
+    "_type": "state"
+  },
   "choice": {
     "selected": {
       "color": {
@@ -26,6 +29,15 @@
       "gradient": {
         "_rename": "palette-gradient"
       }
+    }
+  },
+  "outlined": {
+    "background-color": {
+      "_rename": "background-color"
+    },
+    "border-color": {
+      "value": "transparent",
+      "_rename": "palette-border"
     }
   },
   "@@palette": "{palette}"

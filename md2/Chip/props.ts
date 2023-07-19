@@ -10,8 +10,8 @@ export const subClasses = {
     // [!] Системная метка, нельзя удалять
     // :subclass
     inscription: 'inscription',
-    icon: 'icon',
-    trailing: 'trailing'
+    trailing: 'trailing',
+    icon: 'icon'
     // :subclass
   }
 }
@@ -30,6 +30,7 @@ export type PropsType = PropsChipType & {
   selected?: boolean
   progress?: boolean
   disabled?: boolean
+  outlined?: boolean
   readonly?: boolean
   // :type
 }
@@ -66,6 +67,7 @@ export const props = {
     selected: Boolean,
     progress: Boolean,
     disabled: Boolean,
+    outlined: Boolean,
     readonly: Boolean
     // :prop
   }

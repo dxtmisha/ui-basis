@@ -17,6 +17,9 @@
   "transition-property": "border, box-shadow",
   "transition-duration": "{d.sys.transitionDuration.lg.close}",
   "transition-function": "{d.sys.transitionFunction.standard}",
+  "after": {
+    "basic": "{?button.outlined.after}"
+  },
   "#trailing": {
     "font-size": "{ref.font.size.sm}",
     "line-height": "{ref.spacing.3}"
@@ -28,6 +31,7 @@
     "gradient-opacity": "{sys.opacity.focus}"
   },
   "active": {
+    "basic": "{?button.outlined.active}",
     "gradient-opacity": "{sys.opacity.pressed}",
     "box-shadow": "{ref.shadow.2}"
   },
@@ -51,6 +55,24 @@
     "selected": {
       "color": "{sys.palette.primaryVariant}",
       "gradient": "{sys.palette.primaryVariant}"
+    }
+  },
+  "outlined": {
+    "background-color": "transparent",
+    "before": {
+      "basic": "{?button.outlined.before}"
+    },
+    "focus": {
+      "before": {
+        "border-color": "{sys.palette.primary}",
+        "border-opacity": "{sys.opacity.surface.high}"
+      }
+    },
+    "selected": {
+      "before": {
+        "border-color": "{sys.palette.primaryVariant}",
+        "border-opacity": "{sys.opacity.surface.high}"
+      }
     }
   }
 }
