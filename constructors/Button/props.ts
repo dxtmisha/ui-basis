@@ -44,7 +44,6 @@ export type PropsButtonType = {
   progress?: PropsProgressType /* :type.progress */ | boolean
 
   // Status
-  selected?: boolean
 
   // Options
   tag?: 'button' | 'a' | 'span' | string
@@ -91,8 +90,6 @@ export const propsButton = {
   progress: [Object, Boolean],
 
   // Status
-  selected: Boolean,
-  disabled: Boolean,
 
   // Options
   tag: {

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import {
-  // defineSlots,
+  defineSlots,
   defineOptions
 } from 'vue'
 
 import { ChipDesign } from '../../constructors/Chip/ChipDesign'
-import { ChipEmitsType/* , ChipSlotsType */ } from '../../constructors/Chip/types'
+import { ChipEmitsType, ChipSlotsType } from '../../constructors/Chip/types'
 
 import { defaults, PropsType, subClasses } from './props'
+import Md2Icon from '../Icon/Md2Icon.vue'
+import Md2Ripple from '../Ripple/Md2Ripple.vue'
+import Md2Progress from '../Progress/Md2Progress.vue'
 
 defineOptions({
   // [!] System label, cannot be deleted
@@ -20,11 +23,16 @@ defineOptions({
 const props = withDefaults(defineProps<PropsType>(), defaults)
 const emit = defineEmits<ChipEmitsType>()
 
-// defineSlots<ChipSlotsType>()
+defineSlots<ChipSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
 const design = new ChipDesign<typeof subClasses>(props, emit)
+  .setComponents({
+    icon: Md2Icon,
+    ripple: Md2Ripple,
+    progress: Md2Progress
+  })
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте
@@ -39,7 +47,9 @@ const render = design.render()
 </script>
 
 <template>
-  <render/>
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">

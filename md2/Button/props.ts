@@ -80,9 +80,4 @@ export const props = {
     align: String as PropType<PropsType['align']>
     // :prop
   }
-  // Values
-
-  // Status
-
-  // Options
 }

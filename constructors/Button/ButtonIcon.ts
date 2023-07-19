@@ -15,9 +15,9 @@ import { PropsIconType } from '../Icon/props'
  * ButtonIcon
  */
 export class ButtonIcon<
-  P extends DesignPropsExtendedType<PropsIconType> = DesignPropsExtendedType<PropsIconType>,
+  C extends ButtonComponentsInterface = ButtonComponentsInterface,
   M extends ButtonPropsValueType = ButtonPropsValueType,
-  C extends ButtonComponentsInterface = ButtonComponentsInterface
+  P extends DesignPropsExtendedType<PropsIconType> = DesignPropsExtendedType<PropsIconType>
 > {
   readonly iconBind: ComputedRef<P>
   readonly trailingBind: ComputedRef<P>

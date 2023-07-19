@@ -1,4 +1,6 @@
 import { PropType } from 'vue'
+import { PropsIconType } from '../Icon/props'
+import { PropsProgressType } from '../Progress/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
@@ -7,6 +9,9 @@ export const subClassesChip = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    inscription: 'inscription',
+    icon: 'icon',
+    trailing: 'trailing'
     // :subclass
   }
 }
@@ -17,14 +22,30 @@ export type PropsChipType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  selected?: boolean
+  readonly?: boolean
+  disabled?: boolean
   // :type
 } & {
   // Values
-  value?: string
+  label?: string
+  icon?: string | PropsIconType
+  iconTrailing?: string | PropsIconType
+  value?: any
+  detail?: Record<string, any>
+
+  // Icon
+  iconTurn?: boolean
+  iconHide?: boolean
+
+  // Progress
+  progress?: PropsProgressType /* :type.progress */ | boolean
 
   // Status
+  selected?: boolean
 
   // Options
+  tag?: 'button' | 'span' | string
 }
 
 // Default value for property
@@ -36,7 +57,7 @@ export const defaultsChip = {
     // :default
     // :default
   },
-  value: 'value'
+  tag: 'span'
 }
 
 // Chip for property
@@ -46,12 +67,31 @@ export const propsChip = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    selected: Boolean,
+    readonly: Boolean,
+    disabled: Boolean,
+    progress: Boolean
     // :prop
   },
   // Values
-  value: String
+  label: [Number, String],
+  icon: [Object, String],
+  iconTrailing: [Object, String],
+  value: [Object, Number, String],
+  detail: [Object],
+
+  // Icon
+  iconTurn: Boolean,
+  iconHide: Boolean,
+
+  // Progress
+  progress: [Object, Boolean],
 
   // Status
 
   // Options
+  tag: {
+    type: String as PropType<PropsChipType['tag']>,
+    default: defaultsChip?.tag
+  }
 }

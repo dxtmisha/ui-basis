@@ -1,1 +1,19 @@
-{}
+{
+  "#inscription": {},
+  "#icon": {},
+  "#trailing": {},
+  "selected": {
+    "_type": "state"
+  },
+  "readonly": {
+    "_type": "state"
+  },
+  "disabled": {
+    "_type": "state"
+  },
+  "progress": {
+    "color-opacity": {
+      "_type": "var"
+    }
+  }
+}

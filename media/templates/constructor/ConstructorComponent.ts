@@ -15,9 +15,9 @@ import { DesignClasses } from '../../../classes/DesignClasses'
  * Constructor// :component.once Component
  */
 export class Constructor/* :component.once Component */<
-  P extends DesignPropsExtendedType/* :component.once <PropsComponentType> */ = DesignPropsExtendedType/* :component.once <PropsComponentType> */,
+  C extends ConstructorComponentsInterface = ConstructorComponentsInterface,
   M extends ConstructorPropsValueType = ConstructorPropsValueType,
-  C extends ConstructorComponentsInterface = ConstructorComponentsInterface
+  P extends DesignPropsExtendedType/* :component.once <PropsComponentType> */ = DesignPropsExtendedType/* :component.once <PropsComponentType> */
 > {
   // :component.once readonly bind: ComputedRef<P>
 

@@ -1,12 +1,34 @@
 @import "../../styles/properties";
+@import "../Button/style";
 
 @mixin initChipDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinChip;
+    @include mixinChipInscription;
+    @include mixinChipIcon;
+    @include mixinChipProgress;
+
     @content;
   }
 }
 
 @mixin mixinChip {
+  @include mixinButton;
 
+  text-align: center;
+  cursor: default;
+}
+
+@mixin mixinChipInscription {
+  &__inscription {
+    order: 4;
+  }
+}
+
+@mixin mixinChipIcon {
+  @include mixinButtonIcon;
+}
+
+@mixin mixinChipProgress {
+  @include mixinButtonProgress;
 }

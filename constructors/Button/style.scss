@@ -14,14 +14,14 @@
 }
 
 @mixin mixinButton {
-  display: flex;
+  @include flexCenter;
   position: relative;
-  justify-content: center;
-  align-items: center;
 
   padding: 0;
 
   min-width: var(--sys-height, 0);
+
+  text-decoration: none;
 
   border-radius: 0;
   border: solid transparent 0;
@@ -39,15 +39,17 @@
 @mixin mixinButtonIcon {
   &__icon,
   &__trailing {
-    @include marginX(#{calc((var(--sys-height) - v('?icon._width')) / 2)})
+    @include initByCustom('margin', #{calc((var(--sys-height) - v('?icon._width')) / 2)});
+    @include marginLeft(v('??margin'));
+    @include marginRight(v('??margin'));
   }
 
-  &__icon ~ &__inscription {
-    @include paddingLeft(0);
+  &__inscription ~ &__icon {
+    @include marginRight(#{calc(v('??margin') - v('??padding'))});
   }
 
-  &__trailing ~ &__inscription {
-    @include paddingRight(0);
+  &__inscription ~ &__trailing {
+    @include marginLeft(#{calc(v('??margin') - v('??padding'))});
   }
 }
 

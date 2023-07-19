@@ -12,7 +12,7 @@ import { ButtonComponentsInterface, ButtonPropsValueType, ButtonSlotsType } from
  * Класс для работы с текстом на кнопке
  */
 export class ButtonInscription<
-  C extends ButtonComponentsInterface = ButtonComponentsInterface,
+  C extends Record<string, any> = ButtonComponentsInterface,
   S extends ButtonSlotsType = ButtonSlotsType
 > {
   /**

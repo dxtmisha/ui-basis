@@ -124,8 +124,8 @@ export class ButtonDesign<
     const setup = this.getSetup()
     const children: any[] = [
       ...this.progress.render(),
-      ...this.icon.render(),
-      ...this.inscription.render(setup.classes.value.inscription)
+      ...this.inscription.render(setup.classes.value.inscription),
+      ...this.icon.render()
     ]
 
     if (setup.isEnabled.value) {

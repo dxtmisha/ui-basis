@@ -19,5 +19,5 @@
   "outline": "{ref.palette.black}",
   "white": "{ref.palette.white}",
   "black": "{ref.palette.black}",
-  "overlay": "{ref.palette.black}"
+  "overlay": "{ref.palette.blackLight}"
 }
