@@ -23,14 +23,14 @@ export type PropsType = PropsChipType & {
   // [!] Системная метка, нельзя удалять
   // :type
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
+  selected?: boolean
   choice?: boolean
+  outlined?: boolean
   palette?: 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'grey-blue' | 'white' | 'black' | 'black-light'
   focus?: boolean
   dragged?: boolean
-  selected?: boolean
   progress?: boolean
   disabled?: boolean
-  outlined?: boolean
   readonly?: boolean
   // :type
 }
@@ -60,14 +60,14 @@ export const props = {
       type: String as PropType<PropsType['height']>,
       default: defaults?.height
     },
+    selected: Boolean,
     choice: Boolean,
+    outlined: Boolean,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
-    selected: Boolean,
     progress: Boolean,
     disabled: Boolean,
-    outlined: Boolean,
     readonly: Boolean
     // :prop
   }

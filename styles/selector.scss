@@ -80,7 +80,7 @@
 }
 
 @mixin readonly($parent: &) {
-  &:read-only, &#{$parent}--readonly, &--readonly {
+  &#{$parent}--readonly, &--readonly {
     @content;
   }
 }

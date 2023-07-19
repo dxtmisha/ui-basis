@@ -25,6 +25,16 @@
 
   border-radius: 0;
   border: solid transparent 0;
+
+  cursor: pointer;
+
+  @include disabled {
+    cursor: default;
+  }
+
+  @include readonly {
+    cursor: default;
+  }
 }
 
 @mixin mixinButtonInscription {
@@ -54,9 +64,12 @@
 }
 
 @mixin mixinButtonProgress {
+  &--progress {
+    cursor: default;
+  }
+
   &__progress.#{n('?progress--visible')} ~ * {
     opacity: v('??color-opacity', 0);
-    cursor: default;
   }
 }
 

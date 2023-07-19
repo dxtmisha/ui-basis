@@ -19,6 +19,9 @@
     "text-overflow": "truncate"
   },
   "contained": {
+    "color": {
+      "_rename": "color"
+    },
     "background-color": {
       "_rename": "palette-background"
     },
