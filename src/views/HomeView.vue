@@ -1,5 +1,12 @@
 <template>
   <div style="display: flex; gap: 16px;">
+    <md2-fab icon="face"/>
+    <md2-fab label="label"/>
+    <md2-fab icon="face" label="label"/>
+    <md2-fab>slot</md2-fab>
+    <md2-fab :label="text" @click="text = text ? undefined : 'text'"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px;">
     <md2-chip icon="face"/>
     <md2-chip label="label"/>
     <md2-chip icon="face" label="label"/>
@@ -10,7 +17,7 @@
     <md2-chip outlined icon="face"/>
     <md2-chip outlined label="label"/>
     <md2-chip outlined icon="face" label="label"/>
-    <md2-chip outlined >slot</md2-chip>
+    <md2-chip outlined>slot</md2-chip>
     <md2-chip outlined :label="text" @click="text = text ? undefined : 'text'"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px;">
@@ -171,9 +178,22 @@
                 @click="progress = !progress"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-fab
+      :icon="image"
+      @click="progress = !progress"
+    />
+    <md2-fab :progress="progress" icon="face" icon-trailing="home" label="label"
+             @click="progress = !progress"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button icon="face" icon-trailing="close" label="text" height="sm"/>
     <md2-button icon="face" icon-trailing="close" label="text" height="md"/>
     <md2-button icon="face" icon-trailing="close" label="text" height="lg"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-fab icon="face" icon-trailing="close" label="text" height="sm"/>
+    <md2-fab icon="face" icon-trailing="close" label="text" height="md"/>
+    <md2-fab icon="face" icon-trailing="close" label="text" height="lg"/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button label="text" height="sm"/>
@@ -209,6 +229,23 @@
     <md2-button label="selected" icon="home"/>
     <md2-button label="selected" icon="home" outlined/>
     <md2-button label="selected" icon="home" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected"
+                @click="selected=!selected"/>
+    <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected" outlined/>
+    <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected" text/>
+    <md2-fab label="selected" icon="home" palette="deep-orange"/>
+    <md2-fab label="selected" icon="home" palette="deep-orange" outlined/>
+    <md2-fab label="selected" icon="home" palette="deep-orange" text/>
+  </div>
+  <div style="display: flex; gap: 16px; padding-top: 16px">
+    <md2-fab label="selected" :icon="{icon:'home',iconActive:'face'}" :selected="selected"/>
+    <md2-fab label="selected" icon="home" :selected="selected" outlined/>
+    <md2-fab label="selected" icon="home" :selected="selected" text/>
+    <md2-fab label="selected" icon="home"/>
+    <md2-fab label="selected" icon="home" outlined/>
+    <md2-fab label="selected" icon="home" text/>
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-button label="text" icon="home" palette="brown"/>
@@ -261,6 +298,7 @@ import { defineComponent, ref } from 'vue'
 import Md2Button from '../../md2/Button/Md2Button.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
 import Md2Chip from '../../md2/Chip/Md2Chip.vue'
+import Md2Fab from '../../md2/Fab/Md2Fab.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -268,6 +306,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md2Fab,
     Md2Chip,
     Md2Button
   },

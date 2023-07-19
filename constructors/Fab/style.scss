@@ -1,0 +1,35 @@
+@import "../../styles/properties";
+@import "../Button/style";
+
+@mixin initFabDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinFab;
+    @include mixinFabInscription;
+    @include mixinFabIcon;
+    @include mixinFabProgress;
+
+    @include mixinFabAlign;
+
+    @content;
+  }
+}
+
+@mixin mixinFab {
+  @include mixinButton;
+}
+
+@mixin mixinFabInscription {
+  @include mixinButtonInscription;
+}
+
+@mixin mixinFabIcon {
+  @include mixinButtonIcon;
+}
+
+@mixin mixinFabProgress {
+  @include mixinButtonProgress;
+}
+
+@mixin mixinFabAlign {
+  @include mixinButtonAlign;
+}

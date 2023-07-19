@@ -1,0 +1,9 @@
+{
+  "padding": "{ref.spacing.3}",
+  "height": {
+    "sm": "{ref.spacing.10}",
+    "md": "{ref.spacing.12}",
+    "lg": "{ref.spacing.14}"
+  },
+  "border-radius": "{sys.rounded.full}"
+}

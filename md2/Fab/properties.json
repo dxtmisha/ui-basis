@@ -1,0 +1,13 @@
+{
+  "button": "{md2.button}",
+  "basic": "{d.fab}",
+  "height": {
+    "_default": "lg"
+  },
+  "outlined": {
+    "_type": "none"
+  },
+  "text": {
+    "_type": "none"
+  }
+}
