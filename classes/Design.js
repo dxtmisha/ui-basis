@@ -8,6 +8,7 @@ const To_1 = require('./To')
 const DesignClasses_1 = require('./DesignClasses')
 const DesignProperties_1 = require('./DesignProperties')
 const DesignStyles_1 = require('./DesignStyles')
+const DesignComponents_1 = require('./DesignComponents')
 /**
  * Main class for binding tokens and Vue components
  *
@@ -29,12 +30,17 @@ class Design {
      * @protected
      */
   components
+  element = (0, vue_1.ref)()
+  refs
+  setupItem
   context
+  attrs
+  slots
+  emit
+  expose
   properties
   classes
   styles
-  element = (0, vue_1.ref)()
-  refs
   /**
      * Constructor
      * @param props properties / свойства
@@ -44,12 +50,14 @@ class Design {
     this.props = props
     this.refs = (0, vue_1.toRefs)(props)
     this.properties = new DesignProperties_1.DesignProperties()
+    this.components = new DesignComponents_1.DesignComponents()
     this.context = this.initContext(contextEmit)
+    this.attrs = this.context.attrs
+    this.slots = this.context.slots
+    this.emit = this.context.emit
+    this.expose = this.context.expose
     this.classes = new DesignClasses_1.DesignClasses(this.name, this.properties, this.props)
     this.styles = new DesignStyles_1.DesignStyles(this.name, this.properties, this.props)
-    if (process.env.NODE_ENV !== 'production') {
-      (0, vue_1.onUpdated)(() => console.warn(`Updated: ${this.getName()}`))
-    }
   }
 
   /**
@@ -59,6 +67,15 @@ class Design {
      */
   getName () {
     return this.classes.getName()
+  }
+
+  /**
+     * Returns the names of the design
+     *
+     * Возвращает названия дизайна
+     */
+  getNameDesign () {
+    return this.classes.getName().split('-', 2)?.[0]
   }
 
   /**
@@ -155,7 +172,7 @@ class Design {
      * @param components list of connected components / список подключенных компонентов
      */
   setComponents (components) {
-    this.components = components
+    this.components.set(components)
     return this
   }
 
@@ -170,6 +187,20 @@ class Design {
      * @param name property name / имя свойства
      */
   getBind (value, nameExtra = {}, name = 'value') {
+    return Design.getBindStatic(value, nameExtra, name)
+  }
+
+  /**
+     * A method for generating properties for a subcomponent
+     *
+     * Метод для генерации свойств для под компонента
+     * @param value input value. Can be an object if you need to pass multiple
+     * properties / входное значение. Может быть объектом, если надо передать
+     * несколько свойств
+     * @param nameExtra additional parameter or property name / дополнительный параметр или имя свойства
+     * @param name property name / имя свойства
+     */
+  static getBindStatic (value, nameExtra = {}, name = 'value') {
     return (0, vue_1.computed)(() => {
       const isName = typeof nameExtra === 'string'
       const index = isName ? nameExtra : name
@@ -191,6 +222,15 @@ class Design {
   }
 
   /**
+     * Returns the basic data processed in setup
+     *
+     * Возвращает базовые данные, обрабатываемые в setup
+     */
+  getSetup () {
+    return this.setupItem
+  }
+
+  /**
      * Initializes the slot
      *
      * Инициализирует слот
@@ -199,7 +239,7 @@ class Design {
      * @param props property for the slot / свойство для слота
      * этот элемент, то слот добавится в него
      */
-  initSlot (name = 'default', children, props = {}) {
+  initSlot (name, children, props = {}) {
     const slots = this.context.slots
     if (slots?.[name] &&
             typeof slots[name] === 'function') {
@@ -219,11 +259,9 @@ class Design {
      * @param dataCallback additional component properties / дополнительные свойства компонента
      */
   setup (dataCallback) {
+    this.initSetupItem()
     return {
-      element: this.element,
-      classes: this.classes.getItem(),
-      styles: this.styles.getItem(),
-      ...this.init(),
+      ...(this.getSetup()),
       ...((0, data_1.executeFunction)(dataCallback) || {})
     }
   }
@@ -232,11 +270,10 @@ class Design {
      * The rendering method for the setup method
      *
      * Метод рендеринга для метода настройки
-     * @param dataCallback additional component properties / дополнительные свойства компонента
      */
-  render (dataCallback) {
-    const setup = this.setup(dataCallback)
-    return () => this.initRender(setup)
+  render () {
+    this.initSetupItem()
+    return () => this.initRender()
   }
 
   /**
@@ -250,14 +287,34 @@ class Design {
   }
 
   /**
+     * Initialization of all the necessary properties for work
+     *
+     * Инициализация всех необходимых свойств для работы
+     * @protected
+     */
+  initSetupItem () {
+    if (!this.setupItem) {
+      this.setupItem = {
+        element: this.element,
+        classes: this.classes.getItem(),
+        styles: this.styles.getItem(),
+        ...this.init()
+      }
+      if (process.env.NODE_ENV !== 'production') {
+        // onMounted(() => console.warn(`Mounted: ${this.getName()}`))
+        (0, vue_1.onUpdated)(() => console.warn(`Updated: ${this.getName()}`, this.element?.value))
+      }
+    }
+  }
+
+  /**
      * A method for rendering
      *
      * Метод для рендеринга
-     * @param setup the result of executing the setup method / результат выполнения метода настройки
      * @protected
      */
-  initRender (setup) {
-    return (0, vue_1.h)('div', { class: setup.classes.value.main })
+  initRender () {
+    return (0, vue_1.h)('div', { class: this.setupItem?.classes.value.main })
   }
 
   /**
@@ -269,6 +326,7 @@ class Design {
      */
   initContext (contextEmit) {
     if (contextEmit &&
+            typeof contextEmit === 'object' &&
             'attrs' in contextEmit &&
             'slots' in contextEmit) {
       return contextEmit

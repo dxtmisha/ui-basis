@@ -18,14 +18,20 @@
   "hover": {
     "gradient-opacity": "{sys.opacity.008}"
   },
-  "active": {
-    "gradient-opacity": "{sys.opacity.012}"
-  },
   "focus": {
     "gradient-opacity": "{sys.opacity.012}"
   },
+  "active": {
+    "gradient-opacity": "{sys.opacity.012}",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
+  },
   "progress": {
     "color-opacity": "{sys.opacity.disabled}"
+  },
+  "disabled": {
+    "color": "{sys.palette.onSurface}",
+    "color-opacity": "{sys.opacity.disabled}",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
   },
   "filled": {
     "color": "{sys.palette.onPrimary}",
@@ -38,12 +44,58 @@
     "active": {
       "box-shadow": "none"
     },
+    "selected": {
+      "background-color": "{sys.palette.primaryVariant}"
+    },
     "disabled": {
-      "color": "{sys.palette.onSurface}",
-      "color-opacity": "{sys.opacity.disabled}",
       "background-color": "{sys.palette.onSurface}",
       "background-opacity": "{sys.opacity.012}",
       "box-shadow": "none"
+    }
+  },
+  "outlined": {
+    "before": {
+      "position": "absolute",
+      "inset": "0",
+      "border-radius": "inherit",
+      "border-width": "1px",
+      "border-color": "{sys.palette.outline}",
+      "border-style": "solid"
+    },
+    "after": {
+      "basic": "{??outlined.before}",
+      "border-color": "{sys.palette.primary}",
+      "border-opacity": "0",
+      "transition": "inherit"
+    },
+    "active": {
+      "after": {
+        "border-opacity": "{sys.opacity.016}"
+      }
+    },
+    "focus": {
+      "after": {
+        "border-opacity": "{sys.opacity.high}"
+      }
+    },
+    "selected": {
+      "color": "{sys.palette.primaryVariant}",
+      "gradient-opacity": "{sys.opacity.012}"
+    },
+    "disabled": {
+      "border-color": "{sys.palette.onSurface}",
+      "border-opacity": "{sys.opacity.012}"
+    }
+  },
+  "text": {
+    "after": {
+      "basic": "{??outlined.after}"
+    },
+    "active": {
+      "basic": "{??outlined.active}"
+    },
+    "selected": {
+      "basic": "{??outlined.selected}"
     }
   }
 }

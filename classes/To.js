@@ -80,6 +80,42 @@ class To {
   }
 
   /**
+     * Converts the input value to one of the available types
+     *
+     * Преобразует входное значение в один из доступных типов
+     * @param value входной значения
+     * @param isFunction преобразовывать в функция
+     */
+  static transformation (value, isFunction = true) {
+    if (typeof value === 'string') {
+      value = value.trim()
+      if (value === 'true') {
+        return true
+      } else if (value === 'false') {
+        return false
+      } else if (value === 'undefined') {
+        return undefined
+      } else if (value === 'null') {
+        return null
+      } else if (value.match(/^[{[]/)) {
+        try {
+          return JSON.parse(value)
+        } catch (e) {
+        }
+      } else if (value.match(/^[0-9]+\.[0-9.]+$/)) {
+        return parseFloat(value)
+      } else if (value.match(/^[0-9]+$/)) {
+        return parseInt(value)
+      } else if (isFunction &&
+                value in window &&
+                typeof window[value] === 'function') {
+        return window[value]
+      }
+    }
+    return value
+  }
+
+  /**
      * Method for processing a number
      *
      * Метод для обработки числа

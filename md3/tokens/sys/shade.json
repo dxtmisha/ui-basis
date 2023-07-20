@@ -1,5 +1,6 @@
 {
   "normal": "{ref.shade.40}",
+  "normalVariant": "{ref.shade.20}",
   "container": "{ref.shade.90}",
   "on": "{ref.shade.100}",
   "onContainer": "{ref.shade.10}",

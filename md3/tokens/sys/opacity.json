@@ -2,5 +2,7 @@
   "008": "{ref.opacity.8}",
   "012": "{ref.opacity.12}",
   "016": "{ref.opacity.16}",
+  "high": "{ref.opacity.100}",
+  "medium": "{ref.opacity.72}",
   "disabled": "{ref.opacity.disabled}"
 }

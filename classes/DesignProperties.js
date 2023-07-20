@@ -44,6 +44,16 @@ class DesignProperties {
   }
 
   /**
+     * Returns a list of properties by category
+     *
+     * Возвращает список свойств по категории
+     * @param category category name / название категории
+     */
+  getByCategory (category) {
+    return this.item.value.filter(item => item?.category === category)
+  }
+
+  /**
      * Gets a property by its name or returns the property if the input is the property itself
      *
      * Получает свойство по его имени или возвращает свойство, если на входе является само свойство
@@ -57,6 +67,18 @@ class DesignProperties {
   }
 
   /**
+     * Returns the category name of the property
+     *
+     * Возвращает название категории у свойства
+     * @param nameItem property names or the property instance itself / названия свойств
+     * или сам экземпляр свойства
+     */
+  getCategoryName (nameItem) {
+    const item = this.getOrItem(nameItem)
+    return item && 'category' in item ? item.category : undefined
+  }
+
+  /**
      * Property modification
      *
      * Изменение свойства
@@ -67,6 +89,20 @@ class DesignProperties {
       this.item.value = properties
     }
     return this
+  }
+
+  /**
+     * Checks if the property has a default value
+     *
+     * Проверяет, есть ли у свойства значение по умолчанию
+     * @param nameItem property names or the property instance itself / названия свойств
+     * или сам экземпляр свойства
+     */
+  isDefault (nameItem) {
+    const item = this.getOrItem(nameItem)
+    return !!(item &&
+            'default' in item &&
+            item.default)
   }
 
   /**

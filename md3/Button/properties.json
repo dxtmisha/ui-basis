@@ -27,5 +27,19 @@
     },
     "_category": "appearance",
     "_default": true
-  }
+  },
+  "outlined": {
+    "before": {},
+    "after": {
+      "basic": {},
+      "border-color": {
+        "_rename": "palette-border"
+      }
+    },
+    "_category": "appearance"
+  },
+  "text": {
+    "_category": "appearance"
+  },
+  "@@palette": "{palette}"
 }

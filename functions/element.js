@@ -1,6 +1,6 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.frame = exports.createElement = exports.setItemElementByIndex = exports.getItemElementByIndex = exports.getIdElement = exports.ids = exports.getElement = void 0
+exports.frame = exports.createElement = exports.setItemElementByIndex = exports.getItemElementByIndex = exports.getIdElement = exports.ids = exports.getAttributes = exports.getElement = void 0
 const data_1 = require('./data')
 /**
  * Returns the first Element in the document that matches the specified selector or the element
@@ -12,6 +12,18 @@ function getElement (element) {
   return typeof element === 'string' ? (document.querySelector(element) || undefined) : element
 }
 exports.getElement = getElement
+/**
+ * Получает список атрибуты у элемента
+ * @param element
+ */
+function getAttributes (element) {
+  const attributes = {}
+  for (const attribute of element.attributes) {
+    attributes[attribute.name] = attribute?.value || attribute?.textContent
+  }
+  return attributes
+}
+exports.getAttributes = getAttributes
 /**
  * Counter generator of ID number of element
  *

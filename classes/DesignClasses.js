@@ -79,6 +79,20 @@ class DesignClasses {
   }
 
   /**
+     * Returns the names of classes and their values by the list
+     *
+     * Возвращает название классов и их значения по списку
+     * @param values list of classes and their names / список классов и их названия
+     */
+  getNameByStateByList (values) {
+    const data = {};
+    (0, data_1.forEach)(values, (item, index) => {
+      data[this.getNameByState([index.toString()])] = item
+    })
+    return data
+  }
+
+  /**
      * Возвращает название класса для подкласса
      *
      * Returns the class names for the subclass
@@ -117,6 +131,16 @@ class DesignClasses {
      */
   setExtraMain (data) {
     this.extra.value.main = data
+    return this
+  }
+
+  /**
+     * List of classes for data display control
+     *
+     * Список классов для управления отображением данных
+     */
+  setExtraState (values) {
+    this.setExtraMain(this.getNameByStateByList(values))
     return this
   }
 
@@ -206,7 +230,8 @@ class DesignClasses {
     const classes = {}
     className.push(item.index)
     if ((is && (prop === true ||
-            this.properties.isBool(item))) ||
+            this.properties.isBool(item)) &&
+            this.checkByCategory(item)) ||
             this.properties.isExceptions(item, prop)) {
       this.toClassNameByState(classes, item, className)
     }
@@ -249,6 +274,31 @@ class DesignClasses {
     } else {
       return className
     }
+  }
+
+  /**
+     * Checks if there are similar elements by property, if there are, then does not add a class for work
+     *
+     * Проверяет, есть ли схожие элементы по свойству, если есть, то не добавляет класс для работы
+     * @param item current property / текущее свойство
+     * @private
+     */
+  checkByCategory (item) {
+    if (this.properties.isDefault(item)) {
+      const category = this.properties.getCategoryName(item)
+      if (category) {
+        let active = true
+        this.properties.getByCategory(category)
+          ?.forEach(property => {
+            if (item.name !== property.name &&
+                        this.props?.[property.name]) {
+              active = false
+            }
+          })
+        return active
+      }
+    }
+    return true
   }
 
   /**
