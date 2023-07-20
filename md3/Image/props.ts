@@ -1,8 +1,14 @@
-import { PropType } from 'vue'
+import {
+  defaultsImage,
+  propsImage,
+  PropsImageType,
+  subClassesImage
+} from '../../constructors/Image/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export const subClassesImage = {
+export const subClasses = {
+  ...subClassesImage,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -13,77 +19,46 @@ export const subClassesImage = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsImageType = {
+export type PropsType = PropsImageType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  disabled?: boolean
   adaptive?: boolean
   turn?: boolean
-  disabled?: boolean
   hide?: boolean
   // :type
-} & {
-  // Values
-  value?: string | File
-  coordinator?: [number, number?, number?, number?]
-  size?: 'auto' | 'contain' | 'cover' | string | number
-  x?: string | number
-  y?: string | number
-
-  // Adaptive
-  adaptiveGroup?: string
-  adaptiveAlways?: boolean
-  objectWidth?: number
-  objectHeight?: number
-
-  // Options
-  url?: string
 }
 
 // Default value for property
 // Значение по умолчанию для свойства
-export const defaultsImage = {
+export const defaults = {
+  ...defaultsImage,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  },
-  adaptiveGroup: 'main',
-  url: '/icons/'
+  }
 }
 
-// Image for property
+// Constructor for property
 // Конструктор для свойства
-export const propsImage = {
+export const props = {
+  ...propsImage,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    disabled: Boolean,
     adaptive: Boolean,
     turn: Boolean,
-    disabled: Boolean,
     hide: Boolean
     // :prop
-  },
-  value: [String, File],
-  coordinator: Array as PropType<number[]>,
-  size: [String, Number],
-  x: [String, Number],
-  y: [String, Number],
+  }
+  // Values
 
-  // Adaptive
-  adaptiveGroup: {
-    type: String,
-    default: defaultsImage.adaptiveGroup
-  },
-  adaptiveAlways: Boolean,
-  objectWidth: Number,
-  objectHeight: Number,
+  // Status
 
   // Options
-  url: {
-    type: String,
-    default: defaultsImage.url
-  }
 }

@@ -33,7 +33,7 @@
       "gradient-opacity": "{sys.opacity.hover}"
     },
     "active": {
-      "gradient-opacity": "{sys.opacity.dragged}"
+      "gradient-opacity": "{sys.opacity.pressed}"
     },
     "focus": {
       "gradient-opacity": "{sys.opacity.focus}"

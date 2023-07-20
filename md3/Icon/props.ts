@@ -1,8 +1,16 @@
 import { PropType } from 'vue'
 
+import {
+  defaultsIcon,
+  propsIcon,
+  PropsIconType,
+  subClassesIcon
+} from '../../constructors/Icon/props'
+
 // Type describing subclasses
 // Тип, описывающий подклассы
-export const subClassesImage = {
+export const subClasses = {
+  ...subClassesIcon,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -13,77 +21,60 @@ export const subClassesImage = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsImageType = {
+export type PropsType = PropsIconType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
-  adaptive?: boolean
-  turn?: boolean
+  rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  dynamic?: boolean
   disabled?: boolean
   hide?: boolean
+  animationType?: 'type1' | 'type2'
+  animationShow?: boolean
+  overlay?: boolean
+  start?: boolean
+  end?: boolean
+  high?: boolean
   // :type
-} & {
-  // Values
-  value?: string | File
-  coordinator?: [number, number?, number?, number?]
-  size?: 'auto' | 'contain' | 'cover' | string | number
-  x?: string | number
-  y?: string | number
-
-  // Adaptive
-  adaptiveGroup?: string
-  adaptiveAlways?: boolean
-  objectWidth?: number
-  objectHeight?: number
-
-  // Options
-  url?: string
 }
 
 // Default value for property
 // Значение по умолчанию для свойства
-export const defaultsImage = {
+export const defaults = {
+  ...defaultsIcon,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  },
-  adaptiveGroup: 'main',
-  url: '/icons/'
+  }
 }
 
-// Image for property
+// Constructor for property
 // Конструктор для свойства
-export const propsImage = {
+export const props = {
+  ...propsIcon,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    adaptive: Boolean,
-    turn: Boolean,
+    rounded: String as PropType<PropsType['rounded']>,
+    size: String as PropType<PropsType['size']>,
+    dynamic: Boolean,
     disabled: Boolean,
-    hide: Boolean
+    hide: Boolean,
+    animationType: String as PropType<PropsType['animationType']>,
+    animationShow: Boolean,
+    overlay: Boolean,
+    start: Boolean,
+    end: Boolean,
+    high: Boolean
     // :prop
-  },
-  value: [String, File],
-  coordinator: Array as PropType<number[]>,
-  size: [String, Number],
-  x: [String, Number],
-  y: [String, Number],
+  }
+  // Values
 
-  // Adaptive
-  adaptiveGroup: {
-    type: String,
-    default: defaultsImage.adaptiveGroup
-  },
-  adaptiveAlways: Boolean,
-  objectWidth: Number,
-  objectHeight: Number,
+  // Status
 
   // Options
-  url: {
-    type: String,
-    default: defaultsImage.url
-  }
 }

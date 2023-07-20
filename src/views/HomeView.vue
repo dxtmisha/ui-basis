@@ -1,4 +1,28 @@
 <template>
+  <md3-progress visible/>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-button icon="face"/>
+    <md3-button label="Label"/>
+    <md3-button icon="face" label="Label"/>
+    <md3-button icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+    <md3-button icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; align-items: center; gap: 16px; padding: 16px">
+    <md3-icon icon="face" style="border: solid 1px;"/>
+    <md3-icon icon="face" size="xs" style="border: solid 1px;"/>
+    <md3-icon icon="face" size="sm" style="border: solid 1px;"/>
+    <md3-icon icon="face" size="md" style="border: solid 1px;"/>
+    <md3-icon icon="face" size="lg" style="border: solid 1px;"/>
+    <md3-icon icon="face" size="xl" style="border: solid 1px;"/>
+  </div>
+  <div style="display: flex; align-items: center; gap: 16px; padding: 16px">
+    <md3-icon v-bind="image"/>
+    <md3-icon v-bind="image" size="xs"/>
+    <md3-icon v-bind="image" size="sm"/>
+    <md3-icon v-bind="image" size="md"/>
+    <md3-icon v-bind="image" size="lg"/>
+    <md3-icon v-bind="image" size="xl"/>
+  </div>
   <div style="display: flex; gap: 16px;">
     <md2-fab icon="face"/>
     <md2-fab label="label"/>
@@ -232,7 +256,7 @@
   </div>
   <div style="display: flex; gap: 16px; padding-top: 16px">
     <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected"
-                @click="selected=!selected"/>
+             @click="selected=!selected"/>
     <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected" outlined/>
     <md2-fab label="selected" icon="home" palette="deep-orange" :selected="selected" text/>
     <md2-fab label="selected" icon="home" palette="deep-orange"/>
@@ -299,6 +323,9 @@ import Md2Button from '../../md2/Button/Md2Button.vue'
 import { ImageIcon } from '../../constructors/Image/ImageIcon'
 import Md2Chip from '../../md2/Chip/Md2Chip.vue'
 import Md2Fab from '../../md2/Fab/Md2Fab.vue'
+import Md3Button from '../../md3/Button/Md3Button.vue'
+import Md3Icon from '../../md3/Icon/Md3Icon.vue'
+import Md3Progress from '../../md3/Progress/Md3Progress.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -306,6 +333,9 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md3Progress,
+    Md3Icon,
+    Md3Button,
     Md2Fab,
     Md2Chip,
     Md2Button

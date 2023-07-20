@@ -85,7 +85,7 @@
 
 @mixin mixinIconOverlay {
   &--overlay {
-    background-color: v('??sys.color', var(--sys-color));
+    @include background(v('??sys.color', var(--sys-color)));
   }
 }
 

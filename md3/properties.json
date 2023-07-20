@@ -8,7 +8,7 @@
       "shade": {
         "_category": "shade"
       },
-      "color": {
+      "palette": {
         "_category": "palette",
         "_default": {
           "basic": "40",
@@ -65,9 +65,9 @@
           "_type": "var"
         },
         "sys": {
-          "color": {
+          "palette": {
             "basic": {
-              "value": "{?dark.sys.color}",
+              "value": "{?dark.sys.palette}",
               "_type": "link",
               "_modification": "link"
             }
@@ -80,5 +80,6 @@
     "_type": "class",
     "_category": "class",
     "_name": "?theme"
-  }
+  },
+  "file|components": "tokens/components"
 }

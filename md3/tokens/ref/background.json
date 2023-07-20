@@ -1,7 +1,7 @@
 {
-  "1": "rgb({sys.color.surfaceContainerLow})",
-  "2": "rgb({sys.color.surfaceContainer})",
-  "3": "rgb({sys.color.surfaceContainerHigh})",
-  "4": "rgb({sys.color.surfaceContainerHigh})",
-  "5": "rgb({sys.color.surfaceContainerHighest})"
+  "1": "rgb({sys.palette.surfaceContainerLow})",
+  "2": "rgb({sys.palette.surfaceContainer})",
+  "3": "rgb({sys.palette.surfaceContainerHigh})",
+  "4": "rgb({sys.palette.surfaceContainerHigh})",
+  "5": "rgb({sys.palette.surfaceContainerHighest})"
 }

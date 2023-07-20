@@ -1,8 +1,16 @@
 import { PropType } from 'vue'
 
+import {
+  defaultsProgress,
+  propsProgress,
+  PropsProgressType,
+  subClassesProgress
+} from '../../constructors/Progress/props'
+
 // Type describing subclasses
 // Тип, описывающий подклассы
-export const subClassesProgress = {
+export const subClasses = {
+  ...subClassesProgress,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -14,7 +22,7 @@ export const subClassesProgress = {
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsProgressType = {
+export type PropsType = PropsProgressType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
@@ -25,21 +33,12 @@ export type PropsProgressType = {
   dense?: boolean
   inverse?: boolean
   // :type
-} & {
-  // Values
-  value?: number
-  max?: number
-
-  // Status
-  visible?: boolean
-
-  // Options
-  delay?: number
 }
 
 // Default value for property
 // Значение по умолчанию для свойства
-export const defaultsProgress = {
+export const defaults = {
+  ...defaultsProgress,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -48,48 +47,37 @@ export const defaultsProgress = {
     indeterminate: 'type1',
     position: 'top'
     // :default
-  },
-  max: 100,
-  delay: 480
+  }
 }
 
-// Progress for property
+// Constructor for property
 // Конструктор для свойства
-export const propsProgress = {
+export const props = {
+  ...propsProgress,
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
     linear: {
       type: Boolean,
-      default: defaultsProgress?.linear
+      default: defaults?.linear
     },
     circular: Boolean,
     indeterminate: {
-      type: String as PropType<PropsProgressType['indeterminate']>,
-      default: defaultsProgress?.indeterminate
+      type: String as PropType<PropsType['indeterminate']>,
+      default: defaults?.indeterminate
     },
     position: {
-      type: String as PropType<PropsProgressType['position']>,
-      default: defaultsProgress?.position
+      type: String as PropType<PropsType['position']>,
+      default: defaults?.position
     },
     dense: Boolean,
     inverse: Boolean
     // :prop
-  },
+  }
   // Values
-  value: Number,
-  max: {
-    type: Number,
-    default: defaultsProgress?.max
-  },
 
   // Status
-  visible: Boolean,
 
   // Options
-  delay: {
-    type: Number,
-    default: defaultsProgress?.delay
-  }
 }

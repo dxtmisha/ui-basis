@@ -1,0 +1,11 @@
+{
+  "height": "{ref.spacing.1}",
+  "background-color": "{sys.palette.primary}",
+  "linear": {
+    "background-color": "{sys.palette.surfaceContainerHighest}"
+  },
+  "circular": {
+    "inset": "{ref.spacing.1}",
+    "width": "{ref.spacing.12}"
+  }
+}
