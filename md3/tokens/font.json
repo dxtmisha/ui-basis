@@ -1,0 +1,122 @@
+{
+  "bodySmall": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.sm}",
+    "lineHeight": "{ref.lineHeight.sm}",
+    "letterSpacing": "{ref.letterSpacing.lg}",
+    "textTransform": "none"
+  },
+  "bodyMedium": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.md}",
+    "lineHeight": "{ref.lineHeight.md}",
+    "letterSpacing": "{ref.letterSpacing.md}",
+    "textTransform": "none"
+  },
+  "bodyLarge": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.lg}",
+    "lineHeight": "{ref.lineHeight.lg}",
+    "letterSpacing": "{ref.letterSpacing.xl}",
+    "textTransform": "none"
+  },
+  "labelSmall": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.bold}",
+    "fontSize": "{ref.font.size.xs}",
+    "lineHeight": "{ref.lineHeight.sm}",
+    "letterSpacing": "{ref.letterSpacing.xl}",
+    "textTransform": "none"
+  },
+  "labelMedium": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.bold}",
+    "fontSize": "{ref.font.size.sm}",
+    "lineHeight": "{ref.lineHeight.sm}",
+    "letterSpacing": "{ref.letterSpacing.xl}",
+    "textTransform": "none"
+  },
+  "labelLarge": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.bold}",
+    "fontSize": "{ref.font.size.md}",
+    "lineHeight": "{ref.lineHeight.md}",
+    "letterSpacing": "{ref.letterSpacing.xs}",
+    "textTransform": "none"
+  },
+  "titleSmall": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.bold}",
+    "fontSize": "{ref.font.size.md}",
+    "lineHeight": "{ref.lineHeight.md}",
+    "letterSpacing": "{ref.letterSpacing.xs}",
+    "textTransform": "none"
+  },
+  "titleMedium": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.bold}",
+    "fontSize": "{ref.font.size.lg}",
+    "lineHeight": "{ref.lineHeight.lg}",
+    "letterSpacing": "{ref.letterSpacing.sm}",
+    "textTransform": "none"
+  },
+  "titleLarge": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.xl}",
+    "lineHeight": "{ref.lineHeight.xl}",
+    "letterSpacing": "{ref.letterSpacing.none}",
+    "textTransform": "none"
+  },
+  "headlineSmall": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.headline.sm}",
+    "lineHeight": "{ref.lineHeight.headline.sm}",
+    "letterSpacing": "{ref.letterSpacing.headline.sm}",
+    "textTransform": "none"
+  },
+  "headlineMedium": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.headline.md}",
+    "lineHeight": "{ref.lineHeight.headline.md}",
+    "letterSpacing": "{ref.letterSpacing.headline.md}",
+    "textTransform": "none"
+  },
+  "headlineLarge": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.headline.lg}",
+    "lineHeight": "{ref.lineHeight.headline.lg}",
+    "letterSpacing": "{ref.letterSpacing.headline.lg}",
+    "textTransform": "none"
+  },
+  "displaySmall": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.display.sm}",
+    "lineHeight": "{ref.lineHeight.display.sm}",
+    "letterSpacing": "{ref.letterSpacing.display.sm}",
+    "textTransform": "none"
+  },
+  "displayMedium": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.display.md}",
+    "lineHeight": "{ref.lineHeight.display.md}",
+    "letterSpacing": "{ref.letterSpacing.display.md}",
+    "textTransform": "none"
+  },
+  "displayLarge": {
+    "fontFamily": "{ref.font.family.roboto}",
+    "fontWeight": "{ref.font.weight.normal}",
+    "fontSize": "{ref.font.size.display.lg}",
+    "lineHeight": "{ref.lineHeight.display.lg}",
+    "letterSpacing": "{ref.letterSpacing.display.lg}",
+    "textTransform": "none"
+  }
+}

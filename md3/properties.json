@@ -30,6 +30,12 @@
     "_type": "var",
     "_category": "root"
   },
+  "font": {
+    "value": {
+      "file|main": "tokens/font.json"
+    },
+    "_category": "class"
+  },
   "theme": {
     "value": {
       "dark": {
