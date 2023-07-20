@@ -1,0 +1,7 @@
+{
+  "1": "rgb({sys.color.surfaceContainerLow})",
+  "2": "rgb({sys.color.surfaceContainer})",
+  "3": "rgb({sys.color.surfaceContainerHigh})",
+  "4": "rgb({sys.color.surfaceContainerHigh})",
+  "5": "rgb({sys.color.surfaceContainerHighest})"
+}

@@ -30,6 +30,12 @@
     "_type": "var",
     "_category": "root"
   },
+  "elevation": {
+    "value": {
+      "file|main": "tokens/elevation.json"
+    },
+    "_category": "class"
+  },
   "font": {
     "value": {
       "file|main": "tokens/font.json"
@@ -39,11 +45,23 @@
   "theme": {
     "value": {
       "dark": {
+        "ref": {
+          "shadow": {
+            "basic": {
+              "value": "{?dark.ref.shadow}",
+              "_type": "link",
+              "_modification": "link"
+            }
+          },
+          "_type": "var"
+        },
         "sys": {
-          "basic": {
-            "value": "{?dark.sys.color}",
-            "_type": "link",
-            "_modification": "link"
+          "color": {
+            "basic": {
+              "value": "{?dark.sys.color}",
+              "_type": "link",
+              "_modification": "link"
+            }
           },
           "_type": "var"
         },
