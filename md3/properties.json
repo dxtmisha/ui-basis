@@ -2,6 +2,9 @@
   "ref": {
     "value": {
       "file|main": "tokens/ref.json",
+      "screen": {
+        "_category": "media"
+      },
       "shade": {
         "_category": "shade"
       },
