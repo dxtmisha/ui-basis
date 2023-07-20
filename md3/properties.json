@@ -45,6 +45,12 @@
     },
     "_category": "class"
   },
+  "rounded": {
+    "value": {
+      "file|main": "tokens/rounded.json"
+    },
+    "_category": "class"
+  },
   "theme": {
     "value": {
       "dark": {

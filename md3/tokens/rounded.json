@@ -1,0 +1,26 @@
+{
+  "none": {
+    "border-radius": "{sys.rounded.none}"
+  },
+  "standard": {
+    "border-radius": "{sys.rounded.standard}"
+  },
+  "sm": {
+    "border-radius": "{sys.rounded.sm}"
+  },
+  "md": {
+    "border-radius": "{sys.rounded.md}"
+  },
+  "lg": {
+    "border-radius": "{sys.rounded.lg}"
+  },
+  "xl": {
+    "border-radius": "{sys.rounded.xl}"
+  },
+  "2xl": {
+    "border-radius": "{sys.rounded.2xl}"
+  },
+  "full": {
+    "border-radius": "{sys.rounded.full}"
+  }
+}
