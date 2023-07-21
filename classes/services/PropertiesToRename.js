@@ -12,6 +12,12 @@ const SUPPORT_RENAME = [
   'property'
 ]
 
+const SUPPORT_ADD_NAME = [
+  'design',
+  'component',
+  'class'
+]
+
 /**
  * Class for working with the property name
  *
@@ -117,6 +123,9 @@ module.exports = class PropertiesToRename {
         case 'subclass':
           item[key] = this.__toNameForSubclass(item, name)
           break
+        case 'class':
+          item[key] = this.__toNameForClass(parents, item, name)
+          break
         case 'media':
         case 'media-max':
           item[key] = this.__toNameForMedia(item, name, design)
@@ -193,7 +202,7 @@ module.exports = class PropertiesToRename {
     return forEach(parents, parent => {
       if (
         !variable ||
-        ['design', 'component'].indexOf(parent.item?.[key]) !== -1 ||
+        SUPPORT_ADD_NAME.indexOf(parent.item?.[key]) !== -1 ||
         variable.indexOf(parent.item?.[key]) !== -1
       ) {
         if (SUPPORT_RENAME.indexOf(parent.item?.[key]) !== -1) {
@@ -289,6 +298,24 @@ module.exports = class PropertiesToRename {
       return `& .${name}`
     } else {
       return `&__${name}`
+    }
+  }
+
+  /**
+   * Name transformation for the class-in type
+   *
+   * Преобразование имени для типа class-in
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {string} name base property name / базовое название свойства
+   * @private
+   */
+  __toNameForClass (parents, item, name) {
+    if (item?.[PropertiesTool.getKeyFull()]) {
+      return `& .${name}`
+    } else {
+      return `& .${parents?.[0]?.name}-${name}`
     }
   }
 

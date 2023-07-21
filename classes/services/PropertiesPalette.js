@@ -94,8 +94,8 @@ module.exports = class PropertiesPalette {
       ) {
         const name = item?.[keyName]
         const code = data.find(code => code.name === name)
-        const theme = parents.find(parent => parent.item[keyCategory] === 'theme')
-        const value = `--${design}${theme ? `-${theme.name}` : ''}-palette-${item?.value?.match(/\.([^.{}]+)}/)?.[1]}`
+        const theme = parents.find(parent => parent.item[keyCategory] === 'theme')?.name || 'basic'
+        const value = `--${design}-palette-${this.__getNameCode(theme, item?.value?.match(/\.([^.{}]+)}/)?.[1])}`
 
         if (code) {
           if (theme) {
@@ -141,8 +141,8 @@ module.exports = class PropertiesPalette {
   toTheme (root = undefined, theme = 'basic') {
     this.palette.forEach(palette => {
       const list = root
-        ? this.__getByParent(root, `& .?${KEY_PALETTE}`)
-        : this.__getByParent(palette.parents?.[0]?.item?.value)
+        ? this.__getByParent(root)
+        : this.__getByParent(palette.parents?.[0]?.item?.value, 'class')
 
       if (list) {
         forEach(palette.item?.value, (items, name) => {
@@ -161,36 +161,29 @@ module.exports = class PropertiesPalette {
     })
   }
 
+  __getNameCode (theme, code) {
+    return `${theme}-${code}`
+  }
+
   /**
    * Adding a group of properties based on the design name
    *
    * Добавление группы свойств по названию дизайна
    * @param {Object<string, *>} parent the property object, by which it will be added / объект свойства, по которому будет добавлять
-   * @param {string} name base property name / базовое название свойства
+   * @param {string} category base property name / базовое название свойства
    * @return {Object<string, *>}
    * @private
    */
-  __getByParent (parent, name = undefined) {
+  __getByParent (parent, category = undefined) {
     if (parent) {
-      if (name) {
-        parent[name] = {
-          value: {},
-          [PropertiesTool.getKeyVariable()]: 'scss'
-        }
-
-        return parent?.[name]?.value
-      } else {
-        parent[KEY_PALETTE] = {
-          value: {},
-          [PropertiesTool.getKeyCategory()]: 'class',
-          [PropertiesTool.getKeyVariable()]: 'component'
-        }
-
-        return parent?.[KEY_PALETTE]?.value
+      parent[KEY_PALETTE] = {
+        value: {},
+        [PropertiesTool.getKeyCategory()]: category,
+        [PropertiesTool.getKeyVariable()]: category ? 'component' : 'class'
       }
     }
 
-    return undefined
+    return parent?.[KEY_PALETTE]?.value
   }
 
   /**
@@ -228,9 +221,7 @@ module.exports = class PropertiesPalette {
     const keyVariable = PropertiesTool.getKeyVariable()
 
     forEach(items?.value, (item, code) => {
-      const nameCode = `${theme === 'basic' ? '' : `${theme}-palette-`}${code}`
-
-      classItem[nameCode] = {
+      classItem[this.__getNameCode(theme, code)] = {
         value: `{${palette}.${code}}`,
         [keyCategory]: KEY_CATEGORY,
         [keyVariable]: 'var'
@@ -255,7 +246,7 @@ module.exports = class PropertiesPalette {
       defaultValue in classItem
     ) {
       classItem['sys-palette'] = {
-        ...classItem[defaultValue],
+        ...classItem[this.__getNameCode(theme, defaultValue)],
         [PropertiesTool.getKeyName()]: 'sys-palette',
         [PropertiesTool.getKeyFull()]: true
       }
@@ -268,14 +259,14 @@ module.exports = class PropertiesPalette {
    * Проверка значения по умолчанию
    * @param {Object<string,string>|string} item the value to be checked / проверяемое значение
    * @param {string} theme the name of the theme / название темы
-   * @return {Object<string,string>}
+   * @return {string}
    * @private
    */
   __getDefaultValue (item, theme) {
     const keyDefault = PropertiesTool.getKeyDefault()
 
     if (keyDefault in item) {
-      if (item[keyDefault] === 'object') {
+      if (typeof item[keyDefault] === 'object') {
         return item[keyDefault]?.[theme]
       } else {
         return item[keyDefault]

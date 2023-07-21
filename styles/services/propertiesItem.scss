@@ -154,7 +154,7 @@ $designsClassName: 'class' !default;
     @include initVirtual($property) {
       @content($value);
     }
-  } @else if ($type =='subclass') {
+  } @else if ($type =='subclass' or $type =='class') {
     @include initSubclass($property) {
       @content($value);
     }
