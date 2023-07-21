@@ -271,7 +271,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
         this.checkByCategory(item)
       ) ||
       this.properties.isExceptions(item, prop),
-      !!prop
+      !!prop && this.checkByCategory(item)
     )
 
     if (
@@ -372,7 +372,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
 
     properties.forEach(({ name }) => {
       if (this.props?.[name]) {
-        data.push(name)
+        data.push(`${name}:${this.props[name]}`)
       }
     })
 
