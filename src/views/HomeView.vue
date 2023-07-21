@@ -38,9 +38,12 @@
     <md3-button outlined palette="tertiary" icon="face"/>
     <md3-button outlined palette="tertiary" label="Label"/>
     <md3-button outlined palette="tertiary" icon="face" label="Label"/>
-    <md3-button outlined palette="tertiary" icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
-    <md3-button outlined palette="tertiary" icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
-    <md3-button outlined palette="tertiary" icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+    <md3-button outlined palette="tertiary" icon="face" label="Selected" :selected="selected"
+                @click="selected = !selected"/>
+    <md3-button outlined palette="tertiary" icon="face" label="Progress" :progress="progress"
+                @click="progress = !progress"/>
+    <md3-button outlined palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                :selected="selected"/>
     <md3-button outlined palette="tertiary" icon="face" label="Disabled" disabled/>
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">
@@ -56,10 +59,171 @@
     <md3-button text palette="tertiary" icon="face"/>
     <md3-button text palette="tertiary" label="Label"/>
     <md3-button text palette="tertiary" icon="face" label="Label"/>
-    <md3-button text palette="tertiary" icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
-    <md3-button text palette="tertiary" icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
-    <md3-button text palette="tertiary" icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+    <md3-button text palette="tertiary" icon="face" label="Selected" :selected="selected"
+                @click="selected = !selected"/>
+    <md3-button text palette="tertiary" icon="face" label="Progress" :progress="progress"
+                @click="progress = !progress"/>
+    <md3-button text palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                :selected="selected"/>
     <md3-button text palette="tertiary" icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-button elevated icon="face"/>
+    <md3-button elevated label="Label"/>
+    <md3-button elevated icon="face" label="Label"/>
+    <md3-button elevated icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+    <md3-button elevated icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+    <md3-button elevated icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+    <md3-button elevated icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-button elevated palette="tertiary" icon="face"/>
+    <md3-button elevated palette="tertiary" label="Label"/>
+    <md3-button elevated palette="tertiary" icon="face" label="Label"/>
+    <md3-button elevated palette="tertiary" icon="face" label="Selected" :selected="selected"
+                @click="selected = !selected"/>
+    <md3-button elevated palette="tertiary" icon="face" label="Progress" :progress="progress"
+                @click="progress = !progress"/>
+    <md3-button elevated palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                :selected="selected"/>
+    <md3-button elevated palette="tertiary" icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-button tonal icon="face"/>
+    <md3-button tonal label="Label"/>
+    <md3-button tonal icon="face" label="Label"/>
+    <md3-button tonal icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+    <md3-button tonal icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+    <md3-button tonal icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+    <md3-button tonal icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-button tonal palette="tertiary" icon="face"/>
+    <md3-button tonal palette="tertiary" label="Label"/>
+    <md3-button tonal palette="tertiary" icon="face" label="Label"/>
+    <md3-button tonal palette="tertiary" icon="face" label="Selected" :selected="selected"
+                @click="selected = !selected"/>
+    <md3-button tonal palette="tertiary" icon="face" label="Progress" :progress="progress"
+                @click="progress = !progress"/>
+    <md3-button tonal palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                :selected="selected"/>
+    <md3-button tonal palette="tertiary" icon="face" label="Disabled" disabled/>
+  </div>
+  <div class="md3-theme--dark">
+    <div class="md3-elevation--1">
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button icon="face"/>
+        <md3-button label="Label"/>
+        <md3-button icon="face" label="Label"/>
+        <md3-button icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button palette="secondary" icon="face"/>
+        <md3-button palette="secondary" label="Label"/>
+        <md3-button palette="secondary" icon="face" label="Label"/>
+        <md3-button palette="secondary" icon="face" label="Selected" :selected="selected"
+                    @click="selected = !selected"/>
+        <md3-button palette="secondary" icon="face" label="Progress" :progress="progress"
+                    @click="progress = !progress"/>
+        <md3-button palette="secondary" icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button palette="tertiary" icon="face"/>
+        <md3-button palette="tertiary" label="Label"/>
+        <md3-button palette="tertiary" icon="face" label="Label"/>
+        <md3-button palette="tertiary" icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button palette="tertiary" icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                    :selected="selected"/>
+        <md3-button palette="tertiary" icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button outlined icon="face"/>
+        <md3-button outlined label="Label"/>
+        <md3-button outlined icon="face" label="Label"/>
+        <md3-button outlined icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button outlined icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button outlined icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+        <md3-button outlined icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button outlined palette="tertiary" icon="face"/>
+        <md3-button outlined palette="tertiary" label="Label"/>
+        <md3-button outlined palette="tertiary" icon="face" label="Label"/>
+        <md3-button outlined palette="tertiary" icon="face" label="Selected" :selected="selected"
+                    @click="selected = !selected"/>
+        <md3-button outlined palette="tertiary" icon="face" label="Progress" :progress="progress"
+                    @click="progress = !progress"/>
+        <md3-button outlined palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                    :selected="selected"/>
+        <md3-button outlined palette="tertiary" icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button text icon="face"/>
+        <md3-button text label="Label"/>
+        <md3-button text icon="face" label="Label"/>
+        <md3-button text icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button text icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button text icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+        <md3-button text icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button text palette="tertiary" icon="face"/>
+        <md3-button text palette="tertiary" label="Label"/>
+        <md3-button text palette="tertiary" icon="face" label="Label"/>
+        <md3-button text palette="tertiary" icon="face" label="Selected" :selected="selected"
+                    @click="selected = !selected"/>
+        <md3-button text palette="tertiary" icon="face" label="Progress" :progress="progress"
+                    @click="progress = !progress"/>
+        <md3-button text palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                    :selected="selected"/>
+        <md3-button text palette="tertiary" icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button elevated icon="face"/>
+        <md3-button elevated label="Label"/>
+        <md3-button elevated icon="face" label="Label"/>
+        <md3-button elevated icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button elevated icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button elevated icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+        <md3-button elevated icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button elevated palette="tertiary" icon="face"/>
+        <md3-button elevated palette="tertiary" label="Label"/>
+        <md3-button elevated palette="tertiary" icon="face" label="Label"/>
+        <md3-button elevated palette="tertiary" icon="face" label="Selected" :selected="selected"
+                    @click="selected = !selected"/>
+        <md3-button elevated palette="tertiary" icon="face" label="Progress" :progress="progress"
+                    @click="progress = !progress"/>
+        <md3-button elevated palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                    :selected="selected"/>
+        <md3-button elevated palette="tertiary" icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button tonal icon="face"/>
+        <md3-button tonal label="Label"/>
+        <md3-button tonal icon="face" label="Label"/>
+        <md3-button tonal icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+        <md3-button tonal icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+        <md3-button tonal icon="face" label="Selected + Progress" :progress="progress" :selected="selected"/>
+        <md3-button tonal icon="face" label="Disabled" disabled/>
+      </div>
+      <div style="display: flex; gap: 16px; padding: 16px">
+        <md3-button tonal palette="tertiary" icon="face"/>
+        <md3-button tonal palette="tertiary" label="Label"/>
+        <md3-button tonal palette="tertiary" icon="face" label="Label"/>
+        <md3-button tonal palette="tertiary" icon="face" label="Selected" :selected="selected"
+                    @click="selected = !selected"/>
+        <md3-button tonal palette="tertiary" icon="face" label="Progress" :progress="progress"
+                    @click="progress = !progress"/>
+        <md3-button tonal palette="tertiary" icon="face" label="Selected + Progress" :progress="progress"
+                    :selected="selected"/>
+        <md3-button tonal palette="tertiary" icon="face" label="Disabled" disabled/>
+      </div>
+    </div>
   </div>
   <div style="display: flex; align-items: center; gap: 16px; padding: 16px">
     <md3-icon icon="face" style="border: solid 1px;"/>

@@ -41,5 +41,20 @@
   "text": {
     "_category": "appearance"
   },
+  "elevated": {
+    "background-color": {
+      "_rename": "palette-background"
+    },
+    "_category": "appearance"
+  },
+  "tonal": {
+    "color": {
+      "_rename": "color"
+    },
+    "background-color": {
+      "_rename": "palette-background"
+    },
+    "_category": "appearance"
+  },
   "@@palette": "{palette}"
 }

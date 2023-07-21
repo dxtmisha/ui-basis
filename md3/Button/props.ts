@@ -25,10 +25,12 @@ export type PropsType = PropsButtonType & {
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
   filled?: boolean
   outlined?: boolean
+  text?: boolean
+  elevated?: boolean
+  tonal?: boolean
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   disabled?: boolean
-  text?: boolean
   selected?: boolean
   adaptive?: 'icon' | 'inscription'
   align?: 'left' | 'right' | 'center'
@@ -67,10 +69,12 @@ export const props = {
       default: defaults?.filled
     },
     outlined: Boolean,
+    text: Boolean,
+    elevated: Boolean,
+    tonal: Boolean,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     disabled: Boolean,
-    text: Boolean,
     selected: Boolean,
     adaptive: String as PropType<PropsType['adaptive']>,
     align: String as PropType<PropsType['align']>

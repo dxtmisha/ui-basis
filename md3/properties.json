@@ -55,6 +55,13 @@
     "value": {
       "dark": {
         "ref": {
+          "background": {
+            "basic": {
+              "value": "{?dark.ref.background}",
+              "_type": "link",
+              "_modification": "link"
+            }
+          },
           "shadow": {
             "basic": {
               "value": "{?dark.ref.shadow}",

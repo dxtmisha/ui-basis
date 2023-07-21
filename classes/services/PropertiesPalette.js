@@ -199,6 +199,7 @@ module.exports = class PropertiesPalette {
           if (index === 'basic') {
             classItem['sys-palette'] = this.__getDefaultData(classItem, item)
           } else {
+            console.log('classItem', classItem)
             classItem[`${index}`] = {
               value: {
                 'sys-palette': this.__getDefaultData(classItem, item)

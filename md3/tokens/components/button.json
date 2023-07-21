@@ -97,5 +97,39 @@
     "selected": {
       "basic": "{??outlined.selected}"
     }
+  },
+  "elevated": {
+    "background-color": "{sys.palette.surfaceContainerLow}",
+    "box-shadow": "{ref.shadow.1}",
+    "hover": {
+      "box-shadow": "{ref.shadow.2}",
+      "transition-duration": "{d.sys.transitionDuration.sm}"
+    },
+    "active": {
+      "box-shadow": "{ref.shadow.1}"
+    },
+    "selected": {
+      "background-color": "{sys.palette.surfaceContainerHigh}"
+    },
+    "disabled": {
+      "basic": "{??filled.disabled}"
+    }
+  },
+  "tonal": {
+    "color": "{sys.palette.onSecondaryContainer}",
+    "background-color": "{sys.palette.secondaryContainer}",
+    "gradient": "{sys.palette.onSecondaryContainer}",
+    "hover": {
+      "basic": "{??filled.hover}"
+    },
+    "active": {
+      "basic": "{??filled.active}"
+    },
+    "selected": {
+      "background-color": "{sys.palette.secondaryContainerVariant}"
+    },
+    "disabled": {
+      "basic": "{??filled.disabled}"
+    }
   }
 }
