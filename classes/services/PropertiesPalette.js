@@ -240,13 +240,14 @@ module.exports = class PropertiesPalette {
    */
   __addDefault (palette, classItem, theme) {
     const defaultValue = this.__getDefaultValue(palette?.item, theme)
+    const code = this.__getNameCode(theme, defaultValue)
 
     if (
       defaultValue &&
-      defaultValue in classItem
+      code in classItem
     ) {
       classItem['sys-palette'] = {
-        ...classItem[this.__getNameCode(theme, defaultValue)],
+        ...classItem[code],
         [PropertiesTool.getKeyName()]: 'sys-palette',
         [PropertiesTool.getKeyFull()]: true
       }
