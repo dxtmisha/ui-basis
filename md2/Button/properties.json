@@ -18,12 +18,22 @@
     "padding-right": "{??padding}",
     "text-overflow": "truncate"
   },
+  "disabled": {
+    "color": {
+      "_rename": "color"
+    }
+  },
   "contained": {
     "color": {
       "_rename": "color"
     },
     "background-color": {
       "_rename": "palette-background"
+    },
+    "disabled": {
+      "background-color": {
+        "_rename": "background-color"
+      }
     },
     "_category": "appearance",
     "_default": true

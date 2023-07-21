@@ -52,6 +52,7 @@
       "background-color": "{sys.palette.primaryVariant}"
     },
     "disabled": {
+      "color": "{sys.palette.disabled}",
       "color-opacity": "{sys.opacity.primary.disabled}",
       "background-color": "{sys.palette.disabled}",
       "background-opacity": "{sys.opacity.disabled}",
