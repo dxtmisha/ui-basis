@@ -106,6 +106,7 @@ module.exports = class PropertiesToRename {
     }) => {
       switch (item?.[keyVariable]) {
         case 'component':
+        case 'theme':
           if (typeof item?.value === 'object') {
             item[key] = this.__toNameForComponent(parents, item, name)
           }

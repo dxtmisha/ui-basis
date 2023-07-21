@@ -1,6 +1,7 @@
 const {
   forEach,
-  getColumn
+  getColumn,
+  isSelected
 } = require('../../functions/data')
 const { To } = require('../To')
 
@@ -145,8 +146,14 @@ module.exports = class PropertiesItems {
    * Searching for records with selected categories
    *
    * Поиск записей с выделенными категориями
-   * @param {string} category names of categories / названия категорий
-   * @return {{index:string,item:Object<string,*>,design:string}[]}
+   * @param {string|string[]} category names of categories / названия категорий
+   * @return {{
+   *   index: string,
+   *   name: string,
+   *   parents: Object<string,*>,
+   *   item: Object<string,*>,
+   *   design: string
+   * }[]}
    */
   findCategory (category) {
     const key = PropertiesTool.getKeyCategory()
@@ -158,9 +165,11 @@ module.exports = class PropertiesItems {
       parents,
       design
     }) => {
-      if (item?.[key] === category) {
+      if (isSelected(item?.[key], category)) {
         data.push({
           index: `${getColumn(parents, 'name').join('.')}.${name}`,
+          name,
+          parents,
           item,
           design
         })

@@ -75,7 +75,7 @@ module.exports = class PropertiesScss {
    * @return {string}
    */
   getClasses () {
-    return `$designsClasses: (${this.__getByCategory('class')});`
+    return `$designsClasses: (${this.__getByCategory(['class', 'theme'])});`
   }
 
   /**
@@ -138,6 +138,8 @@ module.exports = class PropertiesScss {
     data += `${this.getShade()}\r\n`
     data += `${this.getProperties()}\r\n`
 
+    console.info('PropertiesScss: end')
+
     return data
   }
 
@@ -184,7 +186,7 @@ module.exports = class PropertiesScss {
    * Returns a list of all records with the selected type
    *
    * Возвращает список всех записей с выбранным типом
-   * @param {string} category category names / названия категорий
+   * @param {string|string[]} category category names / названия категорий
    * @return {string}
    * @private
    */
@@ -363,7 +365,7 @@ module.exports = class PropertiesScss {
 
     this.palette.getListUsed()
       .forEach(property => {
-        data += `\r\n  '${property.name}': '${property.value}',`
+        data += `\r\n  '${property.name}': ('${property.value.join('\', \'')}'),`
       })
 
     return data

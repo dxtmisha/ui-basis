@@ -116,6 +116,8 @@ module.exports = class Properties {
     new PropertiesToLink(items).to()
     variable.to()
 
+    new PropertiesPalette(items).to()
+
     full.toFullValue()
     full.toFullValueByDesign()
     variable.toByVar()
@@ -125,7 +127,6 @@ module.exports = class Properties {
     rename.to()
     new PropertiesToMulti(items).to()
     new PropertiesToStyle(items).to()
-    new PropertiesPalette(items).to()
 
     rename.toByVar()
     value.toString()
@@ -136,6 +137,8 @@ module.exports = class Properties {
 
     rename.toByComponent()
     rename.toBySimilar()
+
+    console.info('Properties: end')
 
     return items.get()
   }

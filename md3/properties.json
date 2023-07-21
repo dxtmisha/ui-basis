@@ -12,7 +12,7 @@
         "_category": "palette",
         "_default": {
           "basic": "40",
-          ".?theme--dark": "80"
+          "dark": "80"
         }
       }
     },
@@ -30,8 +30,8 @@
     "value": {
       "file|main": "tokens/dark.json"
     },
-    "_type": "var",
-    "_category": "root"
+    "_type": "theme",
+    "_category": "theme"
   },
   "elevation": {
     "value": {
@@ -50,43 +50,6 @@
       "file|main": "tokens/rounded.json"
     },
     "_category": "class"
-  },
-  "theme": {
-    "value": {
-      "dark": {
-        "ref": {
-          "background": {
-            "basic": {
-              "value": "{?dark.ref.background}",
-              "_type": "link",
-              "_modification": "link"
-            }
-          },
-          "shadow": {
-            "basic": {
-              "value": "{?dark.ref.shadow}",
-              "_type": "link",
-              "_modification": "link"
-            }
-          },
-          "_type": "var"
-        },
-        "sys": {
-          "palette": {
-            "basic": {
-              "value": "{?dark.sys.palette}",
-              "_type": "link",
-              "_modification": "link"
-            }
-          },
-          "_type": "var"
-        },
-        "_type": "state"
-      }
-    },
-    "_type": "class",
-    "_category": "class",
-    "_name": "?theme"
   },
   "file|components": "tokens/components"
 }

@@ -97,7 +97,7 @@ $designsShade: () !default;
     $palette: getColorByPalette($color);
 
     @if ($palette != null) {
-      @return #{var(#{$palette}, #{toColorRbg($color)})};
+      @return getPaletteItem($palette, $color);
     } @else {
       $shade: getColorByShade($color);
 
@@ -107,6 +107,26 @@ $designsShade: () !default;
     }
   }
   @return #{var(--sys-palette, #{toColorRbg($color)})}
+}
+
+/// Returns value for palette
+///
+/// Возвращает значение для поиск нужный цветов
+/// @param {List} $palette
+/// @param {Color|String} $color
+/// @return {String}
+@function getPaletteItem($palette, $color) {
+  $value: #{toColorRbg($color)};
+
+  @if (meta.type-of($palette) == list) {
+    @each $name in $palette {
+      $value: #{var(#{$name}, #{$value})}
+    }
+
+    @return $value;
+  } @else {
+    @return #{var(#{$palette}, #{$value})};
+  }
 }
 
 /// Color conversion to rgb type

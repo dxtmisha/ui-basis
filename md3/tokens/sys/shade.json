@@ -8,5 +8,17 @@
   "fixed": "{ref.shade.90}",
   "fixedDim": "{ref.shade.80}",
   "onFixed": "{ref.shade.10}",
-  "onFixedVariant": "{ref.shade.30}"
+  "onFixedVariant": "{ref.shade.30}",
+  "dark": {
+    "normal": "{ref.shade.80}",
+    "normalVariant": "{ref.shade.60}",
+    "container": "{ref.shade.30}",
+    "containerVariant": "{ref.shade.10}",
+    "on": "{ref.shade.20}",
+    "onContainer": "{ref.shade.90}",
+    "fixed": "{ref.shade.90}",
+    "fixedDim": "{ref.shade.80}",
+    "onFixed": "{ref.shade.10}",
+    "onFixedVariant": "{ref.shade.30}"
+  }
 }

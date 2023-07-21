@@ -109,7 +109,7 @@
                 :selected="selected"/>
     <md3-button tonal palette="tertiary" icon="face" label="Disabled" disabled/>
   </div>
-  <div class="md3-theme--dark">
+  <div class="md3-dark">
     <div class="md3-elevation--1">
       <div style="display: flex; gap: 16px; padding: 16px">
         <md3-button icon="face"/>
