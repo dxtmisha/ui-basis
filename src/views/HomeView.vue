@@ -46,6 +46,51 @@
       <md3-chip tag="button" assist elevated icon="face" label="Readonly" readonly/>
       <md3-chip tag="button" assist elevated icon="face" label="Disabled" disabled/>
     </div>
+    filter
+    <div style="display: flex; gap: 16px; padding: 16px">
+      <md3-chip tag="button" filter icon="face"/>
+      <md3-chip tag="button" filter label="Label"/>
+      <md3-chip tag="button" filter icon="face" label="Label"/>
+      <md3-chip tag="button" filter icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+      <md3-chip tag="button" filter icon="face" label="Selected + Progress" :selected="selected" :progress="progress"/>
+      <md3-chip tag="button" filter icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+      <md3-chip tag="button" filter icon="face" label="Dragged" :dragged="dragged" @click="dragged = !dragged"/>
+      <md3-chip tag="button" filter icon="face" label="Readonly" readonly/>
+      <md3-chip tag="button" filter icon="face" label="Disabled" disabled/>
+    </div>
+    <div style="display: flex; gap: 16px; padding: 16px">
+      <md3-chip tag="button" filter elevated icon="face"/>
+      <md3-chip tag="button" filter elevated label="Label"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Label"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Selected + Progress" :selected="selected" :progress="progress"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Dragged" :dragged="dragged" @click="dragged = !dragged"/>
+      <md3-chip tag="button" filter elevated icon="face" label="Readonly" readonly/>
+      <md3-chip tag="button" filter elevated icon="face" label="Disabled" disabled/>
+    </div>
+    <div style="display: flex; gap: 16px; padding: 16px">
+      <md3-chip tag="button" filter palette="error" icon="face"/>
+      <md3-chip tag="button" filter palette="error" label="Label"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Label"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Selected + Progress" :selected="selected" :progress="progress"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Dragged" :dragged="dragged" @click="dragged = !dragged"/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Readonly" readonly/>
+      <md3-chip tag="button" filter palette="error" icon="face" label="Disabled" disabled/>
+    </div>
+    <div style="display: flex; gap: 16px; padding: 16px">
+      <md3-chip tag="button" filter palette="error" elevated icon="face"/>
+      <md3-chip tag="button" filter palette="error" elevated label="Label"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Label"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Selected + Progress" :selected="selected" :progress="progress"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Dragged" :dragged="dragged" @click="dragged = !dragged"/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Readonly" readonly/>
+      <md3-chip tag="button" filter palette="error" elevated icon="face" label="Disabled" disabled/>
+    </div>
     <div style="display: flex; gap: 16px; padding: 16px">
       <md3-button icon="face"/>
       <md3-button label="Label"/>

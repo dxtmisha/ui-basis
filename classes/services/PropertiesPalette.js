@@ -4,6 +4,7 @@ const {
 } = require('../../functions/data')
 
 const PropertiesTool = require('./PropertiesTool')
+const { To } = require('../To')
 
 const KEY_PALETTE = 'palette'
 const KEY_CATEGORY = 'color'
@@ -90,7 +91,7 @@ module.exports = class PropertiesPalette {
         typeof item?.value === 'string' &&
         item?.[keyCategory] !== KEY_CATEGORY &&
         item?.[keyVariable] === 'var' &&
-        list.indexOf(item?.value) !== -1
+        list.indexOf(To.kebabCase(item.value)) !== -1
       ) {
         const name = item?.[keyName]
         const code = data.find(code => code.name === name)

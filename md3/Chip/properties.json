@@ -6,9 +6,6 @@
   "height": {
     "_default": "md"
   },
-  "background-color": {
-    "_rename": "palette-background"
-  },
   "gradient": {
     "_rename": "palette-gradient"
   },
@@ -20,11 +17,33 @@
       "_rename": "palette-color"
     }
   },
+  "dragged": {
+    "_type": "state"
+  },
   "selected": {
-    "gradient": {
-      "_rename": "gradient"
+    "background-color": {
+      "_rename": "palette-background"
     },
     "_type": "state"
+  },
+  "elevated": {
+    "background-color": {
+      "_rename": "palette-background"
+    },
+    "_type": "state",
+    "_category": "appearance"
+  },
+  "assist": {
+    "_type": "state",
+    "_category": "location"
+  },
+  "filter": {
+    "_type": "state",
+    "_category": "location"
+  },
+  "suggestion": {
+    "_type": "state",
+    "_category": "location"
   },
   "@@palette": "{palette}"
 }

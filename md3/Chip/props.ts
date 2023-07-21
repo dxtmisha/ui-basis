@@ -24,13 +24,15 @@ export type PropsType = PropsChipType & {
   // :type
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
   selected?: boolean
+  elevated?: boolean
+  assist?: boolean
+  filter?: boolean
+  suggestion?: boolean
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   dragged?: boolean
   progress?: boolean
   disabled?: boolean
-  elevated?: boolean
-  assist?: boolean
   readonly?: boolean
   // :type
 }
@@ -61,13 +63,15 @@ export const props = {
       default: defaults?.height
     },
     selected: Boolean,
+    elevated: Boolean,
+    assist: Boolean,
+    filter: Boolean,
+    suggestion: Boolean,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
     progress: Boolean,
     disabled: Boolean,
-    elevated: Boolean,
-    assist: Boolean,
     readonly: Boolean
     // :prop
   }

@@ -66,6 +66,10 @@
     "active": {
       "box-shadow": "{ref.shadow.2}"
     },
+    "selected": {
+      "background-color": "{sys.palette.secondaryContainer}",
+      "gradient": "{sys.palette.onSecondaryContainer}"
+    },
     "disabled": {
       "background-color": "{sys.palette.onSurfaceVariant}",
       "background-opacity": "{sys.opacity.012}"
@@ -80,5 +84,13 @@
         "box-shadow": "{ref.shadow.2}"
       }
     }
+  },
+  "filter": {
+    "dragged": {
+      "box-shadow": "{ref.shadow.4}"
+    }
+  },
+  "suggestion": {
+    "basic": "{??filter}"
   }
 }
