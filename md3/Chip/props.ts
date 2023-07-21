@@ -29,6 +29,8 @@ export type PropsType = PropsChipType & {
   dragged?: boolean
   progress?: boolean
   disabled?: boolean
+  elevated?: boolean
+  assist?: boolean
   readonly?: boolean
   // :type
 }
@@ -64,6 +66,8 @@ export const props = {
     dragged: Boolean,
     progress: Boolean,
     disabled: Boolean,
+    elevated: Boolean,
+    assist: Boolean,
     readonly: Boolean
     // :prop
   }

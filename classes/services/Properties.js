@@ -37,8 +37,6 @@ module.exports = class Properties {
     this.items = new PropertiesItems(
       cache ? this.__initCache() : this.__init()
     )
-
-    this.palette = new PropertiesPalette(this.items)
   }
 
   /**
@@ -60,7 +58,7 @@ module.exports = class Properties {
   getScss () {
     return new PropertiesScss(
       this.items,
-      this.palette
+      new PropertiesPalette(this.items)
     ).get()
   }
 

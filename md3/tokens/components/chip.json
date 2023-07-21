@@ -41,11 +41,12 @@
     "background-color": "{sys.palette.secondaryContainer}",
     "gradient": "{sys.palette.onSecondaryContainer}",
     "before": {
-      "opacity": "0"
+      "opacity": "0",
+      "transition-duration": "{d.sys.transitionDuration.sm}"
     }
   },
   "progress": {
-    "basic": "{?button.progress}"
+    "color-opacity": "{sys.opacity.disabled}"
   },
   "disabled": {
     "color": "{sys.palette.onSurface}",
@@ -54,6 +55,30 @@
     "transition-duration": "{d.sys.transitionDuration.sm}",
     "#icon": {
       "color": "inherit"
+    }
+  },
+  "elevated": {
+    "background-color": "{sys.palette.surfaceContainerLow}",
+    "box-shadow": "{ref.shadow.1}",
+    "before": {
+      "display": "none"
+    },
+    "active": {
+      "box-shadow": "{ref.shadow.2}"
+    },
+    "disabled": {
+      "background-color": "{sys.palette.onSurfaceVariant}",
+      "background-opacity": "{sys.opacity.012}"
+    }
+  },
+  "assist": {
+    "dragged": {
+      "box-shadow": "none"
+    },
+    "elevated": {
+      "dragged": {
+        "box-shadow": "{ref.shadow.2}"
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ import { getRef } from '../functions/ref'
 
 import {
   DesignProperties,
-  PropertiesItemType,
+  PropertiesItemType, PropertiesListType,
   PropertiesStateType
 } from './DesignProperties'
 
@@ -13,6 +13,7 @@ import {
   CallbackOrAnyType
 } from '../constructors/types'
 import { RefOrNormalType } from '../constructors/typesRef'
+import { CacheLive } from './CacheLive'
 
 export type ClassesItemType = AssociativeType<boolean>
 
@@ -180,7 +181,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
       return {
         main: {
           ...this.classesMain.value,
-          ...this.classesProperties.value
+          ...this.getClassesProperties()
         },
         ...this.classesSubClasses.value
       }
@@ -201,22 +202,6 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
       }
     }
   )
-
-  /**
-   * List of active state classes
-   *
-   * Список активных классов состояний
-   * @protected
-   */
-  protected classesProperties = computed<ClassesItemType>(() => {
-    const data: ClassesItemType = {}
-
-    this.properties.get()?.forEach(
-      item => Object.assign(data, this.toClassName(item))
-    )
-
-    return data
-  })
 
   protected classesSubClasses = computed<ClassesSubClassesListType<C>>(() => {
     const classBasic = this.getName()
@@ -274,7 +259,10 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
 
     className.push(item.index)
 
-    if (
+    this.toClassNameByState(
+      classes,
+      item,
+      className,
       (
         is && (
           prop === true ||
@@ -282,10 +270,9 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
         ) &&
         this.checkByCategory(item)
       ) ||
-      this.properties.isExceptions(item, prop)
-    ) {
-      this.toClassNameByState(classes, item, className)
-    }
+      this.properties.isExceptions(item, prop),
+      !!prop
+    )
 
     if (
       is &&
@@ -306,21 +293,50 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * @param data list of active classes / список активных классов
    * @param item current property / текущее свойство
    * @param className array of class names / массив с названиями классов
+   * @param active fulfillment of the condition / выполненности условия
+   * @param next conditions for further verification / условия для дальнейшей проверки
    * @protected
    */
   protected toClassNameByState (
     data: ClassesItemType,
     item: PropertiesItemType | PropertiesStateType,
-    className: string[]
+    className: string[],
+    active: boolean,
+    next: boolean
   ): this {
     const index = this.jsonState(this.getClassName(item, className))
 
-    data[index] = true
-    item.state?.forEach(
-      state => Object.assign(data, this.toClassName(state, [index]))
-    )
+    if (active) {
+      data[index] = true
+    }
+
+    if (next) {
+      item.state?.forEach(
+        state => Object.assign(data, this.toClassName(state, [index]))
+      )
+    }
 
     return this
+  }
+
+  /**
+   * List of active state classes
+   *
+   * Список активных классов состояний
+   * @protected
+   */
+  protected getClassesProperties () {
+    const properties = this.properties.get()
+
+    return CacheLive.get(this.getPropsActive(properties), () => {
+      const data: ClassesItemType = {}
+
+      properties?.forEach(
+        item => Object.assign(data, this.toClassName(item))
+      )
+
+      return data
+    })
   }
 
   /**
@@ -342,6 +358,25 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
     } else {
       return className
     }
+  }
+
+  /**
+   * Returns a string for the cache of the element state
+   *
+   * Возвращает строку для кэша состояния элемента
+   * @param properties list of available properties / список доступных свойств
+   * @private
+   */
+  private getPropsActive (properties: PropertiesListType): string {
+    const data: string[] = [this.getName()]
+
+    properties.forEach(({ name }) => {
+      if (this.props?.[name]) {
+        data.push(name)
+      }
+    })
+
+    return data.join('|')
   }
 
   /**
