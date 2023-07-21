@@ -121,7 +121,7 @@ module.exports = class PropertiesToRename {
           item[key] = this.__toNameForState(item, name)
           break
         case 'subclass':
-          item[key] = this.__toNameForSubclass(item, name)
+          item[key] = this.__toNameForSubclass(parents, item, name)
           break
         case 'class':
           item[key] = this.__toNameForClass(parents, item, name)
@@ -170,6 +170,19 @@ module.exports = class PropertiesToRename {
     this.items.cache(FILE_CACHE_RENAME_SIMILAR)
 
     return this
+  }
+
+  /**
+   * Checks if the top-level type is a state
+   *
+   * Проверяет, является ли тип верхнего уровня - это state
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @return {boolean}
+   * @private
+   */
+  __isParentsState (parents) {
+    return parents[parents.length - 1].item?.[PropertiesTool.getKeyVariable()] === 'state'
   }
 
   /**
@@ -288,14 +301,22 @@ module.exports = class PropertiesToRename {
    * Name transformation for the subclass type
    *
    * Преобразование имени для типа subclass
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
    * @param {Object<string,*>} item current element / текущий элемент
    * @param {string} name base property name / базовое название свойства
    * @return {string}
    * @private
    */
-  __toNameForSubclass (item, name) {
+  __toNameForSubclass (parents, item, name) {
     if (item?.[PropertiesTool.getKeyFull()]) {
       return `& .${name}`
+    } else if (this.__isParentsState(parents)) {
+      const nameParents = this.__getParentsName(parents, ['subclass'])
+        .join('__')
+        .replace('__', '-')
+
+      return `& .${nameParents}__${name}`
     } else {
       return `&__${name}`
     }

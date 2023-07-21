@@ -1,0 +1,30 @@
+{
+  "basic": "{d.chip}",
+  "padding": {
+    "_type": "var"
+  },
+  "height": {
+    "_default": "md"
+  },
+  "background-color": {
+    "_rename": "palette-background"
+  },
+  "gradient": {
+    "_rename": "palette-gradient"
+  },
+  "#inscription": {
+    "basic": "{?button.inscription}"
+  },
+  "#icon": {
+    "color": {
+      "_rename": "palette-color"
+    }
+  },
+  "selected": {
+    "gradient": {
+      "_rename": "gradient"
+    },
+    "_type": "state"
+  },
+  "@@palette": "{palette}"
+}

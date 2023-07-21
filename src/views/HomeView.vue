@@ -1,6 +1,15 @@
 <template>
   <md3-progress visible/>
   <div style="display: flex; gap: 16px; padding: 16px">
+    <md3-chip icon="face"/>
+    <md3-chip label="Label"/>
+    <md3-chip icon="face" label="Label"/>
+    <md3-chip icon="face" label="Selected" :selected="selected" @click="selected = !selected"/>
+    <md3-chip icon="face" label="Progress" :progress="progress" @click="progress = !progress"/>
+    <md3-chip icon="face" label="Dragged" :dragged="dragged" @click="dragged = !dragged"/>
+    <md3-chip icon="face" label="Disabled" disabled/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
     <md3-button icon="face"/>
     <md3-button label="Label"/>
     <md3-button icon="face" label="Label"/>
@@ -544,6 +553,7 @@ import Md2Fab from '../../md2/Fab/Md2Fab.vue'
 import Md3Button from '../../md3/Button/Md3Button.vue'
 import Md3Icon from '../../md3/Icon/Md3Icon.vue'
 import Md3Progress from '../../md3/Progress/Md3Progress.vue'
+import Md3Chip from '../../md3/Chip/Md3Chip.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -551,6 +561,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md3Chip,
     Md3Progress,
     Md3Icon,
     Md3Button,
@@ -573,8 +584,9 @@ export default defineComponent({
       hide: ref<boolean>(false),
       turn: ref<boolean>(false),
       selected: ref<boolean>(false),
-      disabled: ref<boolean>(false),
-      progress: ref<boolean>(false)
+      dragged: ref<boolean>(false),
+      progress: ref<boolean>(false),
+      disabled: ref<boolean>(false)
     }
   }
 })
