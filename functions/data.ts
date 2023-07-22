@@ -303,7 +303,7 @@ export function splice<T = any> (
           init = true
           replaceRecursive(data, item)
 
-          if (isDelete) {
+          if (isDelete && !(index in (item as Record<any, any>))) {
             delete data[index]
           }
         } else if (init) {

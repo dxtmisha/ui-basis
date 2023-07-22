@@ -1,13 +1,13 @@
 import { computed, ComputedRef, VNode } from 'vue'
 
 import { Design, DesignPropsExtendedType, DesignPropsRefsType } from '../../classes/Design'
+import { DesignClasses } from '../../classes/DesignClasses'
 import { DesignComponents } from '../../classes/DesignComponents'
 
 import {
   ButtonComponentsInterface,
   ButtonPropsValueType
 } from './types'
-import { DesignClasses } from '../../classes/DesignClasses'
 
 import { PropsProgressType } from '../Progress/props'
 
@@ -19,7 +19,7 @@ export class ButtonProgress<
   M extends ButtonPropsValueType = ButtonPropsValueType,
   C extends ButtonComponentsInterface = ButtonComponentsInterface
 > {
-  readonly bind: ComputedRef<P>
+  readonly bind?: ComputedRef<P>
 
   /**
    * Constructor
@@ -35,11 +35,13 @@ export class ButtonProgress<
     protected readonly props: M,
     protected readonly refs: DesignPropsRefsType<M>
   ) {
-    this.bind = Design.getBindStatic<any, P>(refs?.progress, {
-      circular: true,
-      inverse: true,
-      delay: 128
-    }, 'visible')
+    if ('progress' in this.props) {
+      this.bind = Design.getBindStatic<any, P>(refs?.progress, {
+        circular: true,
+        inverse: true,
+        delay: 128
+      }, 'visible')
+    }
   }
 
   /**
@@ -48,7 +50,7 @@ export class ButtonProgress<
    * Проверяет, активен ли элемент
    */
   readonly is = computed<boolean>(
-    () => !!(this.components.is('progress') && this.props.progress)
+    () => !!(this.components.is('progress') && this.props?.progress)
   )
 
   /**
@@ -59,13 +61,15 @@ export class ButtonProgress<
    */
   render (): VNode[] {
     const elements: any[] = []
-    const props = {
-      class: this.classes.getNameBySubclass(['progress']),
-      ...this.bind.value
-    }
 
-    if (this.is.value) {
-      this.components.render(elements, 'progress', props)
+    if (
+      this.bind &&
+      this.is.value
+    ) {
+      this.components.render(elements, 'progress', {
+        class: this.classes.getNameBySubclass(['progress']),
+        ...this.bind.value
+      })
     }
 
     return elements

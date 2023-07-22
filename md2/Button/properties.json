@@ -1,10 +1,13 @@
 {
   "basic": "{d.button}",
-  "padding": {
-    "_type": "var"
-  },
   "height": {
     "_default": "md"
+  },
+  "label": {
+    "padding-left": "{??padding}",
+    "padding-right": "{??padding}",
+    "text-overflow": "truncate",
+    "_type": "subclass"
   },
   "color": {
     "_rename": "palette-color"
@@ -12,16 +15,11 @@
   "gradient": {
     "_rename": "palette-gradient"
   },
-  "#inscription": {
-    "column-gap": "{ref.spacing.2}",
-    "padding-left": "{??padding}",
-    "padding-right": "{??padding}",
-    "text-overflow": "truncate"
+  "text": {
+    "_category": "appearance"
   },
-  "disabled": {
-    "color": {
-      "_rename": "color"
-    }
+  "outlined": {
+    "_category": "appearance"
   },
   "contained": {
     "color": {
@@ -30,19 +28,11 @@
     "background-color": {
       "_rename": "palette-background"
     },
-    "disabled": {
-      "background-color": {
-        "_rename": "background-color"
-      }
+    "gradient": {
+      "_rename": "gradient"
     },
     "_category": "appearance",
     "_default": true
-  },
-  "outlined": {
-    "_category": "appearance"
-  },
-  "text": {
-    "_category": "appearance"
   },
   "adaptive": {
     "sm": {

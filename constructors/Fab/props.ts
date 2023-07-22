@@ -8,7 +8,7 @@ export const subClassesFab = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -24,7 +24,7 @@ export type PropsFabType = PropsButtonType & {
   selected?: boolean
   disabled?: boolean
   progress?: boolean
-  adaptive?: 'icon' | 'inscription'
+  adaptive?: 'icon' | 'label'
   align?: 'left' | 'right' | 'center'
   // :type
 }

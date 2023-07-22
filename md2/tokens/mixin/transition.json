@@ -1,0 +1,12 @@
+{
+  "state": {
+    "transition-duration": "{d.sys.transitionDuration.lg.close}",
+    "transition-function": "{d.sys.transitionFunction.standard}",
+    "active": {
+      "transition-duration": "{d.sys.transitionDuration.sm}"
+    },
+    "disabled": {
+      "transition-duration": "{d.sys.transitionDuration.sm}"
+    }
+  }
+}

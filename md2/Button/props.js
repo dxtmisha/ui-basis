@@ -10,7 +10,7 @@ exports.subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -41,20 +41,17 @@ exports.props = {
       type: String,
       default: exports.defaults?.height
     },
+    text: Boolean,
+    outlined: Boolean,
     contained: {
       type: Boolean,
       default: exports.defaults?.contained
     },
-    outlined: Boolean,
-    text: Boolean,
     adaptive: String,
     palette: String,
-    focus: Boolean,
     dragged: Boolean,
     disabled: Boolean,
-    rounded: String,
-    selected: Boolean,
-    align: String
+    focus: Boolean
     // :prop
   }
 }

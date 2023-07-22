@@ -46,10 +46,13 @@ exports.props = {
       default: exports.defaults?.filled
     },
     outlined: Boolean,
+    text: Boolean,
+    elevated: Boolean,
+    tonal: Boolean,
     palette: String,
     focus: Boolean,
-    selected: Boolean,
     disabled: Boolean,
+    selected: Boolean,
     adaptive: String,
     align: String
     // :prop

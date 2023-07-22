@@ -1,0 +1,18 @@
+{
+  "primary": {
+    "color": "{sys.palette.primary}",
+    "color-opacity": "{sys.opacity.surface.high}"
+  },
+  "onPrimary": {
+    "color": "{sys.palette.onPrimary}",
+    "color-opacity": "{sys.opacity.primary.high}"
+  },
+  "disabled": {
+    "color": "{sys.palette.disabled}",
+    "color-opacity": "{sys.opacity.surface.disabled}"
+  },
+  "onDisabled": {
+    "color": "{sys.palette.disabled}",
+    "color-opacity": "{sys.opacity.primary.disabled}"
+  }
+}

@@ -25,11 +25,13 @@ class ButtonProgress {
     this.components = components
     this.props = props
     this.refs = refs
-    this.bind = Design_1.Design.getBindStatic(refs?.progress, {
-      circular: true,
-      inverse: true,
-      delay: 128
-    }, 'visible')
+    if ('progress' in this.props) {
+      this.bind = Design_1.Design.getBindStatic(refs?.progress, {
+        circular: true,
+        inverse: true,
+        delay: 128
+      }, 'visible')
+    }
   }
 
   /**
@@ -37,7 +39,7 @@ class ButtonProgress {
      *
      * Проверяет, активен ли элемент
      */
-  is = (0, vue_1.computed)(() => !!(this.components.is('progress') && this.props.progress))
+  is = (0, vue_1.computed)(() => !!(this.components.is('progress') && this.props?.progress))
   /**
      * A method for rendering
      *
@@ -46,12 +48,12 @@ class ButtonProgress {
      */
   render () {
     const elements = []
-    const props = {
-      class: this.classes.getNameBySubclass(['progress']),
-      ...this.bind.value
-    }
-    if (this.is.value) {
-      this.components.render(elements, 'progress', props)
+    if (this.bind &&
+            this.is.value) {
+      this.components.render(elements, 'progress', {
+        class: this.classes.getNameBySubclass(['progress']),
+        ...this.bind.value
+      })
     }
     return elements
   }

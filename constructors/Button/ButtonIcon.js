@@ -26,8 +26,12 @@ class ButtonIcon {
     this.components = components
     this.props = props
     this.refs = refs
-    this.iconBind = Design_1.Design.getBindStatic(refs.icon, this.iconOptions, 'icon')
-    this.trailingBind = Design_1.Design.getBindStatic(refs.iconTrailing, this.trailingOptions, 'icon')
+    if ('icon' in this.props) {
+      this.iconBind = Design_1.Design.getBindStatic(refs?.icon, this.iconOptions, 'icon')
+    }
+    if ('iconTrailing' in this.props) {
+      this.trailingBind = Design_1.Design.getBindStatic(refs?.iconTrailing, this.trailingOptions, 'icon')
+    }
   }
 
   /**
@@ -35,13 +39,13 @@ class ButtonIcon {
      *
      * Проверяет, есть ли главная иконка
      */
-  isIcon = (0, vue_1.computed)(() => !!(this.components.is('icon') && this.props.icon))
+  isIcon = (0, vue_1.computed)(() => !!(this.components.is('icon') && this.props?.icon))
   /**
      * Checks if there is an additional icon
      *
      * Проверяет, есть ли дополнительная иконка
      */
-  isTrailing = (0, vue_1.computed)(() => !!(this.components.is('icon') && this.props.iconTrailing))
+  isTrailing = (0, vue_1.computed)(() => !!(this.components.is('icon') && this.props?.iconTrailing))
   /**
      * Parameters for the main icon
      *
@@ -77,13 +81,15 @@ class ButtonIcon {
      */
   render () {
     const elements = []
-    if (this.isIcon.value) {
+    if (this.iconBind &&
+            this.isIcon.value) {
       this.components.render(elements, 'icon', {
         class: this.classes.getNameBySubclass(['icon']),
         ...this.iconBind.value
       })
     }
-    if (this.isTrailing.value) {
+    if (this.trailingBind &&
+            this.isTrailing.value) {
       this.components.render(elements, 'icon', {
         class: this.classes.getNameBySubclass(['trailing']),
         ...this.trailingBind.value

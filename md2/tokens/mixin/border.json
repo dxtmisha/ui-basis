@@ -1,0 +1,25 @@
+{
+  "outlined": {
+    "before": {
+      "position": "absolute",
+      "inset": "0",
+      "border-radius": "inherit",
+      "border-width": "1px",
+      "border-color": "{sys.palette.outline}",
+      "border-opacity": "{sys.opacity.outline}",
+      "border-style": "solid"
+    }
+  },
+  "outlinedActive": {
+    "after": {
+      "border": "{mixin.border.outlined.before}",
+      "border-opacity": "0",
+      "transition": "inherit"
+    },
+    "active": {
+      "after": {
+        "border-opacity": "{sys.opacity.pressed}"
+      }
+    }
+  }
+}

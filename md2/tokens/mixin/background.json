@@ -1,0 +1,9 @@
+{
+  "primary": {
+    "background-color": "{sys.palette.primary}"
+  },
+  "disabled": {
+    "background-color": "{sys.palette.disabled}",
+    "background-opacity": "{sys.opacity.disabled}"
+  }
+}

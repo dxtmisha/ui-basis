@@ -8,6 +8,7 @@ const PropertiesToLink = require('./PropertiesToLink')
 const PropertiesToMulti = require('./PropertiesToMulti')
 const PropertiesPalette = require('./PropertiesPalette')
 const PropertiesToRename = require('./PropertiesToRename')
+const PropertiesToReplace = require('./PropertiesToReplace')
 const PropertiesToStyle = require('./PropertiesToStyle')
 const PropertiesToSub = require('./PropertiesToSub')
 const PropertiesToVar = require('./PropertiesToVar')
@@ -115,6 +116,7 @@ module.exports = class Properties {
     variable.to()
 
     new PropertiesPalette(items).to()
+    new PropertiesToReplace(items).to()
 
     full.toFullValue()
     full.toFullValueByDesign()

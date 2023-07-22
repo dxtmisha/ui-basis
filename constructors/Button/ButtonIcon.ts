@@ -19,8 +19,8 @@ export class ButtonIcon<
   M extends ButtonPropsValueType = ButtonPropsValueType,
   P extends DesignPropsExtendedType<PropsIconType> = DesignPropsExtendedType<PropsIconType>
 > {
-  readonly iconBind: ComputedRef<P>
-  readonly trailingBind: ComputedRef<P>
+  readonly iconBind?: ComputedRef<P>
+  readonly trailingBind?: ComputedRef<P>
 
   /**
    * Constructor
@@ -36,8 +36,13 @@ export class ButtonIcon<
     protected readonly props: M,
     protected readonly refs: DesignPropsRefsType<M>
   ) {
-    this.iconBind = Design.getBindStatic<any, P>(refs.icon, this.iconOptions, 'icon')
-    this.trailingBind = Design.getBindStatic<any, P>(refs.iconTrailing, this.trailingOptions, 'icon')
+    if ('icon' in this.props) {
+      this.iconBind = Design.getBindStatic<any, P>(refs?.icon, this.iconOptions, 'icon')
+    }
+
+    if ('iconTrailing' in this.props) {
+      this.trailingBind = Design.getBindStatic<any, P>(refs?.iconTrailing, this.trailingOptions, 'icon')
+    }
   }
 
   /**
@@ -46,7 +51,7 @@ export class ButtonIcon<
    * Проверяет, есть ли главная иконка
    */
   readonly isIcon = computed<boolean>(
-    () => !!(this.components.is('icon') && this.props.icon)
+    () => !!(this.components.is('icon') && this.props?.icon)
   )
 
   /**
@@ -55,7 +60,7 @@ export class ButtonIcon<
    * Проверяет, есть ли дополнительная иконка
    */
   readonly isTrailing = computed<boolean>(
-    () => !!(this.components.is('icon') && this.props.iconTrailing)
+    () => !!(this.components.is('icon') && this.props?.iconTrailing)
   )
 
   /**
@@ -94,14 +99,20 @@ export class ButtonIcon<
   render (): VNode[] {
     const elements: any[] = []
 
-    if (this.isIcon.value) {
+    if (
+      this.iconBind &&
+      this.isIcon.value
+    ) {
       this.components.render(elements, 'icon', {
         class: this.classes.getNameBySubclass(['icon']),
         ...this.iconBind.value
       })
     }
 
-    if (this.isTrailing.value) {
+    if (
+      this.trailingBind &&
+      this.isTrailing.value
+    ) {
       this.components.render(elements, 'icon', {
         class: this.classes.getNameBySubclass(['trailing']),
         ...this.trailingBind.value

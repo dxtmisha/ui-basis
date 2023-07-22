@@ -3,18 +3,16 @@
 @mixin initButtonDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinButton;
-    @include mixinButtonInscription;
+    @include mixinButtonLabel;
     @include mixinButtonIcon;
     @include mixinButtonProgress;
-
-    @include mixinButtonAlign;
 
     @content;
   }
 }
 
 @mixin mixinButton {
-  @include flexCenter;
+  @include flexInlineCenter;
   position: relative;
 
   padding: 0;
@@ -24,7 +22,7 @@
   text-decoration: none;
 
   border-radius: 0;
-  border: solid transparent 0;
+  border: none;
 
   cursor: pointer;
 
@@ -37,12 +35,10 @@
   }
 }
 
-@mixin mixinButtonInscription {
-  &__inscription {
+@mixin mixinButtonLabel {
+  &__label {
     order: 4;
-
-    transition-property: opacity;
-    transition-duration: v('d.sys.transition-duration.standard');
+    transition: inherit;
   }
 }
 
@@ -54,11 +50,11 @@
     @include marginRight(v('??margin'));
   }
 
-  &__inscription ~ &__icon {
+  &__label ~ &__icon {
     @include marginRight(#{calc(v('??margin') - v('??padding'))});
   }
 
-  &__inscription ~ &__trailing {
+  &__label ~ &__trailing {
     @include marginLeft(#{calc(v('??margin') - v('??padding'))});
   }
 }
@@ -68,23 +64,7 @@
     cursor: default;
   }
 
-  &__progress.#{n('?progress--visible')} ~ * {
+  &__progress#{'.'}#{n('?progress--visible')} ~ * {
     opacity: v('??color-opacity', 0);
-  }
-}
-
-@mixin mixinButtonAlign {
-  &--align {
-    &--left {
-      @include justifyContent('flex-start');
-    }
-
-    &--left {
-      @include justifyContent('flex-end');
-    }
-
-    &--center {
-      @include justifyContent('center');
-    }
   }
 }

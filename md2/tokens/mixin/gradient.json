@@ -1,0 +1,19 @@
+{
+  "primary": {
+    "gradient": "{sys.palette.primary}",
+    "gradient-opacity": "0",
+    "hover": {
+      "gradient-opacity": "{sys.opacity.hover}"
+    },
+    "focus": {
+      "gradient-opacity": "{sys.opacity.focus}"
+    },
+    "active": {
+      "gradient-opacity": "{sys.opacity.pressed}"
+    }
+  },
+  "onPrimary": {
+    "basic": "{mixin.gradient.primary}",
+    "gradient": "{sys.palette.onPrimary}"
+  }
+}

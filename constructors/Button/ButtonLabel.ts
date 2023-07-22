@@ -11,7 +11,7 @@ import { ButtonComponentsInterface, ButtonPropsValueType, ButtonSlotsType } from
  *
  * Класс для работы с текстом на кнопке
  */
-export class ButtonInscription<
+export class ButtonLabel<
   C extends Record<string, any> = ButtonComponentsInterface,
   S extends ButtonSlotsType = ButtonSlotsType
 > {
@@ -34,7 +34,7 @@ export class ButtonInscription<
    *
    * Проверка, доступен ли текст
    */
-  readonly isInscription = computed<boolean>(() => !!this.props.label || 'default' in this.slots)
+  readonly is = computed<boolean>(() => !!this.props?.label || 'default' in this.slots)
 
   /**
    * A method for rendering
@@ -46,7 +46,10 @@ export class ButtonInscription<
   render (className: ClassesItemType): VNode[] {
     const elements: any[] = []
 
-    if (this.isInscription.value) {
+    if (
+      'label' in this.props &&
+      this.is.value
+    ) {
       const children: any[] = []
 
       if (this.props.label) {
@@ -57,9 +60,12 @@ export class ButtonInscription<
         children.push(this.slots.default?.())
       }
 
-      elements.push(
-        this.components.getNode('span', { class: className }, children, 'inscription')
-      )
+      elements.push(this.components.getNode(
+        'span',
+        { class: className },
+        children,
+        'label'
+      ))
     }
 
     return elements

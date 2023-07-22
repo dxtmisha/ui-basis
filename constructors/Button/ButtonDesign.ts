@@ -19,7 +19,7 @@ import {
 import { UseEnabled } from '../../uses/UseEnabled'
 
 import { ButtonEvent } from './ButtonEvent'
-import { ButtonInscription } from './ButtonInscription'
+import { ButtonLabel } from './ButtonLabel'
 
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
@@ -46,7 +46,7 @@ export class ButtonDesign<
   protected readonly enabled: UseEnabled
 
   protected readonly event: ButtonEvent
-  protected readonly inscription: ButtonInscription
+  protected readonly label: ButtonLabel
 
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -69,7 +69,7 @@ export class ButtonDesign<
     this.enabled = new UseEnabled(this.props)
 
     this.event = new ButtonEvent(this.emit, this.props, this.enabled)
-    this.inscription = new ButtonInscription(this.components, this.slots, this.props)
+    this.label = new ButtonLabel(this.components, this.slots, this.props)
 
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -97,21 +97,32 @@ export class ButtonDesign<
    * @protected
    */
   protected init (): ButtonInitInterface {
-    this.classes.setExtraState({
-      progress: this.progress.is
-    })
-
-    return {
+    const setup: ButtonInitInterface = {
       isEnabled: this.enabled.item,
-      isInscription: this.inscription.isInscription,
-
       disabledBind: this.enabled.disabled,
-      iconBind: this.icon.iconBind,
-      trailingBind: this.icon.trailingBind,
-
-      onClick: (event: MouseEvent) => this.event.onClick(event),
-      onTrailing: (event: MouseEvent) => this.event.onTrailing(event)
+      onClick: (event: MouseEvent) => this.event.onClick(event)
     }
+
+    if (this.progress.bind) {
+      this.classes.setExtraState({
+        progress: this.progress.is
+      })
+    }
+
+    if ('label' in this.props) {
+      setup.isLabel = this.label.is
+    }
+
+    if (this.icon.iconBind) {
+      setup.iconBind = this.icon.iconBind
+    }
+
+    if (this.icon.trailingBind) {
+      setup.trailingBind = this.icon.trailingBind
+      setup.onTrailing = (event: MouseEvent) => this.event.onTrailing(event)
+    }
+
+    return setup
   }
 
   /**
@@ -124,7 +135,7 @@ export class ButtonDesign<
     const setup = this.getSetup()
     const children: any[] = [
       ...this.progress.render(),
-      ...this.inscription.render(setup.classes.value.inscription),
+      ...this.label.render(setup.classes.value.label),
       ...this.icon.render()
     ]
 

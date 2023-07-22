@@ -9,7 +9,7 @@ export const subClassesButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -22,9 +22,7 @@ export type PropsButtonType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
-  selected?: boolean
   disabled?: boolean
-  align?: 'left' | 'right' | 'center'
   // :type
   /* :type.adaptive.none */
 } & {
@@ -68,10 +66,8 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    selected: Boolean,
-    disabled: Boolean,
     progress: Boolean,
-    align: String as PropType<PropsButtonType['align']>
+    disabled: Boolean
     // :prop
   },
   // Values

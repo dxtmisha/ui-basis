@@ -184,7 +184,7 @@ module.exports = class PropertiesVariable {
       component
     }) => {
       if (
-        ['var', 'property'].indexOf(item?.[key]) !== -1 &&
+        ['var', 'property', 'selector', 'virtual'].indexOf(item?.[key]) !== -1 &&
         PropertiesTool.isLink(item?.value)
       ) {
         const type = this.__isLink(item, design, component)

@@ -4,6 +4,7 @@ exports.DesignClasses = void 0
 const vue_1 = require('vue')
 const data_1 = require('../functions/data')
 const ref_1 = require('../functions/ref')
+const CacheLive_1 = require('./CacheLive')
 const KEY_CLASS_CUSTOM = 'custom'
 /**
  * Class for working with classes in a component
@@ -154,7 +155,7 @@ class DesignClasses {
     return {
       main: {
         ...this.classesMain.value,
-        ...this.classesProperties.value
+        ...this.getClassesProperties()
       },
       ...this.classesSubClasses.value
     }
@@ -171,18 +172,6 @@ class DesignClasses {
       [this.getName()]: true,
       ...this.getExtraByName('main')
     }
-  })
-
-  /**
-     * List of active state classes
-     *
-     * Список активных классов состояний
-     * @protected
-     */
-  classesProperties = (0, vue_1.computed)(() => {
-    const data = {}
-    this.properties.get()?.forEach(item => Object.assign(data, this.toClassName(item)))
-    return data
   })
 
   classesSubClasses = (0, vue_1.computed)(() => {
@@ -229,12 +218,10 @@ class DesignClasses {
     const is = this.properties.isValue(item, prop)
     const classes = {}
     className.push(item.index)
-    if ((is && (prop === true ||
+    this.toClassNameByState(classes, item, className, (is && (prop === true ||
             this.properties.isBool(item)) &&
             this.checkByCategory(item)) ||
-            this.properties.isExceptions(item, prop)) {
-      this.toClassNameByState(classes, item, className)
-    }
+            this.properties.isExceptions(item, prop), !!prop && this.checkByCategory(item))
     if (is &&
             typeof prop === 'string') {
       classes[this.jsonState([...this.getClassName(item, className), prop])] = true
@@ -251,13 +238,34 @@ class DesignClasses {
      * @param data list of active classes / список активных классов
      * @param item current property / текущее свойство
      * @param className array of class names / массив с названиями классов
+     * @param active fulfillment of the condition / выполненности условия
+     * @param next conditions for further verification / условия для дальнейшей проверки
      * @protected
      */
-  toClassNameByState (data, item, className) {
+  toClassNameByState (data, item, className, active, next) {
     const index = this.jsonState(this.getClassName(item, className))
-    data[index] = true
-    item.state?.forEach(state => Object.assign(data, this.toClassName(state, [index])))
+    if (active) {
+      data[index] = true
+    }
+    if (next) {
+      item.state?.forEach(state => Object.assign(data, this.toClassName(state, [index])))
+    }
     return this
+  }
+
+  /**
+     * List of active state classes
+     *
+     * Список активных классов состояний
+     * @protected
+     */
+  getClassesProperties () {
+    const properties = this.properties.get()
+    return CacheLive_1.CacheLive.get(this.getPropsActive(properties), () => {
+      const data = {}
+      properties?.forEach(item => Object.assign(data, this.toClassName(item)))
+      return data
+    })
   }
 
   /**
@@ -274,6 +282,23 @@ class DesignClasses {
     } else {
       return className
     }
+  }
+
+  /**
+     * Returns a string for the cache of the element state
+     *
+     * Возвращает строку для кэша состояния элемента
+     * @param properties list of available properties / список доступных свойств
+     * @private
+     */
+  getPropsActive (properties) {
+    const data = [this.getName()]
+    properties.forEach(({ name }) => {
+      if (this.props?.[name]) {
+        data.push(`${name}:${this.props[name]}`)
+      }
+    })
+    return data.join('|')
   }
 
   /**

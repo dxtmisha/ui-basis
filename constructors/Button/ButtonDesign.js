@@ -5,7 +5,7 @@ const vue_1 = require('vue')
 const Design_1 = require('../../classes/Design')
 const UseEnabled_1 = require('../../uses/UseEnabled')
 const ButtonEvent_1 = require('./ButtonEvent')
-const ButtonInscription_1 = require('./ButtonInscription')
+const ButtonLabel_1 = require('./ButtonLabel')
 // [!] System label, cannot be deleted
 // [!] Системная метка, нельзя удалять
 // :components-import
@@ -19,7 +19,7 @@ class ButtonDesign extends Design_1.Design {
   props
   enabled
   event
-  inscription
+  label
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :components-variable
@@ -36,7 +36,7 @@ class ButtonDesign extends Design_1.Design {
     this.props = props
     this.enabled = new UseEnabled_1.UseEnabled(this.props)
     this.event = new ButtonEvent_1.ButtonEvent(this.emit, this.props, this.enabled)
-    this.inscription = new ButtonInscription_1.ButtonInscription(this.components, this.slots, this.props)
+    this.label = new ButtonLabel_1.ButtonLabel(this.components, this.slots, this.props)
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :components-init
@@ -52,18 +52,27 @@ class ButtonDesign extends Design_1.Design {
      * @protected
      */
   init () {
-    this.classes.setExtraState({
-      progress: this.progress.is
-    })
-    return {
+    const setup = {
       isEnabled: this.enabled.item,
-      isInscription: this.inscription.isInscription,
       disabledBind: this.enabled.disabled,
-      iconBind: this.icon.iconBind,
-      trailingBind: this.icon.trailingBind,
-      onClick: (event) => this.event.onClick(event),
-      onTrailing: (event) => this.event.onTrailing(event)
+      onClick: (event) => this.event.onClick(event)
     }
+    if (this.progress.bind) {
+      this.classes.setExtraState({
+        progress: this.progress.is
+      })
+    }
+    if ('label' in this.props) {
+      setup.isLabel = this.label.is
+    }
+    if (this.icon.iconBind) {
+      setup.iconBind = this.icon.iconBind
+    }
+    if (this.icon.trailingBind) {
+      setup.trailingBind = this.icon.trailingBind
+      setup.onTrailing = (event) => this.event.onTrailing(event)
+    }
+    return setup
   }
 
   /**
@@ -76,7 +85,7 @@ class ButtonDesign extends Design_1.Design {
     const setup = this.getSetup()
     const children = [
       ...this.progress.render(),
-      ...this.inscription.render(setup.classes.value.inscription),
+      ...this.label.render(setup.classes.value.label),
       ...this.icon.render()
     ]
     if (setup.isEnabled.value) {

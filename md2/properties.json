@@ -23,6 +23,13 @@
     "_type": "var",
     "_category": "root"
   },
+  "mixin": {
+    "value": {
+      "file|main": "tokens/mixin.json"
+    },
+    "_type": "mixin",
+    "_category": "mixin"
+  },
   "elevation": {
     "value": {
       "file|main": "tokens/elevation.json"

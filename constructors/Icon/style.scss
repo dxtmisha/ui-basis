@@ -24,7 +24,7 @@
 }
 
 @mixin mixinIcon {
-  @include initByCustom('_width', v('??width', #{calc(var(--sys-line-height, 16px) * 1.5)}));
+  @include initByCustom('_width', v('??width', #{calc(var(--sys-font-size, 16px) * 1.5)}));
 
   display: inline-flex;
   overflow: hidden;

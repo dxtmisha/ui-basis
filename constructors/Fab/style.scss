@@ -4,7 +4,7 @@
 @mixin initFabDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinFab;
-    @include mixinFabInscription;
+    @include mixinFabLabel;
     @include mixinFabIcon;
     @include mixinFabProgress;
 
@@ -18,8 +18,8 @@
   @include mixinButton;
 }
 
-@mixin mixinFabInscription {
-  @include mixinButtonInscription;
+@mixin mixinFabLabel {
+  @include mixinButtonLabel;
 }
 
 @mixin mixinFabIcon {

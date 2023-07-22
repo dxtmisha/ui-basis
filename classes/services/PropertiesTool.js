@@ -163,6 +163,14 @@ const KEY_SIMPLIFICATION = '_simplification'
 const KEY_WRAP = '_wrap'
 
 /**
+ * It indicates that you need to transform the values of the properties
+ *
+ * Указывает, что надо преобразовывать значения свойств
+ * @type {string}
+ */
+const KEY_REPLACE = '_replace'
+
+/**
  * Indicates which components need to be used
  *
  * Указывает, какие компоненты надо использовать
@@ -203,6 +211,7 @@ const KEYS_SPECIAL = [
   KEY_SEPARATOR,
   KEY_SIMPLIFICATION,
   KEY_WRAP,
+  KEY_REPLACE,
   KEY_COMPONENTS,
   KEY_PATH
 ]
@@ -622,6 +631,16 @@ module.exports = class PropertiesTool {
    */
   static getKeyWrap () {
     return KEY_WRAP
+  }
+
+  /**
+   * Returns the key, indicating that you need to transform the values of the properties
+   *
+   * Возвращает ключ, указывая, что что надо преобразовывать значения свойств
+   * @return {string}
+   */
+  static getKeyReplace () {
+    return KEY_REPLACE
   }
 
   /**

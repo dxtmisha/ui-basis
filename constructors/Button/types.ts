@@ -32,14 +32,14 @@ export interface ButtonComponentsInterface {
 // Интерфейс для описания, какое свойство возвращает setup
 export interface ButtonInitInterface {
   isEnabled: ComputedRef<boolean>
-  isInscription: ComputedRef<boolean>
+  isLabel?: ComputedRef<boolean>
 
   disabledBind: ComputedRef<boolean | undefined>
-  iconBind: ComputedRef<PropsIconType>
-  trailingBind: ComputedRef<PropsIconType>
+  iconBind?: ComputedRef<PropsIconType>
+  trailingBind?: ComputedRef<PropsIconType>
 
   onClick: (event: MouseEvent) => void
-  onTrailing: (event: MouseEvent) => void
+  onTrailing?: (event: MouseEvent) => void
 }
 
 // Type describing incoming properties

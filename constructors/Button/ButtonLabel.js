@@ -1,13 +1,13 @@
 'use strict'
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.ButtonInscription = void 0
+exports.ButtonLabel = void 0
 const vue_1 = require('vue')
 /**
  * Class for working with text on the button
  *
  * Класс для работы с текстом на кнопке
  */
-class ButtonInscription {
+class ButtonLabel {
   components
   slots
   props
@@ -29,7 +29,7 @@ class ButtonInscription {
      *
      * Проверка, доступен ли текст
      */
-  isInscription = (0, vue_1.computed)(() => !!this.props.label || 'default' in this.slots)
+  is = (0, vue_1.computed)(() => !!this.props?.label || 'default' in this.slots)
   /**
      * A method for rendering
      *
@@ -39,7 +39,8 @@ class ButtonInscription {
      */
   render (className) {
     const elements = []
-    if (this.isInscription.value) {
+    if ('label' in this.props &&
+            this.is.value) {
       const children = []
       if (this.props.label) {
         children.push(this.props.label)
@@ -47,10 +48,10 @@ class ButtonInscription {
       if (this.slots?.default) {
         children.push(this.slots.default?.())
       }
-      elements.push(this.components.getNode('span', { class: className }, children, 'inscription'))
+      elements.push(this.components.getNode('span', { class: className }, children, 'label'))
     }
     return elements
   }
 }
-exports.ButtonInscription = ButtonInscription
-// # sourceMappingURL=ButtonInscription.js.map
+exports.ButtonLabel = ButtonLabel
+// # sourceMappingURL=ButtonLabel.js.map

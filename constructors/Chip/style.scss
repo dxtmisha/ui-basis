@@ -4,7 +4,7 @@
 @mixin initChipDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinChip;
-    @include mixinChipInscription;
+    @include mixinChipLabel;
     @include mixinChipIcon;
     @include mixinChipProgress;
 
@@ -18,8 +18,8 @@
   text-align: center;
 }
 
-@mixin mixinChipInscription {
-  &__inscription {
+@mixin mixinChipLabel {
+  &__label {
     order: 4;
   }
 }

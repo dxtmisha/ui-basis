@@ -57,6 +57,12 @@
       "color": "inherit"
     }
   },
+  "avatar": {
+    "border-radius": "{sys.rounded.full}",
+    "#icon": {
+      "color": "inherit"
+    }
+  },
   "elevated": {
     "background-color": "{sys.palette.surfaceContainerLow}",
     "box-shadow": "{ref.shadow.1}",
@@ -88,9 +94,16 @@
   "filter": {
     "dragged": {
       "box-shadow": "{ref.shadow.4}"
+    },
+    "selected": {
+      "#icon": {
+        "color": "inherit"
+      }
     }
   },
   "suggestion": {
-    "basic": "{??filter}"
+    "dragged": {
+      "box-shadow": "{ref.shadow.4}"
+    }
   }
 }

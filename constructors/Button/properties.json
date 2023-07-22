@@ -1,32 +1,25 @@
 {
-  "#inscription": {},
+  "padding": {
+    "_type": "var"
+  },
+  "#label": {},
   "#icon": {},
   "#trailing": {},
-  "selected": {
-    "_type": "state"
-  },
-  "disabled": {
-    "_type": "state"
-  },
   "progress": {
     "color-opacity": {
       "_type": "var"
     }
   },
+  "disabled": {
+    "_type": "state"
+  },
   "adaptive": {
     "~icon": {
       "padding": "0px",
-      "& .??__inscription": {
+      "& .??__label": {
         "display": "none"
       }
-    },
-    "~inscription": {}
-  },
-  "align": {
-    "~left": {},
-    "~right": {},
-    "~center": {},
-    "_type": "state"
+    }
   },
   "_components": [
     "icon",

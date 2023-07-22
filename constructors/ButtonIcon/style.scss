@@ -1,0 +1,28 @@
+@import "../../styles/properties";
+@import "../Button/style";
+
+@mixin initButtonIconDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinButtonIcon;
+    @include mixinButtonIconIcon;
+    @include mixinButtonIconProgress;
+
+    @content;
+  }
+}
+
+@mixin mixinButtonIcon {
+  @include mixinButton;
+}
+
+@mixin mixinButtonIconIcon {
+  &__icon {
+    @include initByCustom('margin', #{calc((var(--sys-height) - v('?icon._width')) / 2)});
+    @include marginLeft(v('??margin'));
+    @include marginRight(v('??margin'));
+  }
+}
+
+@mixin mixinButtonIconProgress {
+  @include mixinButtonProgress;
+}

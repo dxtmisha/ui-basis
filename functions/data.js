@@ -258,7 +258,7 @@ function splice (data, item, start, isDelete) {
                     start === value)) {
           init = true
           replaceRecursive(data, item)
-          if (isDelete) {
+          if (isDelete && !(index in item)) {
             delete data[index]
           }
         } else if (init) {

@@ -9,7 +9,7 @@ export const subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -23,17 +23,14 @@ export type PropsType = PropsButtonType & {
   // [!] Системная метка, нельзя удалять
   // :type
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
-  contained?: boolean
-  outlined?: boolean
   text?: boolean
-  adaptive?: 'sm' | 'md' | 'lg' | 'icon' | 'inscription'
+  outlined?: boolean
+  contained?: boolean
+  adaptive?: 'sm' | 'md' | 'lg' | 'icon'
   palette?: 'red' | 'pink' | 'purple' | 'deep-purple' | 'indigo' | 'blue' | 'light-blue' | 'cyan' | 'teal' | 'green' | 'light-green' | 'lime' | 'yellow' | 'amber' | 'orange' | 'deep-orange' | 'brown' | 'grey' | 'grey-blue' | 'white' | 'black' | 'black-light'
-  focus?: boolean
   dragged?: boolean
   disabled?: boolean
-  rounded?: 'none' | 'standard' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  selected?: boolean
-  align?: 'left' | 'right' | 'center'
+  focus?: boolean
   // :type
   /* :type.progress.none */
 }
@@ -64,20 +61,17 @@ export const props = {
       type: String as PropType<PropsType['height']>,
       default: defaults?.height
     },
+    text: Boolean,
+    outlined: Boolean,
     contained: {
       type: Boolean,
       default: defaults?.contained
     },
-    outlined: Boolean,
-    text: Boolean,
     adaptive: String as PropType<PropsType['adaptive']>,
     palette: String as PropType<PropsType['palette']>,
-    focus: Boolean,
     dragged: Boolean,
     disabled: Boolean,
-    rounded: String as PropType<PropsType['rounded']>,
-    selected: Boolean,
-    align: String as PropType<PropsType['align']>
+    focus: Boolean
     // :prop
   }
 }
