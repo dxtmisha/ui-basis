@@ -1,7 +1,7 @@
 const { replaceRecursive } = require('../../functions/data')
 const { To } = require('../To')
 
-const PropertiesCache = require('./PropertiesCache')
+const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesFiles = require('./properties/PropertiesFiles')
 const PropertiesTool = require('./PropertiesTool')
 

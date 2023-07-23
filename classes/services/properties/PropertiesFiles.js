@@ -55,6 +55,19 @@ module.exports = class PropertiesFiles {
   }
 
   /**
+   * Getting the path to the file by its name and the path to the directory
+   *
+   * Получение пути к файлу по его названию и пути к директории
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
+   * @return {string}
+   */
+  static joinPathByName (paths, name, extension = 'json') {
+    return this.joinPath([...paths, this.getFileName(name, extension)])
+  }
+
+  /**
    * Method returns an object whose properties represent significant elements of the path
    *
    * Метод возвращает объект, свойства которого представляют существенные элементы пути
@@ -145,7 +158,7 @@ module.exports = class PropertiesFiles {
     this.createDir(paths)
 
     requireFs.writeFileSync(
-      this.joinPath([...paths, this.getFileName(name, extension)]),
+      this.joinPathByName(paths, name, extension),
       typeof value === 'object' ? JSON.stringify(value) : value
     )
 

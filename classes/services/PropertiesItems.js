@@ -5,7 +5,7 @@ const {
 } = require('../../functions/data')
 const { To } = require('../To')
 
-const PropertiesCache = require('./PropertiesCache')
+const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesTool = require('./PropertiesTool')
 
 let step = 10

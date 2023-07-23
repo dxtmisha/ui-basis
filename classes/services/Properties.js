@@ -1,4 +1,4 @@
-const PropertiesCache = require('./PropertiesCache')
+const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
 const PropertiesTool = require('./PropertiesTool')
