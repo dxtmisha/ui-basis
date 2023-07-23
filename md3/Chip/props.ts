@@ -9,8 +9,8 @@ export const subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
     icon: 'icon',
+    label: 'label',
     trailing: 'trailing'
     // :subclass
   }
@@ -25,16 +25,17 @@ export type PropsType = PropsChipType & {
   height?: string | 'sm' | 'md' | 'lg' | 'custom'
   dragged?: boolean
   selected?: boolean
+  avatar?: boolean
   elevated?: boolean
+  input?: boolean
   assist?: boolean
   filter?: boolean
   suggestion?: boolean
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
-  focus?: boolean
   progress?: boolean
   disabled?: boolean
-  avatar?: boolean
   readonly?: boolean
+  focus?: boolean
   // :type
 }
 
@@ -65,16 +66,17 @@ export const props = {
     },
     dragged: Boolean,
     selected: Boolean,
+    avatar: Boolean,
     elevated: Boolean,
+    input: Boolean,
     assist: Boolean,
     filter: Boolean,
     suggestion: Boolean,
     palette: String as PropType<PropsType['palette']>,
-    focus: Boolean,
     progress: Boolean,
     disabled: Boolean,
-    avatar: Boolean,
-    readonly: Boolean
+    readonly: Boolean,
+    focus: Boolean
     // :prop
   }
 }

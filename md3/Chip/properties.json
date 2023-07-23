@@ -1,49 +1,57 @@
 {
   "basic": "{d.chip}",
-  "padding": {
-    "_type": "var"
-  },
   "height": {
     "_default": "md"
   },
   "gradient": {
     "_rename": "palette-gradient"
   },
-  "#inscription": {
-    "basic": "{?button.inscription}"
-  },
   "#icon": {
     "color": {
       "_rename": "palette-color"
     }
   },
-  "dragged": {
-    "_type": "state"
-  },
+  "dragged": {},
   "selected": {
     "background-color": {
       "_rename": "palette-background"
     },
-    "_type": "state"
+    "gradient": {
+      "_rename": "gradient"
+    }
+  },
+  "avatar": {
+    "#icon": {
+      "color": {
+        "_rename": "color"
+      }
+    }
   },
   "elevated": {
     "background-color": {
       "_rename": "palette-background"
     },
-    "_type": "state",
     "_category": "appearance"
   },
+  "input": {
+    "_category": "category"
+  },
   "assist": {
-    "_type": "state",
-    "_category": "location"
+    "_category": "category"
   },
   "filter": {
+    "selected": {
+      "#icon": {
+        "color": {
+          "_rename": "color"
+        }
+      }
+    },
     "_type": "state",
-    "_category": "location"
+    "_category": "category"
   },
   "suggestion": {
-    "_type": "state",
-    "_category": "location"
+    "_category": "category"
   },
   "@@palette": "{palette}"
 }

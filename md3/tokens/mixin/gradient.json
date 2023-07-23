@@ -14,5 +14,9 @@
   "primary": {
     "gradient": "{sys.palette.primary}",
     "gradient-opacity": "{mixin.gradient.opacity}"
+  },
+  "onSurfaceVariant": {
+    "gradient": "{sys.palette.onSurfaceVariant}",
+    "gradient-opacity": "{mixin.gradient.opacity}"
   }
 }

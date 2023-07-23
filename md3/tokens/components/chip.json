@@ -8,29 +8,17 @@
   "font": "{font.labelLarge}",
   "color": "{sys.palette.onSurfaceVariant}",
   "background-color": "transparent",
-  "gradient": "{sys.palette.onSurfaceVariant}",
-  "gradient-opacity": "0",
+  "gradient": "{mixin.gradient.onSurfaceVariant}",
   "border-radius": "{sys.rounded.md}",
   "box-shadow": "none",
   "transition-property": "border, box-shadow, opacity",
-  "transition-duration": "{d.sys.transitionDuration.lg.close}",
-  "transition-function": "{d.sys.transitionFunction.standard}",
-  "before": {
-    "basic": "{?button.outlined.before}",
-    "transition": "inherit"
+  "transition-duration": "{mixin.transition.state}",
+  "before": "{mixin.border.outlined}",
+  "#label": {
+    "basic": "{?button.label}"
   },
   "#icon": {
     "color": "{sys.palette.primary}"
-  },
-  "hover": {
-    "gradient-opacity": "{sys.opacity.008}"
-  },
-  "focus": {
-    "gradient-opacity": "{sys.opacity.012}"
-  },
-  "active": {
-    "basic": "{?button.outlined.active}",
-    "gradient-opacity": "{sys.opacity.012}"
   },
   "dragged": {
     "gradient-opacity": "{sys.opacity.016}",
@@ -49,10 +37,8 @@
     "color-opacity": "{sys.opacity.disabled}"
   },
   "disabled": {
-    "color": "{sys.palette.onSurface}",
-    "color-opacity": "{sys.opacity.disabled}",
+    "color": "{mixin.color.onDisabled}",
     "box-shadow": "none",
-    "transition-duration": "{d.sys.transitionDuration.sm}",
     "#icon": {
       "color": "inherit"
     }
@@ -72,6 +58,9 @@
     "active": {
       "box-shadow": "{ref.shadow.2}"
     },
+    "dragged": {
+      "box-shadow": "{ref.shadow.3}"
+    },
     "selected": {
       "background-color": "{sys.palette.secondaryContainer}",
       "gradient": "{sys.palette.onSecondaryContainer}"
@@ -81,6 +70,7 @@
       "background-opacity": "{sys.opacity.012}"
     }
   },
+  "input": {},
   "assist": {
     "dragged": {
       "box-shadow": "none"
@@ -99,11 +89,18 @@
       "#icon": {
         "color": "inherit"
       }
+    },
+    "elevated": {
+      "hover": {
+        "box-shadow": "{ref.shadow.2}"
+      },
+      "active": {
+        "box-shadow": "{ref.shadow.1}"
+      },
+      "dragged": {
+        "box-shadow": "{ref.shadow.4}"
+      }
     }
   },
-  "suggestion": {
-    "dragged": {
-      "box-shadow": "{ref.shadow.4}"
-    }
-  }
+  "suggestion": {}
 }
