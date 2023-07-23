@@ -1,13 +1,21 @@
 {
-  "button": "{md2.button}",
   "basic": "{d.fab}",
   "height": {
     "_default": "lg"
   },
-  "outlined": {
-    "_type": "none"
+  "background-color": {
+    "_rename": "palette-background"
   },
-  "text": {
-    "_type": "none"
-  }
+  "progress": {
+    "& .??__progress": {
+      "?progress-inset": {
+        "value": "{??padding} / 2",
+        "_full-name": true
+      }
+    }
+  },
+  "adaptive": {
+    "basic": "{?button.adaptive}"
+  },
+  "@@palette": "{palette}"
 }

@@ -1,7 +1,7 @@
 {
   "primary": "{ref.palette.blue.{sys.shade.normal}}",
   "primaryVariant": "{ref.palette.blue.{sys.shade.variant}}",
-  "secondary": "{ref.palette.amber.{sys.shade.normal}}",
+  "secondary": "{ref.palette.amber.{sys.shade.secondary}}",
   "secondaryVariant": "{ref.palette.amber.{sys.shade.variant}}",
   "background": "{ref.palette.white}",
   "surface": "{ref.palette.white}",

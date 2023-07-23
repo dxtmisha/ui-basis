@@ -1,9 +1,47 @@
 {
-  "padding": "{ref.spacing.3}",
   "height": {
-    "sm": "{ref.spacing.10}",
-    "md": "{ref.spacing.12}",
-    "lg": "{ref.spacing.14}"
+    "sm": {
+      "padding": "{ref.spacing.2}",
+      "height": "{ref.spacing.10}"
+    },
+    "md": {
+      "padding": "{ref.spacing.3}",
+      "height": "{ref.spacing.12}"
+    },
+    "lg": {
+      "padding": "{ref.spacing.4}",
+      "height": "{ref.spacing.14}"
+    }
   },
-  "border-radius": "{sys.rounded.full}"
+  "font": "{font.button}",
+  "color": "{mixin.color.onPrimary}",
+  "background-color": "{mixin.background.primary}",
+  "gradient": "{mixin.gradient.onPrimary}",
+  "border-radius": "{sys.rounded.full}",
+  "box-shadow": "{ref.shadow.4}",
+  "transition-property": "border, box-shadow",
+  "transition": "{mixin.transition.state}",
+  "#label": {
+    "label": "{?button.label}"
+  },
+  "active": {
+    "box-shadow": "{ref.shadow.12}"
+  },
+  "progress": {
+    "color-opacity": "{sys.opacity.disabled}"
+  },
+  "disabled": {
+    "color": "{mixin.color.onDisabled}",
+    "background-color": "{mixin.background.disabled}",
+    "box-shadow": "none"
+  },
+  "secondary": {
+    "color": "{mixin.color.onSurface}",
+    "background-color": "{mixin.background.secondary}",
+    "gradient": "{sys.palette.onSurface}",
+    "disabled": {
+      "color": "{mixin.color.onDisabled}",
+      "background-color": "{mixin.background.disabled}"
+    }
+  }
 }

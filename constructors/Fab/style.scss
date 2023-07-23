@@ -8,8 +8,6 @@
     @include mixinFabIcon;
     @include mixinFabProgress;
 
-    @include mixinFabAlign;
-
     @content;
   }
 }
@@ -28,8 +26,4 @@
 
 @mixin mixinFabProgress {
   @include mixinButtonProgress;
-}
-
-@mixin mixinFabAlign {
-  @include mixinButtonAlign;
 }

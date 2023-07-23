@@ -1,4 +1,5 @@
 {
   "normal": "{ref.shade.5}",
+  "secondary": "{ref.shade.2}",
   "variant": "{ref.shade.7}"
 }

@@ -31,7 +31,7 @@
     "color-opacity": "{sys.opacity.disabled}"
   },
   "disabled": {
-    "basic": "{mixin.color.disabled}",
+    "color": "{mixin.color.disabled}",
     "box-shadow": "none"
   },
   "outlined": {

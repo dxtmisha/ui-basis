@@ -21,11 +21,9 @@ export type PropsFabType = PropsButtonType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
-  selected?: boolean
-  disabled?: boolean
   progress?: boolean
-  adaptive?: 'icon' | 'label'
-  align?: 'left' | 'right' | 'center'
+  disabled?: boolean
+  adaptive?: 'icon'
   // :type
 }
 
@@ -49,11 +47,9 @@ export const propsFab = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    selected: Boolean,
-    disabled: Boolean,
     progress: Boolean,
-    adaptive: String as PropType<PropsFabType['adaptive']>,
-    align: String as PropType<PropsFabType['align']>
+    disabled: Boolean,
+    adaptive: String as PropType<PropsFabType['adaptive']>
     // :prop
   }
 }

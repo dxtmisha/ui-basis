@@ -157,6 +157,93 @@
     />
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      icon-trailing="home"
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      label="label"
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      label="label"
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      icon-trailing="home"
+      label="label"
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      secondary
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      icon-trailing="home"
+      secondary
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      label="label"
+      secondary
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      label="label"
+      secondary
+    />
+    <md2-fab
+      :disabled="disabled"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      icon="face"
+      icon-trailing="home"
+      label="label"
+      secondary
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
     <md2-chip
       :disabled="disabled"
       :dragged="dragged"
@@ -346,6 +433,11 @@
     <md2-button height="lg" icon="face" label="lg"/>
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-fab height="sm" icon="face" label="sm"/>
+    <md2-fab height="md" icon="face" label="md"/>
+    <md2-fab height="lg" icon="face" label="lg"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
     <md2-chip height="sm" icon="face" label="sm"/>
     <md2-chip height="md" icon="face" label="md"/>
     <md2-chip height="lg" icon="face" label="lg"/>
@@ -356,14 +448,33 @@
     <md2-button adaptive="md" icon="face" label="md"/>
     <md2-button adaptive="lg" icon="face" label="lg"/>
   </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-fab adaptive="sm" icon="face" label="sm"/>
+    <md2-fab adaptive="md" icon="face" label="md"/>
+    <md2-fab adaptive="lg" icon="face" label="lg"/>
+  </div>
   <div style="display: flex; gap: 16px; padding: 16px">palette</div>
   <div style="display: flex; gap: 16px; padding: 16px">
-    <md2-button icon="face" label="indigo" text palette="indigo"/>
-    <md2-button icon="face" label="purple" text palette="purple"/>
-    <md2-button icon="face" label="amber" outlined palette="amber"/>
-    <md2-button icon="face" label="blue" outlined palette="blue"/>
-    <md2-button icon="face" label="deep-purple" palette="deep-purple"/>
-    <md2-button icon="face" label="green" palette="green"/>
+    <md2-button icon="face" label="indigo" text palette="indigo" :disabled="disabled"/>
+    <md2-button icon="face" label="purple" text palette="purple" :disabled="disabled"/>
+    <md2-button icon="face" label="amber" outlined palette="amber" :disabled="disabled"/>
+    <md2-button icon="face" label="blue" outlined palette="blue" :disabled="disabled"/>
+    <md2-button icon="face" label="deep-purple" palette="deep-purple" :disabled="disabled"/>
+    <md2-button icon="face" label="green" palette="green" :disabled="disabled"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-fab icon="face" label="indigo" palette="indigo" :disabled="disabled"/>
+    <md2-fab icon="face" label="purple" palette="purple" :disabled="disabled"/>
+    <md2-fab icon="face" label="amber" secondary palette="amber" :disabled="disabled"/>
+    <md2-fab icon="face" label="blue" secondary palette="blue" :disabled="disabled"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-chip icon="face" label="indigo" palette="indigo" :disabled="disabled"/>
+    <md2-chip icon="face" label="purple" palette="purple" :disabled="disabled"/>
+    <md2-chip icon="face" label="amber" outlined palette="amber" :disabled="disabled"/>
+    <md2-chip icon="face" label="blue" outlined palette="blue" :disabled="disabled"/>
+    <md2-chip icon="face" label="deep-purple" choice palette="deep-purple" :selected="selected" :disabled="disabled"/>
+    <md2-chip icon="face" label="green" choice palette="green" :selected="selected" :disabled="disabled"/>
   </div>
   <div v-if="false">
     <md3-progress visible/>
@@ -1026,6 +1137,7 @@ import Md3Chip from '../../md3/Chip/Md3Chip.vue'
 import { GeoIntl } from '../../classes/GeoIntl'
 import { Geo } from '../../classes/Geo'
 import { StorageItem } from '../../classes/StorageItem'
+import Md2Fab from '../../md2/Fab/Md2Fab.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
@@ -1033,6 +1145,7 @@ ImageIcon.add('test', require('../assets/icons/arrow-left.svg'))
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md2Fab,
     Md3Chip,
     Md3Progress,
     Md3Icon,
