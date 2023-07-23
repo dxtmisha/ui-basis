@@ -1,7 +1,7 @@
 const { To } = require('../To')
 
 const PropertiesCache = require('./PropertiesCache')
-const PropertiesFiles = require('./PropertiesFiles')
+const PropertiesFiles = require('./properties/PropertiesFiles')
 const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesComponent = require('./PropertiesComponent')

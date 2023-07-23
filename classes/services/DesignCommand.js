@@ -1,4 +1,4 @@
-const PropertiesFiles = require('./PropertiesFiles')
+const PropertiesFiles = require('./properties/PropertiesFiles')
 
 const DIR_SAMPLE = [__dirname, '..', '..', 'media', 'templates']
 

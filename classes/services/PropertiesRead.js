@@ -2,7 +2,7 @@ const { replaceRecursive } = require('../../functions/data')
 const { To } = require('../To')
 
 const PropertiesCache = require('./PropertiesCache')
-const PropertiesFiles = require('./PropertiesFiles')
+const PropertiesFiles = require('./properties/PropertiesFiles')
 const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesReadImport = require('./PropertiesReadImport')

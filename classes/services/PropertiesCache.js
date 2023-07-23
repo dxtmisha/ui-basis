@@ -1,6 +1,6 @@
 const { To } = require('../To')
 
-const PropertiesFiles = require('./PropertiesFiles')
+const PropertiesFiles = require('./properties/PropertiesFiles')
 
 const CACHE_STATUS = true
 const DIR_CACHE = ['cache']

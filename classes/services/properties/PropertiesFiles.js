@@ -1,5 +1,5 @@
-const { isFilled } = require('../../functions/data')
-const { To } = require('../To')
+const { isFilled } = require('../../../functions/data')
+const { To } = require('../../To')
 
 const requireFs = require('fs')
 const requirePath = require('path')
@@ -183,21 +183,10 @@ module.exports = class PropertiesFiles {
    *
    * Получение информации о файле
    * @param {string|string[]} paths path to the file / путь к файлу
-   * @return {Promise<{mtime: number}>}
+   * @return {{mtimeMs: number}}
    */
   static stat (paths) {
-    return new Promise((resolve, reject) => {
-      requireFs.stat(
-        this.joinPath(To.array(paths) || ''),
-        (error, stats) => {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(stats)
-          }
-        }
-      )
-    })
+    return requireFs.statSync(this.joinPath(paths))
   }
 
   /**
@@ -211,7 +200,7 @@ module.exports = class PropertiesFiles {
     if (__dirname.match('node_modules')) {
       this.root = __dirname.replace(/node_modules.*?$/, '')
     } else {
-      this.root = this.joinPath([__dirname, '..', '..'])
+      this.root = this.joinPath([__dirname, '..', '..', '..'])
     }
 
     return this
