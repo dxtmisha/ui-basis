@@ -1,4 +1,7 @@
 {
+  "padding": {
+    "_type": "var"
+  },
   "#label": {},
   "#icon": {},
   "#trailing": {},

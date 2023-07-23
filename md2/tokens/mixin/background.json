@@ -2,6 +2,10 @@
   "primary": {
     "background-color": "{sys.palette.primary}"
   },
+  "overlay": {
+    "background-color": "{sys.palette.overlay}",
+    "background-opacity": "{sys.opacity.overlay}"
+  },
   "disabled": {
     "background-color": "{sys.palette.disabled}",
     "background-opacity": "{sys.opacity.disabled}"

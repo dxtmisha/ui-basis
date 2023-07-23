@@ -1,8 +1,5 @@
 {
   "basic": "{d.chip}",
-  "padding": {
-    "_type": "var"
-  },
   "height": {
     "_default": "md"
   },
@@ -12,33 +9,37 @@
   "gradient": {
     "_rename": "palette-gradient"
   },
-  "#inscription": {
-    "column-gap": "{ref.spacing.2}",
-    "padding-left": "{??padding}",
-    "padding-right": "{??padding}",
-    "text-overflow": "truncate"
-  },
-  "selected": {
+  "outlined": {
+    "background-color": {
+      "_rename": "background-color"
+    },
+    "before": {
+      "border-color": {
+        "_rename": "palette-border"
+      }
+    },
     "_type": "state"
+  },
+  "input": {
+    "_type": "state",
+    "_category": "category"
+  },
+  "filter": {
+    "_type": "state",
+    "_category": "category"
   },
   "choice": {
     "selected": {
       "color": {
         "_rename": "palette-color"
-      },
-      "gradient": {
-        "_rename": "palette-gradient"
       }
-    }
-  },
-  "outlined": {
-    "background-color": {
-      "_rename": "background-color"
     },
-    "border-color": {
-      "value": "transparent",
-      "_rename": "palette-border"
-    }
+    "_type": "state",
+    "_category": "category"
+  },
+  "action": {
+    "_type": "state",
+    "_category": "category"
   },
   "@@palette": "{palette}"
 }

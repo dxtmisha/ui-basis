@@ -41,9 +41,6 @@ export type PropsChipType = {
   // Progress
   progress?: PropsProgressType /* :type.progress */ | boolean
 
-  // Status
-  selected?: boolean
-
   // Options
   tag?: 'button' | 'span' | string
 }

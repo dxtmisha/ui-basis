@@ -1,6 +1,5 @@
 {
-  "primary": {
-    "gradient": "{sys.palette.primary}",
+  "opacity": {
     "gradient-opacity": "0",
     "hover": {
       "gradient-opacity": "{sys.opacity.hover}"
@@ -12,8 +11,16 @@
       "gradient-opacity": "{sys.opacity.pressed}"
     }
   },
+  "primary": {
+    "gradient": "{sys.palette.primary}",
+    "gradient-opacity": "{mixin.gradient.opacity}"
+  },
   "onPrimary": {
-    "basic": "{mixin.gradient.primary}",
-    "gradient": "{sys.palette.onPrimary}"
+    "gradient": "{sys.palette.onPrimary}",
+    "gradient-opacity": "{mixin.gradient.opacity}"
+  },
+  "onSurface": {
+    "gradient": "{sys.palette.onSurface}",
+    "gradient-opacity": "{mixin.gradient.opacity}"
   }
 }

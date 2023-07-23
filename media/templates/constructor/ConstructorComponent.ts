@@ -19,7 +19,7 @@ export class Constructor/* :component.once Component */<
   M extends ConstructorPropsValueType = ConstructorPropsValueType,
   P extends DesignPropsExtendedType/* :component.once <PropsComponentType> */ = DesignPropsExtendedType/* :component.once <PropsComponentType> */
 > {
-  // :component.once readonly bind: ComputedRef<P>
+  // :component.once readonly bind?: ComputedRef<P>
 
   /**
    * Constructor
@@ -35,8 +35,10 @@ export class Constructor/* :component.once Component */<
     protected readonly props: M,
     protected readonly refs: DesignPropsRefsType<M>
   ) {
-    // this.bind = Design.getBindStatic<any, P>(refs?.component, this.options, 'value')
-    // :component.once this.bind = Design.getBindStatic<any, P>(refs?.component, {}, 'value')
+    if ('/* :component.once component */' in this.props) {
+      // this.bind = Design.getBindStatic<any, P>(refs?.component, this.options, 'value')
+      // :component.once this.bind = Design.getBindStatic<any, P>(refs?.component, {}, 'value')
+    }
   }
 
   /**
@@ -70,7 +72,10 @@ export class Constructor/* :component.once Component */<
       // :component.once ...this.bind.value
     }
 
-    if (this.is.value) {
+    if (
+      // :component.once this.bind &&
+      this.is.value
+    ) {
       // :component.once this.components.render(elements, 'component', props)
     }
 

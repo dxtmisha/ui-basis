@@ -33,6 +33,9 @@ const design = new ChipDesign<typeof subClasses>(props, emit)
     ripple: Md2Ripple,
     progress: Md2Progress
   })
+  .setModification({
+    icon: { overlay: true }
+  })
 
 // Calls all available variables in this component
 // Вызывает все доступные переменные в этом компоненте

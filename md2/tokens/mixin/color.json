@@ -7,6 +7,10 @@
     "color": "{sys.palette.onPrimary}",
     "color-opacity": "{sys.opacity.primary.high}"
   },
+  "onSurface": {
+    "color": "{sys.palette.onSurface}",
+    "color-opacity": "{sys.opacity.surface.high}"
+  },
   "disabled": {
     "color": "{sys.palette.disabled}",
     "color-opacity": "{sys.opacity.surface.disabled}"

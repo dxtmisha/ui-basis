@@ -26,12 +26,12 @@ import {
   ClassesExtraListType,
   ClassesExtraRefType
 } from './DesignClasses'
+import { DesignComponents, DesignComponentsModificationType } from './DesignComponents'
 import { DesignProperties, PropertiesListType } from './DesignProperties'
 import { DesignStyles, StylesListType, StylesRefType } from './DesignStyles'
 
 import { AssociativeType, ElementType } from '../constructors/types'
 import { RefOrNormalType } from '../constructors/typesRef'
-import { DesignComponents } from './DesignComponents'
 
 export interface DesignSetupBasicInterface<C, E> {
   element: Ref<E | undefined>
@@ -88,7 +88,8 @@ export class Design<
   I extends Record<string, any> = Record<string, any>,
   M extends AssociativeType = AssociativeType,
   O extends DesignEmitsType = EmitsOptions,
-  S extends DesignPropsType = DesignPropsType
+  S extends DesignPropsType = DesignPropsType,
+  MM extends DesignComponentsModificationType = DesignComponentsModificationType<P, M>
 > {
   /**
    * Class name
@@ -104,7 +105,7 @@ export class Design<
    * Список подключенных компонентов
    * @protected
    */
-  protected components: DesignComponents<M>
+  protected components: DesignComponents<M, MM>
   protected element = ref<E>()
 
   protected refs: DesignPropsRefsType<P>
@@ -131,7 +132,7 @@ export class Design<
   ) {
     this.refs = toRefs(props) as DesignPropsRefsType<P>
     this.properties = new DesignProperties()
-    this.components = new DesignComponents<M>()
+    this.components = new DesignComponents<M, MM>()
 
     this.context = this.initContext(contextEmit)
     this.attrs = this.context.attrs
@@ -190,6 +191,17 @@ export class Design<
    */
   setName (name: string): this {
     this.name.value = name
+    return this
+  }
+
+  /**
+   * Changes data for modification of input data of connected components
+   *
+   * Изменяет данные для модификации входных данных у подключенных компонентов
+   * @param modification data for modification / данные для модификации
+   */
+  setModification (modification: MM): this {
+    this.components.setModification(modification)
     return this
   }
 

@@ -1,10 +1,12 @@
 <template>
-  <div style="display: flex; gap: 16px; padding: 16px">
-    <md2-button label="Turn" @click="iconTurn=!iconTurn"/>
-    <md2-button label="Hide" @click="iconHide=!iconHide"/>
-    <md2-button label="Dragged" @click="dragged=!dragged"/>
-    <md2-button label="Progress" @click="progress=!progress"/>
-    <md2-button label="Disabled" @click="disabled=!disabled"/>
+  <div style="display: flex; position: sticky; top: 0; background: white; z-index: 64; gap: 16px; padding: 16px">
+    <md2-chip :selected="iconTurn" choice height="sm" label="Turn" @click="iconTurn=!iconTurn"/>
+    <md2-chip :selected="iconHide" choice height="sm" label="Hide" @click="iconHide=!iconHide"/>
+    <md2-chip :selected="selected" choice height="sm" label="Selected" @click="selected=!selected"/>
+    <md2-chip :selected="dragged" choice height="sm" label="Dragged" @click="dragged=!dragged"/>
+    <md2-chip :selected="progress" choice height="sm" label="Progress" @click="progress=!progress"/>
+    <md2-chip :selected="readonly" choice height="sm" label="Readonly" @click="readonly=!readonly"/>
+    <md2-chip :selected="disabled" choice height="sm" label="Disabled" @click="disabled=!disabled"/>
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">
     <md2-button
@@ -152,6 +154,189 @@
       icon="face"
       icon-trailing="home"
       label="label"
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      icon-trailing="home"
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      label="label"
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      label="label"
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      icon-trailing="home"
+      label="label"
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      icon-trailing="home"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      label="label"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      label="label"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      icon="face"
+      icon-trailing="home"
+      label="label"
+      outlined
+    />
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      choice
+      icon="face"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      choice
+      icon="face"
+      icon-trailing="home"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      choice
+      label="label"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      choice
+      icon="face"
+      label="label"
+      outlined
+    />
+    <md2-chip
+      :disabled="disabled"
+      :dragged="dragged"
+      :icon-hide="iconHide"
+      :icon-turn="iconTurn"
+      :progress="progress"
+      :readonly="readonly"
+      :selected="selected"
+      choice
+      icon="face"
+      icon-trailing="home"
+      label="label"
+      outlined
     />
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">height</div>
@@ -159,6 +344,11 @@
     <md2-button height="sm" icon="face" label="sm"/>
     <md2-button height="md" icon="face" label="md"/>
     <md2-button height="lg" icon="face" label="lg"/>
+  </div>
+  <div style="display: flex; gap: 16px; padding: 16px">
+    <md2-chip height="sm" icon="face" label="sm"/>
+    <md2-chip height="md" icon="face" label="md"/>
+    <md2-chip height="lg" icon="face" label="lg"/>
   </div>
   <div style="display: flex; gap: 16px; padding: 16px">adaptive</div>
   <div style="display: flex; gap: 16px; padding: 16px">
@@ -899,6 +1089,7 @@ export default defineComponent({
       selected: ref<boolean>(false),
       dragged: ref<boolean>(false),
       progress: ref<boolean>(false),
+      readonly: ref<boolean>(false),
       disabled: ref<boolean>(false),
 
       iconTurn: ref<boolean>(false),

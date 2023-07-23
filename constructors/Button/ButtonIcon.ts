@@ -103,20 +103,32 @@ export class ButtonIcon<
       this.iconBind &&
       this.isIcon.value
     ) {
-      this.components.render(elements, 'icon', {
-        class: this.classes.getNameBySubclass(['icon']),
-        ...this.iconBind.value
-      })
+      this.components.render(
+        elements,
+        'icon',
+        {
+          class: this.classes.getNameBySubclass(['icon']),
+          ...this.iconBind.value
+        },
+        undefined,
+        'icon'
+      )
     }
 
     if (
       this.trailingBind &&
       this.isTrailing.value
     ) {
-      this.components.render(elements, 'icon', {
-        class: this.classes.getNameBySubclass(['trailing']),
-        ...this.trailingBind.value
-      })
+      this.components.render(
+        elements,
+        'icon',
+        {
+          class: this.classes.getNameBySubclass(['trailing']),
+          ...this.trailingBind.value
+        },
+        undefined,
+        'iconTrailing'
+      )
     }
 
     return elements

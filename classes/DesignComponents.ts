@@ -1,14 +1,27 @@
-import { h, VNode } from 'vue'
+import { h, ref, Ref, VNode } from 'vue'
+import { executeFunction, forEach } from '../functions/data'
+import { getRef } from '../functions/ref'
+
+import { CallbackOrAnyType } from '../constructors/types'
 
 export type DesignComponentsType = Record<string, any>
+export type DesignComponentsModificationType<
+  P extends Record<string, any> = Record<string, any>,
+  M extends Record<string, any> = Record<string, any>,
+  T extends CallbackOrAnyType = CallbackOrAnyType
+> = P | Record<keyof M, T> | Record<string, T>
 
 /**
  * Class for working with connected components
  *
  * Класс для работы с подключенными компонентами
  */
-export class DesignComponents<M extends DesignComponentsType = DesignComponentsType> {
+export class DesignComponents<
+  M extends DesignComponentsType = DesignComponentsType,
+  MM extends DesignComponentsModificationType = DesignComponentsModificationType
+> {
   protected item = {} as M
+  protected readonly modification = ref({} as MM) as Ref<MM>
 
   /**
    * Check the presence of the component
@@ -101,7 +114,7 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    */
   render<K extends keyof M> (
     item: any[],
-    name: K,
+    name: K & string,
     props?: M[K] & Record<string, any>,
     children?: any[],
     index?: string
@@ -121,13 +134,20 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    * @param index the name of the key / названия ключа
    */
   renderItem<K extends keyof M> (
-    name: K,
+    name: K & string,
     props?: M[K] & Record<string, any>,
     children?: any[],
     index?: string
   ): VNode[] {
     if (this.is(name)) {
-      return [this.getNode(this.get(name), props, children, index || (name as string))]
+      return [
+        this.getNode(
+          this.get(name),
+          this.getModification(index, props),
+          children,
+          index || (name as string)
+        )
+      ]
     }
 
     return []
@@ -141,6 +161,41 @@ export class DesignComponents<M extends DesignComponentsType = DesignComponentsT
    */
   set (components: M): this {
     this.item = components
+    return this
+  }
+
+  /**
+   * Returns the modified input data of the connected components
+   *
+   * Возвращает модифицированные входные данные у подключенных компонентов
+   * @param index the name of this / название данного
+   * @param props базовый данный
+   */
+  getModification (index?: string, props?: Record<string, any>): Record<string, any> | undefined {
+    if (index && index in this.modification.value) {
+      const value: Record<string, any> = {}
+
+      forEach(this.modification.value[index], (item, name) => {
+        value[name] = getRef(executeFunction(item))
+      })
+
+      return {
+        ...value,
+        ...(props || {})
+      }
+    } else {
+      return props
+    }
+  }
+
+  /**
+   * Changes data for modification of input data of connected components
+   *
+   * Изменяет данные для модификации входных данных у подключенных компонентов
+   * @param modification data for modification / данные для модификации
+   */
+  setModification (modification: MM): this {
+    this.modification.value = modification
     return this
   }
 }
