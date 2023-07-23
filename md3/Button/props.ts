@@ -9,7 +9,7 @@ export const subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -29,11 +29,9 @@ export type PropsType = PropsButtonType & {
   elevated?: boolean
   tonal?: boolean
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
-  focus?: boolean
   disabled?: boolean
-  selected?: boolean
-  adaptive?: 'icon' | 'inscription'
-  align?: 'left' | 'right' | 'center'
+  adaptive?: 'icon'
+  focus?: boolean
   // :type
   /* :type.progress.none */
 }
@@ -73,11 +71,9 @@ export const props = {
     elevated: Boolean,
     tonal: Boolean,
     palette: String as PropType<PropsType['palette']>,
-    focus: Boolean,
     disabled: Boolean,
-    selected: Boolean,
     adaptive: String as PropType<PropsType['adaptive']>,
-    align: String as PropType<PropsType['align']>
+    focus: Boolean
     // :prop
   }
 }

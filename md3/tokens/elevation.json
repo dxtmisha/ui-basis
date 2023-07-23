@@ -1,4 +1,9 @@
 {
+  "0": {
+    "background": "{ref.background.0}",
+    "boxShadow": "{ref.shadow.0}",
+    "zIndex": "{ref.index.0}"
+  },
   "1": {
     "background": "{ref.background.1}",
     "boxShadow": "{ref.shadow.1}",

@@ -1,4 +1,5 @@
 {
+  "0": "rgb({sys.palette.surface})",
   "1": "rgb({sys.palette.surfaceContainerLow})",
   "2": "rgb({sys.palette.surfaceContainer})",
   "3": "rgb({sys.palette.surfaceContainerHigh})",

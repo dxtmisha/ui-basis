@@ -1,8 +1,5 @@
 {
   "basic": "{d.button}",
-  "padding": {
-    "_type": "var"
-  },
   "height": {
     "_default": "md"
   },
@@ -12,12 +9,6 @@
   "gradient": {
     "_rename": "palette-gradient"
   },
-  "#inscription": {
-    "column-gap": "{ref.spacing.2}",
-    "padding-left": "{??padding}",
-    "padding-right": "{??padding}",
-    "text-overflow": "truncate"
-  },
   "filled": {
     "color": {
       "_rename": "color"
@@ -25,17 +16,13 @@
     "background-color": {
       "_rename": "palette-background"
     },
+    "gradient": {
+      "_rename": "gradient"
+    },
     "_category": "appearance",
     "_default": true
   },
   "outlined": {
-    "before": {},
-    "after": {
-      "basic": {},
-      "border-color": {
-        "_rename": "palette-border"
-      }
-    },
     "_category": "appearance"
   },
   "text": {
@@ -53,6 +40,9 @@
     },
     "background-color": {
       "_rename": "palette-background"
+    },
+    "gradient": {
+      "_rename": "gradient"
     },
     "_category": "appearance"
   },

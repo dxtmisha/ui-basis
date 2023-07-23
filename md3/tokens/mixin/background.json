@@ -1,0 +1,6 @@
+{
+  "disabled": {
+    "background-color": "{sys.palette.onSurface}",
+    "background-opacity": "{sys.opacity.012}"
+  }
+}

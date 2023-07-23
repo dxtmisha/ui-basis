@@ -26,6 +26,13 @@
     "_type": "var",
     "_category": "root"
   },
+  "mixin": {
+    "value": {
+      "file|main": "tokens/mixin.json"
+    },
+    "_type": "mixin",
+    "_category": "mixin"
+  },
   "dark": {
     "value": {
       "file|main": "tokens/dark.json"
