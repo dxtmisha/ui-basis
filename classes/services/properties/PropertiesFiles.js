@@ -10,6 +10,12 @@ const requirePath = require('path')
  * Класс для работы с файлами
  */
 module.exports = class PropertiesFiles {
+  /**
+   * Path to the project root
+   *
+   * Путь к корню проекта
+   * @type {string}
+   */
   static root
 
   /**
@@ -206,20 +212,18 @@ module.exports = class PropertiesFiles {
    * Initializing root path
    *
    * Инициализация корневого пути
-   * @return {this}
+   * @return {string}
    * @private
    */
   static __initRoot () {
     if (__dirname.match('node_modules')) {
-      this.root = __dirname.replace(/node_modules.*?$/, '')
+      return __dirname.replace(/node_modules.*?$/, '')
     } else {
-      this.root = this.joinPath([__dirname, '..', '..', '..'])
+      return this.joinPath([__dirname, '..', '..', '..'])
     }
-
-    return this
   }
 
   static {
-    this.__initRoot()
+    this.root = this.__initRoot()
   }
 }

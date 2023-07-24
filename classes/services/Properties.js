@@ -1,3 +1,5 @@
+const PropertiesPath = require('./properties/read/PropertiesPath')
+
 const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
@@ -98,7 +100,9 @@ module.exports = class Properties {
   __initGo () {
     console.info('Properties: init')
 
-    const read = new PropertiesRead(this.designs)
+    const path = new PropertiesPath(this.designs)
+
+    const read = new PropertiesRead(path, this.designs)
     const items = new PropertiesItems(read.get())
 
     const full = new PropertiesToFull(items)

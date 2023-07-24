@@ -1,7 +1,7 @@
 const { getColumn } = require('../../../../functions/data')
 const { To } = require('../../../To')
 
-const { PropertiesFiles } = require('../PropertiesFiles')
+const PropertiesFiles = require('../PropertiesFiles')
 
 const FILE_NAME = 'properties.json'
 
@@ -74,7 +74,7 @@ module.exports = class PropertiesPath {
     // TODO: Необходимо проверить, правильно ли будет работать путь при подключении модуля
     return [
       [__dirname, '..', '..', '..', '..', path],
-      [PropertiesFiles.root, path]
+      [PropertiesFiles.getRoot(), path]
     ]
   }
 
@@ -89,7 +89,7 @@ module.exports = class PropertiesPath {
     const items = []
 
     To.array(designs).forEach(design => {
-      this.items.push({
+      items.push({
         design: To.kebabCase(design),
         paths: this.__getDesignPath(design)
       })
