@@ -43,6 +43,15 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   *
+   * @param {string} name
+   * @return {*}
+   */
+  static isVariableInName (name) {
+    return !this.isScss(name) && name.match(new RegExp(`^.+([|].*?$|${SYMBOL_AVAILABLE})$`))
+  }
+
+  /**
    * Returns the variable type name from the property name
    *
    * Возвращает название типа переменной из названия свойства

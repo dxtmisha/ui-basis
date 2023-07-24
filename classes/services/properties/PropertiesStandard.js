@@ -25,27 +25,34 @@ module.exports = class PropertiesStandard {
     const data = {}
 
     forEach(properties, (item, name) => {
-      const key = Tool.getName(name)
-      const value = this.__getValue(key, item)
-
-      const type = value?.[Keys.type] || Tool.getVariableInName(name)
-      const newKey = Tool.reKey(key, type)
-
       if (
-        typeof value === 'object' &&
-        'value' in value
+        !('value' in item) ||
+        Tool.isVariableInName(name)
       ) {
-        this.addType(value, type)
-        this.addFull(value, name)
-        this.valueToString(value)
+        const key = Tool.getName(name)
+        const value = this.__getValue(key, item)
 
-        if (newKey in data) {
-          replaceRecursive(data[newKey], value)
-          return
+        const type = value?.[Keys.type] || Tool.getVariableInName(name)
+        const newKey = Tool.reKey(key, type)
+
+        if (
+          typeof value === 'object' &&
+          'value' in value
+        ) {
+          this.addType(value, type)
+          this.addFull(value, name)
+          this.valueToString(value)
+
+          if (newKey in data) {
+            replaceRecursive(data[newKey], value)
+            return
+          }
         }
-      }
 
-      data[newKey] = value
+        data[newKey] = value
+      } else {
+        data[name] = item
+      }
     })
 
     return data
