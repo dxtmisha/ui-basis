@@ -19,6 +19,14 @@ module.exports = class PropertiesFiles {
   static root
 
   /**
+   * Determines whether the package is connected as a module
+   *
+   * Определяет, является ли пакет подключенным как модуль
+   * @type {boolean}
+   */
+  static module
+
+  /**
    * The fs.existsSync() method is used to synchronously check if a file already
    * exists in the given path or not. It returns a boolean value which indicates
    * the presence of a file
@@ -188,6 +196,31 @@ module.exports = class PropertiesFiles {
   }
 
   /**
+   * Returns the path to the directory, removing the file name from the path
+   *
+   * Возвращает путь к директории, убрав название файла из пути
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @return {string}
+   */
+  static getPathDir (paths) {
+    if (this.isDir(paths)) {
+      return this.joinPath(paths)
+    } else {
+      return requirePath.dirname(this.joinPath(paths))
+    }
+  }
+
+  /**
+   * Determines whether the package is connected as a module
+   *
+   * Определяет, является ли пакет подключенным как модуль
+   * @return {boolean}
+   */
+  static isModule () {
+    return this.module
+  }
+
+  /**
    * Returns the root path
    *
    * Возвращает корневой путь
@@ -216,7 +249,7 @@ module.exports = class PropertiesFiles {
    * @private
    */
   static __initRoot () {
-    if (__dirname.match('node_modules')) {
+    if (this.module) {
       return __dirname.replace(/node_modules.*?$/, '')
     } else {
       return this.joinPath([__dirname, '..', '..', '..'])
@@ -224,6 +257,7 @@ module.exports = class PropertiesFiles {
   }
 
   static {
+    this.module = !!__dirname.match('node_modules')
     this.root = this.__initRoot()
   }
 }

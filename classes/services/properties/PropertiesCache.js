@@ -94,13 +94,15 @@ module.exports = class PropertiesCache {
    * @returns {Object<string,*>|string}
    */
   static read (paths) {
-    this.listenerName.forEach(name => {
-      if (name in this.system.files) {
-        this.system.files[name].push(PropertiesFiles.joinPath(paths))
-      } else {
-        this.system.files[name] = [PropertiesFiles.joinPath(paths)]
-      }
-    })
+    if (PropertiesFiles.is(paths)) {
+      this.listenerName.forEach(name => {
+        if (name in this.system.files) {
+          this.system.files[name].push(PropertiesFiles.joinPath(paths))
+        } else {
+          this.system.files[name] = [PropertiesFiles.joinPath(paths)]
+        }
+      })
+    }
 
     return PropertiesFiles.readFile(paths)
   }
@@ -159,7 +161,7 @@ module.exports = class PropertiesCache {
    * @return {boolean}
    * @private
    */
-  static __isBySystem (name) {
+  static __isBySystem (name = 'global') {
     let update = false
 
     if (name in this.system.files) {

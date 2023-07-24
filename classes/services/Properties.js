@@ -1,4 +1,6 @@
-const PropertiesPath = require('./properties/read/PropertiesPath')
+const PropertiesPath = require('./properties/PropertiesPath')
+
+const PropertiesReadMain = require('./properties/read/PropertiesReadMain')
 
 const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
@@ -100,9 +102,14 @@ module.exports = class Properties {
   __initGo () {
     console.info('Properties: init')
 
-    const path = new PropertiesPath(this.designs)
+    PropertiesCache.get([], this.getPathName(), () => {
+      const path = new PropertiesPath(this.designs)
+      const main = new PropertiesReadMain(path).get()
 
-    const read = new PropertiesRead(path, this.designs)
+      return main
+    })
+
+    const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
 
     const full = new PropertiesToFull(items)
@@ -145,5 +152,13 @@ module.exports = class Properties {
     console.info('Properties: end')
 
     return items.get()
+  }
+
+  /**
+   * Возвращает название файла для кэша. Это полный массив со всеми обработанными свойствами
+   * @return {string}
+   */
+  getPathName () {
+    return `${this.designs.join('-')}-${FILE_CACHE}`
   }
 }

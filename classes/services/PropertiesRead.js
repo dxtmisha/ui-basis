@@ -24,15 +24,12 @@ module.exports = class PropertiesRead {
   designsPaths = []
 
   /**
-   * @param {PropertiesPath} path object of the class for working with paths  объект класса для работы с путями
    * @param {string[]} designs list of design names corresponding to folder names / список
    * названий дизайнов, соответствующих названиям папок
    */
   constructor (
-    path,
     designs
   ) {
-    this.path = path
     this.designs = designs
 
     this.fileImport = new PropertiesReadImport()

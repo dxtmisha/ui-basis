@@ -1,7 +1,10 @@
-const { getColumn } = require('../../../../functions/data')
-const { To } = require('../../../To')
+const {
+  getColumn,
+  forEach
+} = require('../../../functions/data')
+const { To } = require('../../To')
 
-const PropertiesFiles = require('../PropertiesFiles')
+const PropertiesFiles = require('./PropertiesFiles')
 
 const FILE_NAME = 'properties.json'
 
@@ -17,6 +20,9 @@ module.exports = class PropertiesPath {
    * названий дизайнов, соответствующих названиям папок
    */
   constructor (designs) {
+    /**
+     * @type {{design: string, paths: string[]}[]}
+     */
     this.items = this.__init(designs)
   }
 
@@ -61,6 +67,20 @@ module.exports = class PropertiesPath {
   }
 
   /**
+   * Gets a list of available paths to the file of global component settings
+   *
+   * Получает список доступных путей к файлу глобальных настроек компонента
+   * @param {string} name design name / название дизайна
+   * @return {string[][]}
+   */
+  getPathsProperties (name) {
+    return forEach(
+      this.items.find(item => item.design === name)?.paths,
+      path => [...path, this.getFileName()]
+    )
+  }
+
+  /**
    * Returns the path to a file by design name
    *
    * Возвращает путь к файлу по названию дизайна
@@ -71,11 +91,17 @@ module.exports = class PropertiesPath {
   __getDesignPath (name) {
     const path = name === 'd' ? 'constructors' : name
 
-    // TODO: Необходимо проверить, правильно ли будет работать путь при подключении модуля
-    return [
-      [__dirname, '..', '..', '..', '..', path],
-      [PropertiesFiles.getRoot(), path]
-    ]
+    if (PropertiesFiles.isModule()) {
+      return [
+        [__dirname, '..', '..', '..', path],
+        [PropertiesFiles.getRoot(), path],
+        [PropertiesFiles.getRoot(), 'src', 'components', path]
+      ]
+    } else {
+      return [
+        [PropertiesFiles.getRoot(), path]
+      ]
+    }
   }
 
   /**
