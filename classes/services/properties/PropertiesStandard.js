@@ -26,6 +26,7 @@ module.exports = class PropertiesStandard {
 
     forEach(properties, (item, name) => {
       if (
+        typeof item !== 'object' ||
         !('value' in item) ||
         Tool.isVariableInName(name)
       ) {
@@ -39,9 +40,9 @@ module.exports = class PropertiesStandard {
           typeof value === 'object' &&
           'value' in value
         ) {
-          this.addType(value, type)
-          this.addFull(value, name)
-          this.valueToString(value)
+          this.__addType(value, type)
+          this.__addFull(value, name)
+          this.__valueToString(value)
 
           if (newKey in data) {
             replaceRecursive(data[newKey], value)
@@ -122,8 +123,9 @@ module.exports = class PropertiesStandard {
    * Добавляет тип, если есть
    * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
    * @param {string|undefined} type property type / тип свойства
+   * @private
    */
-  static addType (value, type) {
+  static __addType (value, type) {
     if (!(Keys.type in value) && type) {
       value[Keys.type] = type
     }
@@ -135,8 +137,9 @@ module.exports = class PropertiesStandard {
    * Добавляет метку, что имя свойства является финальной версией и не требует дополнительной обработки
    * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
    * @param {string} name key name / название ключа
+   * @private
    */
-  static addFull (value, name) {
+  static __addFull (value, name) {
     if (!(Keys.fullName in value) && Tool.isFull(name)) {
       value[Keys.fullName] = true
     }
@@ -147,8 +150,9 @@ module.exports = class PropertiesStandard {
    *
    * Преобразовывает значения в строку, если являются типом число
    * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
+   * @private
    */
-  static valueToString (value) {
+  static __valueToString (value) {
     if (typeof value.value === 'number') {
       value.value = value.value.toString()
     }

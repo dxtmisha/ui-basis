@@ -95,11 +95,13 @@ module.exports = class PropertiesCache {
    */
   static read (paths) {
     if (PropertiesFiles.is(paths)) {
+      const path = PropertiesFiles.joinPath(paths)
+
       this.listenerName.forEach(name => {
-        if (name in this.system.files) {
-          this.system.files[name].push(PropertiesFiles.joinPath(paths))
-        } else {
-          this.system.files[name] = [PropertiesFiles.joinPath(paths)]
+        if (!(name in this.system.files)) {
+          this.system.files[name] = [path]
+        } else if (this.system.files[name].indexOf(path) === -1) {
+          this.system.files[name].push(path)
         }
       })
     }
@@ -168,7 +170,7 @@ module.exports = class PropertiesCache {
       this.system.files[name].forEach(path => {
         if (PropertiesFiles.stat(path)?.mtimeMs > this.system.time) {
           update = true
-          this.__console(`Modified file: ${path}`)
+          this.__console(`Modified file: ${name} - ${path}`)
         }
       })
     }
