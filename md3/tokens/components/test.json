@@ -20,16 +20,19 @@
     "flex-shrink": "0",
     "border-radius": "100px",
     "background": "var(--m-3-sys-light-primary, #6750A4)",
-    "box-shadow": "0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)"
+    "box-shadow": "0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)",
+    "background-color": "var(--m-3-sys-light-primary, #6750A4)"
   },
   "button/filled/hovered/state-layer": {
     "background": "var(--m-3-state-layers-light-on-primary-opacity-008, rgba(255, 255, 255, 0.08))"
   },
   "button/filled/focused": {
     "border-radius": "100px",
-    "background": "var(--m-3-sys-light-primary, #6750A4)"
+    "background": "var(--m-3-sys-light-primary, #6750A4)",
+    "background-color": "var(--m-3-sys-light-primary, #6750A4)"
   },
   "button/filled/focused/state-layer": {
-    "background": "var(--m-3-state-layers-light-on-primary-opacity-012, rgba(255, 255, 255, 0.12))"
+    "background": "var(--m-3-state-layers-light-on-primary-opacity-012, rgba(255, 255, 255, 0.12))",
+    "background-color": "var(--m-3-sys-light-primary, #6750A4)"
   }
 }

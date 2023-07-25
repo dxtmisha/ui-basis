@@ -4,7 +4,7 @@ const {
 } = require('../../../functions/data')
 const { To } = require('../../To')
 
-const PropertiesFiles = require('./PropertiesFiles')
+const Files = require('./PropertiesFiles')
 
 const FILE_NAME = 'properties.json'
 
@@ -91,15 +91,15 @@ module.exports = class PropertiesPath {
   __getDesignPath (name) {
     const path = name === 'd' ? 'constructors' : name
 
-    if (PropertiesFiles.isModule()) {
+    if (Files.isModule()) {
       return [
         [__dirname, '..', '..', '..', path],
-        [PropertiesFiles.getRoot(), path],
-        [PropertiesFiles.getRoot(), 'src', 'components', path]
+        [Files.getRoot(), path],
+        [Files.getRoot(), 'src', 'components', path]
       ]
     } else {
       return [
-        [PropertiesFiles.getRoot(), path]
+        [Files.getRoot(), path]
       ]
     }
   }

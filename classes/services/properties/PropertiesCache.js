@@ -1,6 +1,6 @@
 const { To } = require('../../To')
 
-const PropertiesFiles = require('./PropertiesFiles')
+const Files = require('./PropertiesFiles')
 
 const CACHE_STATUS = true
 const DIR_CACHE = ['cache']
@@ -44,7 +44,7 @@ module.exports = class PropertiesCache {
    * @return {boolean}
    */
   static is (paths, name, extension = 'json') {
-    return PropertiesFiles.is(this.__getPath([...paths, PropertiesFiles.getFileName(name, extension)]))
+    return Files.is(this.__getPath([...paths, Files.getFileName(name, extension)]))
   }
 
   /**
@@ -94,8 +94,8 @@ module.exports = class PropertiesCache {
    * @returns {Object<string,*>|string}
    */
   static read (paths) {
-    if (PropertiesFiles.is(paths)) {
-      const path = PropertiesFiles.joinPath(paths)
+    if (Files.is(paths)) {
+      const path = Files.joinPath(paths)
 
       this.listenerName.forEach(name => {
         if (!(name in this.system.files)) {
@@ -106,7 +106,7 @@ module.exports = class PropertiesCache {
       })
     }
 
-    return PropertiesFiles.readFile(paths)
+    return Files.readFile(paths)
   }
 
   /**
@@ -125,7 +125,7 @@ module.exports = class PropertiesCache {
     value,
     extension = 'json'
   ) {
-    PropertiesFiles.createFile(this.__getPath(paths), name, value, extension)
+    Files.createFile(this.__getPath(paths), name, value, extension)
     return this
   }
 
@@ -138,7 +138,7 @@ module.exports = class PropertiesCache {
    * @private
    */
   static __getPath (path) {
-    return [PropertiesFiles.getRoot(), ...DIR_CACHE, ...To.array(path)]
+    return [Files.getRoot(), ...DIR_CACHE, ...To.array(path)]
   }
 
   /**
@@ -151,8 +151,8 @@ module.exports = class PropertiesCache {
    * @return {Object<string, *>|*[]|string}
    */
   static __getCache (paths, name, extension = 'json') {
-    const path = this.__getPath([...To.array(paths), PropertiesFiles.getFileName(name, extension)])
-    return PropertiesFiles.readFile(path)
+    const path = this.__getPath([...To.array(paths), Files.getFileName(name, extension)])
+    return Files.readFile(path)
   }
 
   /**
@@ -168,7 +168,7 @@ module.exports = class PropertiesCache {
 
     if (name in this.system.files) {
       this.system.files[name].forEach(path => {
-        if (PropertiesFiles.stat(path)?.mtimeMs > this.system.time) {
+        if (Files.stat(path)?.mtimeMs > this.system.time) {
           update = true
           this.__console(`Modified file: ${name} - ${path}`)
         }

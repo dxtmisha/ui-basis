@@ -58,5 +58,10 @@
     },
     "_category": "class"
   },
-  "file|components": "tokens/components"
+  "file|components": "tokens/components",
+  "test": {
+    "button": {
+      "_category": "components"
+    }
+  }
 }

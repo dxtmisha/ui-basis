@@ -1,13 +1,35 @@
 const {
   forEach,
   replaceRecursive,
-  isObject
+  isObject,
+  isFilled
 } = require('../../../functions/data')
 
 const Keys = require('./PropertiesKeys')
 
-const SEPARATOR = process.env.VUE_APP_TOKEN_SEPARATOR
-const BASIC = process.env.VUE_APP_TOKEN_BASIC
+/**
+ * The separator in the names into tokens for grouped names, by which we split the names into parts
+ *
+ * Разделитель в названиях на токены для сгруппированных имен, по которым разделяем названия на части
+ * @type {string}
+ */
+const SEPARATOR = process.env.VUE_APP_TOKEN_SEPARATOR || '/'
+
+/**
+ * The base name, which is taken as the starting value. Used in grouped names
+ *
+ * Базовое название, которое принимается как стартовое значение. Используется в группированных именах
+ * @type {string}
+ */
+const BASIC = process.env.VUE_APP_TOKEN_SEPARATOR_BASIC || 'basic'
+
+/**
+ * Indicates how far inside the array it is necessary to check for the presence of grouped values
+ *
+ * Указывает, на сколько внутри массива надо проверять на наличие группированных значений
+ * @type {number}
+ */
+const LIMIT = parseInt(process.env.VUE_APP_TOKEN_SEPARATOR_LIMIT) || 3
 
 /**
  * Class for working with property splitting into multiple sub-properties
@@ -16,42 +38,69 @@ const BASIC = process.env.VUE_APP_TOKEN_BASIC
  */
 module.exports = class PropertiesSeparator {
   /**
+   * Checks if the structure has grouped records
+   *
+   * Проверяет, есть ли у структуры сгруппированные записи
+   * @param {Object<string,{value:*}>|*} properties An array that needs to be
+   * transformed / Массив, который нужно преобразовать
+   * @param {number} limit the maximum permissible level of verification / максимальный
+   * допустимый уровень проверки
+   * @return {boolean}
+   */
+  static is (
+    properties,
+    limit = LIMIT
+  ) {
+    if (
+      limit > 0 &&
+      isFilled(properties) &&
+      isObject(properties)
+    ) {
+      for (const item in properties) {
+        if (item.match(SEPARATOR)) {
+          return true
+        } else if (this.is(properties[item]?.value, limit - 1)) {
+          return true
+        }
+      }
+    }
+  }
+
+  /**
    * Transforming a property with long names with separators into a set of sub-properties
    *
    * Преобразование свойства с длинными названиями с разделителями на множество под-свойств
    * @param {Object<string,{value:*}>|*} properties An array that needs to be
    * transformed / Массив, который нужно преобразовать
-   * @param {string} separator separator symbol / символ разделителя
-   * @param {string} basic values to be deleted / значения для удаления
    * @return {Object<string,{value:*}>}
    */
   static to (
-    properties,
-    separator = SEPARATOR,
-    basic = BASIC
+    properties
   ) {
     if (isObject(properties)) {
       const data = {}
 
       forEach(properties, (item, name) => {
-        const value = this.to(item?.value, separator, basic)
+        const value = this.to(item?.value)
+        let newProperties
 
-        if (this.__isSeparator(name, separator)) {
-          const list = this.__removeBasicName(name, separator, basic).split(separator)
+        if (this.__isSeparator(name)) {
+          const list = this.__removeBasicName(name).split(SEPARATOR)
 
-          replaceRecursive(
-            data,
-            this.__wrap(list, {
-              ...item,
-              value
-            })
-          )
-        } else {
-          data[name] = {
+          newProperties = this.__wrap(list, {
             ...item,
             value
+          })?.value
+        } else {
+          newProperties = {
+            [name]: {
+              ...item,
+              value
+            }
           }
         }
+
+        replaceRecursive(data, newProperties)
       })
 
       return data
@@ -65,12 +114,11 @@ module.exports = class PropertiesSeparator {
    *
    * Проверяет, подходит ли свойство для разделения
    * @param {string} name property names / названия свойств
-   * @param {string} separator separator symbol / символ разделителя
    * @return {boolean}
    * @private
    */
-  static __isSeparator (name, separator) {
-    return !!name.match(separator)
+  static __isSeparator (name) {
+    return !!name.match(SEPARATOR)
   }
 
   /**
@@ -78,19 +126,13 @@ module.exports = class PropertiesSeparator {
    *
    * Удаление лишних символов из названия
    * @param {string} name property names / названия свойств
-   * @param {string} separator separator symbol / символ разделителя
-   * @param {string} basic values to be deleted / значения для удаления
    * @return {string}
    * @private
    */
-  static __removeBasicName (
-    name,
-    separator,
-    basic
-  ) {
+  static __removeBasicName (name) {
     return name
-      .replaceAll(`${separator}${basic}`, '')
-      .replace(new RegExp(`${separator}$`), '')
+      .replaceAll(`${SEPARATOR}${BASIC}`, '')
+      .replace(new RegExp(`${SEPARATOR}$`), '')
   }
 
   /**
@@ -99,7 +141,7 @@ module.exports = class PropertiesSeparator {
    * Упаковывает свойство в объекты по массиву названий
    * @param {string[]} list array of titles / массив названий
    * @param {Object<string,*>} item property values / значения свойств
-   * @return {Object<string,*>}
+   * @return {Object<string,{value:*}>}
    * @private
    */
   static __wrap (list, item) {
@@ -109,9 +151,11 @@ module.exports = class PropertiesSeparator {
       .reverse()
       .forEach(name => {
         data = {
-          [name]: {
-            value: data,
-            [Keys.wrap]: true
+          value: {
+            [name]: {
+              ...data,
+              [Keys.wrap]: true
+            }
           }
         }
       })

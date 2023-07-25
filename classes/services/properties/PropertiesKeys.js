@@ -3,7 +3,7 @@
  *
  * Ключ со всеми специальными ключами для обработки токенов
  */
-module.exports = class PropertiesReadStandard {
+module.exports = class PropertiesKeys {
   /**
    * The parameter determines the type of property (for the user) / Параметр определяет
    * тип свойства (для пользователя)

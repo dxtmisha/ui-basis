@@ -4,11 +4,11 @@ const {
   isObject
 } = require('../../../../functions/data')
 
-const Files = require('../PropertiesFiles')
 const Cache = require('../PropertiesCache')
-const Standard = require('../PropertiesStandard')
 const Import = require('../PropertiesImport')
 const Separator = require('../PropertiesSeparator')
+const Standard = require('../PropertiesStandard')
+const Wrap = require('../PropertiesWrap')
 
 module.exports = class PropertiesReadMain {
   /**
@@ -55,7 +55,11 @@ module.exports = class PropertiesReadMain {
         ) {
           properties = Standard.to({ [design]: properties })
           properties = new Import(properties, path).to()
-          properties = Separator.to(properties)
+
+          if (Separator.is(properties)) {
+            properties = Separator.to(properties)
+            Wrap.to(properties)
+          }
 
           replaceRecursive(data, properties)
         }
