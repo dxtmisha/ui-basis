@@ -65,7 +65,12 @@ module.exports = class PropertiesImport {
         isFilled(item?.value) &&
         isObject(item?.value)
       ) {
-        replaceRecursive(data, { [name]: { value: this.to(item.value, root) } })
+        replaceRecursive(data, {
+          [name]: {
+            ...item,
+            value: this.to(item.value, root)
+          }
+        })
       } else {
         data[name] = item
       }

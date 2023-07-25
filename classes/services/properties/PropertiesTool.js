@@ -1,6 +1,6 @@
 const { To } = require('../../To')
 
-const SYMBOL_AVAILABLE = '[\\w-&?{}()., ]+'
+const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${process.env.VUE_APP_TOKEN_SEPARATOR}]+`
 
 module.exports = class PropertiesTool {
   /**

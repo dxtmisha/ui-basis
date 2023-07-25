@@ -8,6 +8,7 @@ const Files = require('../PropertiesFiles')
 const Cache = require('../PropertiesCache')
 const Standard = require('../PropertiesStandard')
 const Import = require('../PropertiesImport')
+const Separator = require('../PropertiesSeparator')
 
 module.exports = class PropertiesReadMain {
   /**
@@ -54,6 +55,7 @@ module.exports = class PropertiesReadMain {
         ) {
           properties = Standard.to({ [design]: properties })
           properties = new Import(properties, path).to()
+          properties = Separator.to(properties)
 
           replaceRecursive(data, properties)
         }

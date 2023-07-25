@@ -38,6 +38,13 @@ module.exports = class PropertiesReadStandard {
   static variable = '__variable'
 
   /**
+   * Метка, по который определяем что это час сгрупированый имя и его надо обтимизировать его данный
+   * @type {string}
+   * @public
+   */
+  static wrap = '__wrap'
+
+  /**
    * Checks if the variable is a special value
    *
    * Проверяет, является ли переменная специальным значением
@@ -52,6 +59,7 @@ module.exports = class PropertiesReadStandard {
     this.type,
     this.fullName,
     this.fullValue,
-    this.variable
+    this.variable,
+    this.wrap
   ]
 }
