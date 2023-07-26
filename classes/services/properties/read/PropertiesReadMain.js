@@ -1,5 +1,4 @@
 const {
-  replaceRecursive,
   isFilled,
   isObject
 } = require('../../../../functions/data')
@@ -10,6 +9,11 @@ const Separator = require('../PropertiesSeparator')
 const Standard = require('../PropertiesStandard')
 const Wrap = require('../PropertiesWrap')
 
+/**
+ * A class for transforming global tokens
+ *
+ * Класс для преобразования глобальных токенов
+ */
 module.exports = class PropertiesReadMain {
   /**
    * Constructor
@@ -26,46 +30,30 @@ module.exports = class PropertiesReadMain {
    * @return {Object<string,*>}
    */
   get () {
-    const data = {}
-
-    this.path.getDesigns().forEach(
-      design => replaceRecursive(data, this.getByDesigns(design))
-    )
-
-    return data
-  }
-
-  /**
-   * Returns global tokens by design name
-   *
-   * Возвращает глобальные токены по названию дизайна
-   * @param {string} design design name / название дизайна
-   * @return {Object<string, *>}
-   */
-  getByDesigns (design) {
-    return Cache.get(['main'], `main-${design}`, () => {
-      const data = {}
-
-      this.path.getPathsProperties(design).forEach(path => {
-        let properties = Cache.read(path)
+    return this.path.applyToDesignAll('main', (error, {
+      design,
+      path
+    }) => {
+      if (error === null) {
+        let properties = Cache.read(path.file)
 
         if (
           isFilled(properties) &&
           isObject(properties)
         ) {
           properties = Standard.to({ [design]: properties })
-          properties = new Import(properties, path).to()
+          properties = new Import(properties, path.dir).to()
 
           if (Separator.is(properties)) {
             properties = Separator.to(properties)
             Wrap.to(properties)
           }
 
-          replaceRecursive(data, properties)
+          return properties
         }
-      })
+      }
 
-      return data
+      return {}
     })
   }
 }

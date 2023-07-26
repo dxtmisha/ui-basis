@@ -1,10 +1,12 @@
 const {
   getColumn,
-  forEach
+  forEach,
+  replaceRecursive
 } = require('../../../functions/data')
 const { To } = require('../../To')
 
 const Files = require('./PropertiesFiles')
+const Cache = require('./PropertiesCache')
 
 const FILE_NAME = 'properties.json'
 
@@ -57,6 +59,82 @@ module.exports = class PropertiesPath {
   }
 
   /**
+   * Gets a list of available paths to the file of global component settings
+   *
+   * Получает список доступных путей к файлу глобальных настроек компонента
+   * @param {string} name design name / название дизайна
+   * @return {{
+   *   dir: string[],
+   *   file: string[]
+   * }[]}
+   */
+  getPathsProperties (name) {
+    return forEach(
+      this.items.find(item => item.design === name)?.paths,
+      path => {
+        return {
+          dir: path,
+          file: [...path, this.getFileName()]
+        }
+      }
+    )
+  }
+
+  /**
+   * Processes all token values for all designs and combines them into one-big array
+   *
+   * Обрабатывает все значения токена у всех дизайнов и соединяет их в одну-большую массива
+   * @param {string} name name of the group / названия группы
+   * @param {(error:*, item:{
+   *   design: string,
+   *   path: {
+   *     dir: string[],
+   *     file: string[]
+   *   }
+   * }) => Object<string,*>} callback function for processing / функция для обработки
+   * @return {Object<string,*>}
+   */
+  applyToDesignAll (name, callback) {
+    const data = {}
+
+    this.getDesigns().forEach(
+      design => replaceRecursive(data, this.applyToDesign(name, design, callback))
+    )
+
+    return data
+  }
+
+  /**
+   * Processes all token values for the selected design and combines them into one-big array
+   *
+   * Обрабатывает все значения токена у выбранного дизайна и соединяет их в одну-большую массива
+   * @param {string} name name of the group / названия группы
+   * @param {string} design design name / название дизайна
+   * @param {(error:*, item:{
+   *   design: string,
+   *   path: {
+   *     dir: string[],
+   *     file: string[]
+   *   }
+   * }) => Object<string,*>} callback function for processing / функция для обработки
+   * @return {Object<string, *>}
+   */
+  applyToDesign (name, design, callback) {
+    return Cache.get(['read', name], `${name}-${design}`, () => {
+      const data = {}
+
+      this.getPathsProperties(design).forEach(
+        path => replaceRecursive(data, callback(null, {
+          design,
+          path
+        }))
+      )
+
+      return data
+    })
+  }
+
+  /**
    * Returns the name of the file, in which the basic values for working with tokens are stored
    *
    * Возвращает название файла, в котором сохранены базовые значения для работы с токенами
@@ -64,20 +142,6 @@ module.exports = class PropertiesPath {
    */
   getFileName () {
     return FILE_NAME
-  }
-
-  /**
-   * Gets a list of available paths to the file of global component settings
-   *
-   * Получает список доступных путей к файлу глобальных настроек компонента
-   * @param {string} name design name / название дизайна
-   * @return {string[][]}
-   */
-  getPathsProperties (name) {
-    return forEach(
-      this.items.find(item => item.design === name)?.paths,
-      path => [...path, this.getFileName()]
-    )
   }
 
   /**

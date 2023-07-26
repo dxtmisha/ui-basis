@@ -5,8 +5,8 @@ const {
   replaceRecursive
 } = require('../../../functions/data')
 
-const Files = require('./PropertiesFiles')
 const Cache = require('./PropertiesCache')
+const Files = require('./PropertiesFiles')
 const Keys = require('./PropertiesKeys')
 const Standard = require('./PropertiesStandard')
 
@@ -26,7 +26,7 @@ module.exports = class PropertiesImport {
     paths
   ) {
     this.properties = properties
-    this.root = [Files.getPathDir(paths)]
+    this.root = paths
   }
 
   /**

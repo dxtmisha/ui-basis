@@ -38,7 +38,17 @@ module.exports = class PropertiesKeys {
   static variable = '__variable'
 
   /**
-   * Метка, по который определяем что это час сгрупированый имя и его надо обтимизировать его данный
+   * Ключ для хранения список источник данный для этого записи
+   * @type {string}
+   */
+  static files = '__files'
+
+  /**
+   * The label, by which we determine that this is a part of a grouped name and it needs to
+   * be optimized according to the data
+   *
+   * Метка, по которой определяем, что это часть группированного имени и его надо
+   * оптимизировать по данным
    * @type {string}
    * @public
    */
@@ -60,6 +70,7 @@ module.exports = class PropertiesKeys {
     this.fullName,
     this.fullValue,
     this.variable,
+    this.files,
     this.wrap
   ]
 }

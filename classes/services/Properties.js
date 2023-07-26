@@ -104,6 +104,7 @@ module.exports = class Properties {
 
     PropertiesCache.get([], this.getPathName(), () => {
       const path = new PropertiesPath(this.designs)
+
       const main = new PropertiesReadMain(path).get()
 
       return main

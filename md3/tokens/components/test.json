@@ -34,5 +34,13 @@
   "button/filled/focused/state-layer": {
     "background": "var(--m-3-state-layers-light-on-primary-opacity-012, rgba(255, 255, 255, 0.12))",
     "background-color": "var(--m-3-sys-light-primary, #6750A4)"
+  },
+  "test": {
+    "value": {
+      "value":  {
+        "test1": "var(--test1)",
+        "test2": "var(--test2)"
+      }
+    }
   }
 }
