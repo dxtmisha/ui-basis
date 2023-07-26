@@ -8,6 +8,7 @@ const { To } = require('../../To')
 const Files = require('./PropertiesFiles')
 const Cache = require('./PropertiesCache')
 
+const DIR_CACHE = 'read'
 const FILE_NAME = 'properties.json'
 
 /**
@@ -95,13 +96,15 @@ module.exports = class PropertiesPath {
    * @return {Object<string,*>}
    */
   applyToDesignAll (name, callback) {
-    const data = {}
+    return Cache.get([DIR_CACHE], `${name}`, () => {
+      const data = {}
 
-    this.getDesigns().forEach(
-      design => replaceRecursive(data, this.applyToDesign(name, design, callback))
-    )
+      this.getDesigns().forEach(
+        design => replaceRecursive(data, this.applyToDesign(name, design, callback))
+      )
 
-    return data
+      return data
+    })
   }
 
   /**
@@ -120,7 +123,7 @@ module.exports = class PropertiesPath {
    * @return {Object<string, *>}
    */
   applyToDesign (name, design, callback) {
-    return Cache.get(['read', name], `${name}-${design}`, () => {
+    return Cache.get([DIR_CACHE, name], `${name}-${design}`, () => {
       const data = {}
 
       this.getPathsProperties(design).forEach(

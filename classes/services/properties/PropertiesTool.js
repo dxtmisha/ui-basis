@@ -2,18 +2,12 @@ const { To } = require('../../To')
 
 const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${process.env.VUE_APP_TOKEN_SEPARATOR || '/'}]+`
 
+/**
+ * Common class with diverse functionality
+ *
+ * Общий класс с разнообразным функционалом
+ */
 module.exports = class PropertiesTool {
-  /**
-   * Checks whether the name is complete
-   *
-   * Проверяет, является ли название полным
-   * @param {string} name key name / название ключа
-   * @return {boolean}
-   */
-  static isFull (name) {
-    return !!name.match(/^=|\|=/)
-  }
-
   /**
    * Is the property a SCSS selector
    *
@@ -30,7 +24,7 @@ module.exports = class PropertiesTool {
    *
    * Возвращает имя свойства, отбрасывая его префикс
    * @param {string} name key name / название ключа
-   * @return {*}
+   * @return {string}
    */
   static getName (name) {
     if (this.isScss(name)) {
@@ -43,9 +37,11 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Checks if there is a type in the name of the property
    *
-   * @param {string} name
-   * @return {*}
+   * Проверяет, если есть тип в названии свойства
+   * @param {string} name key name / название ключа
+   * @return {boolean}
    */
   static isVariableInName (name) {
     return !this.isScss(name) && name.match(new RegExp(`^.+([|].*?$|${SYMBOL_AVAILABLE})$`))
@@ -56,7 +52,7 @@ module.exports = class PropertiesTool {
    *
    * Возвращает название типа переменной из названия свойства
    * @param {string} name key name / название ключа
-   * @return {*}
+   * @return {string}
    */
   static getVariableInName (name) {
     if (this.isScss(name)) {
@@ -86,6 +82,6 @@ module.exports = class PropertiesTool {
         break
     }
 
-    return key
+    return To.camelCase(key)
   }
 }

@@ -1,5 +1,13 @@
-// const Files = require('./PropertiesFiles')
-const PropertiesFiles = require('../PropertiesFiles')
+const {
+  isFilled,
+  isObject,
+  replaceRecursive
+} = require('../../../../functions/data')
+const { To } = require('../../../To')
+
+const Cache = require('../PropertiesCache')
+const Files = require('../PropertiesFiles')
+const Standard = require('../PropertiesStandard')
 
 module.exports = class PropertiesReadSettings {
   /**
@@ -11,9 +19,9 @@ module.exports = class PropertiesReadSettings {
   }
 
   /**
-   * Returns all main tokens
+   * Returns the basic settings of the component
    *
-   * Возвращает базовый настройки у компонента
+   * Возвращает базовые настройки у компонента
    * @return {Object<string,*>}
    */
   get () {
@@ -22,15 +30,30 @@ module.exports = class PropertiesReadSettings {
       path
     }) => {
       if (error === null) {
-        const dirs = PropertiesFiles.readDir(path.dir)
+        const dirs = Files.readDir(path.dir)
+        const data = {}
 
         dirs.forEach(dir => {
-          if (PropertiesFiles.isDir(dir)) {
-            console.log('dir', design, dir)
-            // Files.readFile([])
+          if (Files.isDir(dir)) {
+            const properties = Cache.read([...path.dir, dir, this.path.getFileName()])
+
+            if (
+              isFilled(properties) &&
+              isObject(properties)
+            ) {
+              replaceRecursive(data, Standard.to({
+                [design]: {
+                  [To.camelCase(dir)]: properties
+                }
+              }))
+            }
           }
         })
+
+        return data
       }
+
+      return {}
     })
   }
 }

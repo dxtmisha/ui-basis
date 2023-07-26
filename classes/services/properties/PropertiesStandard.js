@@ -60,6 +60,17 @@ module.exports = class PropertiesStandard {
   }
 
   /**
+   * Checks whether the name is complete
+   *
+   * Проверяет, является ли название полным
+   * @param {string} name key name / название ключа
+   * @return {boolean}
+   */
+  static isFull (name) {
+    return !!name.match(/^=|\|=/)
+  }
+
+  /**
    * Transform the property value into the required format
    *
    * Преобразовать значение свойства в необходимый формат
@@ -140,7 +151,7 @@ module.exports = class PropertiesStandard {
    * @private
    */
   static __addFull (value, name) {
-    if (!(Keys.fullName in value) && Tool.isFull(name)) {
+    if (!(Keys.fullName in value) && this.isFull(name)) {
       value[Keys.fullName] = true
     }
   }

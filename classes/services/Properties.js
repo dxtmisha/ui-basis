@@ -1,8 +1,9 @@
-const PropertiesPath = require('./properties/PropertiesPath')
+const Cache = require('./properties/PropertiesCache')
+const Path = require('./properties/PropertiesPath')
 
-const PropertiesReadMain = require('./properties/read/PropertiesReadMain')
+const ReadMain = require('./properties/read/PropertiesReadMain')
+const ReadSettings = require('./properties/read/PropertiesReadSettings')
 
-const PropertiesCache = require('./properties/PropertiesCache')
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
 const PropertiesTool = require('./PropertiesTool')
@@ -19,6 +20,8 @@ const PropertiesToVar = require('./PropertiesToVar')
 const PropertiesToVariable = require('./PropertiesToVariable')
 
 const PropertiesScss = require('./PropertiesScss')
+const { replaceRecursive } = require('../../functions/data')
+const { To } = require('../To')
 
 const FILE_CACHE = 'properties'
 
@@ -68,6 +71,14 @@ module.exports = class Properties {
   }
 
   /**
+   * Возвращает название файла для кэша. Это полный массив со всеми обработанными свойствами
+   * @return {string}
+   */
+  getPathName () {
+    return `${this.designs.join('-')}-${FILE_CACHE}`
+  }
+
+  /**
    * Entry point for generating a file to work with data from JSON
    *
    * Точка входа для генерации файла для работы с данными из JSON
@@ -77,7 +88,7 @@ module.exports = class Properties {
   __init () {
     const data = this.__initGo()
 
-    PropertiesCache.create([], `${this.designs.join('_')}_${FILE_CACHE}`, data)
+    Cache.create([], `${this.designs.join('_')}_${FILE_CACHE}`, data)
     return data
   }
 
@@ -89,7 +100,7 @@ module.exports = class Properties {
    * @private
    */
   __initCache () {
-    return PropertiesCache.get([], `${this.designs.join('_')}_${FILE_CACHE}`, () => this.__initGo())
+    return Cache.get([], `${this.designs.join('_')}_${FILE_CACHE}`, () => this.__initGo())
   }
 
   /**
@@ -102,13 +113,7 @@ module.exports = class Properties {
   __initGo () {
     console.info('Properties: init')
 
-    PropertiesCache.get([], this.getPathName(), () => {
-      const path = new PropertiesPath(this.designs)
-
-      const main = new PropertiesReadMain(path).get()
-
-      return main
-    })
+    const properties = this.__getBasic()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
@@ -156,10 +161,22 @@ module.exports = class Properties {
   }
 
   /**
-   * Возвращает название файла для кэша. Это полный массив со всеми обработанными свойствами
-   * @return {string}
+   * Collects into an array from all files and returns the content without processing them
+   *
+   * Собирает в массив со всех файлов и возвращает содержимое не обрабатывая их
+   * @return {Object<string, *>}
+   * @private
    */
-  getPathName () {
-    return `${this.designs.join('-')}-${FILE_CACHE}`
+  __getBasic () {
+    return Cache.get([], this.getPathName(), () => {
+      const path = new Path(this.designs)
+
+      const settings = new ReadSettings(path).get()
+      const main = new ReadMain(path).get()
+
+      return To.copy(
+        replaceRecursive(settings, main)
+      )
+    })
   }
 }
