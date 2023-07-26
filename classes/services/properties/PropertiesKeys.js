@@ -13,6 +13,20 @@ module.exports = class PropertiesKeys {
   static type = '_type'
 
   /**
+   * Rename the names of properties / Переименовывать названия свойств
+   * @type {string}
+   * @public
+   */
+  static rename = '_rename'
+
+  /**
+   * Category of property / Категория свойства
+   * @type {string}
+   * @public
+   */
+  static category = '_category'
+
+  /**
    * The key determines that the name of the property is the final version and does not require further processing
    *
    * Ключ определяет, что имя свойства является финальной версией и не требует дополнительной обработки
@@ -67,6 +81,8 @@ module.exports = class PropertiesKeys {
 
   static __special = [
     this.type,
+    this.rename,
+    this.category,
     this.fullName,
     this.fullValue,
     this.variable,

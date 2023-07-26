@@ -20,6 +20,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Is the property extraction SCSS for @at-root
+   *
+   * Является ли свойство выборки SCSS для @at-root
+   * @param {string} name key name / название ключа
+   * @return {boolean}
+   */
+  static isRoot (name) {
+    return !!name.match(/^&&/)
+  }
+
+  /**
    * Returns the property name, discarding its prefix
    *
    * Возвращает имя свойства, отбрасывая его префикс
@@ -55,7 +66,9 @@ module.exports = class PropertiesTool {
    * @return {string}
    */
   static getVariableInName (name) {
-    if (this.isScss(name)) {
+    if (this.isRoot(name)) {
+      return 'root'
+    } else if (this.isScss(name)) {
       return 'scss'
     } else {
       return To.kebabCase(

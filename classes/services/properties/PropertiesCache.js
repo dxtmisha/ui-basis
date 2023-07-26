@@ -4,6 +4,7 @@ const Files = require('./PropertiesFiles')
 
 const CACHE_STATUS = true
 const DIR_CACHE = ['cache']
+const DIR_STEP = ['step']
 const FILE_SYSTEM = 'system'
 
 /**
@@ -127,6 +128,17 @@ module.exports = class PropertiesCache {
   ) {
     Files.createFile(this.__getPath(paths), name, value, extension)
     return this
+  }
+
+  /**
+   * Saves intermediate data
+   *
+   * Сохраняет промежуточные данные
+   * @param {string} name file name / название файла
+   * @param {Object<string,*>|*[]|string} value values for storage / значения для хранения
+   */
+  static createStep (name, value) {
+    this.create(DIR_STEP, name, value)
   }
 
   /**

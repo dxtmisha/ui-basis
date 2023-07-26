@@ -4,6 +4,9 @@ const {
   isObject
 } = require('../../../../functions/data')
 
+const Keys = require('../PropertiesKeys')
+const Type = require('../PropertiesType')
+
 /**
  * Class for cleaning all empty entries for clothing the array
  *
@@ -31,7 +34,11 @@ module.exports = class PropertiesToNone {
    */
   static __to (properties, path = '') {
     forEach(properties, (item, name) => {
-      if (isObject(item) && 'value' in item) {
+      if (
+        isObject(item) &&
+        'value' in item &&
+        item?.[Keys.variable] !== Type.subclass
+      ) {
         if (isFilled(item?.value)) {
           this.__to(item?.value, `${path}.${name}`)
         }
