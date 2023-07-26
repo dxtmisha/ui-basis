@@ -22,6 +22,7 @@ module.exports = class PropertiesItems {
   designs = undefined
 
   /**
+   * Constructor
    * @param {Object<string,*>} properties array with all property records / массив со всеми записями свойств
    */
   constructor (properties) {
@@ -53,20 +54,6 @@ module.exports = class PropertiesItems {
   }
 
   /**
-   * Divides an index into sections
-   *
-   * Разделяет индекс на разделы
-   * @param {string} index index for splitting / индекс для разделения
-   * @return {string[]}
-   */
-  getKeys (index) {
-    return To.kebabCase(
-      index.replace(/^\{|}$/ig, '')
-    )
-      .split('.')
-  }
-
-  /**
    * Returns link properties as a string
    *
    * Возвращает свойства ссылки в виде строки
@@ -91,7 +78,7 @@ module.exports = class PropertiesItems {
    * @return {Object<string, *>|undefined}
    */
   getItemByIndex (index, check = false) {
-    const keys = this.getKeys(index)
+    const keys = this.__getKeys(index)
     let data = this.properties
 
     keys.forEach(key => {
@@ -288,5 +275,20 @@ module.exports = class PropertiesItems {
     PropertiesCache.create(['step', this.getDesigns().join('_')], `step--${step++}__${name}`, data, extension)
 
     return this
+  }
+
+  /**
+   * Divides an index into sections
+   *
+   * Разделяет индекс на разделы
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {string[]}
+   * @private
+   */
+  __getKeys (index) {
+    return To.kebabCase(
+      index.replace(/^\{|}$/ig, '')
+    )
+      .split('.')
   }
 }

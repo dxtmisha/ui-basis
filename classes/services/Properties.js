@@ -1,5 +1,6 @@
 const Cache = require('./properties/PropertiesCache')
 const Path = require('./properties/PropertiesPath')
+// const None = require('./properties/PropertiesToNone')
 
 const ReadMain = require('./properties/read/PropertiesReadMain')
 const ReadSettings = require('./properties/read/PropertiesReadSettings')
@@ -171,11 +172,11 @@ module.exports = class Properties {
     return Cache.get([], this.getPathName(), () => {
       const path = new Path(this.designs)
 
-      const settings = new ReadSettings(path).get()
-      const main = new ReadMain(path).get()
-
       return To.copy(
-        replaceRecursive(settings, main)
+        replaceRecursive(
+          new ReadSettings(path).get(),
+          new ReadMain(path).get()
+        )
       )
     })
   }
