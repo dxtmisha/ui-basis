@@ -3,6 +3,7 @@ const {
   replaceRecursive,
   isFilled
 } = require('../../../functions/data')
+const { To } = require('../../To')
 
 const Keys = require('./PropertiesKeys')
 const Tool = require('./PropertiesTool')
@@ -42,7 +43,7 @@ module.exports = class PropertiesStandard {
         ) {
           this.__addType(value, type)
           this.__addFull(value, name)
-          this.__valueToString(value)
+          this.__general(value)
 
           if (newKey in data) {
             replaceRecursive(data[newKey], value)
@@ -52,7 +53,8 @@ module.exports = class PropertiesStandard {
 
         data[newKey] = value
       } else {
-        data[name] = item
+        this.__general(item)
+        data[Tool.reKey(name)] = item
       }
     })
 
@@ -131,6 +133,18 @@ module.exports = class PropertiesStandard {
   }
 
   /**
+   * General processing
+   *
+   * Общая обработка
+   * @param {Object<string, *>|string|number} item values for conversion / значения для преобразования
+   * @private
+   */
+  static __general (item) {
+    this.__rename(item)
+    this.__value(item)
+  }
+
+  /**
    * Добавляет тип, если есть
    * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
    * @param {string|undefined} type property type / тип свойства
@@ -160,12 +174,33 @@ module.exports = class PropertiesStandard {
    * Converts values to string, if they are of type number
    *
    * Преобразовывает значения в строку, если являются типом число
-   * @param {Object<string, *>|string|number} value values for conversion / значения для преобразования
+   * @param {Object<string, *>|string|number} item values for conversion / значения для преобразования
    * @private
    */
-  static __valueToString (value) {
-    if (typeof value.value === 'number') {
-      value.value = value.value.toString()
+  static __value (item) {
+    switch (typeof item?.value) {
+      case 'number':
+        item.value = item.value.toString()
+        break
+      case 'string':
+        if (Tool.isLink(item.value)) {
+          item.value = item.value
+            .replace(/{[^{}]+}/g, link => To.kebabCase(link))
+        }
+        break
+    }
+  }
+
+  /**
+   * Bring the values of the rename fields to the standard form
+   *
+   * Привести значения полей rename в стандартный вид
+   * @param {Object<string, *>|string|number} item values for conversion / значения для преобразования
+   * @private
+   */
+  static __rename (item) {
+    if (Keys.rename in item) {
+      item[Keys.rename] = To.kebabCase(item[Keys.rename])
     }
   }
 }

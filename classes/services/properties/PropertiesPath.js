@@ -1,6 +1,6 @@
 const {
-  getColumn,
   forEach,
+  getColumn,
   replaceRecursive
 } = require('../../../functions/data')
 const { To } = require('../../To')

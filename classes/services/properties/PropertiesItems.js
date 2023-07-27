@@ -2,7 +2,6 @@ const {
   forEach,
   isObject
 } = require('../../../functions/data')
-const { To } = require('../../To')
 
 const Keys = require('./PropertiesKeys')
 const Cache = require('./PropertiesCache')
@@ -23,6 +22,29 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Returns values by index
+   *
+   * Возвращает значения по индексу
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {Object<string, *>|undefined}
+   */
+  getItemByIndex (index) {
+    const keys = this.__getKeys(index)
+    let item = this.properties
+
+    for (const key of keys) {
+      item = item?.value?.[key]
+
+      if (!item) {
+        console.error(`[Items]: no item ${index}`)
+        break
+      }
+    }
+
+    return item
+  }
+
+  /**
    * Returns the name of the property, taking into account the parameter of changing the name
    *
    * Возвращает название свойства, учитывая параметр изменения имени
@@ -31,9 +53,7 @@ module.exports = class PropertiesItems {
    * @return {*}
    */
   getItemName (name, item) {
-    return To.kebabCase(
-      (item?.[Keys.rename] || name).replace(/\(.*?$/, '')
-    )
+    return (item?.[Keys.rename] || name).replace(/\(.*?$/, '')
   }
 
   /**
@@ -137,17 +157,40 @@ module.exports = class PropertiesItems {
    * @param {string} design design name / название дизайна
    * @param {string} component component name / название компонента
    * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @param {string} separator разделитель
    * @return {string}
    */
-  toFullLink (design, component, value) {
+  toFullLink (
+    design,
+    component,
+    value,
+    separator = '.'
+  ) {
     if (value.match('?')) {
       return value
-        .replace(/\?\?(?![_-])/g, `${design}.${component}.`)
-        .replace(/\?\?(?=[_-])/g, `${design}.${component}`)
-        .replace(/\?/g, `${design}.`)
+        .replace(/\?\?(?![ _-])/g, `${design}${separator}${component}${separator}`)
+        .replace(/\?\?(?=[ _-])/g, `${design}${separator}${component}`)
+        .replace(/\?/g, `${design}${separator}`)
     } else {
       return this.toFullLinkByDesign(design, value)
     }
+  }
+
+  /**
+   * Replaces labels with design and component names (for the name)
+   *
+   * Заменяет метки на названия дизайна и компонента (для названия)
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {string}
+   */
+  toFullLinkForName (
+    design,
+    component,
+    value
+  ) {
+    return this.toFullLink(design, component, value, '-')
   }
 
   /**
@@ -180,5 +223,18 @@ module.exports = class PropertiesItems {
    */
   createStep (name) {
     Cache.createStep(`${this.designs.join('-')}-${name}`, this.properties)
+  }
+
+  /**
+   * Divides an index into sections
+   *
+   * Разделяет индекс на разделы
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {string[]}
+   * @private
+   */
+  __getKeys (index) {
+    return index.replace(/^\{|}$/ig, '')
+      .split('.')
   }
 }

@@ -1,6 +1,9 @@
 const { To } = require('../../To')
 
-const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${process.env.VUE_APP_TOKEN_SEPARATOR || '/'}]+`
+const Keys = require('./PropertiesKeys')
+
+const SYMBOL_SEPARATOR = process.env.VUE_APP_TOKEN_SEPARATOR || Keys.SEPARATOR
+const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${SYMBOL_SEPARATOR}]+`
 
 /**
  * Common class with diverse functionality
@@ -8,6 +11,17 @@ const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${process.env.VUE_APP_TOKEN_SEPARATOR ||
  * Общий класс с разнообразным функционалом
  */
 module.exports = class PropertiesTool {
+  /**
+   * Checks whether a value is a reference
+   *
+   * Проверяет, является ли значение ссылкой
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {boolean}
+   */
+  static isLink (value) {
+    return !!value.match(/{[^{}]+}/)
+  }
+
   /**
    * Is the property a SCSS selector
    *
@@ -78,6 +92,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Returns a list of link values
+   *
+   * Возвращает список значений ссылок
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {string[]}
+   */
+  static getLinkList (value) {
+    return value.match(/{[^{}]+}/ig)
+  }
+
+  /**
    * Transformed key name by its type
    *
    * Преобразованное название ключа по его типу
@@ -85,16 +110,22 @@ module.exports = class PropertiesTool {
    * @param {string|undefined} type property type / тип свойства
    * @return {string}
    */
-  static reKey (key, type) {
-    switch (type) {
-      case 'media':
-      case 'media-max':
-        if (!key.match(/^media-/)) {
-          return `media-${key}`
-        }
-        break
+  static reKey (key, type = undefined) {
+    if (type) {
+      switch (type) {
+        case 'media':
+        case 'media-max':
+          if (!key.match(/^media-/)) {
+            return `media-${key}`
+          }
+          break
+      }
     }
 
-    return To.camelCase(key)
+    return To.kebabCase(
+      SYMBOL_SEPARATOR !== Keys.SEPARATOR
+        ? key.replace(process.env.VUE_APP_TOKEN_SEPARATOR, Keys.SEPARATOR)
+        : key
+    )
   }
 }

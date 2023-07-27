@@ -8,21 +8,18 @@ module.exports = class PropertiesKeys {
    * The parameter determines the type of property (for the user) / Параметр определяет
    * тип свойства (для пользователя)
    * @type {string}
-   * @public
    */
   static type = '_type'
 
   /**
    * Rename the names of properties / Переименовывать названия свойств
    * @type {string}
-   * @public
    */
   static rename = '_rename'
 
   /**
    * Category of property / Категория свойства
    * @type {string}
-   * @public
    */
   static category = '_category'
 
@@ -31,7 +28,6 @@ module.exports = class PropertiesKeys {
    *
    * Ключ определяет, что имя свойства является финальной версией и не требует дополнительной обработки
    * @type {string}
-   * @public
    */
   static fullName = '_full-name'
 
@@ -40,14 +36,12 @@ module.exports = class PropertiesKeys {
    *
    * Ключ определяет, что значение свойства является финальной версией и не требует дополнительной обработки.
    * @type {string}
-   * @public
    */
   static fullValue = '_full-value'
 
   /**
    * The parameter determines the type of property / Параметр определяет тип свойства
    * @type {string}
-   * @public
    */
   static variable = '__variable'
 
@@ -64,9 +58,16 @@ module.exports = class PropertiesKeys {
    * Метка, по которой определяем, что это часть группированного имени и его надо
    * оптимизировать по данным
    * @type {string}
-   * @public
    */
   static wrap = '__wrap'
+
+  /**
+   * The separator in the names into tokens for grouped names, by which we split the names into parts
+   *
+   * Разделитель в названиях на токены для сгруппированных имен, по которым разделяем названия на части
+   * @type {string}
+   */
+  static SEPARATOR = '/'
 
   /**
    * Checks if the variable is a special value

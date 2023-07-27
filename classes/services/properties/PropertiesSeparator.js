@@ -1,19 +1,11 @@
 const {
   forEach,
-  replaceRecursive,
+  isFilled,
   isObject,
-  isFilled
+  replaceRecursive
 } = require('../../../functions/data')
 
 const Keys = require('./PropertiesKeys')
-
-/**
- * The separator in the names into tokens for grouped names, by which we split the names into parts
- *
- * Разделитель в названиях на токены для сгруппированных имен, по которым разделяем названия на части
- * @type {string}
- */
-const SEPARATOR = process.env.VUE_APP_TOKEN_SEPARATOR || '/'
 
 /**
  * The base name, which is taken as the starting value. Used in grouped names
@@ -57,7 +49,7 @@ module.exports = class PropertiesSeparator {
       isObject(properties)
     ) {
       for (const item in properties) {
-        if (item.match(SEPARATOR)) {
+        if (item.match(Keys.SEPARATOR)) {
           return true
         } else if (this.is(properties[item]?.value, limit - 1)) {
           return true
@@ -85,7 +77,7 @@ module.exports = class PropertiesSeparator {
         let newProperties
 
         if (this.__isSeparator(name)) {
-          const list = this.__removeBasicName(name).split(SEPARATOR)
+          const list = this.__removeBasicName(name).split(Keys.SEPARATOR)
 
           newProperties = this.__wrap(list, {
             ...item,
@@ -118,7 +110,7 @@ module.exports = class PropertiesSeparator {
    * @private
    */
   static __isSeparator (name) {
-    return !!name.match(SEPARATOR)
+    return !!name.match(Keys.SEPARATOR)
   }
 
   /**
@@ -131,8 +123,8 @@ module.exports = class PropertiesSeparator {
    */
   static __removeBasicName (name) {
     return name
-      .replaceAll(`${SEPARATOR}${BASIC}`, '')
-      .replace(new RegExp(`${SEPARATOR}$`), '')
+      .replaceAll(`${Keys.SEPARATOR}${BASIC}`, '')
+      .replace(new RegExp(`${Keys.SEPARATOR}$`), '')
   }
 
   /**
