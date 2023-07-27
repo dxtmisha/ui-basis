@@ -30,18 +30,33 @@ module.exports = class PropertiesItems {
    */
   getItemByIndex (index) {
     const keys = this.__getKeys(index)
-    let item = this.properties
+    let item = this.properties?.[keys.shift()]
 
-    for (const key of keys) {
-      item = item?.value?.[key]
+    if (item) {
+      for (const key of keys) {
+        item = item?.value?.[key]
 
-      if (!item) {
-        console.error(`[Items]: no item ${index}`)
-        break
+        if (!item) {
+          console.error(`[Items]: no item ${index}`, key, keys)
+          break
+        }
       }
     }
 
     return item
+  }
+
+  /**
+   * Divides an index into sections
+   *
+   * Разделяет индекс на разделы
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {string[]}
+   * @private
+   */
+  __getKeys (index) {
+    return index.replace(/^\{|}$/ig, '')
+      .split('.')
   }
 
   /**
@@ -69,14 +84,34 @@ module.exports = class PropertiesItems {
    *   parent?: Object<string,*>,
    *   parents?: {name:string, item: Object<string,*>}[]
    * }) => *} callback the callback function is executed for each element / выполняется функция
+   * @param {{
+   *   design?: string,
+   *   component?: string,
+   *   name?: string,
+   *   value?: *,
+   *   item?: Object<string,*>,
+   *   parent?: Object<string,*>,
+   *   parents?: {name:string, item: Object<string,*>}[]
+   * }} property the callback function is executed for each element / выполняется функция
    * обратного вызова (callback) для каждого элемента
    * @returns {*[]}
    * @private
    */
-  each (callback) {
-    return this.__each(
-      callback
-    )
+  each (callback, property = undefined) {
+    if (property) {
+      return this.__each(
+        callback,
+        property?.design,
+        property?.component,
+        property?.item?.value,
+        property?.item,
+        property?.parents
+      )
+    } else {
+      return this.__each(
+        callback
+      )
+    }
   }
 
   /**
@@ -166,7 +201,7 @@ module.exports = class PropertiesItems {
     value,
     separator = '.'
   ) {
-    if (value.match('?')) {
+    if (value.match(/\?/)) {
       return value
         .replace(/\?\?(?![ _-])/g, `${design}${separator}${component}${separator}`)
         .replace(/\?\?(?=[ _-])/g, `${design}${separator}${component}`)
@@ -223,18 +258,5 @@ module.exports = class PropertiesItems {
    */
   createStep (name) {
     Cache.createStep(`${this.designs.join('-')}-${name}`, this.properties)
-  }
-
-  /**
-   * Divides an index into sections
-   *
-   * Разделяет индекс на разделы
-   * @param {string} index index for splitting / индекс для разделения
-   * @return {string[]}
-   * @private
-   */
-  __getKeys (index) {
-    return index.replace(/^\{|}$/ig, '')
-      .split('.')
   }
 }

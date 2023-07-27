@@ -45,6 +45,8 @@ module.exports = class PropertiesImport {
     const data = {}
 
     forEach(properties, (item, name) => {
+      let newItem
+
       if (
         item?.[Keys.type] === 'file' &&
         item?.value
@@ -53,26 +55,27 @@ module.exports = class PropertiesImport {
         const read = this.__read(path)
 
         if (isFilled(read)) {
-          replaceRecursive(
-            data,
-            this.to(
-              Standard.to(read),
-              [Files.getPathDir(path)]
-            )
+          newItem = this.to(
+            Standard.to(read),
+            [Files.getPathDir(path)]
           )
         }
       } else if (
         isFilled(item?.value) &&
         isObject(item?.value)
       ) {
-        replaceRecursive(data, {
+        newItem = {
           [name]: {
             ...item,
             value: this.to(item.value, root)
           }
-        })
+        }
       } else {
-        data[name] = item
+        newItem = { [name]: item }
+      }
+
+      if (newItem) {
+        replaceRecursive(data, newItem)
       }
     })
 

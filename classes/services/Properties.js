@@ -2,6 +2,7 @@ const Cache = require('./properties/PropertiesCache')
 const Path = require('./properties/PropertiesPath')
 const Items = require('./properties/PropertiesItems')
 
+const ToLink = require('./properties/to/PropertiesToLink')
 const ToVariable = require('./properties/to/PropertiesToVariable')
 // const None = require('./properties/PropertiesToNone')
 
@@ -119,7 +120,8 @@ module.exports = class Properties {
 
     const properties = new Items(this.__getBasic())
 
-    new ToVariable(properties).to()
+    // new ToLink(properties).to()
+    // new ToVariable(properties).to()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())

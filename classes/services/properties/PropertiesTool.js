@@ -12,17 +12,6 @@ const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${SYMBOL_SEPARATOR}]+`
  */
 module.exports = class PropertiesTool {
   /**
-   * Checks whether a value is a reference
-   *
-   * Проверяет, является ли значение ссылкой
-   * @param {string} value values of properties from the value field / значения свойств из поля value
-   * @return {boolean}
-   */
-  static isLink (value) {
-    return !!value.match(/{[^{}]+}/)
-  }
-
-  /**
    * Is the property a SCSS selector
    *
    * Является ли свойство выборки SCSS
@@ -92,6 +81,17 @@ module.exports = class PropertiesTool {
   }
 
   /**
+   * Checks whether a value is a reference
+   *
+   * Проверяет, является ли значение ссылкой
+   * @param {string} value values of properties from the value field / значения свойств из поля value
+   * @return {boolean}
+   */
+  static isLink (value) {
+    return typeof value === 'string' && !!value.match(/{[^{}]+}/)
+  }
+
+  /**
    * Returns a list of link values
    *
    * Возвращает список значений ссылок
@@ -99,7 +99,7 @@ module.exports = class PropertiesTool {
    * @return {string[]}
    */
   static getLinkList (value) {
-    return value.match(/{[^{}]+}/ig)
+    return value.match(/{[^{}]+}/g)
   }
 
   /**
