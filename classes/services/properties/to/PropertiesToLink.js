@@ -1,12 +1,13 @@
 const {
   getColumn,
-  splice
+  splice,
+  forEach
 } = require('../../../../functions/data')
 const { To } = require('../../../To')
 
-const Keys = require('../PropertiesKeys')
-const Tool = require('../PropertiesTool')
-const Type = require('../PropertiesType')
+// const Keys = require('../PropertiesKeys')
+// const Tool = require('../PropertiesTool')
+// const Type = require('../PropertiesType')
 
 const FILE_CACHE = '004-link'
 
@@ -22,7 +23,7 @@ module.exports = class PropertiesToLink {
    *   item: Object<string,*>,
    *   parent: Object<string,*>,
    *   parents: Object<string,*>[],
-   *   list: Object<string,*>[]
+   *   link: Object<string,*>
    * }[]}
    */
   list
@@ -60,6 +61,12 @@ module.exports = class PropertiesToLink {
     this.items.createStep(FILE_CACHE)
   }
 
+  __to () {
+    // forEach(this.items.get(), item => {
+
+    // })
+  }
+
   /**
    * Transformation
    *
@@ -69,31 +76,28 @@ module.exports = class PropertiesToLink {
    *   item: Object<string,*>,
    *   parent: Object<string,*>,
    *   parents: Object<string,*>[],
-   *   list: Object<string,*>[]
+   *   link: Object<string,*>
    * }} data object for conversion / объект для преобразования
    * @return {boolean}
    * @private
    */
   __add ({
     name,
-    item,
     parent,
-    list
+    link
   }) {
     let update = false
 
-    list.forEach(link => {
-      if (!this.__isSubLink(link)) {
-        update = true
+    if (this.__isNotSubLink(link)) {
+      update = true
 
-        splice(
-          parent?.value,
-          To.copy(item),
-          name,
-          true
-        )
-      }
-    })
+      splice(
+        parent?.value,
+        To.copy(link.value),
+        name,
+        true
+      )
+    }
 
     return update
   }
@@ -106,15 +110,15 @@ module.exports = class PropertiesToLink {
    * @return {boolean}
    * @private
    */
-  __isSubLink (link) {
+  __isNotSubLink (link) {
     for (const { parents } of this.list) {
       if (parents.indexOf(link) !== -1) {
         console.log('[Sub]', link)
-        return true
+        return false
       }
     }
 
-    return false
+    return true
   }
 
   /**
@@ -126,21 +130,21 @@ module.exports = class PropertiesToLink {
    *   item: Object<string,*>,
    *   parent: Object<string,*>,
    *   parents: Object<string,*>[],
-   *   list: Object<string,*>[]
+   *   link: Object<string,*>
    * }[]}
    * @private
    */
   __initList () {
     return this.items.each(property => {
-      const list = this.__getItemByLink(property)
+      const link = this.__getItemByLink(property)
 
-      if (list) {
+      if (link) {
         return {
           name: property.name,
           item: property.item,
           parent: property.parent,
           parents: getColumn(property.parents, 'item'),
-          list
+          link
         }
       } else {
         return undefined
@@ -155,7 +159,7 @@ module.exports = class PropertiesToLink {
    * @param {string} design design name / название дизайна
    * @param {string} component component name / название компонента
    * @param {Object<string,*>} item current element / текущий элемент
-   * @return {Object<string,*>[]|undefined}
+   * @return {Object<string,*>|undefined}
    * @private
    */
   __getItemByLink ({
@@ -163,24 +167,17 @@ module.exports = class PropertiesToLink {
     component,
     item
   }) {
-    if (this.__isValue(item)) {
-      const list = []
+    if (this.__isValue(item?.value)) {
+      const data = this.items.getItemByIndex(
+        this.items.toFullLink(design, component, item.value)
+      )
 
-      Tool.getLinkList(item.value).forEach(link => {
-        const data = this.items.getItemByIndex(
-          this.items.toFullLink(design, component, link)
-        )
-
-        if (
-          typeof data?.value === 'object' &&
-          Object.keys(data.value).length > 0
-        ) {
-          list.push(data)
-        }
-      })
-
-      if (list.length > 0) {
-        return list
+      if (
+        data &&
+        typeof data?.value === 'object' &&
+        Object.keys(data.value).length > 0
+      ) {
+        return data
       }
     }
 
@@ -191,13 +188,12 @@ module.exports = class PropertiesToLink {
    * Checks whether a value is a reference
    *
    * Проверяет, является ли значение ссылкой
-   * @param {Object<string,*>} item current element / текущий элемент
+   * @param {*} value current element / текущий элемент
    * @return {boolean}
    */
-  __isValue (item) {
-    return Tool.isLink(item?.value) && (
-      item?.[Keys.type] === Type.link ||
-      !item.value.match(/[{?.]sys/)
-    )
+  __isValue (value) {
+    return typeof value === 'string' &&
+      value.match(/^{[^{}]+}$/) &&
+      !value.match(/[{?.]sys/)
   }
 }

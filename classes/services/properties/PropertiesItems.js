@@ -37,7 +37,7 @@ module.exports = class PropertiesItems {
         item = item?.value?.[key]
 
         if (!item) {
-          console.error(`[Items]: no item ${index}`, key, keys)
+          console.error('[Items]', `There is no record for the link ${index}`, key, keys)
           break
         }
       }

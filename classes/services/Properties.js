@@ -120,8 +120,8 @@ module.exports = class Properties {
 
     const properties = new Items(this.__getBasic())
 
-    // new ToLink(properties).to()
-    // new ToVariable(properties).to()
+    new ToLink(properties).to()
+    new ToVariable(properties).to()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())

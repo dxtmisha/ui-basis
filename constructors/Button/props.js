@@ -32,10 +32,8 @@ exports.propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    selected: Boolean,
-    disabled: Boolean,
     progress: Boolean,
-    align: String
+    disabled: Boolean
     // :prop
   },
   // Values

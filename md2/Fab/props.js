@@ -10,7 +10,7 @@ exports.subClasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -24,8 +24,7 @@ exports.defaults = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
-    height: 'lg',
-    contained: true
+    height: 'lg'
     // :default
   }
 }
@@ -41,19 +40,11 @@ exports.props = {
       type: String,
       default: exports.defaults?.height
     },
-    contained: {
-      type: Boolean,
-      default: exports.defaults?.contained
-    },
     adaptive: String,
     palette: String,
-    focus: Boolean,
-    dragged: Boolean,
     progress: Boolean,
     disabled: Boolean,
-    rounded: String,
-    selected: Boolean,
-    align: String
+    secondary: Boolean
     // :prop
   }
 }

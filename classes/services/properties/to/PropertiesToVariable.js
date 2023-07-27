@@ -102,10 +102,8 @@ module.exports = class PropertiesToVariable {
     name
   ) {
     if (name === design) {
-      console.log('design', design, component, name)
       return Type.design
     } else if (name === component) {
-      console.log('component', design, component, name)
       return Type.component
     }
 

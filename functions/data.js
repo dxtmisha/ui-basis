@@ -299,7 +299,7 @@ function replaceRecursive (array, replacement, isMerge = true) {
         if (isMerge &&
                     Array.isArray(data) &&
                     Array.isArray(item)) {
-          data.push(...item)
+          array[index] = uniqueArray([...data, ...item])
         } else if (Array.isArray(data)) {
           array[index] = replaceRecursive(replaceRecursive({}, data), item)
         } else {

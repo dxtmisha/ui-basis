@@ -357,7 +357,7 @@ export function replaceRecursive<T = any> (
           Array.isArray(data) &&
           Array.isArray(item)
         ) {
-          data.push(...item)
+          array[index] = uniqueArray([...data, ...item]) as T
         } else if (Array.isArray(data)) {
           array[index] = replaceRecursive<T>(
             replaceRecursive<T>({}, data),

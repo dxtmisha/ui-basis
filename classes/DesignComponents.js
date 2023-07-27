@@ -2,6 +2,8 @@
 Object.defineProperty(exports, '__esModule', { value: true })
 exports.DesignComponents = void 0
 const vue_1 = require('vue')
+const data_1 = require('../functions/data')
+const ref_1 = require('../functions/ref')
 /**
  * Class for working with connected components
  *
@@ -9,6 +11,7 @@ const vue_1 = require('vue')
  */
 class DesignComponents {
   item = {}
+  modification = (0, vue_1.ref)({})
   /**
      * Check the presence of the component
      *
@@ -103,7 +106,9 @@ class DesignComponents {
      */
   renderItem (name, props, children, index) {
     if (this.is(name)) {
-      return [this.getNode(this.get(name), props, children, index || name)]
+      return [
+        this.getNode(this.get(name), this.getModification(index, props), children, index || name)
+      ]
     }
     return []
   }
@@ -116,6 +121,39 @@ class DesignComponents {
      */
   set (components) {
     this.item = components
+    return this
+  }
+
+  /**
+     * Returns the modified input data of the connected components
+     *
+     * Возвращает модифицированные входные данные у подключенных компонентов
+     * @param index the name of this / название данного
+     * @param props базовый данный
+     */
+  getModification (index, props) {
+    if (index && index in this.modification.value) {
+      const value = {};
+      (0, data_1.forEach)(this.modification.value[index], (item, name) => {
+        value[name] = (0, ref_1.getRef)((0, data_1.executeFunction)(item))
+      })
+      return {
+        ...value,
+        ...(props || {})
+      }
+    } else {
+      return props
+    }
+  }
+
+  /**
+     * Changes data for modification of input data of connected components
+     *
+     * Изменяет данные для модификации входных данных у подключенных компонентов
+     * @param modification data for modification / данные для модификации
+     */
+  setModification (modification) {
+    this.modification.value = modification
     return this
   }
 }

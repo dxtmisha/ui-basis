@@ -6,9 +6,9 @@ const data_1 = require('../functions/data')
 const ref_1 = require('../functions/ref')
 const To_1 = require('./To')
 const DesignClasses_1 = require('./DesignClasses')
+const DesignComponents_1 = require('./DesignComponents')
 const DesignProperties_1 = require('./DesignProperties')
 const DesignStyles_1 = require('./DesignStyles')
-const DesignComponents_1 = require('./DesignComponents')
 /**
  * Main class for binding tokens and Vue components
  *
@@ -98,6 +98,17 @@ class Design {
      */
   setName (name) {
     this.name.value = name
+    return this
+  }
+
+  /**
+     * Changes data for modification of input data of connected components
+     *
+     * Изменяет данные для модификации входных данных у подключенных компонентов
+     * @param modification data for modification / данные для модификации
+     */
+  setModification (modification) {
+    this.components.setModification(modification)
     return this
   }
 

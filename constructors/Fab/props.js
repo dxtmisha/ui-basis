@@ -9,7 +9,7 @@ exports.subClassesFab = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
-    inscription: 'inscription',
+    label: 'label',
     icon: 'icon',
     trailing: 'trailing'
     // :subclass
@@ -34,11 +34,9 @@ exports.propsFab = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    selected: Boolean,
-    disabled: Boolean,
     progress: Boolean,
-    adaptive: String,
-    align: String
+    disabled: Boolean,
+    adaptive: String
     // :prop
   }
 }
