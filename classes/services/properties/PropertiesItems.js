@@ -22,6 +22,79 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Getting full structure property
+   *
+   * Получение полной структуры свойства
+   * @return {Object<string, *>}
+   */
+  get () {
+    return this.properties
+  }
+
+  /**
+   * Returns the full information about the element by its link
+   *
+   * Возвращает полную информацию об элементе по его ссылке
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {{
+   *   design: string,
+   *   component: string,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string, *>,
+   *   parent: Object<string, *>,
+   *   parents: [{item: Object<string, *>, name: string}]
+   * }|undefined}
+   */
+  getFullItemByIndex (index) {
+    const keys = this.getKeys(index)
+    const design = keys.shift()
+    const component = keys.shift()
+    const parents = [
+      {
+        name: design,
+        item: this.properties?.[design]
+      }
+    ]
+
+    let name = component
+    let item = this.properties?.[design]?.value?.[component]
+    let parent = parents[0].item
+
+    if (item) {
+      for (const key of keys) {
+        parents.push({
+          name: key,
+          item
+        })
+
+        parent = item
+
+        name = key
+        item = item?.value?.[key]
+
+        if (!item) {
+          break
+        }
+      }
+    }
+
+    if (item) {
+      return {
+        design,
+        component,
+        name,
+        item,
+        value: item?.value,
+        parent,
+        parents
+      }
+    } else {
+      return undefined
+    }
+  }
+
+  /**
    * Returns values by index
    *
    * Возвращает значения по индексу
@@ -29,18 +102,10 @@ module.exports = class PropertiesItems {
    * @return {Object<string, *>|undefined}
    */
   getItemByIndex (index) {
-    const keys = this.__getKeys(index)
-    let item = this.properties?.[keys.shift()]
+    const item = this.getFullItemByIndex(index)?.item
 
-    if (item) {
-      for (const key of keys) {
-        item = item?.value?.[key]
-
-        if (!item) {
-          console.error('[Items]', `There is no record for the link ${index}`, key, keys)
-          break
-        }
-      }
+    if (!item) {
+      console.error('[Items]', `No record: ${index}`)
     }
 
     return item
@@ -54,7 +119,7 @@ module.exports = class PropertiesItems {
    * @return {string[]}
    * @private
    */
-  __getKeys (index) {
+  getKeys (index) {
     return index.replace(/^\{|}$/ig, '')
       .split('.')
   }
