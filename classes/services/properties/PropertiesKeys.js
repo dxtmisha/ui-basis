@@ -18,6 +18,12 @@ module.exports = class PropertiesKeys {
   static rename = '_rename'
 
   /**
+   * Default values / Значения по умолчанию
+   * @type {string}
+   */
+  static default = '_default'
+
+  /**
    * Category of property / Категория свойства
    * @type {string}
    */
@@ -81,8 +87,10 @@ module.exports = class PropertiesKeys {
   }
 
   static __special = [
+    'type',
     this.type,
     this.rename,
+    this.default,
     this.category,
     this.fullName,
     this.fullValue,

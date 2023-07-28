@@ -81,6 +81,8 @@ module.exports = class PropertiesToVariable {
     switch (item?.[Keys.category]) {
       case Category.root:
         return Type.var
+      case Category.theme:
+        return Type.theme
     }
 
     return undefined

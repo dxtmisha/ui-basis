@@ -1,10 +1,12 @@
 const {
   forEach,
-  isObject
+  getColumn,
+  isObject,
+  isSelected
 } = require('../../../functions/data')
 
-const Keys = require('./PropertiesKeys')
 const Cache = require('./PropertiesCache')
+const Keys = require('./PropertiesKeys')
 
 /**
  * Class for working with a list of all properties
@@ -244,6 +246,45 @@ module.exports = class PropertiesItems {
             }]
           )
         )
+      }
+    })
+
+    return data
+  }
+
+  /**
+   * Searching for records with selected categories
+   *
+   * Поиск записей с выделенными категориями
+   * @param {string|string[]} category names of categories / названия категорий
+   * @return {{
+   *   design: string,
+   *   component: string,
+   *   name: string,
+   *   index: string,
+   *   item: Object<string,*>,
+   *   parents: Object<string,*>
+   * }[]}
+   */
+  findCategory (category) {
+    const data = []
+
+    this.each(({
+      design,
+      component,
+      name,
+      item,
+      parents
+    }) => {
+      if (isSelected(item?.[Keys.category], category)) {
+        data.push({
+          design,
+          component,
+          name,
+          index: `${getColumn(parents, 'name').join('.')}.${name}`,
+          item,
+          parents
+        })
       }
     })
 

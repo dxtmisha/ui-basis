@@ -3,6 +3,7 @@ const Path = require('./properties/PropertiesPath')
 const Items = require('./properties/PropertiesItems')
 
 const ToLink = require('./properties/to/PropertiesToLink')
+const ToPalette = require('./properties/to/PropertiesToPalette')
 const ToVariable = require('./properties/to/PropertiesToVariable')
 // const None = require('./properties/PropertiesToNone')
 
@@ -120,6 +121,7 @@ module.exports = class Properties {
 
     const properties = new Items(this.__getBasic())
 
+    new ToPalette(properties).to()
     new ToLink(properties).to()
     new ToVariable(properties).to()
 
