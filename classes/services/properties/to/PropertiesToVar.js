@@ -66,7 +66,7 @@ module.exports = class PropertiesToVar {
     if (item?.[Keys.fullName]) {
       return `--${name}`
     } else {
-      return `--${this.items.getParentsName(parents, ['var']).join('-')}-${name}`
+      return `--${this.items.getParentsName(parents, [Type.var]).join('-')}-${name}`
     }
   }
 

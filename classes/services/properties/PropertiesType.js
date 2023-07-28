@@ -133,16 +133,16 @@ module.exports = class PropertiesType {
   static none = 'none'
 
   static symbols = {
-    $: 'var',
-    ':': 'selector',
-    '::': 'virtual',
-    '~': 'state',
-    '#': 'subclass',
-    '@': 'link',
-    '@@': 'link-class',
-    '&': 'scss',
-    '&&': 'root',
-    '--': 'none'
+    $: this.var,
+    ':': this.selector,
+    '::': this.virtual,
+    '~': this.state,
+    '#': this.subclass,
+    '@': this.link,
+    '@@': this.linkClass,
+    '&': this.scss,
+    '&&': this.root,
+    '--': this.none
   }
 
   /**

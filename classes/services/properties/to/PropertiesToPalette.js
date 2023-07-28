@@ -1,5 +1,6 @@
 const Category = require('../PropertiesCategory')
 const Keys = require('../PropertiesKeys')
+const Type = require('../PropertiesType')
 
 const {
   forEach,
@@ -140,7 +141,7 @@ module.exports = class PropertiesToPalette {
       forEach(palette, (item, name) => {
         parent[this.__getName(theme, name)] = {
           value: this.__getNameValue(link, name),
-          [Keys.type]: 'var',
+          [Keys.type]: Type.var,
           [Keys.category]: KEY_CATEGORY
         }
       })

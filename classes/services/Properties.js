@@ -12,7 +12,10 @@ const ToSimilar = require('./properties/to/PropertiesToSimilar')
 const ToMulti = require('./properties/to/PropertiesToMulti')
 const ToStyle = require('./properties/to/PropertiesToStyle')
 
+const ToComponent = require('./properties/to/PropertiesToComponent')
 const ToProperty = require('./properties/to/PropertiesToProperty')
+const ToState = require('./properties/to/PropertiesToState')
+const ToSubclass = require('./properties/to/PropertiesToSubclass')
 const ToVar = require('./properties/to/PropertiesToVar')
 // const None = require('./properties/PropertiesToNone')
 
@@ -142,6 +145,9 @@ module.exports = class Properties {
 
     new ToVar(properties).to()
     new ToProperty(properties).to()
+    new ToComponent(properties).to()
+    new ToState(properties).to()
+    new ToSubclass(properties).to()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
@@ -152,36 +158,36 @@ module.exports = class Properties {
     const value = new PropertiesToVar(items)
     const variable = new PropertiesToVariable(items)
 
-    full.toFullValueFix()
-    variable.to()
-    variable.toByLink()
-    sub.toByLink()
+    full.toFullValueFix() // none
+    variable.to() // ok
+    variable.toByLink() // ok
+    sub.toByLink() // none
 
-    new PropertiesToLink(items).to()
-    variable.to()
+    new PropertiesToLink(items).to() // ok
+    variable.to() // ok
 
-    new PropertiesPalette(items).to()
-    new PropertiesToReplace(items).to()
+    new PropertiesPalette(items).to() // ok
+    new PropertiesToReplace(items).to() // ok
 
-    full.toFullValue()
-    full.toFullValueByDesign()
-    variable.toByVar()
-    sub.to()
+    full.toFullValue() // none
+    full.toFullValueByDesign() // none
+    variable.toByVar() // ok
+    sub.to() // ok
 
-    value.toString()
-    rename.to()
-    new PropertiesToMulti(items).to()
-    new PropertiesToStyle(items).to()
+    value.toString() // none
+    rename.to() // ok
+    new PropertiesToMulti(items).to() // ok
+    new PropertiesToStyle(items).to() // ok
 
-    rename.toByVar()
-    value.toString()
-    value.to()
+    rename.toByVar() // ok
+    value.toString() // none
+    value.to() // ok
 
-    value.toFull()
-    value.toImportant()
+    value.toFull() // ok
+    value.toImportant() // ok
 
     rename.toByComponent()
-    rename.toBySimilar()
+    rename.toBySimilar() // ok
 
     console.info('Properties: end')
 

@@ -1,8 +1,13 @@
 const { forEach } = require('../../../../functions/data')
 
 const Keys = require('../PropertiesKeys')
+const Type = require('../PropertiesType')
 
-const TYPE = ['var', 'state']
+const TYPE = [
+  Type.var,
+  Type.state
+]
+
 const FILE_CACHE = '012-multi'
 
 /**
