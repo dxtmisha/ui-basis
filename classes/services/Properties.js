@@ -12,8 +12,12 @@ const ToSimilar = require('./properties/to/PropertiesToSimilar')
 const ToMulti = require('./properties/to/PropertiesToMulti')
 const ToStyle = require('./properties/to/PropertiesToStyle')
 
+const ToAnimate = require('./properties/to/PropertiesToAnimate')
+const ToClass = require('./properties/to/PropertiesToClass')
 const ToComponent = require('./properties/to/PropertiesToComponent')
+const ToMedia = require('./properties/to/PropertiesToMedia')
 const ToProperty = require('./properties/to/PropertiesToProperty')
+const ToRoot = require('./properties/to/PropertiesToRoot')
 const ToState = require('./properties/to/PropertiesToState')
 const ToSubclass = require('./properties/to/PropertiesToSubclass')
 const ToVar = require('./properties/to/PropertiesToVar')
@@ -146,8 +150,12 @@ module.exports = class Properties {
     new ToVar(properties).to()
     new ToProperty(properties).to()
     new ToComponent(properties).to()
+    new ToClass(properties).to()
     new ToState(properties).to()
     new ToSubclass(properties).to()
+    new ToRoot(properties).to()
+    new ToMedia(properties).to()
+    new ToAnimate(properties).to()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
@@ -186,7 +194,7 @@ module.exports = class Properties {
     value.toFull() // ok
     value.toImportant() // ok
 
-    rename.toByComponent()
+    rename.toByComponent() // ok
     rename.toBySimilar() // ok
 
     console.info('Properties: end')

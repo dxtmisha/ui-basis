@@ -6,6 +6,7 @@ const {
 } = require('../../../functions/data')
 
 const Cache = require('./PropertiesCache')
+const Category = require('./PropertiesCategory')
 const Keys = require('./PropertiesKeys')
 const Type = require('./PropertiesType')
 
@@ -182,6 +183,28 @@ module.exports = class PropertiesItems {
 
       return undefined
     }, true)
+  }
+
+  /**
+   * Returns a list of information about media file list
+   *
+   * Возвращает список информации о списках медиафайлов
+   * @return {Object<string,Object<string,*>>}
+   */
+  getItemForMedia () {
+    const data = {}
+
+    this.findCategory(Category.media)
+      .forEach(({
+        design,
+        item
+      }) => {
+        if (typeof item?.value === 'object') {
+          Object.assign(data, { [design]: item.value })
+        }
+      })
+
+    return data
   }
 
   /**

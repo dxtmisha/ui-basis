@@ -63,7 +63,10 @@ module.exports = class PropertiesToPalette {
         parents
       } = palette
 
-      const list = this.__getParent(root || parents?.[0]?.item?.value)
+      const list = this.__getParent(
+        root || parents?.[0]?.item?.value,
+        root ? 'colors' : 'class'
+      )
 
       if (list) {
         forEach(item?.value, (shade, name) => {
@@ -87,14 +90,16 @@ module.exports = class PropertiesToPalette {
    *
    * Добавление группы свойств по названию дизайна
    * @param {Object<string, *>} parent the property object, by which it will be added / объект свойства, по которому будет добавлять
+   * @param {string} category category names / названия категорий
    * @return {Object<string, *>}
    * @private
    */
-  __getParent (parent) {
+  __getParent (parent, category) {
     if (parent) {
       parent[KEY_CLASS_NAME] = {
         value: {},
-        [Keys.type]: 'class'
+        [Keys.type]: Type.classType,
+        [Keys.category]: category
       }
     }
 

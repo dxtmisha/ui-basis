@@ -12,6 +12,9 @@ module.exports = class PropertiesCategory {
    */
   static root = 'root'
 
+  static classCategory = 'class'
+  static media = 'media'
+
   static theme = 'theme'
   static palette = 'palette'
   static shade = 'shade'
