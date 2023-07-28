@@ -26,13 +26,11 @@ module.exports = class PropertiesToMulti {
    * @return {this}
    */
   to () {
-    console.log('this.__getList()', this.__getList())
     this.__getList().forEach(({
       item,
       name,
       value
     }) => {
-      console.log('value', value)
       this.__to(value, item?.[Keys.rename] || name)
 
       item[Keys.variable] = 'state'

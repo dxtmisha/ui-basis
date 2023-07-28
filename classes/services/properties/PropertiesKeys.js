@@ -62,10 +62,18 @@ module.exports = class PropertiesKeys {
   static replace = '_replace'
 
   /**
+   * The key for storing the final name of the property after all processing
+   *
+   * Ключ для хранения конечного названия свойства после всех обработок
+   * @type {string}
+   */
+  static name = '__n'
+
+  /**
    * The parameter determines the type of property / Параметр определяет тип свойства
    * @type {string}
    */
-  static variable = '__variable'
+  static variable = '__v'
 
   /**
    * Ключ для хранения список источник данный для этого записи
@@ -112,6 +120,7 @@ module.exports = class PropertiesKeys {
     this.fullName,
     this.fullValue,
     this.replace,
+    this.name,
     this.variable,
     this.files,
     this.wrap

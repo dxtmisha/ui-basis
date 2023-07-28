@@ -6,6 +6,7 @@ const ToLink = require('./properties/to/PropertiesToLink')
 const ToMulti = require('./properties/to/PropertiesToMulti')
 const ToPalette = require('./properties/to/PropertiesToPalette')
 const ToReplace = require('./properties/to/PropertiesToReplace')
+const ToStyle = require('./properties/to/PropertiesToStyle')
 const ToSub = require('./properties/to/PropertiesToSub')
 const ToVariable = require('./properties/to/PropertiesToVariable')
 // const None = require('./properties/PropertiesToNone')
@@ -131,6 +132,7 @@ module.exports = class Properties {
     new ToVariable(properties).to()
 
     new ToMulti(properties).to()
+    new ToStyle(properties).to()
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
