@@ -3,12 +3,14 @@ const Path = require('./properties/PropertiesPath')
 const Items = require('./properties/PropertiesItems')
 
 const ToLink = require('./properties/to/PropertiesToLink')
-const ToMulti = require('./properties/to/PropertiesToMulti')
 const ToPalette = require('./properties/to/PropertiesToPalette')
 const ToReplace = require('./properties/to/PropertiesToReplace')
-const ToStyle = require('./properties/to/PropertiesToStyle')
 const ToSub = require('./properties/to/PropertiesToSub')
 const ToVariable = require('./properties/to/PropertiesToVariable')
+
+const ToSimilar = require('./properties/to/PropertiesToSimilar')
+const ToMulti = require('./properties/to/PropertiesToMulti')
+const ToStyle = require('./properties/to/PropertiesToStyle')
 
 const ToProperty = require('./properties/to/PropertiesToProperty')
 const ToVar = require('./properties/to/PropertiesToVar')
@@ -134,6 +136,7 @@ module.exports = class Properties {
     new ToSub(properties).to()
     new ToVariable(properties).to()
 
+    new ToSimilar(properties).to()
     new ToMulti(properties).to()
     new ToStyle(properties).to()
 
