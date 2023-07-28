@@ -47,7 +47,7 @@ module.exports = class PropertiesToMedia {
 
     if (values.length > 1) {
       return `(min-width: ${values?.[0] || '0px'}) and (max-width: calc(${values?.[1] || '1980px'} - 1px))`
-    } else if (item?.[Keys.variable] === 'media-max') {
+    } else if (item?.[Keys.variable] === Type.mediaMax) {
       return `(max-width: calc(${values?.[0] || '1980px'} - 1px))`
     } else {
       return `(min-width: ${values?.[0] || '0px'})`

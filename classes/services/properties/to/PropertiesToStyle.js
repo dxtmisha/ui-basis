@@ -1,4 +1,5 @@
 const Keys = require('../PropertiesKeys')
+const Type = require('../PropertiesType')
 
 const KEY_CUSTOM = 'custom'
 const FILE_CACHE = '016-style'
@@ -34,15 +35,15 @@ module.exports = class PropertiesToStyle {
         typeof item?.value === 'object' &&
         !item.value?.[KEY_CUSTOM]
       ) {
-        item[Keys.variable] = 'state'
+        item[Keys.variable] = Type.state
         item.value[KEY_CUSTOM] = {
           value: {
             [name]: {
               value: `{${design}.${component}.sys.${name}`,
-              [Keys.variable]: 'property'
+              [Keys.variable]: Type.property
             }
           },
-          [Keys.variable]: 'state'
+          [Keys.variable]: Type.state
         }
       }
     })

@@ -38,7 +38,7 @@ module.exports = class PropertiesToMulti {
     }) => {
       this.__to(value, this.items.getItemReName(name, item))
 
-      item[Keys.variable] = 'state'
+      item[Keys.variable] = Type.state
     })
 
     this.items.createStep(FILE_CACHE)
@@ -69,7 +69,7 @@ module.exports = class PropertiesToMulti {
       } = property
 
       if (
-        item?.[Keys.variable] === 'property' &&
+        item?.[Keys.variable] === Type.property &&
         typeof value === 'object'
       ) {
         return property
@@ -92,11 +92,11 @@ module.exports = class PropertiesToMulti {
         typeof item?.value === 'string' &&
         TYPE.indexOf(item?.[Keys.variable]) !== -1
       ) {
-        item[Keys.variable] = 'state'
+        item[Keys.variable] = Type.state
         item.value = {
           [name]: {
             value: item.value,
-            [Keys.variable]: 'property'
+            [Keys.variable]: Type.property
           }
         }
       }

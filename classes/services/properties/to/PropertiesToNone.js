@@ -17,7 +17,7 @@ module.exports = class PropertiesToNone {
    * Removes all empty entries from the data
    *
    * Удаляет у данных всех пустых записей
-   * @param {Object<string,{value:*}>} properties An array that needs to be
+   * @param {Object<string,*>} properties An array that needs to be
    * transformed / Массив, который нужно преобразовать
    */
   static to (properties) {

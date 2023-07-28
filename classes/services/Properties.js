@@ -21,7 +21,8 @@ const ToRoot = require('./properties/to/PropertiesToRoot')
 const ToState = require('./properties/to/PropertiesToState')
 const ToSubclass = require('./properties/to/PropertiesToSubclass')
 const ToVar = require('./properties/to/PropertiesToVar')
-// const None = require('./properties/PropertiesToNone')
+
+const ToNone = require('./properties/to/PropertiesToNone')
 
 const ReadMain = require('./properties/read/PropertiesReadMain')
 const ReadSettings = require('./properties/read/PropertiesReadSettings')
@@ -156,6 +157,8 @@ module.exports = class Properties {
     new ToRoot(properties).to()
     new ToMedia(properties).to()
     new ToAnimate(properties).to()
+
+    ToNone.to(properties)
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())

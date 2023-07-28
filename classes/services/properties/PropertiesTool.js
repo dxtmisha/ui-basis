@@ -1,6 +1,7 @@
 const { To } = require('../../To')
 
 const Keys = require('./PropertiesKeys')
+const Type = require('./PropertiesType')
 
 const SYMBOL_SEPARATOR = process.env.VUE_APP_TOKEN_SEPARATOR || Keys.SEPARATOR
 const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${SYMBOL_SEPARATOR}]+`
@@ -70,9 +71,9 @@ module.exports = class PropertiesTool {
    */
   static getVariableInName (name) {
     if (this.isRoot(name)) {
-      return 'root'
+      return Type.root
     } else if (this.isScss(name)) {
-      return 'scss'
+      return Type.scss
     } else {
       return To.kebabCase(
         name.replace(new RegExp(`^(.*?)([|].*?$|${SYMBOL_AVAILABLE}$)`), '$1')
@@ -113,8 +114,8 @@ module.exports = class PropertiesTool {
   static reKey (key, type = undefined) {
     if (type) {
       switch (type) {
-        case 'media':
-        case 'media-max':
+        case Type.media:
+        case Type.mediaMax:
           if (!key.match(/^media-/)) {
             return `media-${key}`
           }

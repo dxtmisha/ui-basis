@@ -37,7 +37,7 @@ module.exports = class PropertiesToPalette {
    */
   to () {
     this.__to()
-    this.items.findCategory('theme')
+    this.items.findCategory(Category.theme)
       .forEach(({
         name,
         item
@@ -65,7 +65,7 @@ module.exports = class PropertiesToPalette {
 
       const list = this.__getParent(
         root || parents?.[0]?.item?.value,
-        root ? 'colors' : 'class'
+        root ? 'colors' : Category.classCategory
       )
 
       if (list) {
@@ -119,7 +119,7 @@ module.exports = class PropertiesToPalette {
     if (!(name in item)) {
       item[name] = {
         value: {},
-        [Keys.type]: 'state'
+        [Keys.type]: Type.state
       }
     }
 
