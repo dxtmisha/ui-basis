@@ -4,6 +4,7 @@ const Items = require('./properties/PropertiesItems')
 
 const ToLink = require('./properties/to/PropertiesToLink')
 const ToPalette = require('./properties/to/PropertiesToPalette')
+const ToReplace = require('./properties/to/PropertiesToReplace')
 const ToSub = require('./properties/to/PropertiesToSub')
 const ToVariable = require('./properties/to/PropertiesToVariable')
 // const None = require('./properties/PropertiesToNone')
@@ -122,6 +123,7 @@ module.exports = class Properties {
 
     const properties = new Items(this.__getBasic())
 
+    new ToReplace(properties).to()
     new ToPalette(properties).to()
     new ToLink(properties).to()
     new ToSub(properties).to()

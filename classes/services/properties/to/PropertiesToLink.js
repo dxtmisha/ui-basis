@@ -56,6 +56,17 @@ module.exports = class PropertiesToLink {
     this.items.createStep(FILE_CACHE)
   }
 
+  /**
+   * The method searches for all links and replaces their values with the specified link
+   *
+   * Метод ищет все ссылки и заменяет значения на указанную ссылку
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
+   * @param {Object<string,*>} properties array with all property records / массив со всеми записями свойств
+   * @param {Object<string,*>} parent object of ancestor / объект предка
+   * @return {boolean}
+   * @private
+   */
   __to (
     design = undefined,
     component = undefined,

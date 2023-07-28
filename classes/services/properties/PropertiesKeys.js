@@ -46,6 +46,14 @@ module.exports = class PropertiesKeys {
   static fullValue = '_full-value'
 
   /**
+   * It indicates that you need to transform the values of the properties
+   *
+   * Указывает, что надо преобразовывать значения свойств
+   * @type {string}
+   */
+  static replace = '_replace'
+
+  /**
    * The parameter determines the type of property / Параметр определяет тип свойства
    * @type {string}
    */
@@ -94,6 +102,7 @@ module.exports = class PropertiesKeys {
     this.category,
     this.fullName,
     this.fullValue,
+    this.replace,
     this.variable,
     this.files,
     this.wrap

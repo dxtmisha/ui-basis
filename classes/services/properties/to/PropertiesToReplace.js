@@ -1,4 +1,4 @@
-const PropertiesTool = require('./PropertiesTool')
+const Keys = require('../PropertiesKeys')
 
 /**
  * A class for transforming an expression through regular expressions
@@ -20,16 +20,15 @@ module.exports = class PropertiesToReplace {
    * Преобразование всех своих свойств
    */
   to () {
-    const key = PropertiesTool.getKeyReplace()
-
     this.items.each(({ item }) => {
       if (
-        key in item &&
+        item?.[Keys.replace] &&
         typeof item?.value === 'string'
       ) {
-        console.info('item.value', item.value)
-        item.value = this.getValue(this.getInfo(item[key]), item.value)
-        console.info('item.value new', item.value)
+        item.value = this.__getValue(
+          this.__getInfo(item[Keys.replace]),
+          item.value
+        )
       }
     })
   }
@@ -48,8 +47,9 @@ module.exports = class PropertiesToReplace {
    *   flags: string,
    *   replace: string
    * }}
+   * @private
    */
-  getInfo (info) {
+  __getInfo (info) {
     if (typeof info === 'object') {
       return {
         pattern: info?.pattern,
@@ -76,8 +76,9 @@ module.exports = class PropertiesToReplace {
    * }} info information for verification / информация для проверки
    * @param {string} value
    * @return {string}
+   * @private
    */
-  getValue (info, value) {
+  __getValue (info, value) {
     if (info.pattern) {
       return value.replace(new RegExp(info.pattern, info.flags), info.replace)
     } else {

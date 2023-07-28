@@ -1,5 +1,5 @@
 {
-  "padding": "{ref.spacing.6}",
+  "padding": "0 {ref.spacing.6}",
   "height": {
     "sm": "{ref.spacing.8}",
     "md": "{ref.spacing.10}",
