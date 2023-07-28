@@ -12,6 +12,12 @@ module.exports = class PropertiesKeys {
   static type = '_type'
 
   /**
+   * Category of property / Категория свойства
+   * @type {string}
+   */
+  static category = '_category'
+
+  /**
    * Rename the names of properties / Переименовывать названия свойств
    * @type {string}
    */
@@ -24,10 +30,12 @@ module.exports = class PropertiesKeys {
   static default = '_default'
 
   /**
-   * Category of property / Категория свойства
+   * Key for determining whether the property is available as a value for a custom style attribute
+   *
+   * Ключ для определения, доступно ли свойство в качестве значения пользовательского атрибута стиля
    * @type {string}
    */
-  static category = '_category'
+  static style = '_style'
 
   /**
    * The key determines that the name of the property is the final version and does not require further processing
@@ -97,9 +105,10 @@ module.exports = class PropertiesKeys {
   static __special = [
     'type',
     this.type,
+    this.category,
     this.rename,
     this.default,
-    this.category,
+    this.style,
     this.fullName,
     this.fullValue,
     this.replace,

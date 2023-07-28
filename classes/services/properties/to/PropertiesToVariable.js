@@ -62,6 +62,7 @@ module.exports = class PropertiesToVariable {
       return this.__getBySubclass(item) ||
         this.__getBySelector(property) ||
         this.__getByVirtual(property) ||
+        this.__getByProperty(property) ||
         Type.state
     } else {
       return this.__getByProperty(property) ||
