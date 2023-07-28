@@ -7,6 +7,13 @@ const {
 
 const Cache = require('./PropertiesCache')
 const Keys = require('./PropertiesKeys')
+const Type = require('./PropertiesType')
+
+const SUPPORT_NAME = [
+  Type.design,
+  Type.component,
+  Type.classType
+]
 
 /**
  * Class for working with a list of all properties
@@ -34,18 +41,31 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Divides an index into sections
+   *
+   * Разделяет индекс на разделы
+   * @param {string} index index for splitting / индекс для разделения
+   * @return {string[]}
+   * @private
+   */
+  getKeys (index) {
+    return index.replace(/^\{|}$/ig, '')
+      .split('.')
+  }
+
+  /**
    * Returns the full information about the element by its link
    *
    * Возвращает полную информацию об элементе по его ссылке
    * @param {string} index index for splitting / индекс для разделения
    * @return {{
-   *   design: string,
-   *   component: string,
+   *   design?: string,
+   *   component?: string,
    *   name: string,
    *   value: *,
-   *   item: Object<string, *>,
-   *   parent: Object<string, *>,
-   *   parents: [{item: Object<string, *>, name: string}]
+   *   item: Object<string,*>,
+   *   parent?: Object<string,*>,
+   *   parents: {name:string, item: Object<string,*>}[]
    * }|undefined}
    */
   getFullItemByIndex (index) {
@@ -114,16 +134,15 @@ module.exports = class PropertiesItems {
   }
 
   /**
-   * Divides an index into sections
+   * Returns the used name
    *
-   * Разделяет индекс на разделы
-   * @param {string} index index for splitting / индекс для разделения
-   * @return {string[]}
-   * @private
+   * Возвращает использованное имя
+   * @param {string} name name of property / название свойства
+   * @param {Object<string, *>} item object of property / объект свойства
+   * @return {*}
    */
-  getKeys (index) {
-    return index.replace(/^\{|}$/ig, '')
-      .split('.')
+  getItemReName (name, item) {
+    return item?.[Keys.rename] || name
   }
 
   /**
@@ -135,7 +154,34 @@ module.exports = class PropertiesItems {
    * @return {*}
    */
   getItemName (name, item) {
-    return (item?.[Keys.rename] || name).replace(/\(.*?$/, '')
+    return this.getItemReName(name, item).replace(/\(.*?$/, '')
+  }
+
+  /**
+   * Returns ancestor names
+   *
+   * Возвращает имена предков
+   * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
+   * along the tree from the top level / массив со всеми свойствами предков по дереву от верхнего уровня
+   * @param {string[]} variable list of types to exclude, such types are ignored / список типов
+   * для исключения, такие типы игнорируются
+   * @return {string[]}
+   */
+  getParentsName (parents, variable = undefined) {
+    return forEach(parents, ({
+      name,
+      item
+    }) => {
+      if (
+        !variable ||
+        variable.indexOf(item?.[Keys.variable]) !== -1 ||
+        SUPPORT_NAME.indexOf(item?.[Keys.variable]) !== -1
+      ) {
+        return name
+      }
+
+      return undefined
+    }, true)
   }
 
   /**
@@ -145,20 +191,20 @@ module.exports = class PropertiesItems {
    * @param {({
    *   design?: string,
    *   component?: string,
-   *   name?: string,
-   *   value?: *,
-   *   item?: Object<string,*>,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
    *   parent?: Object<string,*>,
-   *   parents?: {name:string, item: Object<string,*>}[]
+   *   parents: {name:string, item: Object<string,*>}[]
    * }) => *} callback the callback function is executed for each element / выполняется функция
    * @param {{
    *   design?: string,
    *   component?: string,
-   *   name?: string,
-   *   value?: *,
-   *   item?: Object<string,*>,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
    *   parent?: Object<string,*>,
-   *   parents?: {name:string, item: Object<string,*>}[]
+   *   parents: {name:string, item: Object<string,*>}[]
    * }} property the callback function is executed for each element / выполняется функция
    * обратного вызова (callback) для каждого элемента
    * @returns {*[]}
@@ -188,11 +234,11 @@ module.exports = class PropertiesItems {
    * @param {({
    *   design?: string,
    *   component?: string,
-   *   name?: string,
-   *   value?: *,
-   *   item?: Object<string,*>,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
    *   parent?: Object<string,*>,
-   *   parents?: {name:string, item: Object<string,*>}[]
+   *   parents: {name:string, item: Object<string,*>}[]
    * }) => *} callback the callback function is executed for each element / выполняется функция
    * @param {string} design design name / название дизайна
    * @param {string} component component name / название компонента
@@ -258,37 +304,93 @@ module.exports = class PropertiesItems {
    * Поиск записей с выделенными категориями
    * @param {string|string[]} category names of categories / названия категорий
    * @return {{
-   *   design: string,
-   *   component: string,
+   *   design?: string,
+   *   component?: string,
    *   name: string,
-   *   index: string,
+   *   value: *,
    *   item: Object<string,*>,
-   *   parents: Object<string,*>
+   *   parent?: Object<string,*>,
+   *   parents: {name:string, item: Object<string,*>}[]
    * }[]}
    */
   findCategory (category) {
     const data = []
 
-    this.each(({
-      design,
-      component,
-      name,
-      item,
-      parents
-    }) => {
+    this.each((property) => {
+      const {
+        item
+      } = property
+
       if (isSelected(item?.[Keys.category], category)) {
-        data.push({
-          design,
-          component,
-          name,
-          index: `${getColumn(parents, 'name').join('.')}.${name}`,
-          item,
-          parents
-        })
+        data.push(property)
       }
     })
 
     return data
+  }
+
+  /**
+   * Searching for records with selected categories
+   *
+   * Поиск записей с выделенными категориями
+   * @param {string|string[]} variable names of categories / названия категорий
+   * @return {{
+   *   design?: string,
+   *   component?: string,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
+   *   parent?: Object<string,*>,
+   *   parents: {name:string, item: Object<string,*>}[],
+   *   index: string
+   * }[]}
+   */
+  findVariable (variable) {
+    const data = []
+
+    this.each(property => {
+      const {
+        item
+      } = property
+
+      if (isSelected(item?.[Keys.variable], variable)) {
+        data.push(property)
+      }
+    })
+
+    return data
+  }
+
+  /**
+   * Returns complete information about the property
+   *
+   * Возвращает полную информацию о свойстве
+   * @param {{
+   *   design?: string,
+   *   component?: string,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
+   *   parent?: Object<string,*>,
+   *   parents: {name:string, item: Object<string,*>}[]
+   * }} property an object with information about properties / объект с информацией о свойствах
+   * @return {{
+   *   design?: string,
+   *   component?: string,
+   *   name: string,
+   *   value: *,
+   *   item: Object<string,*>,
+   *   parent?: Object<string,*>,
+   *   parents: {name:string, item: Object<string,*>}[],
+   *   index: string
+   * }}
+   * @private
+   */
+  __getFullInfo (property) {
+    return {
+      ...property,
+      index: `${getColumn(property.parents, 'name').join('.')}.${property.name}`
+    }
   }
 
   /**

@@ -31,7 +31,7 @@ module.exports = class PropertiesToMulti {
       name,
       value
     }) => {
-      this.__to(value, item?.[Keys.rename] || name)
+      this.__to(value, this.items.getItemReName(name, item))
 
       item[Keys.variable] = 'state'
     })

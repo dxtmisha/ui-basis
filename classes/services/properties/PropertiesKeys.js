@@ -54,6 +54,11 @@ module.exports = class PropertiesKeys {
   static fullValue = '_full-value'
 
   /**
+   * @type {string}
+   */
+  static important = '_important'
+
+  /**
    * It indicates that you need to transform the values of the properties
    *
    * Указывает, что надо преобразовывать значения свойств
@@ -74,6 +79,11 @@ module.exports = class PropertiesKeys {
    * @type {string}
    */
   static variable = '__v'
+
+  /**
+   * @type {string}
+   */
+  static css = '__c'
 
   /**
    * Ключ для хранения список источник данный для этого записи
@@ -119,9 +129,11 @@ module.exports = class PropertiesKeys {
     this.style,
     this.fullName,
     this.fullValue,
+    this.important,
     this.replace,
     this.name,
     this.variable,
+    this.css,
     this.files,
     this.wrap
   ]

@@ -103,6 +103,11 @@ module.exports = class PropertiesType {
   /**
    * @type {string}
    */
+  static classType = 'class'
+
+  /**
+   * @type {string}
+   */
   static theme = 'theme'
 
   /**
@@ -176,6 +181,7 @@ module.exports = class PropertiesType {
     this.link,
     this.linkClass,
     this.scss,
+    this.classType,
     this.theme,
     this.root,
     this.mixin,
