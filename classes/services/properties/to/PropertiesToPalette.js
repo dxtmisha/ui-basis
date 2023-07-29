@@ -97,7 +97,7 @@ module.exports = class PropertiesToPalette {
     if (parent) {
       parent[KEY_CLASS_NAME] = {
         value: {},
-        [Keys.type]: Type.classType,
+        [Keys.type]: category === 'color' ? Type.classType : Type.component,
         [Keys.category]: category
       }
     }

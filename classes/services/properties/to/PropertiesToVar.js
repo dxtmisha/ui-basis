@@ -35,7 +35,7 @@ module.exports = class PropertiesToVar {
       parents
     }) => {
       if (isFilled(value) && typeof value === 'string') {
-        const fullValue = this.items.toFullLink(design, component, value)
+        const fullValue = item?.[Keys.css] || this.items.toFullLink(design, component, value)
 
         item[Keys.name] = this.__getName(name, item, parents)
         item[Keys.css] = this.__toValue(
