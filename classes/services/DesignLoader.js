@@ -1,7 +1,8 @@
 const { To } = require('../To')
 
 const PropertiesCache = require('./properties/PropertiesCache')
-const PropertiesFiles = require('./properties/PropertiesFiles')
+const Files = require('./properties/PropertiesFiles')
+const Tool = require('./properties/PropertiesTool')
 const PropertiesTool = require('./PropertiesTool')
 
 const PropertiesComponent = require('./PropertiesComponent')
@@ -24,7 +25,7 @@ module.exports = class DesignLoader {
     path,
     source
   ) {
-    const dirs = PropertiesFiles.splitForDir(path)
+    const dirs = Files.splitForDir(path)
 
     this.path = path
     this.source = source
@@ -59,7 +60,7 @@ module.exports = class DesignLoader {
    * @private
    */
   __isComponent () {
-    return PropertiesTool.getDesignsByEnv().indexOf(this.design) !== -1
+    return Tool.getDesignsByEnv().indexOf(this.design) !== -1
   }
 
   /**

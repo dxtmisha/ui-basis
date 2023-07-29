@@ -13,6 +13,17 @@ const SYMBOL_AVAILABLE = `[\\w-&?{}()., ${SYMBOL_SEPARATOR}]+`
  */
 module.exports = class PropertiesTool {
   /**
+   * This method returns the names of designs from the environment variable (env)
+   *
+   * Данный метод возвращает названия дизайнов из переменной окружения (env)
+   * @return {string[]}
+   */
+  static getDesignsByEnv () {
+    const designs = process.env.VUE_APP_DESIGNS
+    return designs?.toString()?.split(',') || []
+  }
+
+  /**
    * Is the property a SCSS selector
    *
    * Является ли свойство выборки SCSS

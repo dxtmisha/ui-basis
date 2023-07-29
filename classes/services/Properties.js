@@ -28,6 +28,7 @@ const ToSubclass = require('./properties/to/PropertiesToSubclass')
 const ToVar = require('./properties/to/PropertiesToVar')
 
 const ToNone = require('./properties/to/PropertiesToNone')
+const ToDivision = require('./properties/to/PropertiesToDivision')
 
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
@@ -82,36 +83,9 @@ module.exports = class Properties {
     if (!this.__basic) {
       this.__basic = new Items(
         Cache.get([], this.getPathName(), () => {
-          const path = new Path(this.designs)
-          const properties = new Items(To.copy(
-            replaceRecursive(
-              new ReadSettings(path).get(),
-              new ReadMain(path).get()
-            )
-          ))
+          const properties = this.__readBasic()
 
-          new ToReplace(properties).to()
-          new ToPalette(properties).to()
-          new ToLink(properties).to()
-          new ToSub(properties).to()
-          new ToVariable(properties).to()
-
-          new ToSimilar(properties).to()
-          new ToMulti(properties).to()
-          new ToStyle(properties).to()
-
-          new ToFull(properties).to()
-          new ToVar(properties).to()
-          new ToProperty(properties).to()
-          new ToComponent(properties).to()
-          new ToClass(properties).to()
-          new ToState(properties).to()
-          new ToSubclass(properties).to()
-          new ToRoot(properties).to()
-          new ToMedia(properties).to()
-          new ToAnimate(properties).to()
-
-          new ToNone(properties).to()
+          new ToDivision(properties).to()
 
           console.info('[Properties]', 'init')
 
@@ -145,6 +119,48 @@ module.exports = class Properties {
    */
   getPathName () {
     return `${this.designs.join('-')}-${FILE_CACHE}`
+  }
+
+  /**
+   * Processing of basic data
+   *
+   * Обработка базовых данных
+   * @return {PropertiesItems}
+   * @private
+   */
+  __readBasic () {
+    const path = new Path(this.designs)
+    const properties = new Items(To.copy(
+      replaceRecursive(
+        new ReadSettings(path).get(),
+        new ReadMain(path).get()
+      )
+    ))
+
+    new ToReplace(properties).to()
+    new ToPalette(properties).to()
+    new ToLink(properties).to()
+    new ToSub(properties).to()
+    new ToVariable(properties).to()
+
+    new ToSimilar(properties).to()
+    new ToMulti(properties).to()
+    new ToStyle(properties).to()
+
+    new ToFull(properties).to()
+    new ToVar(properties).to()
+    new ToProperty(properties).to()
+    new ToComponent(properties).to()
+    new ToClass(properties).to()
+    new ToState(properties).to()
+    new ToSubclass(properties).to()
+    new ToRoot(properties).to()
+    new ToMedia(properties).to()
+    new ToAnimate(properties).to()
+
+    new ToNone(properties).to()
+
+    return properties
   }
 
   /**
