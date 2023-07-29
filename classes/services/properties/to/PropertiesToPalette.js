@@ -8,9 +8,8 @@ const {
   isObject
 } = require('../../../../functions/data')
 
-const KEY_CLASS_NAME = 'palette'
-const KEY_CATEGORY = 'color'
 const THEME_BASIC = 'basic'
+const KEY_CLASS_NAME = 'palette'
 
 const FILE_CACHE = '002-palette'
 
@@ -147,7 +146,7 @@ module.exports = class PropertiesToPalette {
         parent[this.__getName(theme, name)] = {
           value: this.__getNameValue(link, name),
           [Keys.type]: Type.var,
-          [Keys.category]: KEY_CATEGORY
+          [Keys.category]: Category.color
         }
       })
     }

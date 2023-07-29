@@ -59,6 +59,22 @@ module.exports = class PropertiesKeys {
   static important = '_important'
 
   /**
+   * The key for storing the value indicating whether to add a custom property
+   *
+   * Ключ для хранения значения, указывающего, добавлять ли пользовательское свойство
+   * @type {string}
+   */
+  static varKey = '_var'
+
+  /**
+   * Determines whether values need to be converted
+   *
+   * Определяет, надо ли преобразовывать значения
+   * @type {string}
+   */
+  static modification = '_modification'
+
+  /**
    * It indicates that you need to transform the values of the properties
    *
    * Указывает, что надо преобразовывать значения свойств
@@ -130,6 +146,8 @@ module.exports = class PropertiesKeys {
     this.fullName,
     this.fullValue,
     this.important,
+    this.varKey,
+    this.modification,
     this.replace,
     this.name,
     this.variable,

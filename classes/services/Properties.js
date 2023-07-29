@@ -2,6 +2,10 @@ const Cache = require('./properties/PropertiesCache')
 const Path = require('./properties/PropertiesPath')
 const Items = require('./properties/PropertiesItems')
 
+const ReadMain = require('./properties/read/PropertiesReadMain')
+const ReadSettings = require('./properties/read/PropertiesReadSettings')
+const Scss = require('./properties/PropertiesScss')
+
 const ToLink = require('./properties/to/PropertiesToLink')
 const ToPalette = require('./properties/to/PropertiesToPalette')
 const ToReplace = require('./properties/to/PropertiesToReplace')
@@ -24,9 +28,6 @@ const ToVar = require('./properties/to/PropertiesToVar')
 
 const ToNone = require('./properties/to/PropertiesToNone')
 
-const ReadMain = require('./properties/read/PropertiesReadMain')
-const ReadSettings = require('./properties/read/PropertiesReadSettings')
-
 const PropertiesItems = require('./PropertiesItems')
 const PropertiesRead = require('./PropertiesRead')
 const PropertiesTool = require('./PropertiesTool')
@@ -41,8 +42,6 @@ const PropertiesToStyle = require('./PropertiesToStyle')
 const PropertiesToSub = require('./PropertiesToSub')
 const PropertiesToVar = require('./PropertiesToVar')
 const PropertiesToVariable = require('./PropertiesToVariable')
-
-const PropertiesScss = require('./PropertiesScss')
 const { replaceRecursive } = require('../../functions/data')
 const { To } = require('../To')
 
@@ -54,6 +53,8 @@ const FILE_CACHE = 'properties'
  * Главный класс для работы с токенами
  */
 module.exports = class Properties {
+  __basic
+
   /**
    * Constructor
    * @param {boolean} cache enabling caching / включение кэширования
@@ -71,13 +72,53 @@ module.exports = class Properties {
   }
 
   /**
-   * Returns a PropertiesItems object for working with the list of properties
+   * Collects into an array from all files and returns the content without processing them
    *
-   * Возвращает объект PropertiesItems для работы со списком свойств
-   * @return {PropertiesItems}
+   * Собирает в массив со всех файлов и возвращает содержимое не обрабатывая их
+   * @return {Items}
    */
-  get () {
-    return this.items
+  getBasic () {
+    if (!this.__basic) {
+      this.__basic = new Items(
+        Cache.get([], this.getPathName(), () => {
+          const path = new Path(this.designs)
+          const properties = new Items(To.copy(
+            replaceRecursive(
+              new ReadSettings(path).get(),
+              new ReadMain(path).get()
+            )
+          ))
+
+          new ToReplace(properties).to()
+          new ToPalette(properties).to()
+          new ToLink(properties).to()
+          new ToSub(properties).to()
+          new ToVariable(properties).to()
+
+          new ToSimilar(properties).to()
+          new ToMulti(properties).to()
+          new ToStyle(properties).to()
+
+          new ToVar(properties).to()
+          new ToProperty(properties).to()
+          new ToComponent(properties).to()
+          new ToClass(properties).to()
+          new ToState(properties).to()
+          new ToSubclass(properties).to()
+          new ToRoot(properties).to()
+          new ToMedia(properties).to()
+          new ToAnimate(properties).to()
+
+          new ToNone(properties).to()
+
+          console.info('[Properties]', 'init')
+
+          return properties.get()
+        })
+      )
+    }
+
+    return this.__basic
   }
 
   /**
@@ -87,10 +128,13 @@ module.exports = class Properties {
    * @return {string}
    */
   getScss () {
-    return new PropertiesScss(
-      this.items,
-      new PropertiesPalette(this.items)
-    ).get()
+    return Cache.get([], this.getPathName(), () => {
+      const properties = new Scss(this.getBasic()).get()
+
+      console.info('[Scss]', 'init')
+
+      return properties
+    }, 'scss')
   }
 
   /**
@@ -99,6 +143,16 @@ module.exports = class Properties {
    */
   getPathName () {
     return `${this.designs.join('-')}-${FILE_CACHE}`
+  }
+
+  /**
+   * Returns a PropertiesItems object for working with the list of properties
+   *
+   * Возвращает объект PropertiesItems для работы со списком свойств
+   * @return {PropertiesItems}
+   */
+  get () {
+    return this.items
   }
 
   /**
@@ -135,30 +189,6 @@ module.exports = class Properties {
    */
   __initGo () {
     console.info('Properties: init')
-
-    const properties = new Items(this.__getBasic())
-
-    new ToReplace(properties).to()
-    new ToPalette(properties).to()
-    new ToLink(properties).to()
-    new ToSub(properties).to()
-    new ToVariable(properties).to()
-
-    new ToSimilar(properties).to()
-    new ToMulti(properties).to()
-    new ToStyle(properties).to()
-
-    new ToVar(properties).to()
-    new ToProperty(properties).to()
-    new ToComponent(properties).to()
-    new ToClass(properties).to()
-    new ToState(properties).to()
-    new ToSubclass(properties).to()
-    new ToRoot(properties).to()
-    new ToMedia(properties).to()
-    new ToAnimate(properties).to()
-
-    ToNone.to(properties)
 
     const read = new PropertiesRead(this.designs)
     const items = new PropertiesItems(read.get())
@@ -200,28 +230,6 @@ module.exports = class Properties {
     rename.toByComponent() // ok
     rename.toBySimilar() // ok
 
-    console.info('Properties: end')
-
     return items.get()
-  }
-
-  /**
-   * Collects into an array from all files and returns the content without processing them
-   *
-   * Собирает в массив со всех файлов и возвращает содержимое не обрабатывая их
-   * @return {Object<string, *>}
-   * @private
-   */
-  __getBasic () {
-    return Cache.get([], this.getPathName(), () => {
-      const path = new Path(this.designs)
-
-      return To.copy(
-        replaceRecursive(
-          new ReadSettings(path).get(),
-          new ReadMain(path).get()
-        )
-      )
-    })
   }
 }

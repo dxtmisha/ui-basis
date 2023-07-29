@@ -228,7 +228,7 @@ module.exports = class PropertiesCache {
    * @param {string} text text of the message / текст сообщения
    */
   static __console (text) {
-    console.log('[Cache]', text)
+    console.info('[Cache]', text)
   }
 
   static {

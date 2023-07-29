@@ -1,11 +1,14 @@
 const {
-  forEach,
-  isFilled,
-  isObject
+  getColumn,
+  isFilled
 } = require('../../../../functions/data')
 
-const Keys = require('../PropertiesKeys')
 const Type = require('../PropertiesType')
+
+const TYPES = [
+  Type.var,
+  Type.property
+]
 
 /**
  * Class for cleaning all empty entries for clothing the array
@@ -14,40 +17,30 @@ const Type = require('../PropertiesType')
  */
 module.exports = class PropertiesToNone {
   /**
-   * Removes all empty entries from the data
-   *
-   * Удаляет у данных всех пустых записей
-   * @param {Object<string,*>} properties An array that needs to be
-   * transformed / Массив, который нужно преобразовать
+   * Constructor
+   * @param {PropertiesItems} items
    */
-  static to (properties) {
-    return this.__to(properties)
+  constructor (items) {
+    this.items = items
   }
 
   /**
    * Removes all empty entries from the data
    *
    * Удаляет у данных всех пустых записей
-   * @param {Object<string,{value:*}>} properties An array that needs to be
-   * @param {string} path path to the current value / путь к текущему значению
-   * transformed / Массив, который нужно преобразовать
    */
-  static __to (properties, path = '') {
-    forEach(properties, (item, name) => {
-      if (
-        isObject(item) &&
-        'value' in item &&
-        item?.[Keys.variable] !== Type.subclass
-      ) {
-        if (isFilled(item?.value)) {
-          this.__to(item?.value, `${path}.${name}`)
+  to () {
+    this.items.findVariable(TYPES)
+      .forEach(({
+        name,
+        value,
+        parent,
+        parents
+      }) => {
+        if (!isFilled(value)) {
+          console.error('[None]', `{${getColumn(parents, 'name').join('.')}.${name}}`)
+          delete parent[name]
         }
-
-        if (!isFilled(item?.value)) {
-          console.error('[None]', path, name, item?.value)
-          delete properties[name]
-        }
-      }
-    })
+      })
   }
 }

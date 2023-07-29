@@ -42,6 +42,16 @@ module.exports = class PropertiesItems {
   }
 
   /**
+   * Returns a list of design names
+   *
+   * Возвращает список названий дизайнов
+   * @return {string[]}
+   */
+  getDesigns () {
+    return this.designs
+  }
+
+  /**
    * Divides an index into sections
    *
    * Разделяет индекс на разделы
@@ -345,7 +355,7 @@ module.exports = class PropertiesItems {
       } = property
 
       if (isSelected(item?.[Keys.category], category)) {
-        data.push(property)
+        data.push(this.__getFullInfo(property))
       }
     })
 
@@ -377,7 +387,7 @@ module.exports = class PropertiesItems {
       } = property
 
       if (isSelected(item?.[Keys.variable], variable)) {
-        data.push(property)
+        data.push(this.__getFullInfo(property))
       }
     })
 
