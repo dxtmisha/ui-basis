@@ -1,8 +1,7 @@
 const { To } = require('../To')
 
+const Keys = require('./properties/PropertiesKeys')
 const DesignPrototype = require('./DesignPrototype')
-const PropertiesComponent = require('./PropertiesComponent')
-const PropertiesTool = require('./PropertiesTool')
 
 const DIR_NAME = 'constructors'
 
@@ -30,11 +29,8 @@ module.exports = class DesignConstructor extends DesignPrototype {
     name,
     options = {}
   ) {
-    super(name, options)
+    super(`d.${name}`, options)
 
-    console.log('name', name)
-
-    this.component = new PropertiesComponent(`d.${name}`, false, [])
     this.dir = this._initDir()
   }
 
@@ -59,7 +55,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
     return [
       ...super._initDir(),
       DIR_NAME,
-      this.component.getComponent()
+      this.loader.getComponent()
     ]
   }
 
@@ -71,7 +67,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
    * @private
    */
   __getClassName () {
-    return FILE_CLASS.replace(this.replaceName, this.component.getComponent())
+    return FILE_CLASS.replace(this.replaceName, this.loader.getComponent())
   }
 
   /**
@@ -199,7 +195,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
 
       sample = this._replacePath(sample)
       sample = this._replaceNameForProperties(sample)
-        .replaceAll('subClassesConstructor', `subClasses${this.component.getComponent()}`)
+        .replaceAll('subClassesConstructor', `subClasses${this.loader.getComponent()}`)
 
       this._createFile(file, sample)
     }
@@ -257,7 +253,7 @@ module.exports = class DesignConstructor extends DesignPrototype {
         sample = this._replaceSubclass(sample)
         sample = this._replacePropsType(sample)
         sample = this._replacePropsDefault(sample)
-        sample = this._replaceProps(sample, this.component.getComponent())
+        sample = this._replaceProps(sample, this.loader.getComponent())
       }
 
       this._createFile(file, sample)
@@ -316,13 +312,12 @@ module.exports = class DesignConstructor extends DesignPrototype {
    */
   __initComponent () {
     if (this._isFile(FILE_PROPERTIES)) {
-      const key = PropertiesTool.getKeyComponents()
       const data = this.__readProperties()
       const list = []
 
-      if (key in data) {
-        data[key].forEach(name => {
-          const fullName = To.camelCaseFirst(`${this.component.getComponent()}-${name}`)
+      if (Keys.components in data) {
+        data[Keys.components].forEach(name => {
+          const fullName = To.camelCaseFirst(`${this.loader.getComponent()}-${name}`)
           const file = `${fullName}.ts`
 
           if (!this._isFile(file)) {

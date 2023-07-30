@@ -1,5 +1,4 @@
 const {
-  isFilled,
   isObject,
   replaceRecursive
 } = require('../../../../functions/data')
@@ -38,7 +37,6 @@ module.exports = class PropertiesReadSettings {
             const properties = Cache.read([...path.dir, dir, this.path.getFileName()])
 
             if (
-              isFilled(properties) &&
               isObject(properties)
             ) {
               replaceRecursive(data, Standard.to({

@@ -68,9 +68,6 @@ module.exports = class Properties {
   ) {
     this.cache = cache
     this.designs = ['d', ...(designs || PropertiesTool.getDesignsByEnv())]
-    this.items = new PropertiesItems(
-      cache ? this.__initCache() : this.__init()
-    )
   }
 
   /**
@@ -171,83 +168,5 @@ module.exports = class Properties {
    */
   get () {
     return this.items
-  }
-
-  /**
-   * Entry point for generating a file to work with data from JSON
-   *
-   * Точка входа для генерации файла для работы с данными из JSON
-   * @return {Object<string, *>}
-   * @private
-   */
-  __init () {
-    const data = this.__initGo()
-
-    Cache.create([], `${this.designs.join('_')}_${FILE_CACHE}`, data)
-    return data
-  }
-
-  /**
-   * Entry point for generating a file to work with data from JSON (caching)
-   *
-   * Точка входа для генерации файла для работы с данными из JSON (кеширование)
-   * @return {Object<string, *>}
-   * @private
-   */
-  __initCache () {
-    return Cache.get([], `${this.designs.join('_')}_${FILE_CACHE}`, () => this.__initGo())
-  }
-
-  /**
-   * Generating a base file for work
-   *
-   * Генерируется базовый файл для работы
-   * @return {Object<string, *>}
-   * @private
-   */
-  __initGo () {
-    console.info('Properties: init')
-
-    const read = new PropertiesRead(this.designs)
-    const items = new PropertiesItems(read.get())
-
-    const full = new PropertiesToFull(items)
-    const rename = new PropertiesToRename(items)
-    const sub = new PropertiesToSub(items)
-    const value = new PropertiesToVar(items)
-    const variable = new PropertiesToVariable(items)
-
-    full.toFullValueFix() // none
-    variable.to() // ok
-    variable.toByLink() // ok
-    sub.toByLink() // none
-
-    new PropertiesToLink(items).to() // ok
-    variable.to() // ok
-
-    new PropertiesPalette(items).to() // ok
-    new PropertiesToReplace(items).to() // ok
-
-    full.toFullValue() // none
-    full.toFullValueByDesign() // none
-    variable.toByVar() // ok
-    sub.to() // ok
-
-    value.toString() // none
-    rename.to() // ok
-    new PropertiesToMulti(items).to() // ok
-    new PropertiesToStyle(items).to() // ok
-
-    rename.toByVar() // ok
-    value.toString() // none
-    value.to() // ok
-
-    value.toFull() // ok
-    value.toImportant() // ok
-
-    rename.toByComponent() // ok
-    rename.toBySimilar() // ok
-
-    return items.get()
   }
 }

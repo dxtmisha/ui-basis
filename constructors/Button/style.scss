@@ -3,68 +3,10 @@
 @mixin initButtonDesign($component: 'design.component') {
   @include initDesign($component) {
     @include mixinButton;
-    @include mixinButtonLabel;
-    @include mixinButtonIcon;
-    @include mixinButtonProgress;
-
     @content;
   }
 }
 
 @mixin mixinButton {
-  @include flexInlineCenter;
-  position: relative;
 
-  padding: 0;
-
-  min-width: var(--sys-height, 0);
-
-  text-decoration: none;
-
-  border-radius: 0;
-  border: none;
-
-  cursor: pointer;
-
-  @include disabled {
-    cursor: default;
-  }
-
-  @include readonly {
-    cursor: default;
-  }
-}
-
-@mixin mixinButtonLabel {
-  &__label {
-    order: 4;
-    transition: inherit;
-  }
-}
-
-@mixin mixinButtonIcon {
-  &__icon,
-  &__trailing {
-    @include initByCustom('margin', #{calc((var(--sys-height) - v('?icon._width')) / 2)});
-    @include marginLeft(v('??margin'));
-    @include marginRight(v('??margin'));
-  }
-
-  &__label ~ &__icon {
-    @include marginRight(#{calc(v('??margin') - v('??padding'))});
-  }
-
-  &__label ~ &__trailing {
-    @include marginLeft(#{calc(v('??margin') - v('??padding'))});
-  }
-}
-
-@mixin mixinButtonProgress {
-  &--progress {
-    cursor: default;
-  }
-
-  &__progress#{'.'}#{n('?progress--visible')} ~ * {
-    opacity: v('??color-opacity', 0);
-  }
 }

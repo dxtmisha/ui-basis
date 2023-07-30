@@ -1,6 +1,7 @@
 const { forEach } = require('../../functions/data')
 const { To } = require('../To')
 
+const Loader = require('./properties/PropertiesLoader')
 const DesignCommand = require('./DesignCommand')
 
 /**
@@ -26,6 +27,14 @@ module.exports = class DesignPrototype extends DesignCommand {
   component
 
   /**
+   * Object for working with components
+   *
+   * Объект для работы с компонентами
+   * @type {PropertiesLoader}
+   */
+  loader
+
+  /**
    * Constructor
    * @param {string} name component name / названия компонента
    * @param {{}} options additional parameters / дополнительные параметры
@@ -34,7 +43,11 @@ module.exports = class DesignPrototype extends DesignCommand {
     name,
     options = {}
   ) {
+    const [design, component] = name.split('.', 2)
+
     super(name, options)
+
+    this.loader = new Loader(design, component)
   }
 
   /**
@@ -82,7 +95,7 @@ module.exports = class DesignPrototype extends DesignCommand {
       } else {
         return removeReplacement === true
           ? ''
-          : `${this._replacePath(data.trim().replaceAll(this.replaceName, this.component.getComponent()))}${end}`
+          : `${this._replacePath(data.trim().replaceAll(this.replaceName, this.loader.getComponent()))}${end}`
       }
     }
 
@@ -111,7 +124,7 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replaceName (sample) {
-    return sample.replaceAll(this.replaceName, this.component.getComponent())
+    return sample.replaceAll(this.replaceName, this.loader.getComponent())
   }
 
   /**
@@ -123,7 +136,7 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replaceNameForProperties (sample) {
-    return sample.replace(new RegExp(`(${this.replaceName})([A-Z])`, 'g'), `${this.component.getComponent()}$2`)
+    return sample.replace(new RegExp(`(${this.replaceName})([A-Z])`, 'g'), `${this.loader.getComponent()}$2`)
   }
 
   /**
@@ -135,7 +148,7 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replaceSubclass (sample) {
-    const classes = this.component.getClasses()
+    const classes = this.loader.getClasses()
     const templates = []
 
     forEach(classes, (className, index) => {
@@ -155,13 +168,13 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replaceProps (sample, name) {
-    const props = this.component.getProps()
+    const props = this.loader.get()
     const templates = []
 
     forEach(props, (item, index) => {
       if (!sample.match(`:type.${index}.none`)) {
         const indexName = To.camelCase(index)
-        let type = this.component.getPropsType(item.valueAll)
+        let type = this.__getPropsType(item.valueAll)
         type = type.length > 1 ? `[${type.join(', ')}]` : type?.[0]
 
         if (type !== 'Boolean') {
@@ -191,6 +204,32 @@ module.exports = class DesignPrototype extends DesignCommand {
   }
 
   /**
+   * Returns available types for property
+   *
+   * Возвращает доступные типы для свойства
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {string[]}
+   * @private
+   */
+  __getPropsType (value) {
+    const type = []
+
+    if (this.__isBoolean(value)) {
+      type.push('Boolean')
+    }
+
+    if (this.__isString(value)) {
+      type.push('String')
+    }
+
+    if (type.length === 0) {
+      type.push('Boolean')
+    }
+
+    return type
+  }
+
+  /**
    * Adding types for properties
    *
    * Добавление типов для свойств
@@ -199,21 +238,57 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replacePropsType (sample) {
-    const props = this.component.getProps()
+    const props = this.loader.get()
     const templates = []
 
-    forEach(props, (item, index) => {
+    forEach(props, ({
+      valueAll,
+      style
+    }, index) => {
+      const types = this.__getTypeByName(valueAll, style)
+
       if (sample.match(`:type.${index}`)) {
         sample = sample.replace(
           new RegExp(`(/[*] ?:type[.]${index} ?[*]/)[^\r\n]*`, 'g'),
-          `$1 | ${this.component.getTypeByName(item.valueAll, item?.style)}`
+          `$1 | ${types}`
         )
       } else if (!sample.match(`:type.${index}.none`)) {
-        templates.push(`\r\n  ${To.camelCase(index)}?: ${this.component.getTypeByName(item.valueAll, item?.style)}`)
+        templates.push(`\r\n  ${To.camelCase(index)}?: ${types}`)
       }
     })
 
     return this._replacement(sample, 'type', templates.join(''))
+  }
+
+  /**
+   * Returns a string with the data type
+   *
+   * Возвращает строку с типом данных
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @param {boolean} style is the property style present / является ли свойство style
+   * @return {string}
+   * @private
+   */
+  __getTypeByName (value, style) {
+    const types = []
+
+    if (this.__isBoolean(value)) {
+      types.push('boolean')
+    }
+
+    if (style) {
+      types.push('string')
+    }
+
+    if (this.__isString(value)) {
+      value.forEach(item => types.push(item === true ? 'true' : `'${item}'`))
+    }
+
+    if (types.length === 0) {
+      types.push('boolean')
+    }
+
+    return types.join(' | ')
   }
 
   /**
@@ -225,7 +300,7 @@ module.exports = class DesignPrototype extends DesignCommand {
    * @protected
    */
   _replacePropsDefault (sample) {
-    const props = this.component.getProps()
+    const props = this.loader.get()
     const templates = []
 
     forEach(props, (item, index) => {
@@ -233,10 +308,48 @@ module.exports = class DesignPrototype extends DesignCommand {
         item.default &&
         !sample.match(`:default.${index}.none`)
       ) {
-        templates.push(`\r\n    ${To.camelCase(index)}: ${this.component.getDefault(item.default)}`)
+        templates.push(`\r\n    ${To.camelCase(index)}: ${this.__getDefault(item.default)}`)
       }
     })
 
     return this._replacement(sample, 'default', templates.join(','), '    ')
+  }
+
+  /**
+   * Returns default values
+   *
+   * Возвращает значения по умолчанию
+   * @param {string|boolean} value
+   * @return {string}
+   * @private
+   */
+  __getDefault (value) {
+    if (typeof value === 'string') {
+      return `'${value}'`
+    } else {
+      return `${value}`
+    }
+  }
+
+  /**
+   * Checks if the data type is boolean
+   *
+   * Проверяет, является ли тип данных булевым
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {boolean}
+   */
+  __isBoolean (value) {
+    return value.indexOf(true) !== -1
+  }
+
+  /**
+   * Checks if the data type is string
+   *
+   * Проверяет, является ли тип данных строковым
+   * @param {(string|boolean)[]} value values to check / значения для проверки
+   * @return {boolean}
+   */
+  __isString (value) {
+    return value.length > 0 && value[0] !== true
   }
 }

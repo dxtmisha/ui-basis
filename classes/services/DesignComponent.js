@@ -1,7 +1,12 @@
-const DesignPrototype = require('./DesignPrototype')
-const PropertiesComponent = require('./PropertiesComponent')
-const DesignConstructor = require('./DesignConstructor')
 const { To } = require('../To')
+
+const DesignPrototype = require('./DesignPrototype')
+const DesignConstructor = require('./DesignConstructor')
+
+const FILE_INDEX = 'index.vue'
+const FILE_INDEX_COMPOSITION = 'index-composition.vue'
+const FILE_PROPS = 'props.ts'
+const FILE_PROPERTIES = 'properties.json'
 
 /**
  * Class for creating a component or updating data
@@ -22,13 +27,12 @@ module.exports = class DesignComponent extends DesignPrototype {
   ) {
     super(name, options)
 
-    this.component = new PropertiesComponent(name, false)
     this.dir = this._initDir()
   }
 
   initMain () {
     if (this.options.constr) {
-      new DesignConstructor(To.kebabCase(this.component.getComponent()), {}).init()
+      new DesignConstructor(To.kebabCase(this.loader.getComponent()), {}).init()
     }
 
     this
@@ -44,7 +48,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @return {string}
    */
   getNameCommand () {
-    return this.component.getName()
+    return this.loader.getName()
   }
 
   /**
@@ -56,20 +60,20 @@ module.exports = class DesignComponent extends DesignPrototype {
   _initDir () {
     return [
       ...super._initDir(),
-      this.component.getDesign(),
-      this.component.getComponent()
+      this.loader.getDesign(),
+      this.loader.getComponent()
     ]
   }
 
   /**
-   *  Reading the index.vue file
+   * Reading the index.vue file
    *
    * Читает файл index.vue
    * @return {string}
    * @private
    */
   __readIndex () {
-    return this._read(this.component.getFileMain())
+    return this._read(this.__getFileMain())
   }
 
   /**
@@ -80,7 +84,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __readProps () {
-    return this._read(this.component.getFileProps())
+    return this._read(FILE_PROPS)
   }
 
   /**
@@ -91,7 +95,18 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __readSampleIndex () {
-    return this._readSample(this.component.getFileIndex(!this.options.options))
+    return this._readSample(this.__getFileIndex())
+  }
+
+  /**
+   * Returns the filename index
+   *
+   * Возвращает название файла index
+   * @return {string}
+   * @private
+   */
+  __getFileIndex () {
+    return this.options.options ? FILE_INDEX : FILE_INDEX_COMPOSITION
   }
 
   /**
@@ -102,7 +117,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __readSampleProps () {
-    return this._readSample(this.component.getFileProps())
+    return this._readSample(FILE_PROPS)
   }
 
   /**
@@ -113,7 +128,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __readSampleProperties () {
-    return this._readSample(this.component.getFileProperties())
+    return this._readSample(FILE_PROPERTIES)
   }
 
   /**
@@ -124,7 +139,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __initIndex () {
-    const main = this.component.getFileMain()
+    const main = this.__getFileMain()
     let sample
 
     if (this._isFile(main)) {
@@ -139,7 +154,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       sample = this._replacement(
         sample,
         'name',
-        `\r\n  name: '${this.component.getName()}'${this.options.options ? ',' : ''}`
+        `\r\n  name: '${this.loader.getNameForFile()}'${this.options.options ? ',' : ''}`
       )
 
       this._createFile(main, sample)
@@ -156,10 +171,9 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __initProps () {
-    const file = this.component.getFileProps()
     let sample
 
-    if (this._isFile(file)) {
+    if (this._isFile(FILE_PROPS)) {
       sample = this.__readProps()
     } else {
       sample = this.__readSampleProps()
@@ -173,7 +187,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       sample = this._replacePropsDefault(sample)
       sample = this._replaceProps(sample, '')
 
-      this._createFile(file, sample)
+      this._createFile(FILE_PROPS, sample)
     }
 
     return this
@@ -187,18 +201,27 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __initProperties () {
-    const file = this.component.getFileProperties()
-
-    if (!this._isFile(file)) {
+    if (!this._isFile(FILE_PROPERTIES)) {
       const sample = this.__readSampleProperties()
 
       if (this.options.constr) {
-        sample.basic = `{d.${To.kebabCase(this.component.getComponent())}}`
+        sample.basic = `{d.${To.kebabCase(this.loader.getComponent())}}`
       }
 
-      this._createFile(file, sample)
+      this._createFile(FILE_PROPERTIES, sample)
     }
 
     return this
+  }
+
+  /**
+   * Returns the name for the component
+   *
+   * Возвращает имя для компонента
+   * @return {string}
+   * @private
+   */
+  __getFileMain () {
+    return `${this.loader.getNameForFile()}.vue`
   }
 }

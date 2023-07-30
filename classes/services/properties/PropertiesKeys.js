@@ -99,6 +99,14 @@ module.exports = class PropertiesKeys {
   static propsValue = '_props-value'
 
   /**
+   * Indicates which components need to be used
+   *
+   * Указывает, какие компоненты надо использовать
+   * @type {string}
+   */
+  static components = '_components'
+
+  /**
    * The key for storing the final name of the property after all processing
    *
    * Ключ для хранения конечного названия свойства после всех обработок
@@ -168,6 +176,7 @@ module.exports = class PropertiesKeys {
     this.props,
     this.propsValue,
     this.name,
+    this.components,
     this.variable,
     this.css,
     this.files,

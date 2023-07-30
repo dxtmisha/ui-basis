@@ -61,29 +61,37 @@ module.exports = class PropertiesLoader {
    */
   properties
 
-  constructor (path) {
-    const dirs = Files.splitForDir(path)
+  /**
+   * @type {Object<string,*>}
+   */
+  data
 
-    this.design = To.kebabCase(dirs[dirs.length - 2])
-    this.component = To.kebabCase(dirs[dirs.length - 1])
+  /**
+   * Constructor
+   * @param {string} pathDesign design name / название дизайна
+   * @param {string} component component name / название компонента
+   */
+  constructor (pathDesign, component = undefined) {
+    console.log(pathDesign, component)
+    if (pathDesign && component) {
+      this.design = pathDesign
+      this.component = component
+    } else {
+      const dirs = Files.splitForDir(pathDesign)
+
+      this.design = To.kebabCase(dirs[dirs.length - 2])
+      this.component = To.kebabCase(dirs[dirs.length - 1])
+    }
   }
 
   get () {
-    return Cache.getBySize(
-      [this.getName()],
-      FILE_NAME,
-      Cache.getPathComponent(this.getName()),
-      (property) => {
-        this.__initState(property?.value)
-          .__initMain()
-          .__initValue()
-          .__initValueAll()
-          .__initValueUnique()
-          .__initValueState()
+    this.__init()
+    return this.properties
+  }
 
-        return this.properties
-      }
-    )
+  getData () {
+    this.__init()
+    return this.data?.value
   }
 
   getJson () {
@@ -98,12 +106,99 @@ module.exports = class PropertiesLoader {
     return `${this.design}.${this.component}`
   }
 
+  getNameForFile () {
+    return To.camelCaseFirst(this.getName())
+  }
+
+  /**
+   * Returns the name of the design
+   *
+   * Возвращает название дизайна
+   * @return {string}
+   */
   getDesign () {
     return this.design
   }
 
+  /**
+   * Returns the name of the component
+   *
+   * Возвращает название компонента
+   * @return {string}
+   */
   getComponent () {
-    return this.component
+    return To.camelCaseFirst(this.component)
+  }
+
+  /**
+   * Returns a list of classes
+   *
+   * Возвращает список классов
+   * @param {Object<string,*>} data list of properties / список свойств
+   * @param {string[]} parent Ancestor name / Название предка
+   * @return {Object<string,string>}
+   */
+  getClasses (
+    data = this.getData(),
+    parent = []
+  ) {
+    const list = {}
+
+    forEach(data, (item, name) => {
+      if (this.__isClasses(item)) {
+        const names = [...parent, name]
+
+        list[To.camelCase(names.join('-'))] = names.join('__')
+        Object.assign(list, this.getClasses(item?.value, names))
+      }
+    })
+
+    return list
+  }
+
+  /**
+   * Does this property belong to the class
+   *
+   * Является ли это свойство частью класса
+   * @param {Object<string,*>} item object for checking / объект для проверки
+   * @return {boolean}
+   * @private
+   */
+  __isClasses (item) {
+    return item?.[Keys.variable] === Type.subclass
+  }
+
+  /**
+   * Генерация данный
+   * @return {this}
+   * @private
+   */
+  __init () {
+    if (!this.properties) {
+      const read = Cache.getBySize(
+        [this.getName()],
+        FILE_NAME,
+        Cache.getPathComponent(this.getName()),
+        (data) => {
+          this.__initState(data?.value)
+            .__initMain()
+            .__initValue()
+            .__initValueAll()
+            .__initValueUnique()
+            .__initValueState()
+
+          return {
+            data,
+            properties: this.properties
+          }
+        }
+      )
+
+      this.data = read.data
+      this.properties = read.properties
+    }
+
+    return this
   }
 
   /**
