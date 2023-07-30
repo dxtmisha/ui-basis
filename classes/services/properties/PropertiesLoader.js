@@ -72,7 +72,6 @@ module.exports = class PropertiesLoader {
    * @param {string} component component name / название компонента
    */
   constructor (pathDesign, component = undefined) {
-    console.log(pathDesign, component)
     if (pathDesign && component) {
       this.design = pathDesign
       this.component = component

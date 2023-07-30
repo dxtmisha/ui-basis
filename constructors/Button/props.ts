@@ -1,4 +1,6 @@
 import { PropType } from 'vue'
+import { PropsIconType } from '../Icon/props'
+import { PropsProgressType } from '../Progress/props'
 
 // Type describing subclasses
 // Тип, описывающий подклассы
@@ -7,6 +9,9 @@ export const subClassesButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    label: 'label',
+    icon: 'icon',
+    trailing: 'trailing'
     // :subclass
   }
 }
@@ -17,14 +22,29 @@ export type PropsButtonType = {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  disabled?: boolean
   // :type
+  /* :type.adaptive.none */
 } & {
   // Values
-  value?: string
+  label?: string
+  icon?: string | PropsIconType
+  iconTrailing?: string | PropsIconType
+  to?: string
+  value?: any
+  detail?: Record<string, any>
+
+  // Icon
+  iconTurn?: boolean
+  iconHide?: boolean
+
+  // Progress
+  progress?: PropsProgressType /* :type.progress */ | boolean
 
   // Status
 
   // Options
+  tag?: 'button' | 'a' | 'span' | string
 }
 
 // Default value for property
@@ -36,7 +56,7 @@ export const defaultsButton = {
     // :default
     // :default
   },
-  value: 'value'
+  tag: 'button'
 }
 
 // Button for property
@@ -46,12 +66,30 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    progress: Boolean,
+    disabled: Boolean
     // :prop
   },
   // Values
-  value: String
+  label: [Number, String],
+  icon: [Object, String],
+  iconTrailing: [Object, String],
+  to: String,
+  value: [Object, Number, String],
+  detail: [Object],
+
+  // Icon
+  iconTurn: Boolean,
+  iconHide: Boolean,
+
+  // Progress
+  progress: [Object, Boolean],
 
   // Status
 
   // Options
+  tag: {
+    type: String as PropType<PropsButtonType['tag']>,
+    default: defaultsButton?.tag
+  }
 }

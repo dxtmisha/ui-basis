@@ -1,1 +1,28 @@
-{}
+{
+  "padding": {
+    "_type": "var"
+  },
+  "#label": {},
+  "#icon": {},
+  "#trailing": {},
+  "progress": {
+    "color-opacity": {
+      "_type": "var"
+    }
+  },
+  "disabled": {
+    "_type": "state"
+  },
+  "adaptive": {
+    "~icon": {
+      "padding": "0px",
+      "& .??__label": {
+        "display": "none"
+      }
+    }
+  },
+  "_components": [
+    "icon",
+    "progress"
+  ]
+}

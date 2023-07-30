@@ -1,3 +1,6 @@
+const { replaceRecursive } = require('../../../functions/data')
+const { To } = require('../../To')
+
 const Cache = require('./PropertiesCache')
 const Path = require('./PropertiesPath')
 const Items = require('./PropertiesItems')
@@ -30,22 +33,7 @@ const ToVar = require('./to/PropertiesToVar')
 const ToNone = require('./to/PropertiesToNone')
 const ToDivision = require('./to/PropertiesToDivision')
 
-const PropertiesItems = require('../PropertiesItems')
-const PropertiesRead = require('../PropertiesRead')
-const PropertiesTool = require('../PropertiesTool')
-
-const PropertiesToFull = require('../PropertiesToFull')
-const PropertiesToLink = require('../PropertiesToLink')
-const PropertiesToMulti = require('../PropertiesToMulti')
-const PropertiesPalette = require('../PropertiesPalette')
-const PropertiesToRename = require('../PropertiesToRename')
-const PropertiesToReplace = require('../PropertiesToReplace')
-const PropertiesToStyle = require('../PropertiesToStyle')
-const PropertiesToSub = require('../PropertiesToSub')
-const PropertiesToVar = require('../PropertiesToVar')
-const PropertiesToVariable = require('../PropertiesToVariable')
-const { replaceRecursive } = require('../../../functions/data')
-const { To } = require('../../To')
+const Tool = require('./PropertiesTool')
 
 const FILE_CACHE = 'properties'
 
@@ -67,7 +55,7 @@ module.exports = class Properties {
     designs = undefined
   ) {
     this.cache = cache
-    this.designs = ['d', ...(designs || PropertiesTool.getDesignsByEnv())]
+    this.designs = ['d', ...(designs || Tool.getDesignsByEnv())]
   }
 
   /**
@@ -158,15 +146,5 @@ module.exports = class Properties {
     new ToNone(properties).to()
 
     return properties
-  }
-
-  /**
-   * Returns a PropertiesItems object for working with the list of properties
-   *
-   * Возвращает объект PropertiesItems для работы со списком свойств
-   * @return {PropertiesItems}
-   */
-  get () {
-    return this.items
   }
 }
