@@ -1,7 +1,7 @@
 const { forEach } = require('../../functions/data')
+const { To } = require('../To')
 
 const DesignCommand = require('./DesignCommand')
-const { To } = require('../To')
 
 /**
  * Class with basic replacement for templates

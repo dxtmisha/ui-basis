@@ -1,4 +1,4 @@
-const PropertiesFiles = require('./properties/PropertiesFiles')
+const Files = require('./properties/PropertiesFiles')
 
 const DIR_SAMPLE = [__dirname, '..', '..', 'media', 'templates']
 
@@ -71,7 +71,7 @@ module.exports = class DesignCommand {
    * @protected
    */
   _isFile (name) {
-    return PropertiesFiles.is([...this.dir, name])
+    return Files.is([...this.dir, name])
   }
 
   /**
@@ -83,7 +83,7 @@ module.exports = class DesignCommand {
    * @protected
    */
   _read (name) {
-    return PropertiesFiles.readFile([...this.dir, name])
+    return Files.readFile([...this.dir, name])
   }
 
   /**
@@ -95,7 +95,7 @@ module.exports = class DesignCommand {
    * @protected
    */
   _readSample (name) {
-    return PropertiesFiles.readFile([...DIR_SAMPLE, this.dirSampleName, name])
+    return Files.readFile([...DIR_SAMPLE, this.dirSampleName, name])
   }
 
   /**
@@ -109,7 +109,7 @@ module.exports = class DesignCommand {
   _createFile (name, value) {
     this._console(name)
 
-    PropertiesFiles.createFile(
+    Files.createFile(
       this.dir,
       name,
       value,
@@ -125,7 +125,7 @@ module.exports = class DesignCommand {
    * @protected
    */
   _initDir () {
-    return [PropertiesFiles.getRoot()]
+    return [Files.getRoot()]
   }
 
   /**
