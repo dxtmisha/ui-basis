@@ -5,6 +5,7 @@ const Files = require('./PropertiesFiles')
 const CACHE_STATUS = true
 const DIR_CACHE = ['cache']
 const DIR_STEP = ['step']
+const DIR_COMPONENTS = ['components']
 const FILE_SYSTEM = 'system'
 
 /**
@@ -19,11 +20,16 @@ module.exports = class PropertiesCache {
    *
    * Системные данные для контроля версии файла. В этом массиве хранится время последнего запуска
    * и список файлов, которые были прочитаны
-   * @type {{files: Object<string,string[]>, time: number}}
+   * @type {{
+   *   time: number,
+   *   files: Object<string,string[]>,
+   *   sizes: Object<string,number>
+   * }}
    */
   static system = {
     time: 0,
-    files: {}
+    files: {},
+    sizes: {}
   }
 
   /**
@@ -88,6 +94,53 @@ module.exports = class PropertiesCache {
   }
 
   /**
+   * Retrieving cache data or updating it if the size does not match
+   *
+   * Получение данных кеша или обновление его, если размер не соответствует
+   * @param {string|string[]} paths path to the file / путь к файлу
+   * @param {string} name file name / название файла
+   * @param {string|string[]} pathControl путь к файл для получения информация и проверке
+   * @param {Function} callback if the file is not found, the callback function is called and
+   * its result is saved in the current file / если файл не найден, вызывается функция
+   * обратного вызова (callback) и её результат сохраняется в текущем файле
+   * @param {string} extension file extension by default is json / расширение файла по умолчанию - json
+   * @return {Object<string, *>|*[]|string}
+   */
+  static getBySize (
+    paths,
+    name,
+    pathControl,
+    callback = undefined,
+    extension = 'json'
+  ) {
+    if (
+      CACHE_STATUS &&
+      this.is(paths, name, extension) &&
+      this.__isBySize(pathControl)
+    ) {
+      return this.__getCache(paths, name, extension)
+    } else if (callback) {
+      const value = callback(this.readBySize(pathControl))
+      this.create(paths, name, value, extension)
+
+      return value
+    } else {
+      return {}
+    }
+  }
+
+  /**
+   * Returns the path to the data by component
+   *
+   * Возвращает путь к данным по компоненту
+   * @param {string} name the name of the component / название компонента
+   * @return {string[]}
+   */
+  static getPathComponent (name) {
+    return [...DIR_COMPONENTS, `${name.replace('.', '-')}.json`]
+  }
+
+  /**
    * Returns the content of the file by the specified path
    *
    * Возвращает содержимое файла по указанному пути
@@ -108,6 +161,32 @@ module.exports = class PropertiesCache {
     }
 
     return Files.readFile(paths)
+  }
+
+  /**
+   * Reads the contents of the file and updates the file size label
+   *
+   * Читает содержимое файла и обновляет метку размера файла
+   * @param {string|string[]} paths a sequence of path segments / последовательность сегментов пути
+   * @return {undefined|Object<string, *>|string}
+   */
+  static readBySize (paths) {
+    const path = this.__getPath(paths)
+
+    if (Files.is(path)) {
+      const read = Files.readFile(path)
+      const pathSystem = Files.parse(this.__getPathSizeSystem(path))
+
+      Files.createFile(
+        [pathSystem.dir],
+        pathSystem.name,
+        { size: Files.stat(path).size }
+      )
+
+      return read
+    }
+
+    return undefined
   }
 
   /**
@@ -142,6 +221,17 @@ module.exports = class PropertiesCache {
   }
 
   /**
+   * Saves intermediate data
+   *
+   * Сохраняет промежуточные данные
+   * @param {string} name file name / название файла
+   * @param {Object<string,*>|*[]|string} value values for storage / значения для хранения
+   */
+  static createComponents (name, value) {
+    this.create(DIR_COMPONENTS, name, value)
+  }
+
+  /**
    * Returns the path to the file
    *
    * Возвращает путь к файлу
@@ -151,6 +241,10 @@ module.exports = class PropertiesCache {
    */
   static __getPath (path) {
     return [Files.getRoot(), ...DIR_CACHE, ...To.array(path)]
+  }
+
+  static __getPathSizeSystem (paths) {
+    return Files.joinPath(paths).replace(/(\.\w+)$/, '-system$1')
   }
 
   /**
@@ -188,6 +282,27 @@ module.exports = class PropertiesCache {
     }
 
     return !update
+  }
+
+  /**
+   * Checks if the file has been changed by its size
+   *
+   * Проверяет, изменен ли файл по его размеру
+   * @param {string|string[]} paths a sequence of path segments / последовательность сегментов пути
+   * @return {boolean}
+   * @private
+   */
+  static __isBySize (paths) {
+    const path = Files.joinPath(this.__getPath(paths))
+    const pathSystem = this.__getPathSizeSystem(path)
+    const system = Files.readFile(pathSystem)
+
+    if (Files.stat(path)?.size === system.size) {
+      return true
+    } else {
+      this.__console(`Updated file: ${path}`)
+      return false
+    }
   }
 
   /**

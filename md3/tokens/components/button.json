@@ -27,6 +27,10 @@
     "color": "{mixin.color.onDisabled}"
   },
   "filled": {
+    "height": {
+      "xl": "{ref.spacing.16}",
+      "2xl": "{ref.spacing.20}"
+    },
     "color": "{sys.palette.onPrimary}",
     "background-color": "{sys.palette.primary}",
     "gradient": "{sys.palette.onPrimary}",

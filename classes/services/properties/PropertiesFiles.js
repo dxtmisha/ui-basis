@@ -235,7 +235,7 @@ module.exports = class PropertiesFiles {
    *
    * Получение информации о файле
    * @param {string|string[]} paths path to the file / путь к файлу
-   * @return {{mtimeMs: number}}
+   * @return {{mtimeMs: number, size: number}}
    */
   static stat (paths) {
     return requireFs.statSync(this.joinPath(paths))

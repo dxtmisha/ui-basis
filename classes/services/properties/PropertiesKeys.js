@@ -83,6 +83,22 @@ module.exports = class PropertiesKeys {
   static replace = '_replace'
 
   /**
+   * The key for determining whether to add the property as a variable of the component or not
+   *
+   * Ключ для определения, нужно ли добавлять свойство как переменную компонента или нет
+   * @type {string}
+   */
+  static props = '_props'
+
+  /**
+   * Key for determining whether to add this property as a parameter to the component or not
+   *
+   * Ключ для определения, нужно ли добавлять это свойство в качестве параметра у компонента или нет
+   * @type {string}
+   */
+  static propsValue = '_props-value'
+
+  /**
    * The key for storing the final name of the property after all processing
    *
    * Ключ для хранения конечного названия свойства после всех обработок
@@ -149,6 +165,8 @@ module.exports = class PropertiesKeys {
     this.varKey,
     this.modification,
     this.replace,
+    this.props,
+    this.propsValue,
     this.name,
     this.variable,
     this.css,

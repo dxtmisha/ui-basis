@@ -6,7 +6,7 @@ const {
 
 const { To } = require('../To')
 
-const Properties = require('./Properties')
+const Properties = require('./properties/Properties')
 const PropertiesTool = require('./PropertiesTool')
 
 /**
@@ -113,26 +113,6 @@ module.exports = class PropertiesComponent {
   }
 
   /**
-   * Returns the full name of the component in lower case
-   *
-   * Возвращает полное название компонента в нижнем регистре
-   * @return {string}
-   */
-  getNameLower () {
-    return To.kebabCase(this.getName())
-  }
-
-  /**
-   * Returns the full name of the component as a path to a list of properties
-   *
-   * Возвращает полное название компонента в виде пути к списку свойств
-   * @return {string}
-   */
-  getNameForStyle () {
-    return To.kebabCase(`${this.getDesign()}.${this.getComponent()}`)
-  }
-
-  /**
    * Returns a list of classes
    *
    * Возвращает список классов
@@ -159,16 +139,6 @@ module.exports = class PropertiesComponent {
   }
 
   /**
-   * Converting all classes to string
-   *
-   * Преобразование всех классов в строку
-   * @return {string}
-   */
-  getClassesJson () {
-    return JSON.stringify(this.getClasses())
-  }
-
-  /**
    * Returns the property available for props
    *
    * Возвращает свойство, доступное для props
@@ -192,16 +162,6 @@ module.exports = class PropertiesComponent {
    */
   getProps () {
     return this.props
-  }
-
-  /**
-   * Returns all properties as a JSON string
-   *
-   * Возвращает все свойства в виде строки JSON
-   * @return {string}
-   */
-  getPropsJson () {
-    return JSON.stringify(Object.values(this.getProps()))
   }
 
   /**
@@ -332,21 +292,6 @@ module.exports = class PropertiesComponent {
     }
 
     return type.join(' | ')
-  }
-
-  /**
-   * Returns a string with the data type
-   *
-   * Возвращает строку с типом данных
-   * @param {(string|boolean)[]} value values to check / значения для проверки
-   * @param {boolean} style is the property style present / является ли свойство style
-   * @return {string}
-   */
-  getTypeOptionsByName (value, style) {
-    const type = this.getPropsType(value)
-    const typeValue = this.getTypeByName(value, style)
-
-    return `[${type.join(', ')}]${typeValue !== '' && typeValue !== 'boolean' ? ` as PropType<${typeValue}>` : ''}`
   }
 
   /**

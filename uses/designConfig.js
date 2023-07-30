@@ -5,7 +5,7 @@ const {
   replaceRecursive
 } = require('../functions/data')
 
-const Properties = require('../classes/services/Properties')
+const Properties = require('../classes/services/properties/Properties')
 
 /**
  * Returns user configuration

@@ -2,10 +2,10 @@ const Cache = require('../PropertiesCache')
 const Keys = require('../PropertiesKeys')
 const Type = require('../PropertiesType')
 
-const DIR = ['components']
-
 /**
- * Класс для разделения компоненты на разный файлы
+ * A class for splitting components into different files
+ *
+ * Класс для разделения компонентов на разные файлы
  */
 module.exports = class PropertiesToDivision {
   /**
@@ -16,14 +16,20 @@ module.exports = class PropertiesToDivision {
     this.items = items
   }
 
+  /**
+   * Processes the data of the component and splits it into files
+   *
+   * Обрабатывает данные компонента и разделяет его на файлы
+   */
   to () {
     this.items.findVariable(Type.component)
-      .forEach(({
-        name,
-        value,
-        item
-      }) => {
-        Cache.create(DIR, item?.[Keys.name] || name, value)
+      .forEach(property => {
+        const {
+          name,
+          item
+        } = property
+
+        Cache.createComponents(item?.[Keys.name] || name, property)
       })
   }
 }
