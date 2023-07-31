@@ -33,8 +33,13 @@ module.exports = class PropertiesReadSettings {
         const data = {}
 
         dirs.forEach(dir => {
-          if (Files.isDir(dir)) {
-            const properties = Cache.read([...path.dir, dir, this.path.getFileName()])
+          const pathProperties = [...path.dir, dir, this.path.getFileName()]
+
+          if (
+            Files.isDir(dir) &&
+            Files.is(pathProperties)
+          ) {
+            const properties = Cache.read(pathProperties)
 
             if (
               isObject(properties)

@@ -1,0 +1,14 @@
+{
+  "ref": {
+    "value": {
+      "file|main": "dark/ref"
+    },
+    "_type": "var"
+  },
+  "sys": {
+    "value": {
+      "file|main": "dark/sys"
+    },
+    "_type": "var"
+  }
+}

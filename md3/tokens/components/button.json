@@ -1,89 +1,13 @@
 {
-  "padding": "0 {ref.spacing.6}",
-  "height": {
-    "sm": "{ref.spacing.8}",
-    "md": "{ref.spacing.10}",
-    "lg": "{ref.spacing.12}"
-  },
+  "padding": "{ref.spacing.6}",
+  "height": "{ref.spacing.10}",
   "font": "{font.labelLarge}",
-  "color": "{sys.palette.primary}",
   "background-color": "transparent",
-  "gradient": "{mixin.gradient.primary}",
-  "border-radius": "{sys.rounded.full}",
-  "box-shadow": "none",
-  "transition-property": "border, box-shadow",
-  "transition-duration": "{mixin.transition.state}",
-  "#label": {
-    "padding-left": "{??padding}",
-    "padding-right": "{??padding}",
-    "text-overflow": "truncate",
-    "transition-property": "opacity",
-    "transition-function": "{d.sys.transitionFunction.standard}"
-  },
-  "progress": {
-    "color-opacity": "{sys.opacity.disabled}"
-  },
-  "disabled": {
-    "color": "{mixin.color.onDisabled}"
-  },
   "filled": {
-    "height": {
-      "xl": "{ref.spacing.16}",
-      "2xl": "{ref.spacing.20}"
-    },
-    "color": "{sys.palette.onPrimary}",
-    "background-color": "{sys.palette.primary}",
-    "gradient": "{sys.palette.onPrimary}",
-    "hover": {
-      "box-shadow": "{ref.shadow.1}"
-    },
-    "active": {
-      "box-shadow": "none"
-    },
-    "disabled": {
-      "background-color": "{mixin.background.disabled}",
-      "box-shadow": "none"
-    }
-  },
-  "outlined": {
-    "before": "{mixin.border.outlined}",
-    "focus": {
-      "before": {
-        "border-color": "{sys.palette.primary}"
-      }
-    },
-    "disabled": {
-      "border-color": "{mixin.border.disabled}"
-    }
-  },
-  "text": {
-    "after": "{mixin.border.outlinedActive}"
+    "color": "{sys.palette.on-primary}",
+    "background-color": "{sys.palette.primary}"
   },
   "elevated": {
-    "background-color": "{sys.palette.surfaceContainerLow}",
-    "box-shadow": "{ref.shadow.1}",
-    "hover": {
-      "box-shadow": "{ref.shadow.2}"
-    },
-    "active": {
-      "box-shadow": "{ref.shadow.1}"
-    },
-    "disabled": {
-      "basic": "{??filled.disabled}"
-    }
-  },
-  "tonal": {
-    "color": "{sys.palette.onSecondaryContainer}",
-    "background-color": "{sys.palette.secondaryContainer}",
-    "gradient": "{sys.palette.onSecondaryContainer}",
-    "hover": {
-      "basic": "{??filled.hover}"
-    },
-    "active": {
-      "basic": "{??filled.active}"
-    },
-    "disabled": {
-      "basic": "{??filled.disabled}"
-    }
+    "background-color": "{sys.palette.surface-container-low}"
   }
 }

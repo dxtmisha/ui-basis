@@ -1,7 +1,7 @@
 {
   "ref": {
     "value": {
-      "file|ref": "tokens/ref.json",
+      "file|main": "tokens/ref.json",
       "screen": {
         "_category": "media"
       },
@@ -21,34 +21,47 @@
   },
   "sys": {
     "value": {
-      "file|sys": "tokens/sys.json"
+      "file|main": "tokens/sys.json"
     },
     "_type": "var",
     "_category": "root"
   },
+  "mixin": {
+    "value": {
+      "file|main": "tokens/mixin.json"
+    },
+    "_type": "mixin",
+    "_category": "mixin"
+  },
   "dark": {
     "value": {
-      "file|dark": "tokens/dark.json"
+      "file|main": "tokens/dark.json"
     },
+    "_type": "theme",
     "_category": "theme"
   },
   "elevation": {
     "value": {
-      "file|elevation": "tokens/elevation.json"
+      "file|main": "tokens/elevation.json"
     },
     "_category": "class"
   },
   "font": {
     "value": {
-      "file|font": "tokens/font.json"
+      "file|main": "tokens/font.json"
     },
     "_category": "class"
   },
   "rounded": {
     "value": {
-      "file|rounded": "tokens/rounded.json"
+      "file|main": "tokens/rounded.json"
     },
     "_category": "class"
   },
-  "file|components": "tokens/components"
+  "file|components": "tokens/components",
+  "test": {
+    "button": {
+      "_category": "components"
+    }
+  }
 }
