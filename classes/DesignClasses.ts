@@ -1,31 +1,20 @@
-import { computed, ComputedRef, ref, Ref } from 'vue'
-import { executeFunction, forEach } from '../functions/data'
+import { computed, ComputedRef } from 'vue'
+import { forEach } from '../functions/data'
 import { getRef } from '../functions/ref'
 
-import {
-  DesignProperties,
-  PropertiesItemType, PropertiesListType,
-  PropertiesStateType
-} from './DesignProperties'
-
-import {
-  AssociativeType,
-  CallbackOrAnyType
-} from '../constructors/types'
-import { RefOrNormalType } from '../constructors/typesRef'
 import { CacheLive } from './CacheLive'
 
-export type ClassesItemType = AssociativeType<boolean>
+import { DesignProperties, PropertiesMixinType } from './DesignProperties'
 
-export type ClassesSubClassesType = Record<string, string>
-export type ClassesSubClassesListType<T> = Record<keyof T, ClassesItemType>
+import { RefOrNormalType } from '../constructors/typesRef'
 
-export type ClassesExtraType = CallbackOrAnyType<RefOrNormalType<boolean>>
-export type ClassesExtraItemType = AssociativeType<ClassesExtraType>
-export type ClassesExtraRefType = RefOrNormalType<ClassesExtraItemType>
-export type ClassesExtraListType = AssociativeType<ClassesExtraRefType>
+export type ClassesSubType = Record<string, string>
+export type ClassesSubListType<S extends ClassesSubType> = Record<keyof S, string>
 
-export type ClassesListType<T> = { main: ClassesItemType } & ClassesSubClassesListType<T>
+export type ClassesExtraInputType = RefOrNormalType<boolean>
+export type ClassesExtraType = Record<string, ClassesExtraInputType>
+
+export type ClassesListType<S extends ClassesSubType> = { main: string[] } & ClassesSubListType<S>
 
 const KEY_CLASS_CUSTOM = 'custom'
 
@@ -34,53 +23,52 @@ const KEY_CLASS_CUSTOM = 'custom'
  *
  * Класс для работы с классами в компоненте
  */
-export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesType> {
-  /**
-   * List of subclasses
-   *
-   * Список подклассов
-   * @protected
-   */
-  protected readonly subClasses = ref<C>()
-
-  /**
-   * List of additional classes
-   *
-   * Список дополнительных классов
-   * @protected
-   */
-  protected readonly extra = ref<ClassesExtraListType>({})
+export class DesignClasses<S extends ClassesSubType = ClassesSubType> {
+  private readonly subclasses: ClassesSubListType<S>
 
   /**
    * Constructor
    * @param name class name / название класса
-   * @param properties list of available properties / список доступных свойств
    * @param props properties / свойства
+   * @param properties list of available properties / список доступных свойств
+   * @param subclasses list of subclasses / Список подклассов
+   * @param extra TODO
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
-    protected readonly name: Ref<string>,
-    protected readonly properties: DesignProperties,
-    protected readonly props: AssociativeType
+    private readonly name: string,
+    private readonly props: Record<string, any>,
+    private readonly properties: DesignProperties,
+    subclasses?: S,
+    private readonly extra?: ClassesExtraType
   ) {
+    this.subclasses = this.initSubclasses(name, subclasses)
   }
+
+  /**
+   * An object with a full list of classes for work
+   *
+   * Объект с полным списком классов для работы
+   */
+  classes = computed<ClassesListType<S>>(
+    () => {
+      return {
+        main: [
+          ...this.main.value,
+          ...this.getClassesProperties()
+        ],
+        ...this.subclasses
+      }
+    }
+  )
 
   /**
    * Returns a list of all active classes
    *
    * Возвращает список всех активных классов
    */
-  get (): ClassesListType<C> {
+  get (): ClassesListType<S> {
     return this.classes.value
-  }
-
-  /**
-   * Returns a list of all active classes
-   *
-   * Возвращает список всех активных классов
-   */
-  getItem (): ComputedRef<ClassesListType<C>> {
-    return this.classes
   }
 
   /**
@@ -89,7 +77,7 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * Возвращает базовое название класса
    */
   getName (): string {
-    return this.name.value || 'design-component'
+    return this.name
   }
 
   /**
@@ -98,24 +86,8 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * Возвращает название класса для статуса
    * @param names class name / название класса
    */
-  getNameByState (names: string[]) {
-    return this.jsonState([this.getName(), ...names])
-  }
-
-  /**
-   * Returns the names of classes and their values by the list
-   *
-   * Возвращает название классов и их значения по списку
-   * @param values list of classes and their names / список классов и их названия
-   */
-  getNameByStateByList<V = Ref<boolean>> (values: Record<string, V>): Record<string, V> {
-    const data: Record<string, V> = {}
-
-    forEach(values, (item, index) => {
-      data[this.getNameByState([index.toString()])] = item
-    })
-
-    return data
+  getNameByState (names: string[]): string {
+    return this.jsonState([this.name, ...names])
   }
 
   /**
@@ -125,95 +97,60 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * @param names class name / название класса
    */
   getNameBySubclass (names: string[]) {
-    return this.jsonSubclass([this.getName(), ...names])
+    return this.jsonSubclass([this.name, ...names])
   }
 
   /**
-   * Modifying the list of subclasses
+   * Returns the names of classes and their values by the list
    *
-   * Изменение списка подклассов
-   * @param classes list of subclass values / список значений подкласса
+   * Возвращает название классов и их значения по списку
+   * @param values list of classes and their names / список классов и их названия
    */
-  setSubClasses (classes: C): this {
-    this.subClasses.value = classes
-    return this
+  getListByState (values: Record<string, RefOrNormalType<boolean>>): ComputedRef<string[]> {
+    return computed<string[]>(
+      () => forEach(values, (item, index) => {
+        if (getRef(item)) {
+          return this.getNameByState([index.toString()])
+        }
+
+        return undefined
+      }, true) as string[]
+    )
   }
 
   /**
-   * Adding additional classes
+   * Concatenates class names into a string for state classes
    *
-   * Добавление дополнительных классов
-   * @param data list of additional classes / список дополнительных классов
+   * Соединяем названия классов в строку для классов состояния
+   * @param classes array to class name / массив в название класса
    */
-  setExtra (data: ClassesExtraListType): this {
-    this.extra.value = data
-    return this
+  jsonState (classes: string[]): string {
+    return classes.join('--')
   }
 
   /**
-   * Adding additional classes for the base class
-   * Добавление дополнительных классов для базового класса
-   * @param data list of additional classes / список дополнительных классов
-   */
-  setExtraMain (data: ClassesExtraRefType): this {
-    this.extra.value.main = data
-    return this
-  }
-
-  /**
-   * List of classes for data display control
+   * Concatenates class names into a string for additional classes
    *
-   * Список классов для управления отображением данных
+   * Соединяем названия классов в строку для дополнительных классов
+   * @param classes array to class name / массив в название класса
    */
-  setExtraState<V = Ref<boolean>> (values: Record<string, V>): this {
-    this.setExtraMain(this.getNameByStateByList<V>(values) as ClassesExtraRefType)
-    return this
+  jsonSubclass (classes: string[]): string {
+    return classes.join('__')
   }
-
-  /**
-   * An object with a full list of classes for work
-   *
-   * Объект с полным списком классов для работы
-   * @protected
-   */
-  protected classes = computed<ClassesListType<C>>(
-    () => {
-      return {
-        main: {
-          ...this.classesMain.value,
-          ...this.getClassesProperties()
-        },
-        ...this.classesSubClasses.value
-      }
-    }
-  )
 
   /**
    * An object containing all the classes for working with basic data types
    *
    * Объект, содержащий все классы для работы с базовыми типами данных
-   * @protected
+   * @private
    */
-  protected classesMain = computed<ClassesItemType>(
-    () => {
-      return {
-        [this.getName()]: true,
-        ...this.getExtraByName('main')
-      }
-    }
-  )
+  private main = computed<string[]>(() => {
+    const classes = [this.name]
 
-  protected classesSubClasses = computed<ClassesSubClassesListType<C>>(() => {
-    const classBasic = this.getName()
-    const classes: ClassesSubClassesListType<C> = {} as ClassesSubClassesListType<C>
-
-    if (this.subClasses.value) {
-      forEach(this.subClasses.value, (name, index) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        classes[index] = {
-          [this.jsonSubclass([classBasic, name])]: true,
-          ...this.getExtraByName('name')
+    if (this.extra) {
+      forEach<ClassesExtraInputType, string, void>(this.extra, (item, name) => {
+        if (getRef(item)) {
+          classes.push(name)
         }
       })
     }
@@ -222,23 +159,57 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
   })
 
   /**
-   * Returns additional parameters by their name
-   *
-   * Возвращает дополнительные параметры по их имени
-   * @param name element name / имя элемента
-   * @protected
+   * TODO
+   * @param name
+   * @param subclasses
+   * @private
    */
-  protected getExtraByName (name: string): AssociativeType<boolean> {
-    const extra: AssociativeType<boolean> = {}
+  private initSubclasses (name: string, subclasses?: S): ClassesSubListType<S> {
+    if (subclasses) {
+      const list: ClassesSubListType<S> = {} as S
 
-    forEach(
-      getRef(this.extra.value?.[name]),
-      (item, index) => {
-        extra[index] = getRef(executeFunction(item))
-      }
+      forEach<string, keyof S, void>(subclasses, (className, index) => {
+        list[index] = this.jsonSubclass([name, className])
+      })
+
+      return list
+    } else {
+      return {} as S
+    }
+  }
+
+  /**
+   * List of active state classes
+   *
+   * Список активных классов состояний
+   * @private
+   */
+  private getClassesProperties () {
+    return CacheLive.get(this.getPropsActive(),
+      () => forEach(
+        this.properties.get(),
+        item => [...this.getClassList(item)]
+      )
     )
+  }
 
-    return extra
+  /**
+   * Returns a string for the cache of the element state
+   *
+   * Возвращает строку для кэша состояния элемента
+   * @private
+   */
+  private getPropsActive (): string {
+    let data: string = this.name
+
+    this.properties.get()
+      .forEach(({ name }) => {
+        if (this.props?.[name]) {
+          data += `|${name}:${this.props[name]}`
+        }
+      })
+
+    return data
   }
 
   /**
@@ -247,22 +218,19 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * Формирование названия класса по его свойству
    * @param item current property / текущее свойство
    * @param className array of class names / массив с названиями классов
-   * @protected
+   * @private
    */
-  protected toClassName (
-    item: PropertiesItemType | PropertiesStateType,
-    className: string[] = [this.getName()]
-  ): ClassesItemType {
+  private getClassList (
+    item: PropertiesMixinType,
+    className: string[] = [this.name]
+  ): string[] {
     const prop = this.props?.[item.name]
     const is = this.properties.isValue(item, prop)
-    const classes: ClassesItemType = {}
+    const list: string[] = []
 
-    className.push(item.index)
+    className = [...this.getClassNameByList(item, className), item.index]
 
-    this.toClassNameByState(
-      classes,
-      item,
-      className,
+    if (
       (
         is && (
           prop === true ||
@@ -270,73 +238,24 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
         ) &&
         this.checkByCategory(item)
       ) ||
-      this.properties.isExceptions(item, prop),
-      !!prop && this.checkByCategory(item)
-    )
-
-    if (
-      is &&
-      typeof prop === 'string'
+      this.properties.isExceptions(item, prop)
     ) {
-      classes[this.jsonState([...this.getClassName(item, className), prop])] = true
+      list.push(this.jsonState(className))
+    }
+
+    if (is) {
+      if (typeof prop === 'string') {
+        list.push(this.jsonState([...className, prop]))
+      } else if (this.checkByCategory(item)) {
+        item.state?.forEach(
+          state => list.push(...this.getClassList(state, className))
+        )
+      }
     } else if (this.properties.isStyle(item, prop)) {
-      classes[this.jsonState([...this.getClassName(item, className), KEY_CLASS_CUSTOM])] = true
+      list.push(this.jsonState([...className, KEY_CLASS_CUSTOM]))
     }
 
-    return classes
-  }
-
-  /**
-   * A class for generating the class name recursively based on the state tree array
-   *
-   * Класс для генерации названия класса в глубину по массиву дерева состояния
-   * @param data list of active classes / список активных классов
-   * @param item current property / текущее свойство
-   * @param className array of class names / массив с названиями классов
-   * @param active fulfillment of the condition / выполненности условия
-   * @param next conditions for further verification / условия для дальнейшей проверки
-   * @protected
-   */
-  protected toClassNameByState (
-    data: ClassesItemType,
-    item: PropertiesItemType | PropertiesStateType,
-    className: string[],
-    active: boolean,
-    next: boolean
-  ): this {
-    const index = this.jsonState(this.getClassName(item, className))
-
-    if (active) {
-      data[index] = true
-    }
-
-    if (next) {
-      item.state?.forEach(
-        state => Object.assign(data, this.toClassName(state, [index]))
-      )
-    }
-
-    return this
-  }
-
-  /**
-   * List of active state classes
-   *
-   * Список активных классов состояний
-   * @protected
-   */
-  protected getClassesProperties () {
-    const properties = this.properties.get()
-
-    return CacheLive.get(this.getPropsActive(properties), () => {
-      const data: ClassesItemType = {}
-
-      properties?.forEach(
-        item => Object.assign(data, this.toClassName(item))
-      )
-
-      return data
-    })
+    return list
   }
 
   /**
@@ -347,36 +266,15 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * @param className array of class names / массив с названиями классов
    * @private
    */
-  private getClassName (
-    item: PropertiesItemType | PropertiesStateType,
+  private getClassNameByList (
+    item: PropertiesMixinType,
     className: string[]
   ): string[] {
-    if (
-      'className' in item && item.className
-    ) {
+    if ('className' in item && item?.className) {
       return [item.className]
     } else {
       return className
     }
-  }
-
-  /**
-   * Returns a string for the cache of the element state
-   *
-   * Возвращает строку для кэша состояния элемента
-   * @param properties list of available properties / список доступных свойств
-   * @private
-   */
-  private getPropsActive (properties: PropertiesListType): string {
-    const data: string[] = [this.getName()]
-
-    properties.forEach(({ name }) => {
-      if (this.props?.[name]) {
-        data.push(`${name}:${this.props[name]}`)
-      }
-    })
-
-    return data.join('|')
   }
 
   /**
@@ -386,49 +284,22 @@ export class DesignClasses<C extends ClassesSubClassesType = ClassesSubClassesTy
    * @param item current property / текущее свойство
    * @private
    */
-  private checkByCategory (item: PropertiesItemType | PropertiesStateType) {
+  private checkByCategory (item: PropertiesMixinType) {
     if (this.properties.isDefault(item)) {
       const category = this.properties.getCategoryName(item)
 
       if (category) {
-        let active = true
-
-        this.properties.getByCategory(category)
-          ?.forEach(property => {
-            if (
-              item.name !== property.name &&
-              this.props?.[property.name]
-            ) {
-              active = false
-            }
-          })
-
-        return active
+        for (const property of this.properties.getByCategory(category)) {
+          if (
+            item.name !== property.name &&
+            this.props?.[property.name]
+          ) {
+            return false
+          }
+        }
       }
     }
 
     return true
-  }
-
-  /**
-   * Concatenates class names into a string for state classes
-   *
-   * Соединяем названия классов в строку для классов состояния
-   * @param classes array to class name / массив в название класса
-   * @private
-   */
-  private jsonState (classes: string[]): string {
-    return classes.join('--')
-  }
-
-  /**
-   * Concatenates class names into a string for additional classes
-   *
-   * Соединяем названия классов в строку для дополнительных классов
-   * @param classes array to class name / массив в название класса
-   * @private
-   */
-  private jsonSubclass (classes: string[]): string {
-    return classes.join('__')
   }
 }

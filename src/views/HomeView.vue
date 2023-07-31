@@ -1,9 +1,7 @@
 <template>
   <div>
     <div>
-      <div>
-        <button @click="onClick">test</button>
-      </div>
+      <div></div>
       <div>
         <md3-button label="Label"/>
       </div>

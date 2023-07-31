@@ -1,49 +1,28 @@
 <script setup lang="ts">
-import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
-import { /* ButtonEmitsType,  */ButtonSlotsType } from '../../constructors/Button/types'
-
-import { defaults, PropsType, subClasses } from './props'
-
-defineOptions({
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :name
-  name: 'Md3Button'
-  // :name
-})
+import { Design } from '../../classes/Design'
+import { defaults, PropsType } from '../../--md3/Button/props'
+import properties from '../../cache/md3-button/property.json'
 
 const props = withDefaults(defineProps<PropsType>(), defaults)
-// const emit = defineEmits<ButtonEmitsType>()
-
-defineSlots<ButtonSlotsType>()
-
-// Class for managing component, mainly this is for automatic generation of classes and styles
-// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-const design = new ButtonDesign<typeof subClasses>(props/* , emit */)
-
-// Calls all available variables in this component
-// Вызывает все доступные переменные в этом компоненте
-// const {
-//   classes,
-//   styles
-// } = design.setup({})
-
-// Property for render
-// Свойство для render
-const render = design.render()
+const design = new Design(
+  'md3-button',
+  props,
+  Object.values(properties.properties),
+  {
+    label: 'label',
+    icon: 'icon',
+    trailing: 'trailing'
+  }
+)
+const classes = design.getClass()
 </script>
 
 <template>
-  <render>
-    <slot/>
-  </render>
+  <div :class="classes">test</div>
 </template>
 
 <style lang="scss">
-@import "../../constructors/Button/style";
+@import "../../styles/properties";
 
-// Mixin for generating all classes, states and properties of component
-// Миксин для генерации всех классов, состояний и свойств компонента
-@include initButtonDesign {
-}
+@include initDesign;
 </style>

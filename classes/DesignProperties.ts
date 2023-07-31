@@ -1,28 +1,29 @@
-import { Ref, ref } from 'vue'
 import { isFilled } from '../functions/data'
 
-import {
-  AnyOrUndefinedType,
-  BooleanOrStringType
-} from '../constructors/types'
+import { AnyOrUndefinedType, BooleanOrStringType } from '../constructors/types'
 
-export interface PropertiesStateType {
-  index: string,
-  name: string,
-  value: BooleanOrStringType[]
+export type PropertiesStateType = {
+  index: string
+  name: string
+  value: (string | boolean)[]
   state: PropertiesStateType[]
 }
 
-export interface PropertiesItemType extends PropertiesStateType {
-  type: string,
-  className?: string,
-  valueAll: BooleanOrStringType[]
-  style?: boolean,
-  default?: boolean,
+export type PropertiesMapType = {
+  index: string
+  name: string
+  type: 'property' | 'subclass' | 'link-class'
+  className?: string
+  value: (string | boolean)[]
+  valueAll: (string | boolean)[]
+  state: PropertiesStateType[]
+  style?: boolean
+  default?: boolean
   category?: string
 }
 
-export type PropertiesListType = PropertiesItemType[]
+export type PropertiesMixinType = PropertiesStateType | PropertiesMapType
+export type PropertiesMapListType = PropertiesMapType[]
 
 const EXCEPTIONS = [
   'focus',
@@ -36,24 +37,23 @@ const EXCEPTIONS = [
  * Класс для работы с базовыми свойствами из токенов
  */
 export class DesignProperties {
-  protected readonly item = ref<PropertiesListType>([])
+  /**
+   * Constructor
+   * @param map list of available properties / список доступных свойств
+   */
+  // eslint-disable-next-line no-useless-constructor
+  constructor (
+    protected readonly map: PropertiesMapListType
+  ) {
+  }
 
   /**
    * Returns all properties
    *
    * Возвращает все свойства
    */
-  get (): PropertiesListType {
-    return this.item.value
-  }
-
-  /**
-   * Returns a Ref object with all properties
-   *
-   * Возвращает объект Ref со всеми свойствами
-   */
-  getItem (): Ref<PropertiesListType> {
-    return this.item
+  get (): PropertiesMapListType {
+    return this.map
   }
 
   /**
@@ -62,18 +62,8 @@ export class DesignProperties {
    * Получаем свойство по его имени
    * @param name property names / названия свойств
    */
-  getByName (name: string): AnyOrUndefinedType<PropertiesItemType> {
-    return this.item.value.find(item => item.name === name)
-  }
-
-  /**
-   * Returns a list of properties by category
-   *
-   * Возвращает список свойств по категории
-   * @param category category name / название категории
-   */
-  getByCategory (category: string): AnyOrUndefinedType<PropertiesListType> {
-    return this.item.value.filter(item => item?.category === category)
+  getByName (name: string): AnyOrUndefinedType<PropertiesMapType> {
+    return this.map.find(item => item.name === name)
   }
 
   /**
@@ -83,66 +73,31 @@ export class DesignProperties {
    * @param nameItem property names or the property instance itself / названия свойств
    * или сам экземпляр свойства
    */
-  getOrItem (
-    nameItem: string | PropertiesItemType | PropertiesStateType
-  ): AnyOrUndefinedType<PropertiesItemType | PropertiesStateType> {
-    return typeof nameItem === 'string'
-      ? this.getByName(nameItem)
-      : nameItem
+  getOrItem (nameItem: string | PropertiesMixinType): AnyOrUndefinedType<PropertiesMixinType> {
+    return typeof nameItem === 'string' ? this.getByName(nameItem) : nameItem
   }
 
+  isBool (name: string): boolean
+  isBool (item: PropertiesMixinType): boolean
   /**
-   * Returns the category name of the property
+   * Checks if the property value is true
    *
-   * Возвращает название категории у свойства
+   * Проверяет, если у свойства значение true
    * @param nameItem property names or the property instance itself / названия свойств
    * или сам экземпляр свойства
    */
-  getCategoryName (
-    nameItem: string | PropertiesItemType | PropertiesStateType
-  ): string | undefined {
-    const item = this.getOrItem(nameItem)
-
-    return item && 'category' in item ? item.category : undefined
-  }
-
-  /**
-   * Property modification
-   *
-   * Изменение свойства
-   * @param properties list of properties / список свойств
-   */
-  set (properties: PropertiesListType) {
-    if (Array.isArray(properties)) {
-      this.item.value = properties
-    }
-
-    return this
-  }
-
-  isDefault (name: string): boolean
-  isDefault (item: PropertiesItemType | PropertiesStateType): boolean
-  /**
-   * Checks if the property has a default value
-   *
-   * Проверяет, есть ли у свойства значение по умолчанию
-   * @param nameItem property names or the property instance itself / названия свойств
-   * или сам экземпляр свойства
-   */
-  isDefault (
-    nameItem: string | PropertiesItemType | PropertiesStateType
-  ) {
+  isBool (nameItem: string | PropertiesMixinType): boolean {
     const item = this.getOrItem(nameItem)
 
     return !!(
       item &&
-      'default' in item &&
-      item.default
+      'valueAll' in item &&
+      item?.valueAll?.indexOf(true) !== -1
     )
   }
 
   isValue (name: string, value: BooleanOrStringType): boolean
-  isValue (item: PropertiesItemType | PropertiesStateType, value: BooleanOrStringType): boolean
+  isValue (item: PropertiesMixinType, value: BooleanOrStringType): boolean
   /**
    * Checks if the value is a standard property
    *
@@ -152,7 +107,7 @@ export class DesignProperties {
    * @param value property values / значения свойства
    */
   isValue (
-    nameItem: string | PropertiesItemType | PropertiesStateType,
+    nameItem: string | PropertiesMixinType,
     value: BooleanOrStringType
   ): boolean {
     const item = this.getOrItem(nameItem)
@@ -165,7 +120,7 @@ export class DesignProperties {
   }
 
   isStyle (name: string, value: BooleanOrStringType): boolean
-  isStyle (item: PropertiesItemType | PropertiesStateType, value: BooleanOrStringType): boolean
+  isStyle (item: PropertiesMixinType, value: BooleanOrStringType): boolean
   /**
    * Checks if the property is available for styling
    *
@@ -175,7 +130,7 @@ export class DesignProperties {
    * @param value property values / значения свойства
    */
   isStyle (
-    nameItem: string | PropertiesItemType | PropertiesStateType,
+    nameItem: string | PropertiesMixinType,
     value: BooleanOrStringType
   ): boolean {
     const item = this.getOrItem(nameItem)
@@ -189,27 +144,27 @@ export class DesignProperties {
     )
   }
 
-  isBool (name: string): boolean
-  isBool (item: PropertiesItemType | PropertiesStateType): boolean
+  isDefault (name: string): boolean
+  isDefault (item: PropertiesMixinType): boolean
   /**
-   * Checks if the property value is true
+   * Checks if the property has a default value
    *
-   * Проверяет, если у свойства значение true
+   * Проверяет, есть ли у свойства значение по умолчанию
    * @param nameItem property names or the property instance itself / названия свойств
    * или сам экземпляр свойства
    */
-  isBool (
-    nameItem: string | PropertiesItemType | PropertiesStateType
-  ): boolean {
+  isDefault (nameItem: string | PropertiesMixinType) {
     const item = this.getOrItem(nameItem)
 
     return !!(
       item &&
-      'valueAll' in item &&
-      item?.valueAll?.indexOf(true) !== -1
+      'default' in item &&
+      item.default
     )
   }
 
+  isExceptions (name: string, value: BooleanOrStringType): boolean
+  isExceptions (item: PropertiesMixinType, value: BooleanOrStringType): boolean
   /**
    * This checks if an exception belongs to a rule
    *
@@ -219,7 +174,7 @@ export class DesignProperties {
    * @param value property values / значения свойства
    */
   isExceptions (
-    nameItem: string | PropertiesItemType | PropertiesStateType,
+    nameItem: string | PropertiesMixinType,
     value: BooleanOrStringType
   ): boolean {
     const item = this.getOrItem(nameItem)
@@ -229,5 +184,30 @@ export class DesignProperties {
       value === true &&
       EXCEPTIONS.indexOf(item?.name) !== -1
     )
+  }
+
+  getCategoryName (name: string): string | undefined
+  getCategoryName (item: PropertiesMixinType): string | undefined
+  /**
+   * Returns the category name of the property
+   *
+   * Возвращает название категории у свойства
+   * @param nameItem property names or the property instance itself / названия свойств
+   * или сам экземпляр свойства
+   */
+  getCategoryName (nameItem: string | PropertiesMixinType): string | undefined {
+    const item = this.getOrItem(nameItem)
+
+    return (item && 'category' in item) ? item.category : undefined
+  }
+
+  /**
+   * Returns a list of properties by category
+   *
+   * Возвращает список свойств по категории
+   * @param category category name / название категории
+   */
+  getByCategory (category: string): PropertiesMapListType {
+    return this.map.filter(item => item?.category === category)
   }
 }
