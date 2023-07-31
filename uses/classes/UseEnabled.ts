@@ -1,11 +1,11 @@
 import { computed } from 'vue'
 
-import { DesignPropsValueType } from '../classes/Design'
+import { DesignPropsValueType } from '../../classes/Design'
 
-import { PropsProgressType } from '../constructors/Progress/props'
+// import { PropsProgressType } from '../constructors/Progress/props'
 
 export type UseEnabledPropsType = DesignPropsValueType<{
-  progress?: boolean | PropsProgressType
+  progress?: boolean // | PropsProgressType
   readonly?: boolean
   disabled?: boolean
 }>
@@ -32,7 +32,7 @@ export class UseEnabled {
       !this.props?.progress
   )
 
-  readonly disabled = computed<boolean | undefined>(() => this.isDisabled() || undefined)
+  readonly disabledBind = computed<boolean | undefined>(() => this.isDisabled() || undefined)
 
   /**
    * Checking for the status of the element’s activity

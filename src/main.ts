@@ -13,4 +13,4 @@ const vueItem = createApp(App)
   .use(store)
   .use(router)
 
-vueItem.mount('#app-test')
+vueItem.mount('#app')

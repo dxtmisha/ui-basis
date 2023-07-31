@@ -68,6 +68,10 @@ export type DesignSetupContextEmitType<
   S extends DesignPropsType = DesignPropsType
 > = DesignSetupContextType<O, S> | DesignSetupContextType<O, S>['emit']
 
+export type DesignSetupContextSlotsType<
+  S extends DesignPropsType = DesignPropsType
+> = DesignSetupContextType<DesignEmitsType, S>['slots']
+
 export type DesignSetupValueType<D = AssociativeType> = D | (() => D)
 export type DesignSetupType<
   C,

@@ -1,0 +1,18 @@
+{
+  "padding": {
+    "_type": "var"
+  },
+  "#icon": {},
+  "#trailing": {},
+  "#label": {},
+  "disabled": {
+    "_type": "state"
+  },
+  "adaptive": {
+    "~icon": {
+      "& .??__label": {
+        "display": "none"
+      }
+    }
+  }
+}

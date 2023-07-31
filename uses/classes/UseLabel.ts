@@ -1,18 +1,29 @@
 import { computed, VNode } from 'vue'
 
-import { DesignEmitsType, DesignSetupContextType } from '../../classes/Design'
+import {
+  DesignPropsType,
+  DesignPropsValueType,
+  DesignSetupContextSlotsType
+} from '../../classes/Design'
 import { ClassesItemType } from '../../classes/DesignClasses'
 import { DesignComponents } from '../../classes/DesignComponents'
 
-import { ButtonPropsValueType, ButtonSlotsType } from './types'
+export type LabelPropsValueType = {
+  label?: string
+}
+
+export type LabelSlotsType = {
+  default? (): any
+}
 
 /**
  * Class for working with text on the button
  *
  * Класс для работы с текстом на кнопке
  */
-export class ButtonLabel<
-  S extends ButtonSlotsType = ButtonSlotsType
+export class UseLabel<
+  P extends LabelPropsValueType = LabelPropsValueType,
+  S extends LabelSlotsType = LabelSlotsType
 > {
   /**
    * Constructor
@@ -23,8 +34,8 @@ export class ButtonLabel<
   // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly components: DesignComponents,
-    protected readonly props: ButtonPropsValueType,
-    protected readonly slots: DesignSetupContextType<DesignEmitsType, S>['slots']
+    protected readonly props: P,
+    protected readonly slots: DesignSetupContextSlotsType<S>
   ) {
   }
 
