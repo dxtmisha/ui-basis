@@ -23,7 +23,7 @@ const KEY_CLASS_CUSTOM = 'custom'
  *
  * Класс для работы с классами в компоненте
  */
-export class DesignClasses<S extends ClassesSubType = ClassesSubType> {
+export class DesignClasses<S extends ClassesSubType> {
   private readonly subclasses: ClassesSubListType<S>
 
   /**

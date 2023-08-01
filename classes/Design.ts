@@ -1,46 +1,69 @@
-import { isFilled } from '../functions/data'
-
-import { ClassesExtraType, ClassesSubType, DesignClasses } from './DesignClasses'
 import { DesignProperties, PropertiesMapListType } from './DesignProperties'
+import { ClassesExtraType, ClassesSubType, DesignClasses } from './DesignClasses'
+import { DesignStyles, StylesExtraType } from './DesignStyles'
+
+export interface DesignOptionsInterface<S extends ClassesSubType> {
+  subclasses?: S
+  extra?: ClassesExtraType
+  styles?: StylesExtraType
+}
 
 /**
- * TODO
+ * Class for managing data from tokens
+ *
+ * Класс для управления данными из токенов
  */
-export class Design<S extends ClassesSubType = ClassesSubType> {
-  private readonly properties?: DesignProperties
-  private readonly classes?: DesignClasses<S>
+export class Design<S extends ClassesSubType> {
+  private readonly properties: DesignProperties
+  private readonly classes: DesignClasses<S>
+  private readonly styles: DesignStyles
 
   /**
    * Constructor
    * @param name class name / название класса
    * @param props properties / свойства
    * @param map list of available properties / список доступных свойств
-   * @param subclasses list of subclasses / Список подклассов
-   * @param extra TODO
+   * @param options list of additional parameters / список дополнительных параметров
    */
   constructor (
     name: string,
     props: Record<string, any>,
-    map?: PropertiesMapListType,
-    subclasses?: S,
-    extra?: ClassesExtraType
+    map: PropertiesMapListType,
+    options?: DesignOptionsInterface<S>
   ) {
-    if (map && isFilled(map)) {
-      this.properties = new DesignProperties(map)
-      this.classes = new DesignClasses(
-        name,
-        props,
-        this.properties,
-        subclasses,
-        extra
-      )
-    }
+    this.properties = new DesignProperties(map)
+
+    this.classes = new DesignClasses(
+      name,
+      props,
+      this.properties,
+      options?.subclasses,
+      options?.extra
+    )
+
+    this.styles = new DesignStyles(
+      name,
+      props,
+      this.properties,
+      options?.styles
+    )
   }
 
   /**
-   * TODO
+   * Returns data for classes
+   *
+   * Возвращает данные для классов
    */
-  getClass () {
-    return this.classes?.classes
+  getClasses () {
+    return this.classes.classes
+  }
+
+  /**
+   * Returns data for styles
+   *
+   * Возвращает данные для стилей
+   */
+  getStyles () {
+    return this.styles.styles
   }
 }
