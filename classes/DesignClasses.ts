@@ -32,7 +32,7 @@ export class DesignClasses<S extends ClassesSubType = ClassesSubType> {
    * @param props properties / свойства
    * @param properties list of available properties / список доступных свойств
    * @param subclasses list of subclasses / Список подклассов
-   * @param extra TODO
+   * @param extra additional classes / дополнительные классы
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
@@ -61,6 +61,26 @@ export class DesignClasses<S extends ClassesSubType = ClassesSubType> {
       }
     }
   )
+
+  /**
+   * An object containing all the classes for working with basic data types
+   *
+   * Объект, содержащий все классы для работы с базовыми типами данных
+   * @private
+   */
+  private main = computed<string[]>(() => {
+    const classes = [this.name]
+
+    if (this.extra) {
+      forEach<ClassesExtraInputType, string, void>(this.extra, (item, name) => {
+        if (getRef(item)) {
+          classes.push(name)
+        }
+      })
+    }
+
+    return classes
+  })
 
   /**
    * Returns a list of all active classes
@@ -139,29 +159,11 @@ export class DesignClasses<S extends ClassesSubType = ClassesSubType> {
   }
 
   /**
-   * An object containing all the classes for working with basic data types
+   * Initialization of subclasses and their return
    *
-   * Объект, содержащий все классы для работы с базовыми типами данных
-   * @private
-   */
-  private main = computed<string[]>(() => {
-    const classes = [this.name]
-
-    if (this.extra) {
-      forEach<ClassesExtraInputType, string, void>(this.extra, (item, name) => {
-        if (getRef(item)) {
-          classes.push(name)
-        }
-      })
-    }
-
-    return classes
-  })
-
-  /**
-   * TODO
-   * @param name
-   * @param subclasses
+   * Инициализация подклассов и возвращение их
+   * @param name base class name / базовое название класса
+   * @param subclasses list of subclasses / список подклассов
    * @private
    */
   private initSubclasses (name: string, subclasses?: S): ClassesSubListType<S> {
