@@ -17,6 +17,7 @@ import { PropsConstructorType, subclassesConstructor } from './props'
  */
 export class ConstructorDesign<
   SETUP extends ConstructorSetupInterface,
+  EXPOSE extends ConstructorExposeType,
   P extends PropsConstructorType,
   S extends ClassesSubType = typeof subclassesConstructor
 > extends DesignConstructor<
@@ -24,7 +25,7 @@ export class ConstructorDesign<
   SETUP,
   ConstructorSlotsType,
   ConstructorEmitsType,
-  ConstructorExposeType,
+  EXPOSE,
   P,
   S,
   ConstructorComponentsInterface
@@ -62,5 +63,14 @@ export class ConstructorDesign<
       ref: this.element,
       class: this.design?.getClasses().value.main
     }/* , children */)
+  }
+
+  /**
+   * List of available external variables
+   *
+   * Список доступных переменных извне
+   */
+  expose (): EXPOSE {
+    return {} as EXPOSE
   }
 }

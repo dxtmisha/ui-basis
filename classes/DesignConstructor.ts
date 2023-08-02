@@ -180,15 +180,6 @@ export class DesignConstructor<
   }
 
   /**
-   * List of available external variables
-   *
-   * Список доступных переменных извне
-   */
-  getExpose (): EXPOSE {
-    return {} as EXPOSE
-  }
-
-  /**
    * Execution method to replace setup in Vue
    *
    * Метод выполнения, для замены setup в Vue
@@ -209,6 +200,15 @@ export class DesignConstructor<
    */
   render (): () => VNode {
     return () => this.initRender()
+  }
+
+  /**
+   * List of available external variables
+   *
+   * Список доступных переменных извне
+   */
+  expose (): EXPOSE {
+    return {} as EXPOSE
   }
 
   /**
