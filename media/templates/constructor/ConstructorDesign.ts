@@ -1,73 +1,52 @@
 import { h, VNode } from 'vue'
 
-import {
-  Design,
-  DesignSetupContextEmitType
-} from '../../../classes/Design'
-import { ClassesSubClassesType } from '../../../classes/DesignClasses'
-
-import { subClassesConstructor } from './props'
+import { DesignConstructor } from '../../../classes/DesignConstructor'
+import { ClassesSubType } from '../../../classes/DesignClasses'
 
 import {
   ConstructorComponentsInterface,
   ConstructorEmitsType,
-  ConstructorInitInterface,
-  ConstructorPropsValueType,
+  ConstructorExposeType,
+  ConstructorSetupInterface,
   ConstructorSlotsType
 } from './types'
-
-// [!] System label, cannot be deleted
-// [!] Системная метка, нельзя удалять
-// :components-import
-// :components-import
+import { PropsConstructorType, subclassesConstructor } from './props'
 
 /**
  * ConstructorDesign
  */
 export class ConstructorDesign<
-  C extends ClassesSubClassesType = typeof subClassesConstructor,
-  P extends ConstructorPropsValueType = ConstructorPropsValueType
-> extends Design<
-  C,
+  SETUP extends ConstructorSetupInterface,
+  P extends PropsConstructorType,
+  S extends ClassesSubType = typeof subclassesConstructor
+> extends DesignConstructor<
   HTMLElement,
-  P,
-  ConstructorInitInterface,
-  ConstructorComponentsInterface,
+  SETUP,
+  ConstructorSlotsType,
   ConstructorEmitsType,
-  ConstructorSlotsType
+  ConstructorExposeType,
+  P,
+  S,
+  ConstructorComponentsInterface
 > {
-  // [!] System label, cannot be deleted
-  // [!] Системная метка, нельзя удалять
-  // :components-variable
-  // :components-variable
-
   /**
-   * Constructor
-   * @param props properties / свойства
-   * @param contextEmit additional property / дополнительное свойство
+   * Initialization of basic parameters
+   *
+   * Инициализация базовых параметров
+   * @protected
    */
-  constructor (
-    protected readonly props: P,
-    contextEmit?: DesignSetupContextEmitType<ConstructorEmitsType, ConstructorSlotsType>
-  ) {
-    super(props, contextEmit)
-
-    // [!] System label, cannot be deleted
-    // [!] Системная метка, нельзя удалять
-    // :components-init
-    // :components-init
+  protected init () {
+    // Initialization
   }
 
   /**
-   * Method for generating additional properties
+   * Initialization of all the necessary properties for work
    *
-   * Метод для генерации дополнительных свойств
+   * Инициализация всех необходимых свойств для работы
    * @protected
    */
-  protected init (): ConstructorInitInterface {
-    return {
-      property: 'constructor'
-    }
+  protected initSetup (): SETUP {
+    return {} as SETUP
   }
 
   /**
@@ -77,12 +56,11 @@ export class ConstructorDesign<
    * @protected
    */
   protected initRender (): VNode {
-    const setup = this.getSetup()
     // const children: any[] = []
 
     return h('div', {
       ref: this.element,
-      class: setup.classes.value.main
+      class: this.design?.getClasses().value.main
     }/* , children */)
   }
 }
