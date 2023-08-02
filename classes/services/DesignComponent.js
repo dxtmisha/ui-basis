@@ -1,5 +1,9 @@
 const { To } = require('../To')
 
+const sass = require('sass')
+const { pathToFileURL } = require('url')
+
+const Properties = require('./properties/Properties')
 const DesignPrototype = require('./DesignPrototype')
 const DesignConstructor = require('./DesignConstructor')
 
@@ -7,6 +11,8 @@ const FILE_INDEX = 'index.vue'
 const FILE_PROPS = 'props.ts'
 const FILE_MAP = 'map.json'
 const FILE_PROPERTIES = 'properties.json'
+const FILE_SCSS = 'style.scss'
+const FILE_STYLE = 'style.css'
 
 /**
  * Class for creating a component or updating data
@@ -28,6 +34,9 @@ module.exports = class DesignComponent extends DesignPrototype {
     super(name, options)
 
     this.dir = this._initDir()
+
+    this.properties = new Properties()
+    this.properties.getBasic()
   }
 
   initMain () {
@@ -40,6 +49,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       .__initProps()
       .__initMap()
       .__initProperties()
+      .__initStyle()
   }
 
   /**
@@ -236,6 +246,35 @@ module.exports = class DesignComponent extends DesignPrototype {
 
       this._createFile(FILE_PROPERTIES, sample)
     }
+
+    return this
+  }
+
+  __initStyle () {
+    const name = this.loader.getComponent()
+    let sample = `${this.properties.getScss()}\r\n`
+
+    if (this.options.constr) {
+      sample += `@import "~constructors/${name}/style.scss";\r\n`
+      sample += `@include init${name}Design('${this.loader.getNameForStyle()}') {}\r\n`
+    } else {
+      sample += '@import "~styles/properties";\r\n'
+      sample += `@include initDesign('${this.loader.getNameForStyle()}') {}\r\n`
+    }
+
+    // this._createFile(FILE_SCSS, sample)
+    this._createFile(FILE_STYLE, sass.compileString(sample, {
+      style: 'compressed',
+      importers: [{
+        findFileUrl (url) {
+          if (!url.startsWith('~')) {
+            return null
+          } else {
+            return new URL(url.substring(1), pathToFileURL('node_modules'))
+          }
+        }
+      }]
+    }).css)
 
     return this
   }

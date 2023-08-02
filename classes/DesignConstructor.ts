@@ -77,7 +77,7 @@ export class DesignConstructor<
     protected readonly options?: ConstructorOptionsInterface<P, S, C>,
     protected readonly emits?: SetupContext<EMITS, SLOTS>['emit']
   ) {
-    this.name = To.camelCase(name)
+    this.name = To.kebabCase(name)
     this.refs = toRefs(this.props)
 
     this.attrs = useAttrs()

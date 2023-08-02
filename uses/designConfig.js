@@ -41,7 +41,7 @@ const getPropertiesScss = (config) => {
     css: {
       loaderOptions: {
         scss: {
-          additionalData: `${(new Properties(false)).getScss()}\r\n${getScss(config)}`
+          additionalData: `${(new Properties()).getScss()}\r\n${getScss(config)}`
         }
       }
     }
@@ -81,7 +81,7 @@ module.exports = function designConfig (
   let data = getConfig(config)
 
   data = replaceRecursive(data, getPropertiesScss(config))
-  data = replaceRecursive(data, getChainWebpack(config))
+  // data = replaceRecursive(data, getChainWebpack(config))
   data = replaceRecursive(data, {
     transpileDependencies: true
   })

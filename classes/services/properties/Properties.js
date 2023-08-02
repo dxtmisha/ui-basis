@@ -47,15 +47,9 @@ module.exports = class Properties {
 
   /**
    * Constructor
-   * @param {boolean} cache enabling caching / включение кэширования
-   * @param {string[]} designs list of design names / список названий дизайнов
    */
-  constructor (
-    cache = true,
-    designs = undefined
-  ) {
-    this.cache = cache
-    this.designs = ['d', ...(designs || Tool.getDesignsByEnv())]
+  constructor () {
+    this.designs = ['d', ...Tool.getDesignsByEnv()]
   }
 
   /**

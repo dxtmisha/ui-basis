@@ -57,7 +57,7 @@ const styles = design.getClasses()
 // :constructor.once @import "../../../constructors/Constructor/style";
 
 // [!] System label, cannot be deleted
-// [!] Системная метка, нельзя удалять
+// [!] Системная метка0, нельзя удалять
 // :name-style
 $componentName: 'design.component';
 // :name-style
