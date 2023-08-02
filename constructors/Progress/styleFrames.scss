@@ -1,0 +1,141 @@
+@import "../../styles/properties";
+
+@mixin mixinProgressFramesLinearVisible {
+  @keyframes #{n('??linear-visible')} {
+    0% {
+      transform: scaleY(0)
+    }
+    100% {
+      transform: scaleY(1)
+    }
+  }
+}
+
+@mixin mixinProgressFramesLinearHidden {
+  @keyframes #{n('??linear-hidden')} {
+    0% {
+      transform: scaleY(1)
+    }
+    100% {
+      transform: scaleY(0)
+    }
+  }
+}
+
+@mixin mixinProgressFramesLinearType1 {
+  @keyframes #{n('??linear-type1')} {
+    0% {
+      right: 100%
+    }
+    5% {
+      right: 60%
+    }
+    50% {
+      right: 10%
+    }
+    100% {
+      right: 5%
+    }
+  }
+}
+
+@mixin mixinProgressFramesLinearType2 {
+  @keyframes #{n('??linear-type2')} {
+    0% {
+      left: -35%;
+      right: 100%
+    }
+    60% {
+      left: 100%;
+      right: -90%
+    }
+    100% {
+      left: 100%;
+      right: -90%
+    }
+  }
+}
+
+@mixin mixinProgressFramesLinearType3 {
+  @keyframes #{n('??linear-type3')} {
+    0% {
+      left: -200%;
+      right: 100%
+    }
+    60% {
+      left: 107%;
+      right: -8%
+    }
+    100% {
+      left: 107%;
+      right: -8%
+    }
+  }
+}
+
+@mixin mixinProgressFramesCircleVisible {
+  @keyframes #{n('??circle-visible')} {
+    0% {
+      opacity: 0
+    }
+    100% {
+      opacity: 1
+    }
+  }
+}
+
+@mixin mixinProgressFramesCircleHidden {
+  @keyframes #{n('??circle-hidden')} {
+    0% {
+      opacity: 1
+    }
+    100% {
+      opacity: 0
+    }
+  }
+}
+
+@mixin mixinProgressFramesCircleType1 {
+  @keyframes #{n('??circle-type1')} {
+    0% {
+      stroke-dasharray: 1.256637061435917 125.66370614359173
+    }
+    5% {
+      stroke-dasharray: 50.265482457436692 125.66370614359173
+    }
+    50% {
+      stroke-dasharray: 113.09733552923253 125.66370614359173
+    }
+    100% {
+      stroke-dasharray: 119.38052083641211 125.66370614359173
+    }
+  }
+}
+
+@mixin mixinProgressFramesCircleType2 {
+  @keyframes #{n('??circle-type2')} {
+    0% {
+      transform: rotate(0deg)
+    }
+    100% {
+      transform: rotate(360deg)
+    }
+  }
+}
+
+@mixin mixinProgressFramesCircleType3 {
+  @keyframes #{n('??circle-type3')} {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0
+    }
+    50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35
+    }
+    100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124
+    }
+  }
+}

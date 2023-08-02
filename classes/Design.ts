@@ -55,7 +55,36 @@ export class Design<S extends ClassesSubType> {
    * Возвращает данные для классов
    */
   getClasses () {
+    return this.classes.get()
+  }
+
+  /**
+   * Returns data for classes
+   *
+   * Возвращает данные для классов
+   */
+  getClassesRef () {
     return this.classes.classes
+  }
+
+  /**
+   * Returns the class names for the status
+   *
+   * Возвращает название класса для статуса
+   * @param names class name / название класса
+   */
+  getClassesByState (names: string[]) {
+    return this.classes.getNameByState(names)
+  }
+
+  /**
+   * Returns the class names for the status
+   *
+   * Возвращает название класса для статуса
+   * @param names class name / название класса
+   */
+  getClassesBySubclass (names: string[]) {
+    return this.classes.getNameBySubclass(names)
   }
 
   /**
@@ -64,6 +93,15 @@ export class Design<S extends ClassesSubType> {
    * Возвращает данные для стилей
    */
   getStyles () {
+    return this.styles.get()
+  }
+
+  /**
+   * Returns data for styles
+   *
+   * Возвращает данные для стилей
+   */
+  getStylesRef () {
     return this.styles.styles
   }
 }

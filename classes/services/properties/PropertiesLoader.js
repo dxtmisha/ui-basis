@@ -90,7 +90,7 @@ module.exports = class PropertiesLoader {
 
   getData () {
     this.__init()
-    return this.data?.value
+    return this.data?.item?.value
   }
 
   getJson () {
@@ -179,7 +179,7 @@ module.exports = class PropertiesLoader {
         FILE_NAME,
         Cache.getPathComponent(this.getName()),
         (data) => {
-          this.__initState(data?.value)
+          this.__initState(data?.item?.value)
             .__initMain()
             .__initValue()
             .__initValueAll()

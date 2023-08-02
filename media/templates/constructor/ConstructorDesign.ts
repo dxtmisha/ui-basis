@@ -1,7 +1,6 @@
-import { h, VNode } from 'vue'
+import { h, SetupContext, VNode } from 'vue'
 
-import { DesignConstructor } from '../../../classes/DesignConstructor'
-import { ClassesSubType } from '../../../classes/DesignClasses'
+import { ConstructorOptionsInterface, DesignConstructor } from '../../../classes/DesignConstructor'
 
 import {
   ConstructorComponentsInterface,
@@ -10,7 +9,7 @@ import {
   ConstructorSetupInterface,
   ConstructorSlotsType
 } from './types'
-import { PropsConstructorType, subclassesConstructor } from './props'
+import { PropsConstructorFullType, subclassesConstructor } from './props'
 
 /**
  * ConstructorDesign
@@ -18,8 +17,9 @@ import { PropsConstructorType, subclassesConstructor } from './props'
 export class ConstructorDesign<
   SETUP extends ConstructorSetupInterface,
   EXPOSE extends ConstructorExposeType,
-  P extends PropsConstructorType,
-  S extends ClassesSubType = typeof subclassesConstructor
+  P extends PropsConstructorFullType,
+  S extends typeof subclassesConstructor,
+  C extends ConstructorComponentsInterface
 > extends DesignConstructor<
   HTMLElement,
   SETUP,
@@ -28,16 +28,41 @@ export class ConstructorDesign<
   EXPOSE,
   P,
   S,
-  ConstructorComponentsInterface
+  C
 > {
   /**
-   * Initialization of basic parameters
+   * Constructor
+   * @param name class name / название класса
+   * @param props properties / свойства
+   * @param options list of additional parameters / список дополнительных параметров
+   * @param emits function for calling an event / функция для вызова события
+   */
+  constructor (
+    name: string,
+    props: Required<P>,
+    options?: ConstructorOptionsInterface<P, S, C>,
+    emits?: SetupContext['emit']
+  ) {
+    super(
+      name,
+      props,
+      options,
+      emits
+    )
+
+    // Initialization
+
+    this.init()
+  }
+
+  /**
+   * Initialization of basic options
    *
-   * Инициализация базовых параметров
+   * Инициализация базовых опций
    * @protected
    */
-  protected init () {
-    // Initialization
+  protected initOptions (): ConstructorOptionsInterface<P, S, C> {
+    return {}
   }
 
   /**
@@ -61,7 +86,7 @@ export class ConstructorDesign<
 
     return h('div', {
       ref: this.element,
-      class: this.design?.getClasses().value.main
+      class: this.design?.getClasses().main
     }/* , children */)
   }
 

@@ -25,11 +25,20 @@ module.exports = class PropertiesToDivision {
     this.items.findVariable(Type.component)
       .forEach(property => {
         const {
+          design,
+          component,
           name,
-          item
+          item,
+          index
         } = property
 
-        Cache.createComponents(item?.[Keys.name] || name, property)
+        Cache.createComponents(item?.[Keys.name] || name, {
+          design,
+          component,
+          name,
+          item,
+          index
+        })
       })
   }
 }

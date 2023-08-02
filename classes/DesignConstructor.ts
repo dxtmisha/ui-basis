@@ -1,5 +1,5 @@
 import { ComputedRef, h, ref, Ref, SetupContext, toRefs, useAttrs, useSlots, VNode } from 'vue'
-import { isFilled } from '../functions/data'
+import { isFilled, replaceRecursive } from '../functions/data'
 import { To } from './To'
 
 import { Design, DesignOptionsInterface } from './Design'
@@ -61,6 +61,7 @@ export class DesignConstructor<
   protected attrs?: ConstructorItemType
   protected slots?: SLOTS
 
+  protected options: ConstructorOptionsInterface<P, S, C>
   protected design?: Design<S>
   protected components?: DesignComponents<C, P>
 
@@ -74,7 +75,7 @@ export class DesignConstructor<
   constructor (
     name: string,
     protected readonly props: Required<P>,
-    protected readonly options?: ConstructorOptionsInterface<P, S, C>,
+    options?: ConstructorOptionsInterface<P, S, C>,
     protected readonly emits?: SetupContext<EMITS, SLOTS>['emit']
   ) {
     this.name = To.kebabCase(name)
@@ -83,19 +84,24 @@ export class DesignConstructor<
     this.attrs = useAttrs()
     this.slots = useSlots() as SLOTS
 
-    this.initDesign()
-    this.initComponents()
-    this.init()
+    this.options = options || {}
+  }
+
+  protected init () {
+    Object.assign(this.options, this.initOptions())
+
+    this.initDesign(this.options)
+    this.initComponents(this.options)
   }
 
   /**
-   * Initialization of basic parameters
+   * Initialization of basic options
    *
-   * Инициализация базовых параметров
+   * Инициализация базовых опций
    * @protected
    */
-  protected init () {
-    // Initialization
+  protected initOptions (): ConstructorOptionsInterface<P, S, C> {
+    return {}
   }
 
   /**
@@ -117,7 +123,7 @@ export class DesignConstructor<
   protected initRender (): VNode {
     return h('div', {
       ref: this.element,
-      class: this.design?.getClasses().value.main
+      class: this.design?.getClasses().main
     })
   }
 
@@ -174,8 +180,8 @@ export class DesignConstructor<
    */
   getDesign (): ConstructorDesignInterface<S> {
     return {
-      classes: this.design?.getClasses(),
-      styles: this.design?.getStyles()
+      classes: this.design?.getClassesRef(),
+      styles: this.design?.getStylesRef()
     }
   }
 
@@ -249,17 +255,19 @@ export class DesignConstructor<
    * Инициализация класса для работы с дизайн-токенами
    * @private
    */
-  private initDesign () {
+  private initDesign (
+    options?: ConstructorOptionsInterface<P, S, C>
+  ) {
     if (
-      this.options &&
-      this.options?.map &&
-      isFilled(this.options.map)
+      options &&
+      options?.map &&
+      isFilled(options.map)
     ) {
       this.design = new Design(
         this.name,
         this.props,
-        this.options.map,
-        this.options
+        options.map,
+        options
       )
     }
   }
@@ -270,15 +278,17 @@ export class DesignConstructor<
    * Инициализация класса для работы с входными компонентами
    * @private
    */
-  private initComponents () {
+  private initComponents (
+    options?: ConstructorOptionsInterface<P, S, C>
+  ) {
     if (
-      this.options &&
-      this.options?.components &&
-      isFilled(this.options.components)
+      options &&
+      options?.components &&
+      isFilled(options.components)
     ) {
       this.components = new DesignComponents(
-        this.options.components,
-        this.options?.modification
+        options.components,
+        options?.modification
       )
     }
   }

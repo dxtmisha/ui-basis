@@ -264,7 +264,7 @@ module.exports = class DesignComponent extends DesignPrototype {
 
     // this._createFile(FILE_SCSS, sample)
     this._createFile(FILE_STYLE, sass.compileString(sample, {
-      style: 'compressed',
+      style: 'expanded',
       importers: [{
         findFileUrl (url) {
           if (!url.startsWith('~')) {

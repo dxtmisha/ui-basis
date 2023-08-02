@@ -238,7 +238,14 @@ module.exports = class PropertiesFiles {
    * @return {{mtimeMs: number, size: number}}
    */
   static stat (paths) {
-    return requireFs.statSync(this.joinPath(paths))
+    if (this.is(paths)) {
+      return requireFs.statSync(this.joinPath(paths))
+    } else {
+      return {
+        mtimeMs: 0,
+        size: 0
+      }
+    }
   }
 
   /**

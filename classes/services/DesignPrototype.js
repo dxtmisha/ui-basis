@@ -22,14 +22,6 @@ module.exports = class DesignPrototype extends DesignCommand {
    * Object for working with components
    *
    * Объект для работы с компонентами
-   * @type {PropertiesComponent}
-   */
-  component
-
-  /**
-   * Object for working with components
-   *
-   * Объект для работы с компонентами
    * @type {PropertiesLoader}
    */
   loader

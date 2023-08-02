@@ -1,34 +1,54 @@
-// :constructor.once import { defaultsConstructor, PropsConstructorType, subclassesConstructor } from '../../../constructors/Constructor/props'
-
 // Type describing subclasses
 // Тип, описывающий подклассы
-export const subclasses = {
-  /* :constructor.once ...subclassesConstructor, */
+export const subclassesProgress = {
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    circle: 'circle'
     // :subclass
   }
 }
 
 // Type describing incoming properties
 // Тип, описывающий входящие свойства
-export type PropsType = /* :constructor.once PropsConstructorType & */ {
+export type PropsProgressType = {
+  // Values
+  value?: number
+  max?: number
+
+  // Status
+  visible?: boolean
+
+  // Options
+  delay?: number
+}
+
+export type PropsProgressFullType = PropsProgressType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  linear?: boolean
+  circular?: boolean
+  indeterminate?: 'type1' | 'type2'
+  position?: 'top' | 'bottom'
+  dense?: boolean
+  inverse?: boolean
   // :type
 }
 
 // Default value for property
 // Значение по умолчанию для свойства
-export const defaults: PropsType = {
-  /* :constructor.once ...defaultsConstructor, */
+export const defaultsProgress: PropsProgressType = {
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    linear: true,
+    indeterminate: 'type1',
+    position: 'top'
     // :default
-  }
+  },
+  max: 100,
+  delay: 480
 }

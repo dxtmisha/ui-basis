@@ -8,7 +8,7 @@ import { RefOrNormalType } from '../constructors/typesRef'
 
 export type StylesType = Record<string, string> | undefined
 
-export type StylesExtraInputType = RefOrNormalType<string>
+export type StylesExtraInputType = RefOrNormalType<string | null>
 export type StylesExtraType = Record<string, StylesExtraInputType>
 
 /**

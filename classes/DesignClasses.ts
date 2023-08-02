@@ -74,7 +74,7 @@ export class DesignClasses<S extends ClassesSubType> {
     if (this.extra) {
       forEach<ClassesExtraInputType, string, void>(this.extra, (item, name) => {
         if (getRef(item)) {
-          classes.push(name)
+          classes.push(this.getNameByState([name]))
         }
       })
     }
