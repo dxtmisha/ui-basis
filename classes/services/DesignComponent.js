@@ -5,7 +5,7 @@ const DesignConstructor = require('./DesignConstructor')
 
 const FILE_INDEX = 'index.vue'
 const FILE_PROPS = 'props.ts'
-const FILE_MAP = 'map.ts'
+const FILE_MAP = 'map.json'
 const FILE_PROPERTIES = 'properties.json'
 
 /**
@@ -160,14 +160,15 @@ module.exports = class DesignComponent extends DesignPrototype {
 
       sample = this._replacement(
         sample,
-        'name',
+        'name-component',
         `\r\n  name: '${this.loader.getNameForFile()}'`
       )
 
       sample = this._replacement(
         sample,
         'name-style',
-        `\r\n$componentName: '${this.loader.getNameForStyle()}';`
+        `\r\n$componentName: '${this.loader.getNameForStyle()}';`,
+        ''
       )
 
       this._createFile(main, sample)

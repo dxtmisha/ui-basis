@@ -11,9 +11,9 @@ import * as map from './map.json'
 defineOptions({
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
-  // :name
+  // :name-component
   name: 'DesignComponent'
-  // :name
+  // :name-component
 })
 
 const props = withDefaults(defineProps<PropsType>(), defaults)
@@ -37,15 +37,10 @@ const design = new /* :constructor.once Constructor */Design(
   }/* :constructor.once //, emit */
 )
 
-// Calls all available variables in this component
-// Вызывает все доступные переменные в этом компоненте
 /* :basic.once */
 const classes = design.getClasses()
 const styles = design.getClasses()
 /* :basic.once.end */
-
-// Property for render
-// Свойство для render
 // :constructor.once const render = design.render()
 </script>
 
@@ -54,12 +49,15 @@ const styles = design.getClasses()
   <div :class="classes.main" :style="styles"></div>
   <!-- :basic.once.end -->
   <!-- :constructor.once <render/> -->
+
 </template>
 
 <style lang="scss">
 // :basic.once @import "../../../styles/properties";
 // :constructor.once @import "../../../constructors/Constructor/style";
 
+// [!] System label, cannot be deleted
+// [!] Системная метка, нельзя удалять
 // :name-style
 $componentName: 'design.component';
 // :name-style

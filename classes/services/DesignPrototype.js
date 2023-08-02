@@ -88,6 +88,8 @@ module.exports = class DesignPrototype extends DesignCommand {
     const exp1 = new RegExp(`\\/\\/ :${name}\\.once ([^\r\n]+)([\r\n ]*)`, 'g')
     const exp2 = new RegExp(`\\/\\* :${name}\\.once \\*\\/([\\S\\s]*?)\\/\\* :${name}\\.once\\.end \\*\\/([\r\n ]*)`, 'g')
     const exp3 = new RegExp(`\\/\\* :${name}\\.once (.*?) \\*\\/([\r\n ]*)`, 'g')
+    const exp4 = new RegExp(`<!-- :${name}\\.once -->([\\S\\s]*?)<!-- :${name}\\.once\\.end -->([\r\n ]*)`, 'g')
+    const exp5 = new RegExp(`<!-- :${name}\\.once (.*?) -->([\r\n ]*)`, 'g')
 
     const replacement = (all, data, end) => {
       if (typeof removeReplacement === 'function') {
@@ -103,6 +105,8 @@ module.exports = class DesignPrototype extends DesignCommand {
       .replace(exp1, replacement)
       .replace(exp2, replacement)
       .replace(exp3, replacement)
+      .replace(exp4, replacement)
+      .replace(exp5, replacement)
   }
 
   /**

@@ -21,12 +21,6 @@ export type PropsType = /* :constructor.once PropsConstructorType & */ {
   // [!] Системная метка, нельзя удалять
   // :type
   // :type
-
-  // Values
-
-  // Status
-
-  // Options
 }
 
 // Default value for property
@@ -51,9 +45,4 @@ export const props = {
     // :prop
     // :prop
   }
-  // Values
-
-  // Status
-
-  // Options
 }
