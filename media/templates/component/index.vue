@@ -1,39 +1,71 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
+<script setup lang="ts">
 /* :basic.once */
 import { Design } from '../../../classes/Design'
 /* :basic.once.end */
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
+// :constructor.once import { /* ConstructorEmitsType,  */ConstructorSlotsType } from '../../../constructors/Constructor/types'
 
-import { props, subClasses } from './props'
+import { defaults, PropsType, subclasses } from './props'
+import * as map from './map.json'
 
-export default defineComponent({
+defineOptions({
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :name
-  name: 'DesignComponent',
+  name: 'DesignComponent'
   // :name
-  props,
-  setup (props, context) {
-    // Class for managing component, mainly this is for automatic generation of classes and styles
-    // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
-    return new /* :constructor.once Constructor */Design<typeof subClasses>(props, context)
-      .setup({})
-  }
 })
+
+const props = withDefaults(defineProps<PropsType>(), defaults)
+// const emit = defineEmits/* :constructor.once <ConstructorEmitsType> */(/* :basic.once */[]/* :basic.once.end */)
+
+defineSlots/* :constructor.once <ConstructorSlotsType> */()
+
+// Class for managing component, mainly this is for automatic generation of classes and styles
+// Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
+const design = new /* :constructor.once Constructor */Design(
+  // [!] System label, cannot be deleted
+  // [!] Системная метка, нельзя удалять
+  // :name-class
+  'design-component',
+  // :name-class
+  props,
+  /* :basic.once */map, /* :basic.once.end */
+  {
+    /* :constructor.once map, */
+    subclasses
+  }/* :constructor.once //, emit */
+)
+
+// Calls all available variables in this component
+// Вызывает все доступные переменные в этом компоненте
+/* :basic.once */
+const classes = design.getClasses()
+const styles = design.getClasses()
+/* :basic.once.end */
+
+// Property for render
+// Свойство для render
+// :constructor.once const render = design.render()
 </script>
 
 <template>
+  <!-- :basic.once -->
   <div :class="classes.main" :style="styles"></div>
+  <!-- :basic.once.end -->
+  <!-- :constructor.once <render/> -->
 </template>
 
 <style lang="scss">
 // :basic.once @import "../../../styles/properties";
 // :constructor.once @import "../../../constructors/Constructor/style";
 
+// :name-style
+$componentName: 'design.component';
+// :name-style
+
 // Mixin for generating all classes, states and properties of component
 // Миксин для генерации всех классов, состояний и свойств компонента
-// :basic.once @include initDesign {}
-// :constructor.once @include initConstructorDesign {}
+// :basic.once @include initDesign($componentName) {}
+// :constructor.once @include initConstructorDesign($componentName) {}
 </style>

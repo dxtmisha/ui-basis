@@ -4,8 +4,8 @@ const DesignPrototype = require('./DesignPrototype')
 const DesignConstructor = require('./DesignConstructor')
 
 const FILE_INDEX = 'index.vue'
-const FILE_INDEX_COMPOSITION = 'index-composition.vue'
 const FILE_PROPS = 'props.ts'
+const FILE_MAP = 'map.ts'
 const FILE_PROPERTIES = 'properties.json'
 
 /**
@@ -19,7 +19,7 @@ module.exports = class DesignComponent extends DesignPrototype {
   /**
    * Constructor
    * @param {string} name component name / названия компонента
-   * @param {{const:boolean, options:boolean}} options additional parameters / дополнительные параметры
+   * @param {{const:boolean}} options additional parameters / дополнительные параметры
    */
   constructor (
     name,
@@ -38,6 +38,7 @@ module.exports = class DesignComponent extends DesignPrototype {
     this
       .__initIndex()
       .__initProps()
+      .__initMap()
       .__initProperties()
   }
 
@@ -106,7 +107,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __getFileIndex () {
-    return this.options.options ? FILE_INDEX : FILE_INDEX_COMPOSITION
+    return FILE_INDEX
   }
 
   /**
@@ -153,8 +154,20 @@ module.exports = class DesignComponent extends DesignPrototype {
     if (sample) {
       sample = this._replacement(
         sample,
+        'name-class',
+        `\r\n  '${this.loader.getName()}',`
+      )
+
+      sample = this._replacement(
+        sample,
         'name',
-        `\r\n  name: '${this.loader.getNameForFile()}'${this.options.options ? ',' : ''}`
+        `\r\n  name: '${this.loader.getNameForFile()}'`
+      )
+
+      sample = this._replacement(
+        sample,
+        'name-style',
+        `\r\n$componentName: '${this.loader.getNameForStyle()}';`
       )
 
       this._createFile(main, sample)
@@ -190,6 +203,18 @@ module.exports = class DesignComponent extends DesignPrototype {
       this._createFile(FILE_PROPS, sample)
     }
 
+    return this
+  }
+
+  /**
+   * This code generates the map.json
+   *
+   * Генерация файла map.json
+   * @return {this}
+   * @private
+   */
+  __initMap () {
+    this._createFile(FILE_MAP, this.loader.getJson())
     return this
   }
 

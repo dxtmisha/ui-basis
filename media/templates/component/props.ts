@@ -4,8 +4,8 @@
 
 // Type describing subclasses
 // Тип, описывающий подклассы
-export const subClasses = {
-  /* :constructor.once ...subClassesConstructor, */
+export const subclasses = {
+  /* :constructor.once ...subclassesConstructor, */
   ...{
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
@@ -21,9 +21,8 @@ export type PropsType = /* :constructor.once PropsConstructorType & */ {
   // [!] Системная метка, нельзя удалять
   // :type
   // :type
-} & {
+
   // Values
-  value?: string
 
   // Status
 
@@ -39,8 +38,7 @@ export const defaults = {
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  },
-  value: 'value'
+  }
 }
 
 // Constructor for property
@@ -52,9 +50,8 @@ export const props = {
     // [!] Системная метка, нельзя удалять
     // :prop
     // :prop
-  },
+  }
   // Values
-  value: String
 
   // Status
 
