@@ -216,7 +216,7 @@
     }
 
     @include state('dense') {
-      @include inset(0);
+      @include initByCustom('inset', 0);
     }
   }
 }
