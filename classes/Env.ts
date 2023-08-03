@@ -52,6 +52,6 @@ export class Env {
    * Возвращает PREFIX
    */
   static prefix (): string {
-    return this.get('PREFIX', '_d_')
+    return this.get('PREFIX', '__dUi')
   }
 }

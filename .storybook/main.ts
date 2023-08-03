@@ -17,7 +17,7 @@ const config: StorybookConfig = {
       options: {
         sass: {
           implementation: require('sass'),
-          additionalData: new Properties().getScss()
+          additionalData: new Properties(['md2', 'md3']).getScss()
         }
       }
     }

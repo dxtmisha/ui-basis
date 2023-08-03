@@ -53,6 +53,10 @@ $designsInit: false !default;
   }
 }
 
+@mixin initNone() {
+  $designsInit: true !global;
+}
+
 /// Generating all properties
 ///
 /// Генерация всех свойств

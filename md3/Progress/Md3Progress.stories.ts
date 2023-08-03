@@ -26,10 +26,10 @@ const meta = {
       min: 0,
       step: 100
     },
-    // [!] System label, cannot be deleted
-    // [!] Системная метка, нельзя удалять
-    // :arg-types
     ...{
+      // [!] System label, cannot be deleted
+      // [!] Системная метка, нельзя удалять
+      // :arg-types
       linear: { control: 'boolean' },
       circular: { control: 'boolean' },
       indeterminate: {
@@ -42,22 +42,22 @@ const meta = {
       },
       dense: { control: 'boolean' },
       inverse: { control: 'boolean' }
+      // :arg-types
     }
-    // :arg-types
   },
   args: {
     max: 100,
     visible: true,
     delay: 400,
-    // [!] System label, cannot be deleted
-    // [!] Системная метка, нельзя удалять
-    // :args
     ...{
+      // [!] System label, cannot be deleted
+      // [!] Системная метка, нельзя удалять
+      // :default
       linear: true,
       indeterminate: 'type1',
       position: 'top'
+      // :default
     }
-    // :args
   }
 } satisfies Meta<typeof Md3Progress>
 

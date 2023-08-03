@@ -6,13 +6,15 @@ const { pathToFileURL } = require('url')
 const Properties = require('./properties/Properties')
 const DesignPrototype = require('./DesignPrototype')
 const DesignConstructor = require('./DesignConstructor')
+const { forEach } = require('../../functions/data')
 
 const FILE_INDEX = 'index.vue'
 const FILE_PROPS = 'props.ts'
 const FILE_MAP = 'map.json'
 const FILE_PROPERTIES = 'properties.json'
-const FILE_SCSS = 'style.scss'
+// const FILE_SCSS = 'style.scss'
 const FILE_STYLE = 'style.css'
+const FILE_STORIES = 'index.stories.ts'
 
 /**
  * Class for creating a component or updating data
@@ -99,6 +101,17 @@ module.exports = class DesignComponent extends DesignPrototype {
   }
 
   /**
+   * Reading the index.stories.ts file
+   *
+   * Читает файл index.stories.ts
+   * @return {string}
+   * @private
+   */
+  __readStories () {
+    return this._read(this.__getFileMainStories())
+  }
+
+  /**
    * This code reads a template for the index.vue
    *
    * Читает шаблона для файла index.vue
@@ -106,18 +119,7 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @private
    */
   __readSampleIndex () {
-    return this._readSample(this.__getFileIndex())
-  }
-
-  /**
-   * Returns the filename index
-   *
-   * Возвращает название файла index
-   * @return {string}
-   * @private
-   */
-  __getFileIndex () {
-    return FILE_INDEX
+    return this._readSample(FILE_INDEX)
   }
 
   /**
@@ -140,6 +142,17 @@ module.exports = class DesignComponent extends DesignPrototype {
    */
   __readSampleProperties () {
     return this._readSample(FILE_PROPERTIES)
+  }
+
+  /**
+   * This code reads a template for the index.vue
+   *
+   * Читает шаблона для файла index.vue
+   * @return {string}
+   * @private
+   */
+  __readSampleStories () {
+    return this._readSample(FILE_STORIES)
   }
 
   /**
@@ -185,6 +198,17 @@ module.exports = class DesignComponent extends DesignPrototype {
     }
 
     return this
+  }
+
+  /**
+   * Returns the name for the component
+   *
+   * Возвращает имя для компонента
+   * @return {string}
+   * @private
+   */
+  __getFileMain () {
+    return `${this.loader.getNameForFile()}.vue`
   }
 
   /**
@@ -264,7 +288,7 @@ module.exports = class DesignComponent extends DesignPrototype {
 
     // this._createFile(FILE_SCSS, sample)
     this._createFile(FILE_STYLE, sass.compileString(sample, {
-      style: 'expanded',
+      style: 'compressed',
       importers: [{
         findFileUrl (url) {
           if (!url.startsWith('~')) {
@@ -279,6 +303,30 @@ module.exports = class DesignComponent extends DesignPrototype {
     return this
   }
 
+  __initStories () {
+    const main = this.__getFileMainStories()
+    let sample
+
+    if (this._isFile(main)) {
+      sample = this.__readStories()
+    } else {
+      sample = this.__readSampleStories()
+      sample = this._replacementOnce(sample, 'basic', this.options.constr)
+      sample = this._replacementOnce(sample, 'constructor', !this.options.constr)
+        .replace('index.vue', this.__getFileMain())
+        .replace('Design/', To.camelCaseFirst(this.loader.getDesign()))
+    }
+
+    if (sample) {
+      sample = this.__replaceStoriesArgTypes(sample)
+      sample = this._replacePropsDefault(sample)
+
+      this._createFile(main, sample)
+    }
+
+    return this
+  }
+
   /**
    * Returns the name for the component
    *
@@ -286,7 +334,42 @@ module.exports = class DesignComponent extends DesignPrototype {
    * @return {string}
    * @private
    */
-  __getFileMain () {
-    return `${this.loader.getNameForFile()}.vue`
+  __getFileMainStories () {
+    return `${this.loader.getNameForFile()}.stories.ts`
+  }
+
+  /**
+   * Adding default values for properties
+   *
+   * Добавление параметры для история
+   * @param {string} sample property template / шаблон свойства
+   * @return {string}
+   * @protected
+   */
+  __replaceStoriesArgTypes (sample) {
+    const props = this.loader.get()
+    const templates = []
+
+    forEach(props, ({ valueAll }, index) => {
+      if (
+        valueAll.length === 1 &&
+        valueAll[0] === true
+      ) {
+        templates.push(
+          `\r\n      ${index}: { control: 'boolean' }`
+        )
+      } else {
+        const options = forEach(valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)
+          .join(', ')
+        templates.push(
+          `\r\n      ${index}: {` +
+          '\r\n        control: \'select\',' +
+          `\r\n        options: [${options}]` +
+          '\r\n      }'
+        )
+      }
+    })
+
+    return this._replacement(sample, 'arg-types', templates.join(','), '    ')
   }
 }

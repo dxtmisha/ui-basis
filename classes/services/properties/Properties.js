@@ -47,9 +47,10 @@ module.exports = class Properties {
 
   /**
    * Constructor
+   * @param {string[]} designs
    */
-  constructor () {
-    this.designs = ['d', ...Tool.getDesignsByEnv()]
+  constructor (designs = undefined) {
+    this.designs = ['d', ...(designs || Tool.getDesignsByEnv())]
   }
 
   /**
