@@ -1,4 +1,4 @@
-import { ComputedRef } from 'vue'
+import { ComputedRef, Ref } from 'vue'
 
 // Interface for describing which components need to be connected for work
 // Интерфейс для описания, какие компоненты надо подключить для работы
@@ -8,8 +8,11 @@ import { ComputedRef } from 'vue'
 // Интерфейс для описания, какое свойство возвращает setup
 export interface ProgressSetupInterface {
   tag: ComputedRef<string>
-  valueInPercent: ComputedRef<string | null>
+  hide: Ref<boolean>
+  visible: Ref<boolean>
   onAnimation: (event: AnimationEvent) => void
+
+  valueInPercent?: ComputedRef<string | null>
 }
 
 // Type describing available slots

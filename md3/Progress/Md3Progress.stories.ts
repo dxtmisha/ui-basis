@@ -21,31 +21,43 @@ const meta = {
       step: 50
     },
     visible: { control: 'boolean' },
-    linear: { control: 'boolean' },
-    circular: { control: 'boolean' },
-    indeterminate: {
-      control: 'select',
-      options: ['type1', 'type2']
-    },
-    position: {
-      control: 'select',
-      options: ['top', 'bottom']
-    },
-    dense: { control: 'boolean' },
-    inverse: { control: 'boolean' },
     delay: {
       control: 'number',
       min: 0,
       step: 100
+    },
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :arg-types
+    ...{
+      linear: { control: 'boolean' },
+      circular: { control: 'boolean' },
+      indeterminate: {
+        control: 'select',
+        options: ['type1', 'type2']
+      },
+      position: {
+        control: 'select',
+        options: ['top', 'bottom']
+      },
+      dense: { control: 'boolean' },
+      inverse: { control: 'boolean' }
     }
+    // :arg-types
   },
   args: {
     max: 100,
     visible: true,
-    linear: true,
-    indeterminate: 'type1',
-    position: 'top',
-    delay: 400
+    delay: 400,
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :args
+    ...{
+      linear: true,
+      indeterminate: 'type1',
+      position: 'top'
+    }
+    // :args
   }
 } satisfies Meta<typeof Md3Progress>
 

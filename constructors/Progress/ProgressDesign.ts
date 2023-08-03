@@ -3,6 +3,8 @@ import { computed, h, ref, SetupContext, VNode, watch } from 'vue'
 import { ConstructorItemType, ConstructorOptionsInterface, DesignConstructor } from '../../classes/DesignConstructor'
 import { ComponentsType } from '../../classes/DesignComponents'
 
+import { ProgressValue } from './ProgressValue'
+
 import { ProgressSetupInterface } from './types'
 import { PropsProgressFullType, subclassesProgress } from './props'
 
@@ -31,7 +33,7 @@ export class ProgressDesign<
    * Определяет условия для перехода в скрытое состояние
    * @protected
    */
-  public readonly hide = ref<boolean>(false)
+  private readonly hide = ref<boolean>(false)
 
   /**
    * Defines the conditions for opening
@@ -39,33 +41,7 @@ export class ProgressDesign<
    * Определяет условия для открытия
    * @protected
    */
-  public readonly visible = ref<boolean>(false)
-
-  /**
-   * Checks if a specific value has been passed
-   *
-   * Проверяет, передано ли конкретное значение
-   * @protected
-   */
-  public readonly isValue = computed<boolean>(() => {
-    return typeof this.props?.value === 'number'
-  })
-
-  /**
-   * Values are converted to percentages
-   *
-   * Значения преобразованы в проценты
-   * @protected
-   */
-  public readonly valueInPercent = computed<string | null>(() => {
-    if (typeof this.props?.value === 'number') {
-      return this.props?.circular
-        ? `${(100 / (this.props?.max || 100) * this.props.value)}`
-        : `${100 - (100 / (this.props?.max || 100) * this.props.value)}%`
-    } else {
-      return null
-    }
-  })
+  private readonly visible = ref<boolean>(false)
 
   /**
    * Determines the type of the main element
@@ -73,7 +49,9 @@ export class ProgressDesign<
    * Определяет, какой тип у главного элемента
    * @protected
    */
-  public readonly tag = computed<string>(() => this.props?.circular ? 'svg' : 'div')
+  private readonly tag = computed<string>(() => this.props?.circular ? 'svg' : 'div')
+
+  private readonly value?: ProgressValue<P>
 
   /**
    * Time for delay control
@@ -103,30 +81,20 @@ export class ProgressDesign<
       emits
     )
 
+    const source: any[] = [this.refs.visible]
+
+    if ('value' in props) {
+      this.value = new ProgressValue(props)
+      source.push(this.refs.value)
+    }
+
     watch(
-      [
-        this.refs.visible,
-        this.refs.value
-      ],
+      source,
       () => this.watchVisible(),
       { immediate: true }
     )
 
     this.init()
-  }
-
-  /**
-   * Monitors the animation event for hiding the element
-   *
-   * Следит за событием анимации для скрытия элемента
-   * @param animationName A string containing the value of the animation-name that
-   * generated the animation / Является DOMString содержащей значения animation-name
-   * CSS-свойств связанных с transition
-   */
-  onAnimation ({ animationName }: AnimationEvent): void {
-    if (animationName.match('-hidden')) {
-      this.hide.value = false
-    }
   }
 
   /**
@@ -136,14 +104,24 @@ export class ProgressDesign<
    * @protected
    */
   protected initOptions (): ConstructorOptionsInterface<P, S, C> {
-    return {
-      extra: {
-        hide: this.hide,
-        visible: this.visible,
-        value: this.isValue
-      },
-      styles: {
-        value: this.valueInPercent
+    const extra = {
+      hide: this.hide,
+      visible: this.visible
+    }
+
+    if (this.value) {
+      return {
+        extra: {
+          ...extra,
+          value: this.value.isValue
+        },
+        styles: {
+          value: this.value.valueInPercent
+        }
+      }
+    } else {
+      return {
+        extra
       }
     }
   }
@@ -155,11 +133,18 @@ export class ProgressDesign<
    * @protected
    */
   protected initSetup (): SETUP {
-    return {
+    const setup: SETUP = {
       tag: this.tag,
-      valueInPercent: this.valueInPercent,
+      hide: this.hide,
+      visible: this.visible,
       onAnimation: (event: AnimationEvent) => this.onAnimation(event)
     } as SETUP
+
+    if (this.value) {
+      setup.valueInPercent = this.value.valueInPercent
+    }
+
+    return setup
   }
 
   /**
@@ -190,6 +175,20 @@ export class ProgressDesign<
       viewBox: '0 0 48 48',
       onAnimationend: (event: AnimationEvent) => this.onAnimation(event)
     }, children)
+  }
+
+  /**
+   * Monitors the animation event for hiding the element
+   *
+   * Следит за событием анимации для скрытия элемента
+   * @param animationName A string containing the value of the animation-name that
+   * generated the animation / Является DOMString содержащей значения animation-name
+   * CSS-свойств связанных с transition
+   */
+  private onAnimation ({ animationName }: AnimationEvent): void {
+    if (animationName.match('-hidden')) {
+      this.hide.value = false
+    }
   }
 
   /**

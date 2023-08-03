@@ -1,5 +1,5 @@
 import { ComputedRef, h, ref, Ref, SetupContext, toRefs, useAttrs, useSlots, VNode } from 'vue'
-import { isFilled, replaceRecursive } from '../functions/data'
+import { isFilled } from '../functions/data'
 import { To } from './To'
 
 import { Design, DesignOptionsInterface } from './Design'
