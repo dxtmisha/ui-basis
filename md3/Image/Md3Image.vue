@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { ImageDesign } from '../../constructors/Image/ImageDesign'
 import { ImageEmitsType/* , ImageSlotsType */ } from '../../constructors/Image/types'
 
@@ -28,7 +29,7 @@ const design = new ImageDesign(
   // :name-class
   props,
   {
-    map,
+    map: map as PropertiesMapListType,
     subclasses
   },
   emit

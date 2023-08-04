@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PropertiesMapListType } from '../../../classes/DesignProperties'
 /* :basic.once */
 import { Design } from '../../../classes/Design'
 /* :basic.once.end */
@@ -30,9 +31,9 @@ const design = new /* :constructor.once Constructor */Design(
   'design-component',
   // :name-class
   props,
-  /* :basic.once */map, /* :basic.once.end */
+  /* :basic.once */map as PropertiesMapListType, /* :basic.once.end */
   {
-    /* :constructor.once map, */
+    /* :constructor.once map: map as PropertiesMapListType, */
     subclasses
   }/* :constructor.once //, emit */
 )

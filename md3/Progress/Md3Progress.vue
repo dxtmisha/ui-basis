@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { ProgressDesign } from '../../constructors/Progress/ProgressDesign'
 // import { ProgressEmitsType, ProgressSlotsType } from '../../constructors/Progress/types'
 
@@ -27,7 +28,7 @@ const design = new ProgressDesign(
   // :name-class
   props,
   {
-    map,
+    map: map as PropertiesMapListType,
     subclasses
   }//, emit
 )
