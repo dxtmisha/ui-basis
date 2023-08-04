@@ -1,4 +1,4 @@
-import { ComputedRef, h, ref, Ref, SetupContext, toRefs, useAttrs, useSlots, VNode } from 'vue'
+import { ComputedRef, h, ref, Ref, toRefs, useAttrs, useSlots, VNode } from 'vue'
 import { isFilled } from '../functions/data'
 import { To } from './To'
 
@@ -39,6 +39,13 @@ export type ConstrSetupType<
   & ConstrDesignInterface<S>
   & SETUP
 
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
+export type ConstrEmitItemType<T extends ConstrItemType> = T[keyof T]
+export type ConstrEmitType<T extends ConstrItemType = ConstrItemType> = UnionToIntersection<ConstrEmitItemType<{
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  [K in keyof T]: (evt: K, ...args: T[K]) => void
+}>>
+
 /**
  * Class for collecting all functional components
  *
@@ -76,7 +83,7 @@ export class DesignConstructor<
     name: string,
     protected readonly props: Required<P>,
     options?: ConstrOptionsInterface<P, S, C>,
-    protected readonly emits?: SetupContext<EMITS, SLOTS>['emit']
+    protected readonly emits?: ConstrEmitType<EMITS>
   ) {
     this.name = To.kebabCase(name)
     this.refs = toRefs(this.props)

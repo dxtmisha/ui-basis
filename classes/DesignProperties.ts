@@ -12,7 +12,7 @@ export type PropertiesStateType = {
 export type PropertiesMapType = {
   index: string
   name: string
-  type: 'property' | 'subclass' | 'link-class'
+  type: 'property' | 'subclass' | 'link-class' | string
   className?: string
   value: (string | boolean)[]
   valueAll: (string | boolean)[]

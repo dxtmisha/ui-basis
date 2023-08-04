@@ -1,6 +1,6 @@
-import { h, SetupContext, VNode } from 'vue'
+import { h, VNode } from 'vue'
 
-import { ConstrOptionsInterface, DesignConstructor } from '../../../classes/DesignConstructor'
+import { ConstrEmitType, ConstrOptionsInterface, DesignConstructor } from '../../../classes/DesignConstructor'
 
 import {
   ConstructorComponentsInterface,
@@ -41,7 +41,7 @@ export class ConstructorDesign<
     name: string,
     props: Required<P>,
     options?: ConstrOptionsInterface<P, S, C>,
-    emits?: SetupContext['emit']
+    emits?: ConstrEmitType<ConstructorEmitsType>
   ) {
     super(
       name,

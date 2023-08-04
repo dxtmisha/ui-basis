@@ -1,7 +1,12 @@
-import { h, onUnmounted, SetupContext, VNode, watch } from 'vue'
+import { h, onUnmounted, VNode, watch } from 'vue'
 
 import { ComponentsType } from '../../classes/DesignComponents'
-import { ConstrOptionsInterface, DesignConstructor, ConstrItemType } from '../../classes/DesignConstructor'
+import {
+  ConstrOptionsInterface,
+  DesignConstructor,
+  ConstrItemType,
+  ConstrEmitType
+} from '../../classes/DesignConstructor'
 
 import { Image } from './Image'
 
@@ -44,7 +49,7 @@ export class ImageDesign<
     name: string,
     props: Required<P>,
     options?: ConstrOptionsInterface<P, S, C>,
-    emits?: SetupContext['emit']
+    emits?: ConstrEmitType<ImageEmitsType>
   ) {
     super(
       name,

@@ -25,7 +25,7 @@ export type PropsType = PropsImageType & {
   // :type
 }
 
-// Default value for property
+// Default value for property<br>
 // Значение по умолчанию для свойства
 export const defaults: PropsType = {
   ...defaultsImage,

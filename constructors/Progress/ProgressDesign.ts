@@ -1,6 +1,11 @@
-import { computed, h, ref, SetupContext, VNode, watch } from 'vue'
+import { computed, h, ref, VNode, watch } from 'vue'
 
-import { ConstrItemType, ConstrOptionsInterface, DesignConstructor } from '../../classes/DesignConstructor'
+import {
+  ConstrEmitType,
+  ConstrItemType,
+  ConstrOptionsInterface,
+  DesignConstructor
+} from '../../classes/DesignConstructor'
 import { ComponentsType } from '../../classes/DesignComponents'
 
 import { ProgressValue } from './ProgressValue'
@@ -72,7 +77,7 @@ export class ProgressDesign<
     name: string,
     props: Required<P>,
     options?: ConstrOptionsInterface<P, S, C>,
-    emits?: SetupContext['emit']
+    emits?: ConstrEmitType
   ) {
     super(
       name,
