@@ -292,10 +292,11 @@ module.exports = class DesignPrototype extends DesignCommand {
    *
    * Добавление значения по умолчанию для свойств
    * @param {string} sample property template / шаблон свойства
+   * @param {string} space adding a space / добавление пробела
    * @return {string}
    * @protected
    */
-  _replacePropsDefault (sample) {
+  _replacePropsDefault (sample, space = '    ') {
     const props = this.loader.get()
     const templates = []
 
@@ -304,11 +305,11 @@ module.exports = class DesignPrototype extends DesignCommand {
         item.default &&
         !sample.match(`:default.${index}.none`)
       ) {
-        templates.push(`\r\n    ${To.camelCase(index)}: ${this.__getDefault(item.default)}`)
+        templates.push(`\r\n${space}${To.camelCase(index)}: ${this.__getDefault(item.default)}`)
       }
     })
 
-    return this._replacement(sample, 'default', templates.join(','), '    ')
+    return this._replacement(sample, 'default', templates.join(','), space)
   }
 
   /**

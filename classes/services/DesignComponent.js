@@ -52,6 +52,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       .__initMap()
       .__initProperties()
       .__initStyle()
+      .__initStories()
   }
 
   /**
@@ -311,15 +312,14 @@ module.exports = class DesignComponent extends DesignPrototype {
       sample = this.__readStories()
     } else {
       sample = this.__readSampleStories()
-      sample = this._replacementOnce(sample, 'basic', this.options.constr)
-      sample = this._replacementOnce(sample, 'constructor', !this.options.constr)
         .replace('index.vue', this.__getFileMain())
-        .replace('Design/', To.camelCaseFirst(this.loader.getDesign()))
+        .replaceAll('Design', To.camelCaseFirst(this.loader.getDesign()))
+        .replaceAll('Component', this.loader.getComponent())
     }
 
     if (sample) {
       sample = this.__replaceStoriesArgTypes(sample)
-      sample = this._replacePropsDefault(sample)
+      sample = this._replacePropsDefault(sample, '      ')
 
       this._createFile(main, sample)
     }
@@ -370,6 +370,6 @@ module.exports = class DesignComponent extends DesignPrototype {
       }
     })
 
-    return this._replacement(sample, 'arg-types', templates.join(','), '    ')
+    return this._replacement(sample, 'arg-types', templates.join(','), '      ')
   }
 }

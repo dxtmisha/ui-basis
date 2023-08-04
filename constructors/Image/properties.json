@@ -1,0 +1,20 @@
+{
+  "color": {
+    "_type": "var"
+  },
+  "color-opacity": {
+    "_type": "var"
+  },
+  "turn": {
+    "_type": "state"
+  },
+  "disabled": {
+    "_type": "state"
+  },
+  "hide": {
+    "_type": "state"
+  },
+  "adaptive": {
+    "_type": "state"
+  }
+}
