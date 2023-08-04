@@ -1,4 +1,4 @@
-// Type describing subclasses
+// Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclassesConstructor = {
   ...{
@@ -9,7 +9,7 @@ export const subclassesConstructor = {
   }
 }
 
-// Type describing incoming properties
+// Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
 export type PropsConstructorType = {
   // Values
@@ -20,6 +20,8 @@ export type PropsConstructorType = {
   // Options
 }
 
+// Type describing incoming properties<br>
+// Тип, описывающий входящие свойства
 export type PropsConstructorFullType = PropsConstructorType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -27,7 +29,7 @@ export type PropsConstructorFullType = PropsConstructorType & {
   // :type
 }
 
-// Default value for property
+// Default value for property<br>
 // Значение по умолчанию для свойства
 export const defaultsConstructor: PropsConstructorType = {
   ...{

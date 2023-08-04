@@ -1,6 +1,6 @@
 import { defaultsImage, PropsImageType, subclassesImage } from '../../constructors/Image/props'
 
-// Type describing subclasses
+// Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclasses = {
   ...subclassesImage,
@@ -12,7 +12,7 @@ export const subclasses = {
   }
 }
 
-// Type describing incoming properties
+// Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
 export type PropsType = PropsImageType & {
   // [!] System label, cannot be deleted

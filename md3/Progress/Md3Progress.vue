@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<PropsType>(), defaults)
 // const emit = defineEmits<ProgressEmitsType>()
 // defineSlots<ProgressSlotsType>()
 
-// Class for managing component, mainly this is for automatic generation of classes and styles
+// Class for managing component, mainly this is for automatic generation of classes and styles<br>
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
 const design = new ProgressDesign(
   // [!] System label, cannot be deleted

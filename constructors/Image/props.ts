@@ -1,4 +1,4 @@
-// Type describing subclasses
+// Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclassesImage = {
   ...{
@@ -9,12 +9,12 @@ export const subclassesImage = {
   }
 }
 
-// Type describing incoming properties
+// Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
 export type PropsImageType = {
   // Values
   value?: string | File
-  coordinator?: [number, number?, number?, number?]
+  coordinator?: [number, number?, number?, number?] | any
   size?: 'auto' | 'contain' | 'cover' | string | number
   x?: string | number
   y?: string | number
@@ -29,6 +29,8 @@ export type PropsImageType = {
   url?: string
 }
 
+// Type describing incoming properties<br>
+// Тип, описывающий входящие свойства
 export type PropsImageFullType = PropsImageType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -40,7 +42,7 @@ export type PropsImageFullType = PropsImageType & {
   // :type
 }
 
-// Default value for property
+// Default value for property<br>
 // Значение по умолчанию для свойства
 export const defaultsImage: PropsImageType = {
   ...{

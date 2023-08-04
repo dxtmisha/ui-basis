@@ -1,6 +1,6 @@
 import { defaultsProgress, PropsProgressType, subclassesProgress } from '../../constructors/Progress/props'
 
-// Type describing subclasses
+// Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclasses = {
   ...subclassesProgress,
@@ -13,7 +13,7 @@ export const subclasses = {
   }
 }
 
-// Type describing incoming properties
+// Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
 export type PropsType = PropsProgressType & {
   // [!] System label, cannot be deleted
@@ -28,7 +28,7 @@ export type PropsType = PropsProgressType & {
   // :type
 }
 
-// Default value for property
+// Default value for property<br>
 // Значение по умолчанию для свойства
 export const defaults: PropsType = {
   ...defaultsProgress,

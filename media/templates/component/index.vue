@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<PropsType>(), defaults)
 
 defineSlots/* :constructor.once <ConstructorSlotsType> */()
 
-// Class for managing component, mainly this is for automatic generation of classes and styles
+// Class for managing component, mainly this is for automatic generation of classes and styles<br>
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
 const design = new /* :constructor.once Constructor */Design(
   // [!] System label, cannot be deleted

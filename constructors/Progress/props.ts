@@ -1,4 +1,4 @@
-// Type describing subclasses
+// Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclassesProgress = {
   ...{
@@ -10,7 +10,7 @@ export const subclassesProgress = {
   }
 }
 
-// Type describing incoming properties
+// Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
 export type PropsProgressType = {
   // Values
@@ -24,6 +24,8 @@ export type PropsProgressType = {
   delay?: number
 }
 
+// Type describing incoming properties<br>
+// Тип, описывающий входящие свойства
 export type PropsProgressFullType = PropsProgressType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -37,7 +39,7 @@ export type PropsProgressFullType = PropsProgressType & {
   // :type
 }
 
-// Default value for property
+// Default value for property<br>
 // Значение по умолчанию для свойства
 export const defaultsProgress: PropsProgressType = {
   ...{
