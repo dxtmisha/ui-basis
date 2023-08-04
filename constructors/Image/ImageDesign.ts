@@ -1,13 +1,14 @@
-import { h, SetupContext, VNode } from 'vue'
+import { h, onUnmounted, SetupContext, VNode, watch } from 'vue'
 
-import { ImageOptionsInterface, DesignConstructor } from '../../classes/DesignConstructor'
+import { ComponentsType } from '../../classes/DesignComponents'
+import { ConstrOptionsInterface, DesignConstructor, ConstrItemType } from '../../classes/DesignConstructor'
+
+import { Image } from './Image'
 
 import {
-  ImageComponentsInterface,
   ImageEmitsType,
   ImageExposeType,
-  ImageSetupInterface,
-  ImageSlotsType
+  ImageSetupInterface
 } from './types'
 import { PropsImageFullType, subclassesImage } from './props'
 
@@ -19,17 +20,19 @@ export class ImageDesign<
   EXPOSE extends ImageExposeType,
   P extends PropsImageFullType,
   S extends typeof subclassesImage,
-  C extends ImageComponentsInterface
+  C extends ComponentsType
 > extends DesignConstructor<
-  HTMLElement,
+  HTMLSpanElement,
   SETUP,
-  ImageSlotsType,
+  ConstrItemType,
   ImageEmitsType,
   EXPOSE,
   P,
   S,
   C
 > {
+  protected image: Image
+
   /**
    * Constructor
    * @param name class name / название класса
@@ -40,7 +43,7 @@ export class ImageDesign<
   constructor (
     name: string,
     props: Required<P>,
-    options?: ImageOptionsInterface<P, S, C>,
+    options?: ConstrOptionsInterface<P, S, C>,
     emits?: SetupContext['emit']
   ) {
     super(
@@ -50,9 +53,26 @@ export class ImageDesign<
       emits
     )
 
-    // Initialization
+    this.image = new Image(
+      this.element,
+      name,
+      this.refs.value,
+      this.refs?.url,
+      this.refs?.size,
+      this.refs?.coordinator,
+      this.refs?.x,
+      this.refs?.y,
+      this.refs?.adaptiveGroup,
+      this.refs?.adaptive,
+      this.refs?.adaptiveAlways,
+      this.refs?.objectWidth,
+      this.refs?.objectHeight
+    )
 
     this.init()
+
+    onUnmounted(() => this.image.destructor())
+    watch(this.image.getDataImage(), value => this.emits?.('load', value))
   }
 
   /**
@@ -61,8 +81,11 @@ export class ImageDesign<
    * Инициализация базовых опций
    * @protected
    */
-  protected initOptions (): ImageOptionsInterface<P, S, C> {
-    return {}
+  protected initOptions (): ConstrOptionsInterface<P, S, C> {
+    return {
+      extra: this.image.classes,
+      styles: this.image.styles
+    }
   }
 
   /**
@@ -72,7 +95,9 @@ export class ImageDesign<
    * @protected
    */
   protected initSetup (): SETUP {
-    return {} as SETUP
+    return {
+      text: this.image.text
+    } as SETUP
   }
 
   /**
@@ -84,10 +109,12 @@ export class ImageDesign<
   protected initRender (): VNode {
     // const children: any[] = []
 
-    return h('div', {
+    return h('span', {
       ref: this.element,
-      class: this.design?.getClasses().main
-    }/* , children */)
+      class: this.design?.getClasses().main,
+      style: this.design?.getStyles(),
+      translate: 'no'
+    }, this.image.text.value)
   }
 
   /**

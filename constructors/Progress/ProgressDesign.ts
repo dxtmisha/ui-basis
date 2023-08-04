@@ -1,6 +1,6 @@
 import { computed, h, ref, SetupContext, VNode, watch } from 'vue'
 
-import { ConstructorItemType, ConstructorOptionsInterface, DesignConstructor } from '../../classes/DesignConstructor'
+import { ConstrItemType, ConstrOptionsInterface, DesignConstructor } from '../../classes/DesignConstructor'
 import { ComponentsType } from '../../classes/DesignComponents'
 
 import { ProgressValue } from './ProgressValue'
@@ -13,15 +13,15 @@ import { PropsProgressFullType, subclassesProgress } from './props'
  */
 export class ProgressDesign<
   SETUP extends ProgressSetupInterface,
-  EXPOSE extends ConstructorItemType,
+  EXPOSE extends ConstrItemType,
   P extends PropsProgressFullType,
   S extends typeof subclassesProgress,
   C extends ComponentsType
 > extends DesignConstructor<
   HTMLDivElement,
   SETUP,
-  ConstructorItemType,
-  ConstructorItemType,
+  ConstrItemType,
+  ConstrItemType,
   EXPOSE,
   P,
   S,
@@ -71,7 +71,7 @@ export class ProgressDesign<
   constructor (
     name: string,
     props: Required<P>,
-    options?: ConstructorOptionsInterface<P, S, C>,
+    options?: ConstrOptionsInterface<P, S, C>,
     emits?: SetupContext['emit']
   ) {
     super(
@@ -103,7 +103,7 @@ export class ProgressDesign<
    * Инициализация базовых опций
    * @protected
    */
-  protected initOptions (): ConstructorOptionsInterface<P, S, C> {
+  protected initOptions (): ConstrOptionsInterface<P, S, C> {
     const extra = {
       hide: this.hide,
       visible: this.visible

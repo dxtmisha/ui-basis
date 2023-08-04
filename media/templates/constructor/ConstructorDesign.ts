@@ -1,6 +1,6 @@
 import { h, SetupContext, VNode } from 'vue'
 
-import { ConstructorOptionsInterface, DesignConstructor } from '../../../classes/DesignConstructor'
+import { ConstrOptionsInterface, DesignConstructor } from '../../../classes/DesignConstructor'
 
 import {
   ConstructorComponentsInterface,
@@ -40,7 +40,7 @@ export class ConstructorDesign<
   constructor (
     name: string,
     props: Required<P>,
-    options?: ConstructorOptionsInterface<P, S, C>,
+    options?: ConstrOptionsInterface<P, S, C>,
     emits?: SetupContext['emit']
   ) {
     super(
@@ -61,7 +61,7 @@ export class ConstructorDesign<
    * Инициализация базовых опций
    * @protected
    */
-  protected initOptions (): ConstructorOptionsInterface<P, S, C> {
+  protected initOptions (): ConstrOptionsInterface<P, S, C> {
     return {}
   }
 

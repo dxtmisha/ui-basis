@@ -13,11 +13,20 @@ export const subclassesImage = {
 // Тип, описывающий входящие свойства
 export type PropsImageType = {
   // Values
-  value?: string
+  value?: string | File
+  coordinator?: [number, number?, number?, number?]
+  size?: 'auto' | 'contain' | 'cover' | string | number
+  x?: string | number
+  y?: string | number
 
-  // Status
+  // Adaptive
+  adaptiveGroup?: string
+  adaptiveAlways?: boolean
+  objectWidth?: number
+  objectHeight?: number
 
   // Options
+  url?: string
 }
 
 export type PropsImageFullType = PropsImageType & {
@@ -44,5 +53,6 @@ export const defaultsImage: PropsImageType = {
     position: 'top'
     // :default
   },
-  value: 'value'
+  adaptiveGroup: 'main',
+  url: '/icons/'
 }

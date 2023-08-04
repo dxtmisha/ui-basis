@@ -1,6 +1,16 @@
 import { computed, Ref } from 'vue'
 
-import { ImageCoordinatorType, ImageSizeType } from './types'
+import { ImageSizeType } from './ImageData'
+
+// Supported format for photo cropping of the image
+// Поддерживаемый формат для фото обрезки изображения
+export type ImageCoordinatorType = Ref<
+  [number] |
+  [number, number] |
+  [number, number, number] |
+  [number, number, number, number] |
+  undefined
+>
 
 /**
  * Class for working with coordinates

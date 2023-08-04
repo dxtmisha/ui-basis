@@ -8,13 +8,13 @@ import { ClassesListType, ClassesSubType } from './DesignClasses'
 import { StylesType } from './DesignStyles'
 import { ComponentsModificationType, ComponentsType, DesignComponents } from './DesignComponents'
 
-export type ConstructorItemType = Record<string, any>
-export type ConstructorRefsType<P extends ConstructorItemType> = {
-  [K in keyof P]-?: Ref<P[K]>
+export type ConstrItemType = Record<string, any>
+export type ConstrRefsType<P extends ConstrItemType> = {
+  [K in keyof P]-?: Ref<any>
 }
 
-export interface ConstructorOptionsInterface<
-  P extends ConstructorItemType,
+export interface ConstrOptionsInterface<
+  P extends ConstrItemType,
   S extends ClassesSubType,
   C extends ComponentsType
 > extends DesignOptionsInterface<S> {
@@ -23,20 +23,20 @@ export interface ConstructorOptionsInterface<
   modification?: ComponentsModificationType<P>
 }
 
-export interface ConstructorDesignInterface<S extends ClassesSubType> {
+export interface ConstrDesignInterface<S extends ClassesSubType> {
   classes?: ComputedRef<ClassesListType<S>>
   styles?: ComputedRef<StylesType>
 }
 
-export type ConstructorSetupType<
+export type ConstrSetupType<
   E extends Element,
   S extends ClassesSubType,
-  SETUP extends ConstructorItemType
+  SETUP extends ConstrItemType
 > = {
     name: string
     element?: Ref<E | undefined>
   }
-  & ConstructorDesignInterface<S>
+  & ConstrDesignInterface<S>
   & SETUP
 
 /**
@@ -46,22 +46,22 @@ export type ConstructorSetupType<
  */
 export class DesignConstructor<
   E extends Element,
-  SETUP extends ConstructorItemType,
-  SLOTS extends ConstructorItemType,
-  EMITS extends ConstructorItemType,
-  EXPOSE extends ConstructorItemType,
-  P extends ConstructorItemType,
+  SETUP extends ConstrItemType,
+  SLOTS extends ConstrItemType,
+  EMITS extends ConstrItemType,
+  EXPOSE extends ConstrItemType,
+  P extends ConstrItemType,
   S extends ClassesSubType,
   C extends ComponentsType
 > {
   protected readonly name: string
   protected readonly element = ref<E | undefined>()
-  protected readonly refs: ConstructorRefsType<P>
+  protected readonly refs: ConstrRefsType<P>
 
-  protected attrs?: ConstructorItemType
+  protected attrs?: ConstrItemType
   protected slots?: SLOTS
 
-  protected options: ConstructorOptionsInterface<P, S, C>
+  protected options: ConstrOptionsInterface<P, S, C>
   protected design?: Design<S>
   protected components?: DesignComponents<C, P>
 
@@ -75,7 +75,7 @@ export class DesignConstructor<
   constructor (
     name: string,
     protected readonly props: Required<P>,
-    options?: ConstructorOptionsInterface<P, S, C>,
+    options?: ConstrOptionsInterface<P, S, C>,
     protected readonly emits?: SetupContext<EMITS, SLOTS>['emit']
   ) {
     this.name = To.kebabCase(name)
@@ -100,7 +100,7 @@ export class DesignConstructor<
    * Инициализация базовых опций
    * @protected
    */
-  protected initOptions (): ConstructorOptionsInterface<P, S, C> {
+  protected initOptions (): ConstrOptionsInterface<P, S, C> {
     return {}
   }
 
@@ -178,7 +178,7 @@ export class DesignConstructor<
    *
    * Возвращает использованные классы и стили
    */
-  getDesign (): ConstructorDesignInterface<S> {
+  getDesign (): ConstrDesignInterface<S> {
     return {
       classes: this.design?.getClassesRef(),
       styles: this.design?.getStylesRef()
@@ -190,7 +190,7 @@ export class DesignConstructor<
    *
    * Метод выполнения, для замены setup в Vue
    */
-  setup (): ConstructorSetupType<E, S, SETUP> {
+  setup (): ConstrSetupType<E, S, SETUP> {
     return {
       name: this.name,
       element: this.element,
@@ -229,7 +229,7 @@ export class DesignConstructor<
    */
   protected readSlot<K extends keyof SLOTS> (
     name: K,
-    props: ConstructorItemType = {},
+    props: ConstrItemType = {},
     children?: any[]
   ): VNode | undefined {
     if (
@@ -256,7 +256,7 @@ export class DesignConstructor<
    * @private
    */
   private initDesign (
-    options?: ConstructorOptionsInterface<P, S, C>
+    options?: ConstrOptionsInterface<P, S, C>
   ) {
     if (
       options &&
@@ -279,7 +279,7 @@ export class DesignConstructor<
    * @private
    */
   private initComponents (
-    options?: ConstructorOptionsInterface<P, S, C>
+    options?: ConstrOptionsInterface<P, S, C>
   ) {
     if (
       options &&

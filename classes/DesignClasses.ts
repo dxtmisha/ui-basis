@@ -12,7 +12,8 @@ export type ClassesSubType = Record<string, string>
 export type ClassesSubListType<S extends ClassesSubType> = Record<keyof S, string>
 
 export type ClassesExtraInputType = RefOrNormalType<boolean>
-export type ClassesExtraType = Record<string, ClassesExtraInputType>
+export type ClassesExtraListType = Record<string, ClassesExtraInputType>
+export type ClassesExtraType = RefOrNormalType<ClassesExtraListType>
 
 export type ClassesListType<S extends ClassesSubType> = { main: string[] } & ClassesSubListType<S>
 
@@ -72,7 +73,7 @@ export class DesignClasses<S extends ClassesSubType> {
     const classes = [this.name]
 
     if (this.extra) {
-      forEach<ClassesExtraInputType, string, void>(this.extra, (item, name) => {
+      forEach<ClassesExtraInputType, string, void>(getRef(this.extra), (item, name) => {
         if (getRef(item)) {
           classes.push(this.getNameByState([name]))
         }

@@ -9,7 +9,8 @@ import { RefOrNormalType } from '../constructors/typesRef'
 export type StylesType = Record<string, string> | undefined
 
 export type StylesExtraInputType = RefOrNormalType<string | null>
-export type StylesExtraType = Record<string, StylesExtraInputType>
+export type StylesExtraListType = Record<string, StylesExtraInputType>
+export type StylesExtraType = RefOrNormalType<StylesExtraListType>
 
 /**
  * A class for working with user-defined values in a component
@@ -78,13 +79,16 @@ export class DesignStyles {
     const data: StylesType = {}
 
     if (this.extra) {
-      forEach<StylesExtraInputType, string, void>(this.extra, (extra, name) => {
-        const value = getRef(extra)
+      forEach<StylesExtraInputType, string, void>(
+        getRef(this.extra),
+        (extra, name) => {
+          const value = getRef(extra)
 
-        if (value) {
-          data[this.getCustomName(name)] = value.toString()
+          if (value) {
+            data[this.getCustomName(name)] = value.toString()
+          }
         }
-      })
+      )
     }
 
     return data
