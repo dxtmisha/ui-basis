@@ -43,7 +43,7 @@ const render = design.render()
 @import "../../constructors/Progress/style";
 
 // [!] System label, cannot be deleted
-// [!] Системная метка0, нельзя удалять
+// [!] Системная метка, нельзя удалять
 // :name-style
 $componentName: 'md3.progress';
 // :name-style

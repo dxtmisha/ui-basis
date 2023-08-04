@@ -20,13 +20,15 @@ const meta = {
       control: 'number',
       min: 0,
       max: 500,
-      step: 50
+      step: 50,
+      description: 'Maximum permissible value<br>Максимально допустимое значение'
     },
     visible: { control: 'boolean' },
     delay: {
       control: 'number',
       min: 0,
-      step: 100
+      step: 100,
+      description: 'Bootloader display delay<br>Задержка отображения загрузчика'
     },
     ...{
       // [!] System label, cannot be deleted
