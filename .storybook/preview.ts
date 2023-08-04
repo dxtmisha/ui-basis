@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/vue3'
 
-import '../src/main.scss'
 import './style.scss'
 
 const preview: Preview = {
@@ -12,19 +11,7 @@ const preview: Preview = {
         date: /Date$/
       }
     }
-  },
-  decorators: [
-    (story) => ({
-      components: { story },
-      template: `
-        <div class="sb-preview">
-          <div class="sb-preview__body">
-            <story/>
-          </div>
-        </div>
-      `,
-    })
-  ]
+  }
 }
 
 export default preview

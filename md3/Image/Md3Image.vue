@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ImageDesign } from '../../constructors/Image/ImageDesign'
-import { /* ImageEmitsType,  */ImageSlotsType } from '../../constructors/Image/types'
+import { ImageEmitsType/* , ImageSlotsType */ } from '../../constructors/Image/types'
 
 import { defaults, PropsType, subclasses } from './props'
 import * as map from './map.json'
@@ -14,9 +14,9 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<PropsType>(), defaults)
-// const emit = defineEmits<ImageEmitsType>()
+const emit = defineEmits<ImageEmitsType>()
 
-defineSlots<ImageSlotsType>()
+// defineSlots<ImageSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles
 // Класс для управления компонентом, в основном это для автоматической генерации классов и стилей
@@ -30,7 +30,8 @@ const design = new ImageDesign(
   {
     map,
     subclasses
-  }//, emit
+  },
+  emit
 )
 
 const render = design.render()
@@ -52,5 +53,6 @@ $componentName: 'md3.image';
 
 // Mixin for generating all classes, states and properties of component
 // Миксин для генерации всех классов, состояний и свойств компонента
-@include initImageDesign($componentName) {}
+@include initImageDesign($componentName) {
+}
 </style>

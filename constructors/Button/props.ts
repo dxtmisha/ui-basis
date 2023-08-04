@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+// import { PropType } from 'vue'
 
 // Type describing subclasses
 // Тип, описывающий подклассы

@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+// import { PropType } from 'vue'
 import { defaultsButton, PropsButtonType, subclassesButton } from '../../constructors/Button/props'
 
 // Type describing subclasses

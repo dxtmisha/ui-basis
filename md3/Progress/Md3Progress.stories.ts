@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Md3Progress from './Md3Progress.vue'
+import { stories } from '../stories'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
+  ...stories,
   title: 'MD3/Md3Progress',
   component: Md3Progress,
   tags: ['autodocs'],

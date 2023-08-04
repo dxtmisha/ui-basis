@@ -33,12 +33,10 @@ export type PropsImageFullType = PropsImageType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  adaptive?: boolean
   turn?: boolean
   disabled?: boolean
   hide?: boolean
-  adaptive?: boolean
-  linear?: boolean
-  position?: 'top' | 'bottom'
   // :type
 }
 
@@ -49,8 +47,6 @@ export const defaultsImage: PropsImageType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
-    linear: true,
-    position: 'top'
     // :default
   },
   adaptiveGroup: 'main',

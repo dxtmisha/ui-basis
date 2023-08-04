@@ -12,15 +12,10 @@ const meta = {
       // [!] System label, cannot be deleted
       // [!] Системная метка, нельзя удалять
       // :arg-types
+      adaptive: { control: 'boolean' },
       turn: { control: 'boolean' },
       disabled: { control: 'boolean' },
-      hide: { control: 'boolean' },
-      adaptive: { control: 'boolean' },
-      linear: { control: 'boolean' },
-      position: {
-        control: 'select',
-        options: ['top', 'bottom']
-      }
+      hide: { control: 'boolean' }
       // :arg-types
     }
   },
@@ -29,8 +24,6 @@ const meta = {
       // [!] System label, cannot be deleted
       // [!] Системная метка, нельзя удалять
       // :default
-      linear: true,
-      position: 'top'
       // :default
     }
   }

@@ -30,7 +30,10 @@ $designsInit: false !default;
 ///
 /// Генерация стилей для компонента
 /// @param {String} $component
-@mixin initDesign($component: 'design.component') {
+@mixin initDesign(
+  $component: 'design.component',
+  $root: false
+) {
   $designsValues: getProperties($component) !global;
   $designsInit: false !global;
 
@@ -41,14 +44,35 @@ $designsInit: false !default;
     $name: map.get($designsValues, 'name');
     $designsClassIndex: $name !global;
 
-    #{'.'}#{$name} {
-      $designsClassName: & !global;
-
+    @if ($root) {
       @content;
+    } @else {
+      #{'.'}#{$name} {
+        $designsClassName: & !global;
 
-      @if ($designsInit == false) {
-        @include initPropertiesComponent;
+        @content;
+
+        @if ($designsInit == false) {
+          @include initPropertiesComponent;
+        }
       }
+    }
+  }
+}
+
+@mixin initDesignBody(
+  $component: 'design.component',
+  $root: false
+) {
+  @if ($root) {
+    body {
+      @include initDesign($component, true) {
+        @content;
+      }
+    }
+  } @else {
+    @include initDesign($component) {
+      @content;
     }
   }
 }

@@ -1819,6 +1819,7 @@ __metadata:
     ts-jest: ^29.1.1
     typescript: ^4.9.5
     vue: ^3.3.4
+    vue-docgen-loader: ^2.0.0
     vue-loader: ^17.2.2
     vue-router: 4.2.4
     vuex: ^4.1.0
@@ -20086,6 +20087,20 @@ __metadata:
     vue-docgen-api: ">=3"
     webpack: ">=4"
   checksum: d99f485097c5d17292dc00a0d067cd72c534446f2910b64ba887a76e6ae3a213e3f336c76f636af920202b47eef192e78de00a574b0e8b9f51c690ea9558a4ca
+  languageName: node
+  linkType: hard
+
+"vue-docgen-loader@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "vue-docgen-loader@npm:2.0.0"
+  dependencies:
+    clone: ^2.1.2
+    jscodeshift: ^0.13.1
+    loader-utils: ^1.2.3
+  peerDependencies:
+    vue-docgen-api: ">=3"
+    webpack: ">=4"
+  checksum: 4607955553aefeb5c68c00b5f2d0ad34adaa2d204032f20994979da58a887f9fe8b0b45065b40bde6086dfd4b143e1656f66cd02df366d52ce464a66c99d9d67
   languageName: node
   linkType: hard
 
