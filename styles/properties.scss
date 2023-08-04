@@ -60,18 +60,10 @@ $designsInit: false !default;
   }
 }
 
-@mixin initDesignBody(
-  $component: 'design.component',
-  $root: false
-) {
-  @if ($root) {
-    body {
-      @include initDesign($component, true) {
-        @content;
-      }
-    }
-  } @else {
-    @include initDesign($component) {
+@mixin initDesignBody($component: 'design.component') {
+  body {
+    @include initDesign($component, true) {
+      @include initByLink($component);
       @content;
     }
   }

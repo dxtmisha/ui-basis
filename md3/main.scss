@@ -7,6 +7,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons+Sharp");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone");
 
-@mixin initMd3($root: true) {
-  @include initDesignBody('md3.main', $root);
+@mixin initMd3 {
+  @include initDesignBody('md3.main');
 }

@@ -50,5 +50,9 @@
     },
     "_category": "class"
   },
+  "main": {
+    "font": "{font.bodyLarge}",
+    "_category": "class"
+  },
   "file|components": "tokens/components"
 }
