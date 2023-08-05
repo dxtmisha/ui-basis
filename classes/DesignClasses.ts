@@ -73,11 +73,14 @@ export class DesignClasses<S extends ClassesSubType> {
     const classes = [this.name]
 
     if (this.extra) {
-      forEach<ClassesExtraInputType, string, void>(getRef(this.extra), (item, name) => {
-        if (getRef(item)) {
-          classes.push(this.getNameByState([name]))
+      forEach<ClassesExtraInputType, string, void>(
+        getRef(this.extra),
+        (item, name) => {
+          if (getRef(item)) {
+            classes.push(this.getCustomName(name))
+          }
         }
-      })
+      )
     }
 
     return classes
@@ -277,6 +280,21 @@ export class DesignClasses<S extends ClassesSubType> {
       return [item.className]
     } else {
       return className
+    }
+  }
+
+  /**
+   * Returns the name of the user-defined property
+   *
+   * Возвращает имя пользовательского свойства
+   * @param name property name / название свойства
+   * @private
+   */
+  private getCustomName (name: string): string {
+    if (name.match(/^\?\?/)) {
+      return this.getNameByState([name.replace(/^\?\?/, '')])
+    } else {
+      return name
     }
   }
 

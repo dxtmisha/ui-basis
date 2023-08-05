@@ -3,7 +3,7 @@ import { Geo } from '../classes/Geo'
 
 const DEFAULT_THEME = 'light'
 
-const design = ref<string>(undefined)
+const design = ref<string>('')
 const theme = ref<string>(DEFAULT_THEME)
 
 export const globalTypes = {
@@ -35,10 +35,10 @@ export const globalTypes = {
   }
 }
 
-export const decoratorTheme = (story, {
+export const decoratorTheme = (story: any, {
   globals,
   parameters
-}) => {
+}: any) => {
   Geo.set(globals.language)
 
   design.value = parameters?.design
@@ -62,7 +62,6 @@ export const decoratorTheme = (story, {
     },
     template: `
       <div :class="classes">
-        {{ classes }}
         <div class="sb-preview__body">
           <story/>
         </div>

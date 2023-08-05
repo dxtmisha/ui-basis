@@ -35,10 +35,10 @@ export type PropsImageFullType = PropsImageType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
-  adaptive?: boolean
   turn?: boolean
   disabled?: boolean
   hide?: boolean
+  adaptive?: boolean
   // :type
 }
 

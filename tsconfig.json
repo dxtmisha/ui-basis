@@ -33,6 +33,9 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "md3/**/*.ts",
+    "md3/**/*.tsx",
+    "md3/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

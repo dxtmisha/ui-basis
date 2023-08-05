@@ -111,6 +111,10 @@ export class DesignStyles {
    * @private
    */
   private getCustomName (name: string): string {
-    return `--${this.name}-sys-${name}`
+    if (name.match(/^\?\?/)) {
+      return name.replace(/^\?\?/, `--${this.name}-sys-`)
+    } else {
+      return name
+    }
   }
 }

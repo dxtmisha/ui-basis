@@ -5,9 +5,6 @@
   "color-opacity": {
     "_type": "var"
   },
-  "adaptive": {
-    "_type": "state"
-  },
   "turn": {
     "_type": "state"
   },
@@ -15,6 +12,9 @@
     "_type": "state"
   },
   "hide": {
+    "_type": "state"
+  },
+  "adaptive": {
     "_type": "state"
   }
 }

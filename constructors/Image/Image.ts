@@ -28,7 +28,6 @@ export class Image {
   /**
    * Constructor
    * @param element image element for scaling / элемент изображения для масштабирования
-   * @param className base name of the current class / базовое название текущего класса
    * @param image values from the image / значения из изображения
    * @param coordinator coordinates for margins / координаты для отступов
    * @param x coordinate of the picture on the left / координата картины слева
@@ -43,7 +42,6 @@ export class Image {
    */
   constructor (
     protected readonly element: ImageElementType,
-    protected readonly className: string,
     protected readonly image: ImageValueType,
     url?: Ref<string>,
     size?: ImageOptionType,
@@ -152,7 +150,7 @@ export class Image {
   readonly classes = computed<ClassesExtraListType>(() => {
     const type = this.type.get()
     const data = {
-      [`${this.className}--type--${type}`]: type !== undefined,
+      [`??type--${type}`]: type !== undefined,
       notranslate: true
     }
 

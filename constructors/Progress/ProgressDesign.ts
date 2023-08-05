@@ -110,18 +110,18 @@ export class ProgressDesign<
    */
   protected initOptions (): ConstrOptionsInterface<P, S, C> {
     const extra = {
-      hide: this.hide,
-      visible: this.visible
+      '??hide': this.hide,
+      '??visible': this.visible
     }
 
     if (this.value) {
       return {
         extra: {
           ...extra,
-          value: this.value.isValue
+          '??value': this.value.isValue
         },
         styles: {
-          value: this.value.valueInPercent
+          '??value': this.value.valueInPercent
         }
       }
     } else {

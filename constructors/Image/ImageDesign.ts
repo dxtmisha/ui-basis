@@ -60,7 +60,6 @@ export class ImageDesign<
 
     this.image = new Image(
       this.element,
-      name,
       this.refs.value,
       this.refs?.url,
       this.refs?.size,
@@ -112,8 +111,6 @@ export class ImageDesign<
    * @protected
    */
   protected initRender (): VNode {
-    // const children: any[] = []
-
     return h('span', {
       ref: this.element,
       class: this.design?.getClasses().main,
