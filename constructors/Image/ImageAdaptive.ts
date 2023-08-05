@@ -68,8 +68,6 @@ export class ImageAdaptive {
    * @private
    */
   private update (): void {
-    this.remove()
-
     if (this.is()) {
       this.item = ImageAdaptiveGroup.add(
         this.element,
@@ -80,6 +78,9 @@ export class ImageAdaptive {
         this.width,
         this.height
       )
+    } else if (this.item) {
+      this.remove()
+      this.item = undefined
     }
   }
 }

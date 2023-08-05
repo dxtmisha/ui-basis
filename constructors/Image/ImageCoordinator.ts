@@ -79,31 +79,35 @@ export class ImageCoordinator {
    */
   getCoordinator (): [number, number, number, number] {
     if (this.coordinator.value) {
-      switch (this.coordinator.value.length) {
+      const coordinator: number[] = Array.isArray(this.coordinator.value)
+        ? this.coordinator.value
+        : Object.values(this.coordinator.value)
+
+      switch (coordinator.length) {
         case 1:
           return [
-            this.coordinator.value[0],
-            this.coordinator.value[0],
-            this.coordinator.value[0],
-            this.coordinator.value[0]
+            coordinator[0],
+            coordinator[0],
+            coordinator[0],
+            coordinator[0]
           ]
         case 2:
           return [
-            this.coordinator.value[0],
-            this.coordinator.value[1],
-            this.coordinator.value[0],
-            this.coordinator.value[1]
+            coordinator[0],
+            coordinator[1],
+            coordinator[0],
+            coordinator[1]
           ]
 
         case 3:
           return [
-            this.coordinator.value[0],
-            this.coordinator.value[1],
-            this.coordinator.value[2],
-            this.coordinator.value[1]
+            coordinator[0],
+            coordinator[1],
+            coordinator[2],
+            coordinator[1]
           ]
         case 4:
-          return this.coordinator.value
+          return coordinator as [number, number, number, number]
       }
     }
 

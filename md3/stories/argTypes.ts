@@ -12,10 +12,6 @@ export const icon = {
   options: [
     'search',
     'home',
-    'account_circle',
-    'settings',
-    'done',
-    'info',
     '@market-coffee',
     '@market-vegetables',
     'https://drscdn.500px.org/photo/294267357/q%3D80_m%3D2000/v2?sig=03989c1970e5921d8ab67b23e03e79b8db13b7e7d3bc3f72829cc9eecbb42cf4',

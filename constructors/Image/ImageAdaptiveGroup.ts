@@ -76,6 +76,7 @@ export class ImageAdaptiveGroup {
 
     if (key !== -1) {
       this.objects.splice(key, 1)
+      this.cache = []
     }
 
     this.init()

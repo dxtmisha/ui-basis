@@ -36,16 +36,12 @@ export class ImageBackground {
    * @private
    */
   private readonly item = computed<string | null>(() => {
-    const size = this.size?.value
-
     if (this.coordinator?.is()) {
       return this.getSizeByCoordinator()
     } else if (this.adaptive?.is()) {
-      return this.adaptive.getSize()
-    } else if (size && isFilled(size)) {
-      return size.toString().match(/%$/) ? this.getSize(size, size) : size.toString()
+      return this.adaptive?.getSize() || this.getSizeForItem()
     } else {
-      return null
+      return this.getSizeForItem()
     }
   })
 
@@ -119,6 +115,22 @@ export class ImageBackground {
       } = this.coordinator.getSize()
 
       return this.getSize(width, height)
+    } else {
+      return null
+    }
+  }
+
+  /**
+   * Returns the sizes for the value
+   *
+   * Возвращает размеры для значения
+   * @protected
+   */
+  protected getSizeForItem (): string | null {
+    const size = this.size?.value
+
+    if (size && isFilled(size)) {
+      return size.toString().match(/%$/) ? this.getSize(size, size) : size.toString()
     } else {
       return null
     }
