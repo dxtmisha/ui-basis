@@ -19,7 +19,8 @@
       --d-dir-padding-right: var(--sys-padding-right, 0);
     }
 
-    &[dir="rtl"] {
+    &[dir="rtl"],
+    .dir-rtl {
       direction: rtl;
 
       --d-dir: -1;

@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/vue3'
+import { decoratorTheme, globalTypes } from '../constructors/storybookPreview'
 
 import './style.scss'
 
@@ -11,7 +12,9 @@ const preview: Preview = {
         date: /Date$/
       }
     }
-  }
+  },
+  globalTypes,
+  decorators: [decoratorTheme]
 }
 
 export default preview

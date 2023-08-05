@@ -13,7 +13,11 @@ export class Env {
    * отсутствии значения
    */
   static get (key: string, value?: string): string {
-    return process.env?.[`VUE_APP_${key}`] || value || ''
+    if (process) {
+      return process.env?.[`VUE_APP_${key}`] || value || ''
+    } else {
+      return value || ''
+    }
   }
 
   /**

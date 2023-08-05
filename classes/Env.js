@@ -16,7 +16,11 @@ class Env {
      * отсутствии значения
      */
   static get (key, value) {
-    return process.env?.[`VUE_APP_${key}`] || value || ''
+    if (process) {
+      return process.env?.[`VUE_APP_${key}`] || value || ''
+    } else {
+      return value || ''
+    }
   }
 
   /**
@@ -55,7 +59,7 @@ class Env {
      * Возвращает PREFIX
      */
   static prefix () {
-    return this.get('PREFIX', '_d_')
+    return this.get('PREFIX', '__dUi')
   }
 }
 exports.Env = Env
