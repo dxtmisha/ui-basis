@@ -109,7 +109,8 @@ const meta = {
         category: 'Adaptive',
         type: { summary: 'number' }
       }
-    }
+    },
+    onLoad: { action: 'load' }
   },
   args: {
     value: 'home'
