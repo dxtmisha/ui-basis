@@ -3,7 +3,7 @@ import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { ImageDesign } from '../../constructors/Image/ImageDesign'
 import { ImageEmitsType/* , ImageSlotsType */ } from '../../constructors/Image/types'
 
-import { defaults, PropsType, subclasses } from './props'
+import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
 
 defineOptions({
@@ -14,7 +14,7 @@ defineOptions({
   // :name-component
 })
 
-const props = withDefaults(defineProps<PropsType>(), defaults)
+const props = defineProps(propsInstruction)
 const emit = defineEmits<ImageEmitsType>()
 
 // defineSlots<ImageSlotsType>()
@@ -40,7 +40,6 @@ const render = design.render()
 
 <template>
   <render/>
-
 </template>
 
 <style lang="scss">

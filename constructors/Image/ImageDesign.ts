@@ -1,31 +1,30 @@
 import { h, onUnmounted, VNode, watch } from 'vue'
 
-import { ComponentsType } from '../../classes/DesignComponents'
 import {
-  ConstrOptionsInterface,
-  DesignConstructor,
+  ConstrEmitType,
   ConstrItemType,
-  ConstrEmitType
+  ConstrOptionsInterface,
+  DesignConstructor
 } from '../../classes/DesignConstructor'
 
 import { Image } from './Image'
 
 import {
   ImageEmitsType,
-  ImageExposeType,
+  ImageExposeInterface,
   ImageSetupInterface
 } from './types'
-import { PropsImageFullType, subclassesImage } from './props'
+import { PropsImageType, subclassesImage } from './props'
 
 /**
  * ImageDesign
  */
 export class ImageDesign<
   SETUP extends ImageSetupInterface,
-  EXPOSE extends ImageExposeType,
-  P extends PropsImageFullType,
+  EXPOSE extends ImageExposeInterface,
+  P extends PropsImageType,
   S extends typeof subclassesImage,
-  C extends ComponentsType
+  C extends ConstrItemType
 > extends DesignConstructor<
   HTMLSpanElement,
   SETUP,
@@ -47,7 +46,7 @@ export class ImageDesign<
    */
   constructor (
     name: string,
-    props: Required<P>,
+    props: Readonly<P>,
     options?: ConstrOptionsInterface<P, S, C>,
     emits?: ConstrEmitType<ImageEmitsType>
   ) {

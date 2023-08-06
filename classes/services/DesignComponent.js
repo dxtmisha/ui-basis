@@ -381,7 +381,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       const story = this.stories?.[name] || {}
 
       if (!sample.match(
-        new RegExp(`(?<=argTypes:)[\\S\\s]+${name}[\\S\\s]+(?=:arg-style)`)
+        new RegExp(`(?<=:arg-basic)[\\S\\s]+${name}[:,][\\S\\s]+(?=:arg-basic)`)
       )) {
         let template = `\r\n${space}${name}: {`
         let type
