@@ -7,7 +7,7 @@ import { Design } from '../../../classes/Design'
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
 // :constructor.once import { /* ConstructorEmitsType, */ConstructorSlotsType } from '../../../constructors/Constructor/types'
 
-import { defaults, PropsType, subclasses } from './props'
+import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
 
 defineOptions({
@@ -18,7 +18,7 @@ defineOptions({
   // :name-component
 })
 
-const props = withDefaults(defineProps<PropsType>(), defaults)
+const props = defineProps(propsInstruction)
 // const emit = defineEmits/* :constructor.once <ConstructorEmitsType> */(/* :basic.once */[]/* :basic.once.end */)
 
 defineSlots/* :constructor.once <ConstructorSlotsType> */()

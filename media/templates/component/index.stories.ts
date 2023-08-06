@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import DesignComponent from './index.vue'
-import { stories } from '../stories'
+import { stories } from '../../stories'
+
+import { argTypes } from './argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
@@ -9,22 +11,8 @@ const meta = {
   title: 'Design/DesignComponent',
   component: DesignComponent,
   tags: ['autodocs'],
-  argTypes: {
-    ...{
-      // [!] System label, cannot be deleted
-      // [!] Системная метка, нельзя удалять
-      // :arg-types
-      // :arg-types
-    }
-  },
-  args: {
-    ...{
-      // [!] System label, cannot be deleted
-      // [!] Системная метка, нельзя удалять
-      // :default
-      // :default
-    }
-  }
+  argTypes,
+  args: {}
 } satisfies Meta<typeof DesignComponent>
 
 type Story = StoryObj<typeof meta>;

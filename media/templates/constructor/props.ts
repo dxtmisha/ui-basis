@@ -1,3 +1,5 @@
+// :constructor.once import { PropType } from 'vue'
+
 // Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclassesConstructor = {
@@ -11,7 +13,7 @@ export const subclassesConstructor = {
 
 // Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
-export type PropsConstructorType = {
+export type PropsConstructorBasicType = {
   // Values
   value?: string
 
@@ -22,7 +24,7 @@ export type PropsConstructorType = {
 
 // Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
-export type PropsConstructorFullType = PropsConstructorType & {
+export type PropsConstructorType = PropsConstructorBasicType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
@@ -39,4 +41,21 @@ export const defaultsConstructor: PropsConstructorType = {
     // :default
   },
   value: 'value'
+}
+
+// Constructor for property
+// Конструктор для свойства
+export const propsConstructor = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :prop
+    // :prop
+  },
+  // Values
+  value: String
+
+  // Status
+
+  // Options
 }

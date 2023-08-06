@@ -1,9 +1,3 @@
-// Interface for describing which components need to be connected for work<br>
-// Интерфейс для описания, какие компоненты надо подключить для работы
-export interface ConstructorComponentsInterface {
-  component: object
-}
-
 // Interface for describing what property setup returns<br>
 // Интерфейс для описания, какое свойство возвращает setup
 export interface ConstructorSetupInterface {
@@ -24,6 +18,12 @@ export type ConstructorEmitsType = {
 
 // Type describing available properties<br>
 // Тип, описывающий доступные свойства
-export type ConstructorExposeType = {
+export interface ConstructorExposeInterface {
   name: string
+}
+
+// Interface for describing which components need to be connected for work<br>
+// Интерфейс для описания, какие компоненты надо подключить для работы
+export interface ConstructorComponentsInterface {
+  component: object
 }

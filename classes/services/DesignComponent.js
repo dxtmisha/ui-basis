@@ -14,7 +14,10 @@ const FILE_MAP = 'map.json'
 const FILE_PROPERTIES = 'properties.json'
 // const FILE_SCSS = 'style.scss'
 const FILE_STYLE = 'style.css'
+
 const FILE_STORIES = 'index.stories.ts'
+const FILE_STORIES_TYPES = 'argTypes.ts'
+const FILE_STORIES_PROPERTIES = 'properties.stories.json'
 
 /**
  * Class for creating a component or updating data
@@ -39,6 +42,8 @@ module.exports = class DesignComponent extends DesignPrototype {
 
     this.properties = new Properties()
     this.properties.getBasic()
+
+    this.stories = this.getStories()
   }
 
   initMain () {
@@ -53,6 +58,7 @@ module.exports = class DesignComponent extends DesignPrototype {
       .__initProperties()
       .__initStyle()
       .__initStories()
+      .__initStoriesTypes()
   }
 
   /**
@@ -63,6 +69,16 @@ module.exports = class DesignComponent extends DesignPrototype {
    */
   getNameCommand () {
     return this.loader.getName()
+  }
+
+  getStories () {
+    const file = FILE_STORIES_PROPERTIES
+
+    if (!this._isFile(file)) {
+      this._createFile(file, '{}')
+    }
+
+    return this._read(file)
   }
 
   /**
@@ -305,23 +321,17 @@ module.exports = class DesignComponent extends DesignPrototype {
   }
 
   __initStories () {
-    const main = this.__getFileMainStories()
-    let sample
+    const file = this.__getFileMainStories()
 
-    if (this._isFile(main)) {
-      sample = this.__readStories()
-    } else {
-      sample = this.__readSampleStories()
+    if (!this._isFile(file)) {
+      const sample = this.__readSampleStories()
         .replace('index.vue', this.__getFileMain())
         .replaceAll('Design', To.camelCaseFirst(this.loader.getDesign()))
         .replaceAll('Component', this.loader.getComponent())
-    }
 
-    if (sample) {
-      sample = this.__replaceStoriesArgTypes(sample)
-      sample = this._replacePropsDefault(sample, '      ')
-
-      this._createFile(main, sample)
+      if (sample) {
+        this._createFile(file, sample)
+      }
     }
 
     return this
@@ -338,6 +348,21 @@ module.exports = class DesignComponent extends DesignPrototype {
     return `${this.loader.getNameForFile()}.stories.ts`
   }
 
+  __initStoriesTypes () {
+    const file = FILE_STORIES_TYPES
+    let sample = this._isFile(file)
+      ? this._read(file)
+      : this._readSample(file)
+
+    if (sample) {
+      sample = this.__replaceStoriesArgTypes(sample)
+
+      this._createFile(file, sample)
+    }
+
+    return this
+  }
+
   /**
    * Adding default values for properties
    *
@@ -352,6 +377,7 @@ module.exports = class DesignComponent extends DesignPrototype {
 
     forEach(props, (item, index) => {
       const name = To.camelCase(index)
+      const story = this.stories?.[name] || {}
 
       if (!sample.match(
         new RegExp(`(?<=argTypes:)[\\S\\s]+${name}[\\S\\s]+(?=:arg-style)`)
@@ -376,8 +402,12 @@ module.exports = class DesignComponent extends DesignPrototype {
             .replaceAll('\'', '')
         }
 
+        if (story?.description) {
+          template += `\r\n        description: \`${story.description.join('<br><br>')}\`,`
+        }
+
         template += '\r\n        table: {' +
-          '\r\n          category: \'Styles\',' +
+          `\r\n          category: '${story?.category || 'Styles'}',` +
           (item.default ? `\r\n          defaultValue: { summary: '${item.default}' },` : '') +
           `\r\n          type: { summary: '${type}' }` +
           '\r\n        }' +

@@ -5,19 +5,19 @@ import { ConstrEmitType, ConstrOptionsInterface, DesignConstructor } from '../..
 import {
   ConstructorComponentsInterface,
   ConstructorEmitsType,
-  ConstructorExposeType,
+  ConstructorExposeInterface,
   ConstructorSetupInterface,
   ConstructorSlotsType
 } from './types'
-import { PropsConstructorFullType, subclassesConstructor } from './props'
+import { PropsConstructorType, subclassesConstructor } from './props'
 
 /**
  * ConstructorDesign
  */
 export class ConstructorDesign<
   SETUP extends ConstructorSetupInterface,
-  EXPOSE extends ConstructorExposeType,
-  P extends PropsConstructorFullType,
+  EXPOSE extends ConstructorExposeInterface,
+  P extends PropsConstructorType,
   S extends typeof subclassesConstructor,
   C extends ConstructorComponentsInterface
 > extends DesignConstructor<

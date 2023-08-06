@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Md3Image from './Md3Image.vue'
-import { stories } from '../stories'
+import { main } from '../main'
 
 import { disabled, hide, icon, onLoad, turn } from '../stories/argTypes'
 
@@ -14,7 +14,7 @@ const images = {
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
-  ...stories,
+  ...main,
   title: 'Md3/Md3Image',
   component: Md3Image,
   tags: ['autodocs'],
