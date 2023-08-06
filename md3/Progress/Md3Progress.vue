@@ -3,7 +3,7 @@ import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { ProgressDesign } from '../../constructors/Progress/ProgressDesign'
 // import { ProgressEmitsType, ProgressSlotsType } from '../../constructors/Progress/types'
 
-import { defaults, PropsType, subclasses } from './props'
+import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
 
 defineOptions({
@@ -14,8 +14,9 @@ defineOptions({
   // :name-component
 })
 
-const props = withDefaults(defineProps<PropsType>(), defaults)
+const props = defineProps(propsInstruction)
 // const emit = defineEmits<ProgressEmitsType>()
+
 // defineSlots<ProgressSlotsType>()
 
 // Class for managing component, mainly this is for automatic generation of classes and styles<br>
@@ -44,7 +45,7 @@ const render = design.render()
 @import "../../constructors/Progress/style";
 
 // [!] System label, cannot be deleted
-// [!] Системная метка, нельзя удалять
+// [!] Системная метка0, нельзя удалять
 // :name-style
 $componentName: 'md3.progress';
 // :name-style

@@ -1,17 +1,15 @@
 import { computed, h, ref, VNode, watch } from 'vue'
 
 import {
-  ConstrEmitType,
   ConstrItemType,
   ConstrOptionsInterface,
   DesignConstructor
 } from '../../classes/DesignConstructor'
-import { ComponentsType } from '../../classes/DesignComponents'
 
 import { ProgressValue } from './ProgressValue'
 
 import { ProgressSetupInterface } from './types'
-import { PropsProgressFullType, subclassesProgress } from './props'
+import { PropsProgressType, subclassesProgress } from './props'
 
 /**
  * ProgressDesign
@@ -19,11 +17,11 @@ import { PropsProgressFullType, subclassesProgress } from './props'
 export class ProgressDesign<
   SETUP extends ProgressSetupInterface,
   EXPOSE extends ConstrItemType,
-  P extends PropsProgressFullType,
+  P extends PropsProgressType,
   S extends typeof subclassesProgress,
-  C extends ComponentsType
+  C extends ConstrItemType
 > extends DesignConstructor<
-  HTMLDivElement,
+  HTMLElement,
   SETUP,
   ConstrItemType,
   ConstrItemType,
@@ -32,58 +30,28 @@ export class ProgressDesign<
   S,
   C
 > {
-  /**
-   * Defines the conditions for transitioning to a hidden state
-   *
-   * Определяет условия для перехода в скрытое состояние
-   * @protected
-   */
   private readonly hide = ref<boolean>(false)
-
-  /**
-   * Defines the conditions for opening
-   *
-   * Определяет условия для открытия
-   * @protected
-   */
   private readonly visible = ref<boolean>(false)
-
-  /**
-   * Determines the type of the main element
-   *
-   * Определяет, какой тип у главного элемента
-   * @protected
-   */
-  private readonly tag = computed<string>(() => this.props?.circular ? 'svg' : 'div')
-
-  private readonly value?: ProgressValue<P>
-
-  /**
-   * Time for delay control
-   *
-   * Время для управления задержкой
-   * @protected
-   */
   private timeout?: NodeJS.Timeout
+
+  private readonly tag = computed<string>(() => this.props?.circular ? 'svg' : 'div')
+  private readonly value?: ProgressValue<P>
 
   /**
    * Constructor
    * @param name class name / название класса
    * @param props properties / свойства
    * @param options list of additional parameters / список дополнительных параметров
-   * @param emits function for calling an event / функция для вызова события
    */
   constructor (
     name: string,
-    props: Required<P>,
-    options?: ConstrOptionsInterface<P, S, C>,
-    emits?: ConstrEmitType
+    props: Readonly<P>,
+    options?: ConstrOptionsInterface<P, S, C>
   ) {
     super(
       name,
       props,
-      options,
-      emits
+      options
     )
 
     const source: any[] = [this.refs.visible]
@@ -180,6 +148,15 @@ export class ProgressDesign<
       viewBox: '0 0 48 48',
       onAnimationend: (event: AnimationEvent) => this.onAnimation(event)
     }, children)
+  }
+
+  /**
+   * List of available external variables
+   *
+   * Список доступных переменных извне
+   */
+  expose (): EXPOSE {
+    return {} as EXPOSE
   }
 
   /**

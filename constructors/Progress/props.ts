@@ -1,3 +1,5 @@
+import { PropType } from 'vue'
+
 // Type describing subclasses<br>
 // Тип, описывающий подклассы
 export const subclassesProgress = {
@@ -12,7 +14,7 @@ export const subclassesProgress = {
 
 // Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
-export type PropsProgressType = {
+export type PropsProgressBasicType = {
   // Values
   value?: number
   max?: number
@@ -26,7 +28,7 @@ export type PropsProgressType = {
 
 // Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
-export type PropsProgressFullType = PropsProgressType & {
+export type PropsProgressType = PropsProgressBasicType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
@@ -53,4 +55,45 @@ export const defaultsProgress: PropsProgressType = {
   },
   max: 100,
   delay: 480
+}
+
+// Progress for property
+// Конструктор для свойства
+export const propsProgress = {
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :prop
+    linear: {
+      type: Boolean,
+      default: defaultsProgress?.linear
+    },
+    circular: Boolean,
+    indeterminate: {
+      type: String as PropType<PropsProgressType['indeterminate']>,
+      default: defaultsProgress?.indeterminate
+    },
+    position: {
+      type: String as PropType<PropsProgressType['position']>,
+      default: defaultsProgress?.position
+    },
+    dense: Boolean,
+    inverse: Boolean
+    // :prop
+  },
+  // Values
+  value: Number,
+  max: {
+    type: Number,
+    default: defaultsProgress?.max
+  },
+
+  // Status
+  visible: Boolean,
+
+  // Options
+  delay: {
+    type: Number,
+    default: defaultsProgress?.delay
+  }
 }

@@ -39,7 +39,7 @@ export class ConstructorDesign<
    */
   constructor (
     name: string,
-    props: Required<P>,
+    props: Readonly<P>,
     options?: ConstrOptionsInterface<P, S, C>,
     emits?: ConstrEmitType<ConstructorEmitsType>
   ) {

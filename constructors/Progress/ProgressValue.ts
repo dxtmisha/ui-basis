@@ -1,8 +1,8 @@
 import { computed } from 'vue'
-import { PropsProgressFullType } from './props'
+import { PropsProgressType } from './props'
 
 export class ProgressValue<
-  P extends PropsProgressFullType
+  P extends PropsProgressType
 > {
   /**
    * Checks if a specific value has been passed
@@ -36,7 +36,7 @@ export class ProgressValue<
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
-    protected readonly props: Required<P>
+    protected readonly props: Readonly<P>
   ) {
   }
 }

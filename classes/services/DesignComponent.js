@@ -374,6 +374,7 @@ module.exports = class DesignComponent extends DesignPrototype {
   __replaceStoriesArgTypes (sample) {
     const props = this.loader.get()
     const templates = []
+    const space = '    '
 
     forEach(props, (item, index) => {
       const name = To.camelCase(index)
@@ -382,20 +383,20 @@ module.exports = class DesignComponent extends DesignPrototype {
       if (!sample.match(
         new RegExp(`(?<=argTypes:)[\\S\\s]+${name}[\\S\\s]+(?=:arg-style)`)
       )) {
-        let template = `\r\n      ${name}: {`
+        let template = `\r\n${space}${name}: {`
         let type
 
         if (
           item.valueAll.length === 1 &&
           item.valueAll[0] === true
         ) {
-          template += '\r\n        control: \'boolean\','
+          template += `\r\n${space}  control: 'boolean',`
           type = 'boolean'
         } else {
           const options = forEach(item.valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)
 
-          template += '\r\n        control: \'select\','
-          template += `\r\n        options: [${options.join(', ')}],`
+          template += `\r\n${space}  control: 'select',`
+          template += `\r\n${space}  options: [${options.join(', ')}],`
 
           type = options
             .join(' | ')
@@ -403,20 +404,21 @@ module.exports = class DesignComponent extends DesignPrototype {
         }
 
         if (story?.description) {
-          template += `\r\n        description: \`${story.description.join('<br><br>')}\`,`
+          template += `\r\n${space}  description: '${story.description.join('<br><br>').replace(/(?<!\\)'/, '\\\'')}',`
         }
 
-        template += '\r\n        table: {' +
-          `\r\n          category: '${story?.category || 'Styles'}',` +
-          (item.default ? `\r\n          defaultValue: { summary: '${item.default}' },` : '') +
-          `\r\n          type: { summary: '${type}' }` +
-          '\r\n        }' +
-          '\r\n      }'
+        template +=
+          `\r\n${space}  table: {` +
+          `\r\n${space}    category: '${story?.category || 'Styles'}',` +
+          (item.default ? `\r\n${space}    defaultValue: { summary: '${item.default}' },` : '') +
+          `\r\n${space}    type: { summary: '${type}' }` +
+          `\r\n${space}  }` +
+          `\r\n${space}}`
 
         templates.push(template)
       }
     })
 
-    return this._replacement(sample, 'arg-types', templates.join(','), '      ')
+    return this._replacement(sample, 'arg-types', templates.join(','), space)
   }
 }

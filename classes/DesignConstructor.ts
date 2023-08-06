@@ -1,4 +1,4 @@
-import { ComputedRef, h, ref, Ref, toRefs, useAttrs, useSlots, VNode } from 'vue'
+import { ComputedRef, h, ref, Ref, toRefs, ToRefs, useAttrs, useSlots, VNode } from 'vue'
 import { isFilled } from '../functions/data'
 import { To } from './To'
 
@@ -63,7 +63,7 @@ export class DesignConstructor<
 > {
   protected readonly name: string
   protected readonly element = ref<E | undefined>()
-  protected readonly refs: ConstrRefsType<P>
+  protected readonly refs: ToRefs<P>
 
   protected attrs?: ConstrItemType
   protected slots?: SLOTS
@@ -81,7 +81,7 @@ export class DesignConstructor<
    */
   constructor (
     name: string,
-    protected readonly props: Required<P>,
+    protected readonly props: Readonly<P>,
     options?: ConstrOptionsInterface<P, S, C>,
     protected readonly emits?: ConstrEmitType<EMITS>
   ) {

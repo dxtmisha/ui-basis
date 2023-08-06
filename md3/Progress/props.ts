@@ -1,4 +1,5 @@
-import { defaultsProgress, PropsProgressType, subclassesProgress } from '../../constructors/Progress/props'
+import { PropType } from 'vue'
+import { defaultsProgress, propsProgress, PropsProgressBasicType, subclassesProgress } from '../../constructors/Progress/props'
 
 // Type describing subclasses<br>
 // Тип, описывающий подклассы
@@ -15,7 +16,7 @@ export const subclasses = {
 
 // Type describing incoming properties<br>
 // Тип, описывающий входящие свойства
-export type PropsType = PropsProgressType & {
+export type PropsType = PropsProgressBasicType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
@@ -40,5 +41,32 @@ export const defaults: PropsType = {
     indeterminate: 'type1',
     position: 'top'
     // :default
+  }
+}
+
+// Constructor for property
+// Конструктор для свойства
+export const propsInstruction = {
+  ...propsProgress,
+  ...{
+    // [!] System label, cannot be deleted
+    // [!] Системная метка, нельзя удалять
+    // :prop
+    linear: {
+      type: Boolean,
+      default: defaults?.linear
+    },
+    circular: Boolean,
+    indeterminate: {
+      type: String as PropType<PropsType['indeterminate']>,
+      default: defaults?.indeterminate
+    },
+    position: {
+      type: String as PropType<PropsType['position']>,
+      default: defaults?.position
+    },
+    dense: Boolean,
+    inverse: Boolean
+    // :prop
   }
 }
