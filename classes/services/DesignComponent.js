@@ -362,7 +362,7 @@ module.exports = class DesignComponent extends DesignPrototype {
         const options = forEach(valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)
           .join(', ')
         templates.push(
-          `\r\n      ${index}: {` +
+          `\r\n      ${To.camelCase(index)}: {` +
           '\r\n        control: \'select\',' +
           `\r\n        options: [${options}]` +
           '\r\n      }'
