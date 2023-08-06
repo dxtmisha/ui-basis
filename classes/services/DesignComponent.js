@@ -350,23 +350,40 @@ module.exports = class DesignComponent extends DesignPrototype {
     const props = this.loader.get()
     const templates = []
 
-    forEach(props, ({ valueAll }, index) => {
-      if (
-        valueAll.length === 1 &&
-        valueAll[0] === true
-      ) {
-        templates.push(
-          `\r\n      ${To.camelCase(index)}: { control: 'boolean' }`
-        )
-      } else {
-        const options = forEach(valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)
-          .join(', ')
-        templates.push(
-          `\r\n      ${To.camelCase(index)}: {` +
-          '\r\n        control: \'select\',' +
-          `\r\n        options: [${options}]` +
+    forEach(props, (item, index) => {
+      const name = To.camelCase(index)
+
+      if (!sample.match(
+        new RegExp(`(?<=argTypes:)[\\S\\s]+${name}[\\S\\s]+(?=:arg-style)`)
+      )) {
+        let template = `\r\n      ${name}: {`
+        let type
+
+        if (
+          item.valueAll.length === 1 &&
+          item.valueAll[0] === true
+        ) {
+          template += '\r\n        control: \'boolean\','
+          type = 'boolean'
+        } else {
+          const options = forEach(item.valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)
+
+          template += '\r\n        control: \'select\','
+          template += `\r\n        options: [${options.join(', ')}],`
+
+          type = options
+            .join(' | ')
+            .replaceAll('\'', '')
+        }
+
+        template += '\r\n        table: {' +
+          '\r\n          category: \'Styles\',' +
+          (item.default ? `\r\n          defaultValue: { summary: '${item.default}' },` : '') +
+          `\r\n          type: { summary: '${type}' }` +
+          '\r\n        }' +
           '\r\n      }'
-        )
+
+        templates.push(template)
       }
     })
 

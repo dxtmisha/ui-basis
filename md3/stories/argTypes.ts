@@ -33,6 +33,17 @@ export const status = {
   }
 }
 
+export const active = status
 export const turn = status
 export const disabled = status
 export const hide = status
+
+// Events
+
+export const onLoad = {
+  action: 'load',
+  table: {
+    category: 'Events',
+    type: { summary: '(image: string | ImageItemType) => void' }
+  }
+}

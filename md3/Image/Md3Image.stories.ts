@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import Md3Image from './Md3Image.vue'
 import { stories } from '../stories'
 
-import { disabled, hide, icon, turn } from '../stories/argTypes'
+import { disabled, hide, icon, onLoad, turn } from '../stories/argTypes'
 
 const images = {
   galaxy_s23: require('../stories/images/galaxy_s23.png'),
@@ -110,7 +110,7 @@ const meta = {
         type: { summary: 'number' }
       }
     },
-    onLoad: { action: 'load' }
+    onLoad
   },
   args: {
     value: 'home'
