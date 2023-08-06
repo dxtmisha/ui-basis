@@ -18,7 +18,7 @@ defineOptions({
   // :name-component
 })
 
-const props = defineProps(propsInstruction)
+const props = defineProps({ ...propsInstruction })
 // const emit = defineEmits/* :constructor.once <ConstructorEmitsType> */(/* :basic.once */[]/* :basic.once.end */)
 
 defineSlots/* :constructor.once <ConstructorSlotsType> */()

@@ -14,7 +14,7 @@ defineOptions({
   // :name-component
 })
 
-const props = defineProps(propsInstruction)
+const props = defineProps({ ...propsInstruction })
 // const emit = defineEmits<ProgressEmitsType>()
 
 // defineSlots<ProgressSlotsType>()

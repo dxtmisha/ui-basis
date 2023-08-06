@@ -21,10 +21,48 @@ type Story = StoryObj<typeof meta>;
 
 export default meta
 
-export const Progress: Story = { name: 'Visible' }
+export const Progress: Story = { name: 'visible' }
+
+export const ProgressDelay: Story = {
+  name: 'delay',
+  args: {
+    visible: true,
+    linear: true
+  },
+  render: (args: any) => ({
+    components: { Md3Progress },
+    setup () {
+      return { args }
+    },
+    template: `
+      <div style="width: 100%;">
+        delay=0
+        <div style="position: relative; width: 100%; height: 24px;">
+          <md3-progress :delay="0" v-bind="args"/>
+        </div>
+        delay=200
+        <div style="position: relative; width: 100%; height: 24px;">
+          <md3-progress :delay="200" v-bind="args"/>
+        </div>
+        delay=800
+        <div style="position: relative; width: 100%; height: 24px;">
+          <md3-progress :delay="800" v-bind="args"/>
+        </div>
+        delay=1600
+        <div style="position: relative; width: 100%; height: 24px;">
+          <md3-progress :delay="1600" v-bind="args"/>
+        </div>
+        delay=3600
+        <div style="position: relative; width: 100%; height: 24px;">
+          <md3-progress :delay="3600" v-bind="args"/>
+        </div>
+      </div>
+    `
+  })
+}
 
 export const ProgressLinear: Story = {
-  name: 'Linear',
+  name: 'linear',
   args: {
     visible: true,
     linear: true
@@ -38,43 +76,97 @@ export const ProgressLinear: Story = {
       <div style="width: 100%;">
         indeterminate=type1
         <div style="position: relative; width: 100%; height: 24px;">
-          <md3-progress v-bind="args" indeterminate="type1"/>
+          <md3-progress indeterminate="type1" v-bind="args"/>
         </div>
         indeterminate=type2
         <div style="position: relative; width: 100%; height: 24px;">
-          <md3-progress v-bind="args" indeterminate="type2"/>
+          <md3-progress indeterminate="type2" v-bind="args"/>
         </div>
         value=25
         <div style="position: relative; width: 100%; height: 24px;">
-          <md3-progress v-bind="args" :value="25"/>
+          <md3-progress :value="25" v-bind="args"/>
         </div>
         value=95
         <div style="position: relative; width: 100%; height: 24px;">
-          <md3-progress v-bind="args" :value="95"/>
+          <md3-progress :value="95" v-bind="args"/>
         </div>
         value=95, max=200
         <div style="position: relative; width: 100%; height: 24px;">
-          <md3-progress v-bind="args" :value="95" :max="200"/>
+          <md3-progress :max="200" :value="95" v-bind="args"/>
         </div>
       </div>
     `
   })
 }
 
-export const CircularType1: Story = {
-  name: 'Circular, indeterminate=type1',
+export const ProgressLinearPosition: Story = {
+  name: 'linear, position',
+  args: {
+    visible: true,
+    linear: true
+  },
+  render: (args: any) => ({
+    components: { Md3Progress },
+    setup () {
+      return { args }
+    },
+    template: `
+      <div style="width: 100%;">
+        position=top
+        <div style="position: relative; width: 100%; height: 24px; border: 1px solid rgb(var(--sys-color),.12);">
+          <md3-progress position="top" v-bind="args"/>
+        </div>
+        position=bottom
+        <div style="position: relative; width: 100%; height: 24px; border: 1px solid rgb(var(--sys-color),.12);">
+          <md3-progress position="bottom" v-bind="args"/>
+        </div>
+      </div>
+    `
+  })
+}
+
+export const ProgressCircular: Story = {
+  name: 'circular',
+  args: {
+    visible: true,
+    circular: true
+  },
+  render: (args: any) => ({
+    components: { Md3Progress },
+    setup () {
+      return { args }
+    },
+    template: `
+      <div style="position: relative; width: 40px; height: 40px; border: 1px solid rgb(var(--sys-color),.12);">
+        <md3-progress indeterminate="type1" v-bind="args"/>
+      </div>
+      <div style="position: relative; width: 40px; height: 40px; border: 1px solid rgb(var(--sys-color),.12);">
+        <md3-progress indeterminate="type2" v-bind="args"/>
+      </div>
+      <div style="position: relative; width: 40px; height: 40px; border: 1px solid rgb(var(--sys-color),.12);">
+        <md3-progress :value="25" v-bind="args"/>
+      </div>
+      <div style="position: relative; width: 40px; height: 40px; border: 1px solid rgb(var(--sys-color),.12);">
+        <md3-progress :value="95" v-bind="args"/>
+      </div>
+      <div style="position: relative; width: 40px; height: 40px; border: 1px solid rgb(var(--sys-color),.12);">
+        <md3-progress :max="200" :value="95" v-bind="args"/>
+      </div>
+    `
+  })
+}
+
+export const ProgressCircularDense: Story = {
+  ...ProgressCircular,
+  name: 'circular, dense',
   args: {
     visible: true,
     circular: true,
-    indeterminate: 'type1'
+    dense: true
   }
 }
 
-export const CircularType2: Story = {
-  name: 'Circular, indeterminate=type2',
-  args: {
-    visible: true,
-    circular: true,
-    indeterminate: 'type2'
-  }
+export const ProgressInverse: Story = {
+  name: 'inverse',
+  args: { inverse: true }
 }

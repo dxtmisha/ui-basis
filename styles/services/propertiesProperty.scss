@@ -33,7 +33,11 @@ $designsAnimate: false !default;
     $var: getMapByIndex($property, 'var');
 
     @if ($var) {
-      #{'--'}#{$designsClassIndex}-#{$index}: #{$value};
+      $nameVar: #{'--'}#{$designsClassIndex}-#{$index};
+
+      #{$nameVar}: #{$value};
+
+      $value: var($nameVar);
     }
 
     @if (not $modification or isAnimate($name)) {
