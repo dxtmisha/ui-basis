@@ -1,0 +1,114 @@
+@import "../../styles/properties";
+
+@import "./styleFrames";
+
+@mixin initIconDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinIcon;
+
+    @include mixinIconHide;
+
+    @include mixinIconAnimation;
+    @include mixinIconAnimationShow;
+
+    @include mixinIconOverlay;
+    @include mixinIconDynamic;
+    @include mixinIconStart;
+    @include mixinIconEnd;
+    @include mixinIconHigh;
+
+    @include mixinIconShowFrames;
+
+    @content;
+  }
+}
+
+@mixin mixinIcon {
+  @include initByCustom('_width', v('??width', #{calc(var(--sys-font-size, 16px) * 1.5)}));
+
+  display: inline-flex;
+  overflow: hidden;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  @include squared(#{v('??_width')});
+  min-width: v('??_width');
+
+  @include textSelectNone;
+
+  border-radius: v('??rounded', inherit);
+
+  transition-property: clip-path, margin, opacity, transform;
+  transition-duration: v('d.sys.transition-duration.standard');
+}
+
+@mixin mixinIconHide {
+  &--hide {
+    opacity: 0;
+    transform: scale(.8);
+  }
+}
+
+@mixin mixinIconAnimation {
+  $clipPath: clip-path #{v('d.sys.transition-duration.fade.enter')} #{v('d.sys.transition-function.deceleration')};
+  $margin: margin #{v('d.ref.transition-duration.1')} linear;
+  $background: background #{v('d.sys.transition-duration.standard')} linear;
+  $opacity: opacity #{v('d.sys.transition-duration.standard')} linear;
+  $transform: transform #{v('d.sys.transition-duration.standard')} linear;
+
+  &--animation-type {
+    &--type2 {
+      clip-path: inset(0 0 0 0);
+
+      transition: #{$clipPath}, #{$margin}, #{$background}, #{$opacity}, #{$transform};
+
+      @include state('hide') {
+        clip-path: inset(0 100% 0 0);
+        margin: 0 calc(#{v('??_width')} * -1) 0 0 !important;
+        opacity: 1;
+
+        transition-duration: v('d.sys.transition-duration.fade.exit');
+        transition-timing-function: linear;
+        transform: none;
+      }
+    }
+  }
+}
+
+@mixin mixinIconAnimationShow {
+  &--animation-show {
+    animation-name: n('??show');
+    animation-duration: v('d.sys.transition-duration.standard');
+  }
+}
+
+@mixin mixinIconOverlay {
+  &--overlay {
+    @include background(v('??sys.color', var(--sys-color)));
+  }
+}
+
+@mixin mixinIconDynamic {
+  &--dynamic {
+    @include gradient(v('??sys.color', var(--sys-color)), 0);
+  }
+}
+
+@mixin mixinIconStart {
+  &--start {
+    order: 1;
+  }
+}
+
+@mixin mixinIconEnd {
+  &--end {
+    order: 99999;
+  }
+}
+
+@mixin mixinIconHigh {
+  &--high {
+    z-index: 16;
+  }
+}

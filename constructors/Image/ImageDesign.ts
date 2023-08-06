@@ -125,6 +125,8 @@ export class ImageDesign<
    * Список доступных переменных извне
    */
   expose (): EXPOSE {
-    return {} as EXPOSE
+    return {
+      image: this.image.getDataImage()
+    } as EXPOSE
   }
 }
