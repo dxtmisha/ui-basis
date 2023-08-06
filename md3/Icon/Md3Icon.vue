@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { PropertiesMapListType } from '../../../classes/DesignProperties'
+import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { IconDesign } from '../../constructors/Icon/IconDesign'
-import { /* IconEmitsType,  */IconSlotsType } from '../../constructors/Icon/types'
+import { IconEmitsType, IconSlotsType } from '../../constructors/Icon/types'
 
 import { defaults, PropsType, subclasses } from './props'
 import * as map from './map.json'
+
+import Md3Image from '../Image/Md3Image.vue'
 
 defineOptions({
   // [!] System label, cannot be deleted
@@ -15,7 +17,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<PropsType>(), defaults)
-// const emit = defineEmits<IconEmitsType>()
+const emit = defineEmits<IconEmitsType>()
 
 defineSlots<IconSlotsType>()
 
@@ -30,16 +32,21 @@ const design = new IconDesign(
   props,
   {
     map: map as PropertiesMapListType,
-    subclasses
-  }//, emit
+    subclasses,
+    components: {
+      image: Md3Image
+    }
+  },
+  emit
 )
 
 const render = design.render()
 </script>
 
 <template>
-  <render/>
-
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">
@@ -53,5 +60,6 @@ $componentName: 'md3.icon';
 
 // Mixin for generating all classes, states and properties of component
 // Миксин для генерации всех классов, состояний и свойств компонента
-@include initIconDesign($componentName) {}
+@include initIconDesign($componentName) {
+}
 </style>

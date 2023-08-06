@@ -4,6 +4,9 @@
       <div></div>
       <div>
         <md3-button/>
+        <md3-icon>
+          <template v-slot:default/>
+        </md3-icon>
       </div>
     </div>
     <div>
@@ -57,10 +60,12 @@ import { defineComponent, ref } from 'vue'
 
 import Md3Button from '../../md3/Button/Md3Button.vue'
 import Md3Progress from '../../md3/Progress/Md3Progress.vue'
+import Md3Icon from '../../md3/Icon/Md3Icon.vue'
 
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md3Icon,
     Md3Progress,
     Md3Button
   },

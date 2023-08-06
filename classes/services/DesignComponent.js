@@ -356,7 +356,7 @@ module.exports = class DesignComponent extends DesignPrototype {
         valueAll[0] === true
       ) {
         templates.push(
-          `\r\n      ${index}: { control: 'boolean' }`
+          `\r\n      ${To.camelCase(index)}: { control: 'boolean' }`
         )
       } else {
         const options = forEach(valueAll, value => typeof value === 'boolean' ? value : `'${value}'`)

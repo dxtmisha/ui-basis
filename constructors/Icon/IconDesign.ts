@@ -28,7 +28,7 @@ export class IconDesign<
   S extends typeof subclassesIcon,
   C extends IconComponentsInterface
 > extends DesignConstructor<
-  HTMLElement,
+  HTMLSpanElement,
   SETUP,
   IconSlotsType,
   IconEmitsType,
@@ -95,8 +95,6 @@ export class IconDesign<
       emits
     )
 
-    // Initialization
-
     this.init()
 
     this.iconBind = getBind(this.refs?.icon, computed(() => ({
@@ -112,16 +110,6 @@ export class IconDesign<
         hide: !this.isActive.value
       })))
     }
-  }
-
-  /**
-   * Initialization of basic options
-   *
-   * Инициализация базовых опций
-   * @protected
-   */
-  protected initOptions (): ConstrOptionsInterface<P, S, C> {
-    return {}
   }
 
   /**
@@ -150,18 +138,21 @@ export class IconDesign<
   protected initRender (): VNode {
     const children: any[] = []
 
-    return h('div', {
+    this.initSlot('default', children)
+
+    if (this.components?.is('image')) {
+      if (this.props?.icon) {
+        this.components?.renderAdd(children, 'image', this.iconBind.value)
+      }
+
+      if (this.props?.iconActive) {
+        this.components?.renderAdd(children, 'image', this.iconActiveBind?.value)
+      }
+    }
+
+    return h('span', {
       ref: this.element,
       class: this.design?.getClasses().main
     }, children)
-  }
-
-  /**
-   * List of available external variables
-   *
-   * Список доступных переменных извне
-   */
-  expose (): EXPOSE {
-    return {} as EXPOSE
   }
 }

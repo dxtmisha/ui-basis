@@ -299,4 +299,35 @@ export class DesignConstructor<
       )
     }
   }
+
+  /**
+   * Initializes the slot
+   *
+   * Инициализирует слот
+   * @param name slot name / название слота
+   * @param children if you pass this element, the slot will be added to it / если передать
+   * @param props property for the slot / свойство для слота
+   * этот элемент, то слот добавится в него
+   */
+  protected initSlot<K extends keyof SLOTS> (
+    name: K,
+    children?: any[],
+    props: ConstrItemType = {}
+  ): VNode | undefined {
+    if (
+      this.slots &&
+      this.slots?.[name] &&
+      typeof this.slots[name] === 'function'
+    ) {
+      const slot = (this.slots[name] as ((props?: ConstrItemType) => VNode))(props)
+
+      if (children) {
+        children.push(slot)
+      }
+
+      return slot
+    }
+
+    return undefined
+  }
 }

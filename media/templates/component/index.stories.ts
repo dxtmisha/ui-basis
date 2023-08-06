@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import DesignComponent from './index.vue'
+import { stories } from '../stories'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
+  ...stories,
   title: 'Design/DesignComponent',
   component: DesignComponent,
   tags: ['autodocs'],

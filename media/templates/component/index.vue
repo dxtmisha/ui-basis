@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { PropertiesMapListType } from '../../../classes/DesignProperties'
 /* :basic.once */
+import { PropertiesMapListType } from '../../../classes/DesignProperties'
 import { Design } from '../../../classes/Design'
 /* :basic.once.end */
+// :constructor.once import { PropertiesMapListType } from '../../../classes/DesignProperties'
 // :constructor.once import { ConstructorDesign } from '../../../constructors/Constructor/ConstructorDesign'
-// :constructor.once import { /* ConstructorEmitsType,  */ConstructorSlotsType } from '../../../constructors/Constructor/types'
+// :constructor.once import { /* ConstructorEmitsType, */ConstructorSlotsType } from '../../../constructors/Constructor/types'
 
 import { defaults, PropsType, subclasses } from './props'
 import * as map from './map.json'

@@ -15,8 +15,8 @@ export const subclassesIcon = {
 // Тип, описывающий входящие свойства
 export type PropsIconType = {
   // Values
-  icon?: string | PropsImageFullType
-  iconActive?: string | PropsImageFullType
+  icon?: string | object | PropsImageFullType
+  iconActive?: string | object | PropsImageFullType
 
   // Status
   active?: boolean

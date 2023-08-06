@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Md3Icon from './Md3Icon.vue'
+import { stories } from '../stories'
+
+import { icon } from '../stories/argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
+  ...stories,
   title: 'Md3/Md3Icon',
   component: Md3Icon,
   tags: ['autodocs'],
   argTypes: {
+    icon,
     ...{
       // [!] System label, cannot be deleted
       // [!] Системная метка, нельзя удалять
@@ -36,6 +41,7 @@ const meta = {
     }
   },
   args: {
+    icon: 'home',
     ...{
       // [!] System label, cannot be deleted
       // [!] Системная метка, нельзя удалять

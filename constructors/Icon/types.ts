@@ -20,7 +20,7 @@ export interface IconSetupInterface {
 // Type describing available slots<br>
 // Тип, описывающий доступные слоты
 export type IconSlotsType = {
-  default? (): any
+  default? (props: any): any
 }
 
 // Type describing available events<br>

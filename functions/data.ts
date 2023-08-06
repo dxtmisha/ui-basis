@@ -280,7 +280,7 @@ export function intersectKey<T = any> (
  */
 export function splice<T = any> (
   data?: AssociativeType<T>,
-  item?: T,
+  item?: AssociativeOrArrayType<T>,
   start?: NumberOrStringType | T,
   isDelete?: boolean
 ): AssociativeType<T> {
@@ -343,40 +343,43 @@ export function replaceRecursive<T = any> (
     typeof array === 'object' &&
     isFilled(replacement)
   ) {
-    forEach(replacement, (item, index) => {
-      const data = array?.[index] as T
+    forEach<AssociativeOrArrayType<T>, string, void>(
+      replacement,
+      (item, index) => {
+        const data = array?.[index] as T
 
-      if (
-        data &&
-        item &&
-        isObject(data) &&
-        isObject(item)
-      ) {
         if (
-          isMerge &&
-          Array.isArray(data) &&
-          Array.isArray(item)
+          data &&
+          item &&
+          isObject(data) &&
+          isObject(item)
         ) {
-          array[index] = uniqueArray([...data, ...item]) as T
-        } else if (Array.isArray(data)) {
-          array[index] = replaceRecursive<T>(
-            replaceRecursive<T>({}, data),
-            item
-          ) as T
+          if (
+            isMerge &&
+            Array.isArray(data) &&
+            Array.isArray(item)
+          ) {
+            array[index] = uniqueArray([...data, ...item]) as T
+          } else if (Array.isArray(data)) {
+            array[index] = replaceRecursive<T>(
+              replaceRecursive<T>({}, data),
+              item
+            ) as T
+          } else {
+            replaceRecursive<T>(
+              data as AssociativeType<T>,
+              item
+            )
+          }
         } else {
-          replaceRecursive<T>(
-            data as AssociativeType<T>,
-            item
-          )
-        }
-      } else {
-        if (Array.isArray(item)) {
-          array[index] = [...item] as T
-        } else {
-          array[index] = typeof item === 'object' ? JSON.parse(JSON.stringify(item)) : item
+          if (Array.isArray(item)) {
+            array[index] = [...item] as T
+          } else {
+            array[index] = typeof item === 'object' ? JSON.parse(JSON.stringify(item)) : item
+          }
         }
       }
-    })
+    )
   }
 
   return array

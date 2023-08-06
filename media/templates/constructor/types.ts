@@ -13,7 +13,7 @@ export interface ConstructorSetupInterface {
 // Type describing available slots<br>
 // Тип, описывающий доступные слоты
 export type ConstructorSlotsType = {
-  default? (): any
+  default? (props: any): any
 }
 
 // Type describing available events<br>
