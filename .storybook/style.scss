@@ -4,6 +4,9 @@
   padding: 8px 16px;
 
   &__body {
+    display: flex;
+    align-content: center;
+    justify-content: center;
     position: relative;
     min-height: 52px;
   }

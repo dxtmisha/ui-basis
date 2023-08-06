@@ -26,6 +26,9 @@
       "rounded": "{rounded.none}"
     }
   },
+  "overlay": {
+    "background-opacity": "{sys.opacity.004}"
+  },
   "dynamic": {
     "hover": {
       "gradient-opacity": "{sys.opacity.008}"
