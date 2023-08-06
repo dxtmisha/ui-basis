@@ -1,12 +1,5 @@
 import { ComputedRef } from 'vue'
-
 import { ImageDataType } from '../Image/ImageData'
-
-// Interface for describing which components need to be connected for work<br>
-// Интерфейс для описания, какие компоненты надо подключить для работы
-export interface IconComponentsInterface {
-  image?: object
-}
 
 // Interface for describing what property setup returns<br>
 // Интерфейс для описания, какое свойство возвращает setup
@@ -31,4 +24,12 @@ export type IconEmitsType = {
 
 // Type describing available properties<br>
 // Тип, описывающий доступные свойства
-// export type IconExposeType = {}
+// export interface IconExposeInterface {
+//   name: string
+// }
+
+// Interface for describing which components need to be connected for work<br>
+// Интерфейс для описания, какие компоненты надо подключить для работы
+export interface IconComponentsInterface {
+  image?: object
+}

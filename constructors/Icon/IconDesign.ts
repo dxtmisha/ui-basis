@@ -16,7 +16,7 @@ import {
   IconSetupInterface,
   IconSlotsType
 } from './types'
-import { PropsIconFullType, subclassesIcon } from './props'
+import { PropsIconType, subclassesIcon } from './props'
 
 /**
  * IconDesign
@@ -24,7 +24,7 @@ import { PropsIconFullType, subclassesIcon } from './props'
 export class IconDesign<
   SETUP extends IconSetupInterface,
   EXPOSE extends ConstrItemType,
-  P extends PropsIconFullType,
+  P extends PropsIconType,
   S extends typeof subclassesIcon,
   C extends IconComponentsInterface
 > extends DesignConstructor<
@@ -37,20 +37,7 @@ export class IconDesign<
   S,
   C
 > {
-  /**
-   * Switch the element to activity mode
-   *
-   * Переводить элемент в режим активности
-   * @protected
-   */
   protected readonly isActive = computed<boolean>(() => !!(this.props?.iconActive && this.props?.active))
-
-  /**
-   * Basic input parameters for the image
-   *
-   * Базовые входные параметры для изображения
-   * @protected
-   */
   protected readonly imageBind = computed(() => {
     return {
       disabled: this.props?.disabled,
@@ -59,20 +46,7 @@ export class IconDesign<
     }
   })
 
-  /**
-   * Basic input data for the first image
-   *
-   * Базовые входные данные для первого изображения
-   * @protected
-   */
   protected readonly iconBind: ComputedRef<ConstrItemType>
-
-  /**
-   * Basic input data for the active icon
-   *
-   * Базовые входные данные для активной иконки
-   * @protected
-   */
   protected readonly iconActiveBind?: ComputedRef<ConstrItemType>
 
   /**
@@ -84,7 +58,7 @@ export class IconDesign<
    */
   constructor (
     name: string,
-    props: Required<P>,
+    props: Readonly<P>,
     options?: ConstrOptionsInterface<P, S, C>,
     emits?: ConstrEmitType<IconEmitsType>
   ) {
@@ -97,15 +71,18 @@ export class IconDesign<
 
     this.init()
 
-    this.iconBind = getBind(this.refs?.icon, computed(() => ({
-      class: this.design?.getClassesBySubclass(['icon']),
+    const classIcon = this.design?.getClassesBySubclass(['icon'])
+    const classIconActive = this.design?.getClassesBySubclass(['active'])
+
+    this.iconBind = getBind(this.refs.icon, computed(() => ({
+      class: classIcon,
       ...this.imageBind.value,
       hide: this.isActive.value
     })))
 
     if ('iconActive' in this.props) {
-      this.iconActiveBind = getBind(this.refs?.iconActive, computed(() => ({
-        class: this.design?.getClassesBySubclass(['active']),
+      this.iconActiveBind = getBind(this.refs.iconActive, computed(() => ({
+        class: classIconActive,
         ...this.imageBind.value,
         hide: !this.isActive.value
       })))

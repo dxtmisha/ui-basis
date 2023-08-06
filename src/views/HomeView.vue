@@ -7,6 +7,7 @@
         <md3-icon>
           <template v-slot:default/>
         </md3-icon>
+        <md3-progress/>
       </div>
     </div>
     <div>

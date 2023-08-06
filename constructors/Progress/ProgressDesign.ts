@@ -151,15 +151,6 @@ export class ProgressDesign<
   }
 
   /**
-   * List of available external variables
-   *
-   * Список доступных переменных извне
-   */
-  expose (): EXPOSE {
-    return {} as EXPOSE
-  }
-
-  /**
    * Monitors the animation event for hiding the element
    *
    * Следит за событием анимации для скрытия элемента

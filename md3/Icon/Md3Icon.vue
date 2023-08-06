@@ -3,7 +3,7 @@ import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { IconDesign } from '../../constructors/Icon/IconDesign'
 import { IconEmitsType, IconSlotsType } from '../../constructors/Icon/types'
 
-import { defaults, PropsType, subclasses } from './props'
+import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
 
 import Md3Image from '../Image/Md3Image.vue'
@@ -16,7 +16,7 @@ defineOptions({
   // :name-component
 })
 
-const props = withDefaults(defineProps<PropsType>(), defaults)
+const props = defineProps(propsInstruction)
 const emit = defineEmits<IconEmitsType>()
 
 defineSlots<IconSlotsType>()
