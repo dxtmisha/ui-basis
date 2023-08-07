@@ -52,7 +52,7 @@ export function getIndex (
  * @param name property name / имя свойства
  */
 export function getBind<T, R extends Record<string, any>> (
-  value: Ref<T | R>,
+  value: Ref<T | R> | undefined,
   nameExtra: RefOrNormalType<Record<string, any>> | string = {},
   name = 'value'
 ): ComputedRef<R> {
@@ -61,20 +61,24 @@ export function getBind<T, R extends Record<string, any>> (
     const index = isName ? nameExtra : name
     const extra = isName ? {} : getRef(nameExtra)
 
-    if (
-      value.value &&
-      typeof value.value === 'object' &&
-      index in value.value
-    ) {
-      return {
-        ...extra,
-        ...value.value
-      } as R
+    if (value) {
+      if (
+        value.value &&
+        typeof value.value === 'object' &&
+        index in value.value
+      ) {
+        return {
+          ...extra,
+          ...value.value
+        } as R
+      } else {
+        return {
+          ...extra,
+          [index]: value.value
+        } as R
+      }
     } else {
-      return {
-        ...extra,
-        [index]: value.value
-      } as R
+      return {} as R
     }
   })
 }

@@ -5,8 +5,9 @@
 
   &__body {
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
+    gap: 12px;
     position: relative;
     min-height: 52px;
   }

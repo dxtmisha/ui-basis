@@ -41,6 +41,7 @@ export const defaults: PropsType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    animationType: 'type1'
     // :default
   }
 }
@@ -59,7 +60,10 @@ export const propsInstruction = {
     dynamic: Boolean,
     disabled: Boolean,
     hide: Boolean,
-    animationType: String as PropType<PropsType['animationType']>,
+    animationType: {
+      type: String as PropType<PropsType['animationType']>,
+      default: defaults?.animationType
+    },
     animationShow: Boolean,
     start: Boolean,
     end: Boolean,

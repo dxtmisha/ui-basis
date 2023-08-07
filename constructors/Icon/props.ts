@@ -51,6 +51,7 @@ export const defaultsIcon: PropsIconType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    animationType: 'type1'
     // :default
   }
 }
@@ -64,7 +65,10 @@ export const propsIcon = {
     // :prop
     disabled: Boolean,
     hide: Boolean,
-    animationType: String as PropType<PropsIconType['animationType']>,
+    animationType: {
+      type: String as PropType<PropsIconType['animationType']>,
+      default: defaultsIcon?.animationType
+    },
     animationShow: Boolean,
     overlay: Boolean,
     dynamic: Boolean,

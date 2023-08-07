@@ -1,1 +1,44 @@
-{}
+{
+  "overlay": {
+    "description": [
+      "Adding a background",
+      "Добавление фона"
+    ]
+  },
+  "dynamic": {
+    "description": [
+      "Adding a hover event",
+      "Добавление события hover"
+    ]
+  },
+  "animationType": {
+    "description": [
+      "Animation when hiding an image",
+      "Анимация при скрытии изображения"
+    ]
+  },
+  "animationShow": {
+    "description": [
+      "Enabling appearance animation after loading",
+      "Включение анимации появления после загрузки"
+    ]
+  },
+  "start": {
+    "description": [
+      "Moving an element to the beginning",
+      "Перемещение элемента в начало"
+    ]
+  },
+  "end": {
+    "description": [
+      "Moving an element to the end",
+      "Перемещение элемента в конец"
+    ]
+  },
+  "high": {
+    "description": [
+      "Raising an element above other elements",
+      "Поднятие элемента поверх других элементов"
+    ]
+  }
+}

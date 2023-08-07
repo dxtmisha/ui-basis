@@ -11,7 +11,8 @@
   "animation-type": {
     "~type1": {},
     "~type2": {},
-    "_type": "state"
+    "_type": "state",
+    "_default": "type1"
   },
   "animation-show": {
     "_type": "state"

@@ -6,7 +6,10 @@ export const argTypes = {
   // :arg-basic
   icon,
   iconActive: icon,
-  active,
+  active: {
+    ...active,
+    description: 'Switching to a secondary image<br><br>Переход на вторичное изображение'
+  },
   turn,
   disabled,
   hide,
@@ -33,6 +36,7 @@ export const argTypes = {
     },
     overlay: {
       control: 'boolean',
+      description: 'Adding a background<br><br>Добавление фона',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }
@@ -40,6 +44,7 @@ export const argTypes = {
     },
     dynamic: {
       control: 'boolean',
+      description: 'Adding a hover event<br><br>Добавление события hover',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }
@@ -48,13 +53,16 @@ export const argTypes = {
     animationType: {
       control: 'select',
       options: ['type1', 'type2'],
+      description: 'Animation when hiding an image<br><br>Анимация при скрытии изображения',
       table: {
         category: 'Styles',
+        defaultValue: { summary: 'type1' },
         type: { summary: 'type1 | type2' }
       }
     },
     animationShow: {
       control: 'boolean',
+      description: 'Enabling appearance animation after loading<br><br>Включение анимации появления после загрузки',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }
@@ -62,6 +70,7 @@ export const argTypes = {
     },
     start: {
       control: 'boolean',
+      description: 'Moving an element to the beginning<br><br>Перемещение элемента в начало',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }
@@ -69,6 +78,7 @@ export const argTypes = {
     },
     end: {
       control: 'boolean',
+      description: 'Moving an element to the end<br><br>Перемещение элемента в конец',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }
@@ -76,6 +86,7 @@ export const argTypes = {
     },
     high: {
       control: 'boolean',
+      description: 'Raising an element above other elements<br><br>Поднятие элемента поверх других элементов',
       table: {
         category: 'Styles',
         type: { summary: 'boolean' }

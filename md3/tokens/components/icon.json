@@ -27,7 +27,7 @@
     }
   },
   "overlay": {
-    "background-opacity": "{sys.opacity.004}"
+    "background-opacity": "{sys.opacity.016}"
   },
   "dynamic": {
     "hover": {

@@ -59,8 +59,8 @@ export const File: Story = {
     docs: {
       description: {
         story: [
-          'Support for uploaded images.',
-          'Поддержка загруженных изображений.'
+          'Support for uploaded images',
+          'Поддержка загруженных изображений'
         ].join('<br><br>')
       }
     }
@@ -106,8 +106,8 @@ export const Image: Story = {
     docs: {
       description: {
         story: [
-          'You can specify the full path to the picture or icon.',
-          'Можно указать полный путь к картинке или иконке.'
+          'You can specify the full path to the picture or icon',
+          'Можно указать полный путь к картинке или иконке'
         ].join('<br><br>')
       }
     }
@@ -249,6 +249,13 @@ export const ImageXy: Story = {
 
 export const ImageAdaptive: Story = {
   name: 'adaptive=true',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.adaptive.description
+      }
+    }
+  },
   args: {
     value: icon.options[icon.options.length - 1],
     adaptive: true
