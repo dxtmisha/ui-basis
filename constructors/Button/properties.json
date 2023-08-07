@@ -1,0 +1,26 @@
+{
+  "padding": {
+    "_type": "var"
+  },
+  "#label": {},
+  "#icon": {},
+  "#trailing": {},
+  "progress": {
+    "color-opacity": {
+      "_type": "var"
+    },
+    "_type": "state",
+    "_subclass": true
+  },
+  "disabled": {
+    "_type": "state"
+  },
+  "adaptive": {
+    "~icon": {
+      "padding": "0px",
+      "& .??__label": {
+        "display": "none"
+      }
+    }
+  }
+}

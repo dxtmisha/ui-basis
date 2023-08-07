@@ -1,14 +1,10 @@
 import { computed } from 'vue'
 
-import { DesignPropsValueType } from '../../classes/Design'
-
-// import { PropsProgressType } from '../constructors/Progress/props'
-
-export type UseEnabledPropsType = DesignPropsValueType<{
-  progress?: boolean // | PropsProgressType
+export type UseEnabledPropsType = {
+  progress?: Record<string, any> | boolean
   readonly?: boolean
   disabled?: boolean
-}>
+}
 
 /**
  * Class for managing the activity of an element
@@ -16,23 +12,23 @@ export type UseEnabledPropsType = DesignPropsValueType<{
  * Класс для управления активности элемента
  */
 export class UseEnabled {
+  readonly item = computed<boolean>(() =>
+    !this.props?.disabled &&
+    !this.props?.readonly &&
+    !this.props?.progress
+  )
+
+  readonly disabledBind = computed<boolean | undefined>(() => this.isDisabled() || undefined)
+
   /**
    * Constructor
    * @param props input property / входное свойство
    */
   // eslint-disable-next-line no-useless-constructor
   constructor (
-    protected readonly props: UseEnabledPropsType
+    protected readonly props: Readonly<UseEnabledPropsType>
   ) {
   }
-
-  readonly item = computed<boolean>(
-    () => !this.props?.disabled &&
-      !this.props?.readonly &&
-      !this.props?.progress
-  )
-
-  readonly disabledBind = computed<boolean | undefined>(() => this.isDisabled() || undefined)
 
   /**
    * Checking for the status of the element’s activity

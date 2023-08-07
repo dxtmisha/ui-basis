@@ -241,7 +241,6 @@ module.exports = class PropertiesItems {
    * }} property the callback function is executed for each element / выполняется функция
    * обратного вызова (callback) для каждого элемента
    * @returns {*[]}
-   * @private
    */
   each (callback, property = undefined) {
     if (property) {

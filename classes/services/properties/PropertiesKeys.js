@@ -10,6 +10,7 @@ module.exports = class PropertiesKeys {
    * @type {string}
    */
   static type = '_type'
+  static subclass = '_subclass'
 
   /**
    * Category of property / Категория свойства
@@ -163,6 +164,7 @@ module.exports = class PropertiesKeys {
   static __special = [
     'type',
     this.type,
+    this.subclass,
     this.category,
     this.rename,
     this.default,

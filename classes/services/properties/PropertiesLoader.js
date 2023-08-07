@@ -164,7 +164,7 @@ module.exports = class PropertiesLoader {
    * @private
    */
   __isClasses (item) {
-    return item?.[Keys.variable] === Type.subclass
+    return item?.[Keys.variable] === Type.subclass || item?.[Keys.subclass]
   }
 
   /**
