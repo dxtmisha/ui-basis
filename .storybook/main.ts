@@ -17,7 +17,7 @@ const config: StorybookConfig = {
       name: '@storybook/addon-styling',
       options: {
         sass: {
-          implementation: require('sass'),
+          // implementation: require('sass'),
           additionalData: new Properties(['md2', 'md3']).getScss()
         }
       }

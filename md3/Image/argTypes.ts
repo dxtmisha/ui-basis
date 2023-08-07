@@ -1,4 +1,4 @@
-import { disabled, hide, icon, onLoad, turn } from '../stories/argTypes'
+import { disabled, hide, icon, turn } from '../stories/argTypes'
 
 export const argTypes = {
   // [!] System label, cannot be deleted
@@ -100,8 +100,7 @@ export const argTypes = {
     // [!] Системная метка, нельзя удалять
     // :arg-types
     // :arg-types
-  },
-  onLoad
+  }
 }
 
 export const images = {
