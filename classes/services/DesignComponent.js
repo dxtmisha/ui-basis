@@ -328,6 +328,7 @@ module.exports = class DesignComponent extends DesignPrototype {
         .replace('index.vue', this.__getFileMain())
         .replaceAll('Design', To.camelCaseFirst(this.loader.getDesign()))
         .replaceAll('Component', this.loader.getComponent())
+        .replaceAll('design: \'design\',', `design: '${this.loader.getDesign()}',`)
 
       if (sample) {
         this._createFile(file, sample)

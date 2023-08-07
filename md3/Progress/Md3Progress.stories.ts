@@ -2,15 +2,21 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Md3Progress from './Md3Progress.vue'
 
-import { main } from '../stories/main'
 import { argTypes } from './argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
-  ...main,
   title: 'Md3/Md3Progress',
   component: Md3Progress,
   tags: ['autodocs'],
+  parameters: {
+    design: 'md3',
+    docs: {
+      description: {
+        component: 'Progress indicators express an unspecified wait time or display the length of a process.'
+      }
+    }
+  },
   argTypes,
   args: {
     visible: true
@@ -21,10 +27,17 @@ type Story = StoryObj<typeof meta>;
 
 export default meta
 
-export const Progress: Story = { name: 'visible' }
+export const Progress: Story = {}
 
 export const ProgressDelay: Story = {
-  name: 'delay',
+  name: 'delay=true',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.delay.description
+      }
+    }
+  },
   args: {
     visible: true,
     linear: true
@@ -61,8 +74,27 @@ export const ProgressDelay: Story = {
   })
 }
 
+export const ProgressInverse: Story = {
+  name: 'inverse=true',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.inverse.description
+      }
+    }
+  },
+  args: { inverse: true }
+}
+
 export const ProgressLinear: Story = {
-  name: 'linear',
+  name: 'Linear progress indicators',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Linear progress indicators display progress by animating an indicator along the length of a fixed, visible track. The behavior of the indicator is dependent on whether the progress of a process is known.'
+      }
+    }
+  },
   args: {
     visible: true,
     linear: true
@@ -100,7 +132,7 @@ export const ProgressLinear: Story = {
 }
 
 export const ProgressLinearPosition: Story = {
-  name: 'linear, position',
+  name: 'position=<top|bottom>',
   args: {
     visible: true,
     linear: true
@@ -126,7 +158,14 @@ export const ProgressLinearPosition: Story = {
 }
 
 export const ProgressCircular: Story = {
-  name: 'circular',
+  name: 'Circular progress indicators',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Circular progress indicators display progress by animating an indicator along an invisible circular track in a clockwise direction. They can be applied directly to a surface, such as a button or card.'
+      }
+    }
+  },
   args: {
     visible: true,
     circular: true
@@ -158,15 +197,17 @@ export const ProgressCircular: Story = {
 
 export const ProgressCircularDense: Story = {
   ...ProgressCircular,
-  name: 'circular, dense',
+  name: 'dense=true',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.dense.description
+      }
+    }
+  },
   args: {
     visible: true,
     circular: true,
     dense: true
   }
-}
-
-export const ProgressInverse: Story = {
-  name: 'inverse',
-  args: { inverse: true }
 }
