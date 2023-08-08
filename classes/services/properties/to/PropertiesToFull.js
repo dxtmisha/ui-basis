@@ -24,7 +24,7 @@ module.exports = class PropertiesToFull {
       value,
       item
     }) => {
-      item[Keys.name] = this.items.toFullLink(design, component, this.items.getItemReName(name, item))
+      item[Keys.name] = this.items.toFullLink(design, component, this.items.getItemReName(name, item), '-')
 
       if (typeof value === 'string') {
         item[Keys.css] = this.items.toFullLink(design, component, value)

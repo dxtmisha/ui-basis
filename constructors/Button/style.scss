@@ -13,6 +13,7 @@
 
 @mixin mixinButton {
   @include flexInlineCenter;
+  box-sizing: border-box;
   position: relative;
 
   padding: 0;

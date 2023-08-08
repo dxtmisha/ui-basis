@@ -1,4 +1,4 @@
-import { h, VNode } from 'vue'
+import { computed, h, VNode } from 'vue'
 
 import {
   ConstrEmitType,
@@ -111,15 +111,11 @@ export class ButtonDesign<
    * @protected
    */
   protected initOptions (): ConstrOptionsInterface<P, S, C> {
-    const options: ConstrOptionsInterface<P, S, C> = {}
-
-    if (this.icon) {
-      options.extra = {
-        '??icon': this.icon?.is
+    return {
+      extra: {
+        '??icon': computed(() => !!(this.props?.icon || this.props?.iconTrailing))
       }
     }
-
-    return options
   }
 
   /**

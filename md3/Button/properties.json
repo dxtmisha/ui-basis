@@ -1,6 +1,38 @@
 {
   "basic": "{d.button}",
+  "selected": {},
   "filled": {
+    "_category": "style",
     "_default": true
+  },
+  "outlined": {
+    "_category": "style"
+  },
+  "text": {
+    "_category": "style"
+  },
+  "elevated": {
+    "_category": "style"
+  },
+  "tonal": {
+    "_category": "style"
+  },
+  "adaptive": {
+    "sm": {
+      "media-max|sm": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    },
+    "md": {
+      "media-max|md": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    }
   }
 }

@@ -5,10 +5,13 @@
 
   &__body {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
     position: relative;
+
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+
     min-height: 52px;
   }
 }

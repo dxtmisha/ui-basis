@@ -25,7 +25,8 @@
     "~icon": {
       "padding": "0px",
       "& .??__label": {
-        "display": "none"
+        "display": "none",
+        "padding-x": "0px"
       }
     }
   }
