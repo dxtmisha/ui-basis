@@ -24,11 +24,13 @@ export type PropsType = PropsButtonBasicType & {
   // [!] Системная метка, нельзя удалять
   // :type
   filled?: boolean
-  elevated?: boolean
-  progress?: boolean
+  focus?: boolean
   disabled?: boolean
+  elevated?: boolean
+  selected?: boolean
   adaptive?: 'icon'
   // :type
+  /* :type.progress.none */
 }
 
 // Default value for property<br>
@@ -39,6 +41,7 @@ export const defaults: PropsType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    filled: true
     // :default
   }
 }
@@ -51,10 +54,14 @@ export const propsInstruction = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
-    filled: Boolean,
-    elevated: Boolean,
-    progress: Boolean,
+    filled: {
+      type: Boolean,
+      default: defaults?.filled
+    },
+    focus: Boolean,
     disabled: Boolean,
+    elevated: Boolean,
+    selected: Boolean,
     adaptive: String as PropType<PropsType['adaptive']>
     // :prop
   }

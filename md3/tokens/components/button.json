@@ -1,11 +1,50 @@
 {
+  "gap": "{ref.spacing.2}",
   "padding": "{ref.spacing.6}",
   "height": "{ref.spacing.10}",
   "font": "{font.labelLarge}",
+  "color": "{sys.palette.primary}",
   "background-color": "transparent",
+  "gradient": "{sys.palette.primary}",
+  "gradient-opacity": "0",
+  "border-radius": "{sys.rounded.full}",
+  "box-shadow": "none",
+  "transition-property": "border, box-shadow",
+  "transition-duration": "{d.sys.transitionDuration.lg.close}",
+  "transition-function": "{d.sys.transitionFunction.standard}",
+  "hover": {
+    "gradient-opacity": "{sys.opacity.008}",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
+  },
+  "active": {
+    "gradient-opacity": "{sys.opacity.012}",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
+  },
+  "focus": {
+    "gradient-opacity": "{sys.opacity.012}"
+  },
+  "disabled": {
+    "color": "{sys.palette.on-surface}",
+    "color-opacity": "{sys.opacity.disabled}",
+    "transition-duration": "{d.sys.transitionDuration.sm}"
+  },
   "filled": {
     "color": "{sys.palette.on-primary}",
-    "background-color": "{sys.palette.primary}"
+    "background-color": "{sys.palette.primary}",
+    "gradient": "{sys.palette.on-primary}",
+    "hover": {
+      "box-shadow": "{ref.shadow.1}"
+    },
+    "active": {
+      "box-shadow": "none"
+    },
+    "selected": {
+      "background-color": "{sys.palette.primary-variant}"
+    },
+    "disabled": {
+      "background-color": "{sys.palette.on-surface}",
+      "background-opacity": "{sys.opacity.012}"
+    }
   },
   "elevated": {
     "background-color": "{sys.palette.surface-container-low}"

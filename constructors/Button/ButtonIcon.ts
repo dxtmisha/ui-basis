@@ -54,7 +54,7 @@ export class ButtonIcon {
     protected readonly props: PropsButtonIconType,
     protected readonly components?: DesignComponents<ButtonIconComponentsType, PropsButtonIconType>,
     protected readonly event?: ButtonEvent,
-    protected readonly classes?: { icon?: string, iconTrailing?: string }
+    protected readonly classes?: { icon?: string, trailing?: string }
   ) {
     const refs = toRefs(this.props)
 
@@ -76,6 +76,8 @@ export class ButtonIcon {
       })), 'icon')
     }
   }
+
+  readonly is = computed(() => !!(this.props?.icon || this.props?.iconTrailing))
 
   /**
    * A method for rendering
@@ -103,7 +105,7 @@ export class ButtonIcon {
           elements,
           'icon',
           {
-            class: this.classes?.iconTrailing || 'iconTrailing',
+            class: this.classes?.trailing || 'trailing',
             ...this.trailingBind.value
           }
         )

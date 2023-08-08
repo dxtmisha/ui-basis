@@ -37,7 +37,13 @@
 
 @mixin mixinButtonLabel {
   &__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: v('??gap');
+
     order: 4;
+    padding: 0 v('??padding');
     transition: inherit;
   }
 }
@@ -56,6 +62,10 @@
 
   &__label ~ &__trailing {
     @include marginLeft(#{calc(v('??margin') - v('??padding'))});
+  }
+
+  &--icon {
+    @include initByCustom('padding', #{calc(var(--sys-height) / 2)});
   }
 }
 

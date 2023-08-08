@@ -105,6 +105,24 @@ export class ButtonDesign<
   }
 
   /**
+   * Initialization of basic options
+   *
+   * Инициализация базовых опций
+   * @protected
+   */
+  protected initOptions (): ConstrOptionsInterface<P, S, C> {
+    const options: ConstrOptionsInterface<P, S, C> = {}
+
+    if (this.icon) {
+      options.extra = {
+        '??icon': this.icon?.is
+      }
+    }
+
+    return options
+  }
+
+  /**
    * Initialization of all the necessary properties for work
    *
    * Инициализация всех необходимых свойств для работы
@@ -152,7 +170,7 @@ export class ButtonDesign<
       this.components?.renderAdd(children, 'ripple')
     }
 
-    return h(this.refs.tag.value, {
+    return h(this.props?.tag || 'button', {
       ref: this.element,
 
       class: this.design?.getClasses().main,

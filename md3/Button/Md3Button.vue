@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { PropertiesMapListType } from '../../classes/DesignProperties'
 import { ButtonDesign } from '../../constructors/Button/ButtonDesign'
-import { /* ButtonEmitsType, */ButtonSlotsType } from '../../constructors/Button/types'
+import { ButtonEmitsType, ButtonSlotsType } from '../../constructors/Button/types'
 
 import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
+
+import Md3Icon from '../Icon/Md3Icon.vue'
+import Md3Progress from '../Progress/Md3Progress.vue'
 
 defineOptions({
   // [!] System label, cannot be deleted
@@ -15,7 +18,7 @@ defineOptions({
 })
 
 const props = defineProps({ ...propsInstruction })
-// const emit = defineEmits<ButtonEmitsType>()
+const emit = defineEmits<ButtonEmitsType>()
 
 defineSlots<ButtonSlotsType>()
 
@@ -30,16 +33,22 @@ const design = new ButtonDesign(
   props,
   {
     map: map as PropertiesMapListType,
-    subclasses
-  }//, emit
+    subclasses,
+    components: {
+      icon: Md3Icon,
+      progress: Md3Progress
+    }
+  },
+  emit
 )
 
 const render = design.render()
 </script>
 
 <template>
-  <render/>
-
+  <render>
+    <slot/>
+  </render>
 </template>
 
 <style lang="scss">
@@ -53,5 +62,6 @@ $componentName: 'md3.button';
 
 // Mixin for generating all classes, states and properties of component
 // Миксин для генерации всех классов, состояний и свойств компонента
-@include initButtonDesign($componentName) {}
+@include initButtonDesign($componentName) {
+}
 </style>

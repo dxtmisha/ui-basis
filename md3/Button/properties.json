@@ -1,1 +1,6 @@
-{"basic":"{d.button}"}
+{
+  "basic": "{d.button}",
+  "filled": {
+    "_default": true
+  }
+}

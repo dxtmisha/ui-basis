@@ -1,10 +1,16 @@
 {
+  "gap": {
+    "_type": "var"
+  },
   "padding": {
     "_type": "var"
   },
   "#label": {},
   "#icon": {},
   "#trailing": {},
+  "selected": {
+    "_type": "state"
+  },
   "progress": {
     "color-opacity": {
       "_type": "var"

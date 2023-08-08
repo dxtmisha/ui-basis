@@ -11,7 +11,6 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-actions',
     '@storybook/addon-interactions',
     {
       name: '@storybook/addon-styling',
@@ -21,8 +20,7 @@ const config: StorybookConfig = {
           additionalData: new Properties(['md2', 'md3']).getScss()
         }
       }
-    },
-    '@storybook/addon-docs'
+    }
   ],
   framework: {
     name: '@storybook/vue3-webpack5',

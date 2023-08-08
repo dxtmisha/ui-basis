@@ -37,6 +37,7 @@ export type PropsButtonType = PropsButtonBasicType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  selected?: boolean
   disabled?: boolean
   adaptive?: 'icon'
   // :type
@@ -62,6 +63,7 @@ export const propsButton = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    selected: Boolean,
     disabled: Boolean,
     adaptive: String as PropType<PropsButtonType['adaptive']>
     // :prop

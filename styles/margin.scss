@@ -15,13 +15,21 @@
 }
 
 @mixin marginLeft($value) {
-  @include __marginDir;
-  --sys-margin-left: #{$value};
+  margin-inline-start: #{$value};
+
+  @supports not (margin-inline-start: #{$value}) {
+    @include __marginDir;
+    --sys-margin-left: #{$value};
+  }
 }
 
 @mixin marginRight($value) {
-  @include __marginDir;
-  --sys-margin-right: #{$value};
+  margin-inline-end: #{$value};
+
+  @supports not (margin-inline-end: #{$value}) {
+    @include __marginDir;
+    --sys-margin-right: #{$value};
+  }
 }
 
 @mixin __marginDir() {

@@ -6,7 +6,7 @@ export type ButtonLabelSlotsType = {
 }
 
 export type PropsButtonLabelType = {
-  label?: string
+  label?: string | number
 }
 
 export const propsButtonLabel = {
@@ -28,7 +28,7 @@ export class ButtonLabel {
   // eslint-disable-next-line no-useless-constructor
   constructor (
     protected readonly props: Readonly<PropsButtonLabelType>,
-    protected readonly slots: ButtonLabelSlotsType,
+    protected readonly slots?: ButtonLabelSlotsType,
     protected readonly className?: string
   ) {
   }
@@ -38,7 +38,14 @@ export class ButtonLabel {
    *
    * Проверка, доступен ли текст
    */
-  readonly is = computed<boolean>(() => !!this.props?.label || 'default' in this.slots)
+  readonly is = computed<boolean>(() =>
+    !!(
+      this.props?.label || (
+        this.slots &&
+        'default' in this.slots
+      )
+    )
+  )
 
   /**
    * A method for rendering
@@ -59,7 +66,7 @@ export class ButtonLabel {
         children.push(this.props.label)
       }
 
-      if (this.slots?.default) {
+      if (this.slots && this.slots?.default) {
         children.push(this.slots.default?.({}))
       }
 

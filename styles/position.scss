@@ -32,13 +32,21 @@
 }
 
 @mixin left($value: 0px) {
-  @include __positionDir;
-  --sys-position-left: #{$value};
+  inset-inline-start: #{$value};
+
+  @supports not (inset-inline-start: #{$value}) {
+    @include __positionDir;
+    --sys-position-left: #{$value};
+  }
 }
 
 @mixin right($value: 0px) {
-  @include __positionDir;
-  --sys-position-right: #{$value};
+  inset-inline-end: #{$value};
+
+  @supports not (inset-inline-end: #{$value}) {
+    @include __positionDir;
+    --sys-position-right: #{$value};
+  }
 }
 
 @mixin __positionDir() {
