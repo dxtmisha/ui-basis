@@ -117,20 +117,21 @@ export const argTypes = {
         type: { summary: 'boolean' }
       }
     },
+    adaptive: {
+      control: 'select',
+      options: ['sm', 'md', 'icon'],
+      table: {
+        category: 'Styles',
+        type: { summary: 'sm | md | icon' }
+      }
+    },
     palette: {
       control: 'select',
       options: ['primary', 'secondary', 'tertiary', 'error', 'neutral', 'neutral-variant'],
+      description: 'In addition to using the default button colors, you can add custom ones, or disable any you don\'t need<br><br>Помимо использования цветов кнопок по умолчанию, вы можете добавить свои цвета или отключить те, которые вам не нужны',
       table: {
         category: 'Styles',
         type: { summary: 'primary | secondary | tertiary | error | neutral | neutral-variant' }
-      }
-    },
-    adaptive: {
-      control: 'select',
-      options: ['icon'],
-      table: {
-        category: 'Styles',
-        type: { summary: 'icon' }
       }
     }
     // :arg-types

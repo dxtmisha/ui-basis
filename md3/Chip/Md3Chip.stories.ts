@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import Md3Chip from './Md3Chip.vue'
 
 import { argTypes } from './argTypes'
-import { icon } from '../stories/argTypes'
+import { icon, onClick } from '../stories/argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
@@ -31,13 +31,14 @@ const chipTypeRender = (args: any) => ({
     return { args }
   },
   template: `
-    <div>
+    <div style="padding: 16px 0;">
       <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
         <md3-chip v-bind="args" :label="undefined"/>
         <md3-chip v-bind="args" :icon="undefined"/>
         <md3-chip v-bind="args"/>
         <md3-chip v-bind="args" dragged/>
         <md3-chip v-bind="args" selected/>
+        <md3-chip v-bind="args" dragged selected/>
         <md3-chip v-bind="args" disabled/>
       </div>
       <div style="display: flex; justify-content: center; align-items: center; gap: 8px; padding-top: 16px;">
@@ -46,6 +47,7 @@ const chipTypeRender = (args: any) => ({
         <md3-chip v-bind="args" elevated/>
         <md3-chip v-bind="args" elevated dragged/>
         <md3-chip v-bind="args" elevated selected/>
+        <md3-chip v-bind="args" elevated dragged selected/>
         <md3-chip v-bind="args" elevated disabled/>
       </div>
     </div>
@@ -60,17 +62,50 @@ export const Chip: Story = {}
 
 export const ChipInput: Story = {
   name: 'Input chips',
+  parameters: {
+    docs: {
+      description: { story: argTypes.input.description }
+    }
+  },
   args: {
     icon: icon.options[1]
   },
   render: chipTypeRender
 }
 
-export const ChipElevated: Story = {
-  name: 'Elevated chips',
+export const ChipInputAvatar: Story = {
+  name: 'Input chips, avatar=true',
+  args: {
+    icon: icon.options[icon.options.length - 1],
+    avatar: true
+  },
+  render: chipTypeRender
+}
+
+export const ChipAssist: Story = {
+  name: 'Assist chips',
+  parameters: {
+    docs: {
+      description: { story: argTypes.assist.description }
+    }
+  },
   args: {
     icon: icon.options[1],
-    elevated: true
+    assist: true
+  },
+  render: chipTypeRender
+}
+
+export const ChipFilter: Story = {
+  name: 'Filter chips',
+  parameters: {
+    docs: {
+      description: { story: argTypes.filter.description }
+    }
+  },
+  args: {
+    icon: icon.options[1],
+    filter: true
   },
   render: chipTypeRender
 }
@@ -159,4 +194,78 @@ export const ChipIconHide: Story = {
       <md3-chip v-bind="args" :icon-hide="hide"/>
     `
   })
+}
+
+export const ChipHeight: Story = {
+  name: 'height=<sm|md|lg>',
+  args: {
+    icon: icon.options[1]
+  },
+  render: (args) => ({
+    components: { Md3Chip },
+    setup () {
+      return { args }
+    },
+    template: `
+      <md3-chip v-bind="args" height="sm"/>
+      <md3-chip v-bind="args" height="md"/>
+      <md3-chip v-bind="args" height="lg"/>
+    `
+  })
+}
+
+export const ChipHeightAvatar: Story = {
+  name: 'height=<sm|md|lg>, avatar=true',
+  args: {
+    icon: icon.options[icon.options.length - 1],
+    avatar: true
+  },
+  render: (args) => ({
+    components: { Md3Chip },
+    setup () {
+      return { args }
+    },
+    template: `
+      <md3-chip v-bind="args" height="sm"/>
+      <md3-chip v-bind="args" height="md"/>
+      <md3-chip v-bind="args" height="lg"/>
+    `
+  })
+}
+
+export const ChipPalette: Story = {
+  name: 'palette=<string>',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.palette.description
+      }
+    }
+  },
+  args: {
+    icon: icon.options[1]
+  },
+  render: (args) => ({
+    components: { Md3Chip },
+    setup () {
+      return { args }
+    },
+    template: `
+      <md3-chip v-bind="args" palette="secondary"/>
+      <md3-chip v-bind="args" palette="tertiary" outlined/>
+      <md3-chip v-bind="args" palette="error" elevated/>
+      <md3-chip v-bind="args" palette="secondary" selected/>
+      <md3-chip v-bind="args" palette="error" selected/>
+    `
+  })
+}
+
+export const ChipEventClick: Story = {
+  name: 'Event: click',
+  argTypes: {
+    onClick
+  },
+  args: {
+    iconTrailing: icon.options[1]
+  }
 }

@@ -32,11 +32,11 @@ export type PropsType = PropsChipBasicType & {
   filter?: boolean
   suggestion?: boolean
   avatar?: boolean
+  adaptive?: 'sm' | 'md' | 'icon'
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   dragged?: boolean
   disabled?: boolean
-  adaptive?: 'icon'
   // :type
   /* :type.progress.none */
 }
@@ -82,11 +82,11 @@ export const propsInstruction = {
     filter: Boolean,
     suggestion: Boolean,
     avatar: Boolean,
+    adaptive: String as PropType<PropsType['adaptive']>,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
-    disabled: Boolean,
-    adaptive: String as PropType<PropsType['adaptive']>
+    disabled: Boolean
     // :prop
   }
 }

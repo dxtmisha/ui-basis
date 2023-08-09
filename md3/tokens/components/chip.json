@@ -109,7 +109,10 @@
           "box-shadow": "{ref.shadow.1}"
         },
         "dragged": {
-          "box-shadow": "{ref.shadow.4}"
+          "box-shadow": "{ref.shadow.4}",
+          "hover": {
+            "box-shadow": "{ref.shadow.4}"
+          }
         }
       }
     },
@@ -118,7 +121,10 @@
         "box-shadow": "{ref.shadow.2}"
       },
       "dragged": {
-        "box-shadow": "{ref.shadow.4}"
+        "box-shadow": "{ref.shadow.4}",
+        "hover": {
+          "box-shadow": "{ref.shadow.4}"
+        }
       }
     }
   },

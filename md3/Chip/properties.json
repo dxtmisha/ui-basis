@@ -6,6 +6,11 @@
   "gradient": {
     "_rename": "palette-gradient"
   },
+  "#icon": {
+    "color": {
+      "_rename": "palette-color"
+    }
+  },
   "selected": {
     "background-color": {
       "_rename": "palette-background"
@@ -16,6 +21,9 @@
     "_default": true
   },
   "elevated": {
+    "background-color": {
+      "_rename": "palette-background"
+    },
     "_category": "style"
   },
   "input": {
@@ -26,6 +34,13 @@
     "_category": "type"
   },
   "filter": {
+    "selected": {
+      "#icon": {
+        "color": {
+          "_rename": "color"
+        }
+      }
+    },
     "_category": "type"
   },
   "suggestion": {
@@ -33,8 +48,26 @@
   },
   "avatar": {
     "=?icon-width": {
-      "value": "{ref.spacing.6}",
+      "value": "calc(var(--sys-height) - {ref.spacing.2})",
       "_type": "var"
+    }
+  },
+  "adaptive": {
+    "sm": {
+      "media-max|sm": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
+    },
+    "md": {
+      "media-max|md": {
+        "basic": {
+          "value": "{??adaptive.icon}",
+          "_type": "link"
+        }
+      }
     }
   },
   "@@palette": "{palette}"

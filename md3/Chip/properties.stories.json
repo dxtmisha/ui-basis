@@ -21,5 +21,11 @@
     "description": [
       "Suggestion chips help narrow a user’s intent by presenting dynamically generated suggestions, such as possible responses or search filters"
     ]
+  },
+  "palette": {
+    "description": [
+      "In addition to using the default button colors, you can add custom ones, or disable any you don't need",
+      "Помимо использования цветов кнопок по умолчанию, вы можете добавить свои цвета или отключить те, которые вам не нужны"
+    ]
   }
 }
