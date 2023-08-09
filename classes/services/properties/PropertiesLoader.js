@@ -517,6 +517,13 @@ module.exports = class PropertiesLoader {
 
           parent.push(value)
           this.__initValueState(state, value.state)
+
+          if (
+            value.state.length > 0 &&
+            value.value.length === 0
+          ) {
+            value.value.push(true)
+          }
         } else {
           this.__initValueState(state, this.properties[index]?.state)
         }

@@ -39,7 +39,10 @@
   "disabled": {
     "color": "{sys.palette.on-surface}",
     "color-opacity": "{sys.opacity.disabled}",
-    "transition-duration": "{d.sys.transitionDuration.sm}"
+    "transition-duration": "{d.sys.transitionDuration.sm}",
+    "#icon": {
+      "color": "{sys.palette.on-surface}"
+    }
   },
   "outlined": {
     "before": {
@@ -67,6 +70,11 @@
     "box-shadow": "{ref.shadow.1}",
     "selected": {
       "background-color": "{sys.palette.secondary-container}"
+    },
+    "disabled": {
+      "background-color": "{sys.palette.on-surface-variant}",
+      "background-opacity": "{sys.opacity.012}",
+      "box-shadow": "none"
     }
   },
   "input": {

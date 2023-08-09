@@ -25,21 +25,18 @@ export type PropsType = PropsChipBasicType & {
   // :type
   height?: 'sm' | 'md' | 'lg'
   selected?: boolean
-  outlined?: boolean | 'border-color' | true
+  outlined?: boolean
   elevated?: boolean
   input?: boolean
   assist?: boolean
   filter?: boolean
   suggestion?: boolean
   avatar?: boolean
-  adaptive?: 'sm' | 'md' | 'icon'
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   dragged?: boolean
   disabled?: boolean
-  filled?: boolean
-  text?: boolean | 'border-color' | true
-  tonal?: boolean
+  adaptive?: 'icon'
   // :type
   /* :type.progress.none */
 }
@@ -54,8 +51,7 @@ export const defaults: PropsType = {
     // :default
     height: 'md',
     outlined: true,
-    input: true,
-    filled: true
+    input: true
     // :default
   }
 }
@@ -74,7 +70,7 @@ export const propsInstruction = {
     },
     selected: Boolean,
     outlined: {
-      type: [Boolean, String] as PropType<PropsType['outlined']>,
+      type: Boolean,
       default: defaults?.outlined
     },
     elevated: Boolean,
@@ -86,17 +82,11 @@ export const propsInstruction = {
     filter: Boolean,
     suggestion: Boolean,
     avatar: Boolean,
-    adaptive: String as PropType<PropsType['adaptive']>,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
     disabled: Boolean,
-    filled: {
-      type: Boolean,
-      default: defaults?.filled
-    },
-    text: [Boolean, String] as PropType<PropsType['text']>,
-    tonal: Boolean
+    adaptive: String as PropType<PropsType['adaptive']>
     // :prop
   }
 }

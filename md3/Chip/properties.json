@@ -7,7 +7,9 @@
     "_rename": "palette-gradient"
   },
   "selected": {
-    "_rename": "palette-background"
+    "background-color": {
+      "_rename": "palette-background"
+    }
   },
   "outlined": {
     "_category": "style",
@@ -35,6 +37,5 @@
       "_type": "var"
     }
   },
-  "adaptive": "{button}",
   "@@palette": "{palette}"
 }

@@ -63,12 +63,11 @@ export const argTypes = {
       }
     },
     outlined: {
-      control: 'select',
-      options: ['border-color', true],
+      control: 'boolean',
       table: {
         category: 'Styles',
         defaultValue: { summary: 'true' },
-        type: { summary: 'border-color | true' }
+        type: { summary: 'boolean' }
       }
     },
     elevated: {
@@ -118,14 +117,6 @@ export const argTypes = {
         type: { summary: 'boolean' }
       }
     },
-    adaptive: {
-      control: 'select',
-      options: ['sm', 'md', 'icon'],
-      table: {
-        category: 'Styles',
-        type: { summary: 'sm | md | icon' }
-      }
-    },
     palette: {
       control: 'select',
       options: ['primary', 'secondary', 'tertiary', 'error', 'neutral', 'neutral-variant'],
@@ -134,27 +125,12 @@ export const argTypes = {
         type: { summary: 'primary | secondary | tertiary | error | neutral | neutral-variant' }
       }
     },
-    filled: {
-      control: 'boolean',
-      table: {
-        category: 'Styles',
-        defaultValue: { summary: 'true' },
-        type: { summary: 'boolean' }
-      }
-    },
-    text: {
+    adaptive: {
       control: 'select',
-      options: ['border-color', true],
+      options: ['icon'],
       table: {
         category: 'Styles',
-        type: { summary: 'border-color | true' }
-      }
-    },
-    tonal: {
-      control: 'boolean',
-      table: {
-        category: 'Styles',
-        type: { summary: 'boolean' }
+        type: { summary: 'icon' }
       }
     }
     // :arg-types
