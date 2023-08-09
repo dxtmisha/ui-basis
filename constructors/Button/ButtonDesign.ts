@@ -142,7 +142,6 @@ export class ButtonDesign<
 
       if (this.icon.trailingBind) {
         setup.trailingBind = this.icon.trailingBind
-        setup.onTrailing = (event: MouseEvent) => this.event?.onTrailing(event)
       }
     }
 

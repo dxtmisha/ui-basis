@@ -73,6 +73,7 @@ export const selected = {
   description: 'Translate into the selection state<br><br>Перевести в состояние выделения'
 }
 export const focus = status
+export const dragged = status
 export const turn = status
 export const progress = {
   ...status,
@@ -93,6 +94,14 @@ export const tagForButton = {
   }
 }
 
+export const tagForChip = {
+  ...tagForButton,
+  table: {
+    ...tagForButton.table,
+    defaultValue: { summary: 'span' }
+  }
+}
+
 // Events
 
 export const onLoad = {
@@ -100,5 +109,13 @@ export const onLoad = {
   table: {
     category: category.event,
     type: { summary: '(image: string | ImageItemType) => void' }
+  }
+}
+
+export const onClick = {
+  action: 'click',
+  table: {
+    category: category.event,
+    type: { summary: '(event: MouseEvent, options: ButtonEventType) => void' }
   }
 }

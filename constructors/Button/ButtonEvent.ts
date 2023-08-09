@@ -72,25 +72,13 @@ export class ButtonEvent {
    * @param event press events / события нажатия
    */
   onClick (event: MouseEvent) {
-    if (this.enabled.is() && !this.router()) {
-      this.emits('click', event, this.options.value)
-    } else {
-      EventItem.stopPropagation(event)
-    }
-  }
-
-  /**
-   * Events when clicking on the icon on the right
-   *
-   * События при нажатии на иконку справа
-   * @param event press events / события нажатия
-   */
-  onTrailing (event: MouseEvent) {
-    if (this.enabled.is()) {
+    if ((event.target as HTMLInputElement).closest('.is-trailing')) {
       this.emits('click', event, {
         ...this.options.value,
         type: 'trailing'
       })
+    } else if (this.enabled.is() && !this.router()) {
+      this.emits('click', event, this.options.value)
     } else {
       EventItem.stopPropagation(event)
     }

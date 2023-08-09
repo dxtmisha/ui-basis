@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import Md3Button from './Md3Button.vue'
 
 import { argTypes } from './argTypes'
-import { icon } from '../stories/argTypes'
+import { icon, onClick } from '../stories/argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {
@@ -15,10 +15,7 @@ const meta = {
     design: 'md3',
     docs: {
       description: {
-        component: [
-          '',
-          ''
-        ].join('<br><br>')
+        component: 'Common buttons prompt most actions in a UI'
       }
     }
   },
@@ -306,4 +303,14 @@ export const ButtonPalette: Story = {
       <md3-button v-bind="args" palette="tertiary" tonal/>
     `
   })
+}
+
+export const ButtonEventClick: Story = {
+  name: 'Event: click',
+  argTypes: {
+    onClick
+  },
+  args: {
+    iconTrailing: icon.options[1]
+  }
 }

@@ -6,6 +6,9 @@ import { ChipEmitsType, ChipSlotsType } from '../../constructors/Chip/types'
 import { propsInstruction, subclasses } from './props'
 import * as map from './map.json'
 
+import Md3Icon from '../Icon/Md3Icon.vue'
+import Md3Progress from '../Progress/Md3Progress.vue'
+
 defineOptions({
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
@@ -30,7 +33,11 @@ const design = new ChipDesign(
   props,
   {
     map: map as PropertiesMapListType,
-    subclasses
+    subclasses,
+    components: {
+      icon: Md3Icon,
+      progress: Md3Progress
+    }
   },
   emit
 )

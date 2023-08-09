@@ -25,20 +25,23 @@ export type PropsType = PropsChipBasicType & {
   // :type
   height?: 'sm' | 'md' | 'lg'
   selected?: boolean
-  outlined?: boolean
+  outlined?: boolean | 'border-color' | true
   elevated?: boolean
   input?: boolean
   assist?: boolean
   filter?: boolean
   suggestion?: boolean
   avatar?: boolean
+  adaptive?: 'sm' | 'md' | 'icon'
   palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   dragged?: boolean
   disabled?: boolean
-  progress?: boolean
-  adaptive?: 'icon'
+  filled?: boolean
+  text?: boolean | 'border-color' | true
+  tonal?: boolean
   // :type
+  /* :type.progress.none */
 }
 
 // Default value for property<br>
@@ -49,7 +52,10 @@ export const defaults: PropsType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
-    height: 'md'
+    height: 'md',
+    outlined: true,
+    input: true,
+    filled: true
     // :default
   }
 }
@@ -67,19 +73,30 @@ export const propsInstruction = {
       default: defaults?.height
     },
     selected: Boolean,
-    outlined: Boolean,
+    outlined: {
+      type: [Boolean, String] as PropType<PropsType['outlined']>,
+      default: defaults?.outlined
+    },
     elevated: Boolean,
-    input: Boolean,
+    input: {
+      type: Boolean,
+      default: defaults?.input
+    },
     assist: Boolean,
     filter: Boolean,
     suggestion: Boolean,
     avatar: Boolean,
+    adaptive: String as PropType<PropsType['adaptive']>,
     palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     dragged: Boolean,
     disabled: Boolean,
-    progress: Boolean,
-    adaptive: String as PropType<PropsType['adaptive']>
+    filled: {
+      type: Boolean,
+      default: defaults?.filled
+    },
+    text: [Boolean, String] as PropType<PropsType['text']>,
+    tonal: Boolean
     // :prop
   }
 }

@@ -71,8 +71,7 @@ export class ButtonIcon {
       this.trailingBind = getBind(refs?.iconTrailing, computed(() => ({
         turn: this.props?.iconTurn,
         end: true,
-        high: true,
-        onTrailing: (event: MouseEvent) => this.event?.onTrailing(event)
+        high: true
       })), 'icon')
     }
   }
@@ -105,7 +104,7 @@ export class ButtonIcon {
           elements,
           'icon',
           {
-            class: this.classes?.trailing || 'trailing',
+            class: [this.classes?.trailing || 'trailing', 'is-trailing'],
             ...this.trailingBind.value
           }
         )

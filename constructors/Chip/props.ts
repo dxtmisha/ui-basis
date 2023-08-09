@@ -43,7 +43,8 @@ export const defaultsChip: PropsChipType = {
     // [!] Системная метка, нельзя удалять
     // :default
     // :default
-  }
+  },
+  tag: 'span'
 }
 
 // Chip for property

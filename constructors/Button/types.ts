@@ -17,7 +17,6 @@ export interface ButtonSetupInterface {
 
   iconBind?: ComputedRef<PropsIconType>
   trailingBind?: ComputedRef<PropsIconType>
-  onTrailing?: (event: MouseEvent) => void
 }
 
 // Type describing available slots<br>

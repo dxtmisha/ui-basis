@@ -10,13 +10,15 @@
     "_rename": "palette-background"
   },
   "outlined": {
-    "_category": "style"
+    "_category": "style",
+    "_default": true
   },
   "elevated": {
     "_category": "style"
   },
   "input": {
-    "_category": "type"
+    "_category": "type",
+    "_default": true
   },
   "assist": {
     "_category": "type"
@@ -33,5 +35,6 @@
       "_type": "var"
     }
   },
+  "adaptive": "{button}",
   "@@palette": "{palette}"
 }
