@@ -1,6 +1,10 @@
 <template>
   <div>
+    <md3-mutation/>
     <md3-button label="label" icon-trailing="home" @click="onClick"/>
+  </div>
+  <div style="padding-top: 24px;">
+    <span data-md3="button" data-label="Label" data-icon="home"/>
   </div>
 </template>
 
@@ -8,10 +12,12 @@
 import { defineComponent, ref } from 'vue'
 
 import Md3Button from '../../md3/Button/Md3Button.vue'
+import Md3Mutation from '../../md3/Mutation/Md3Mutation.vue'
 
 export default defineComponent({
   name: 'HomeView',
   components: {
+    Md3Mutation,
     Md3Button
   },
   setup () {

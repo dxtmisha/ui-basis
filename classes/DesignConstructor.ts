@@ -81,12 +81,12 @@ export class DesignConstructor<
    */
   constructor (
     name: string,
-    protected readonly props: Readonly<P>,
+    protected readonly props?: Readonly<P>,
     options?: ConstrOptionsInterface<P, S, C>,
     protected readonly emits?: ConstrEmitType<EMITS>
   ) {
     this.name = To.kebabCase(name)
-    this.refs = toRefs(this.props)
+    this.refs = this.props ? toRefs(this.props) : {} as ToRefs<P>
 
     this.attrs = useAttrs()
     this.slots = useSlots() as SLOTS
@@ -266,6 +266,7 @@ export class DesignConstructor<
     options?: ConstrOptionsInterface<P, S, C>
   ) {
     if (
+      this.props &&
       options &&
       options?.map &&
       isFilled(options.map)

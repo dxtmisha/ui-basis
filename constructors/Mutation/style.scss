@@ -1,0 +1,12 @@
+@import "../../styles/properties";
+
+@mixin initMutationDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinMutation;
+    @content;
+  }
+}
+
+@mixin mixinMutation {
+
+}
