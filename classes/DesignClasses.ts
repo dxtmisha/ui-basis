@@ -234,7 +234,7 @@ export class DesignClasses<S extends ClassesSubType> {
     const is = this.properties.isValue(item, prop)
     const list: string[] = []
 
-    className = [...this.getClassNameByList(item, className), item.index]
+    className = [...this.getClassNameByList(item, [...className, item.index])]
 
     if (
       (

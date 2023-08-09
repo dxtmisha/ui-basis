@@ -1,7 +1,11 @@
 {
   "gap": "{ref.spacing.2}",
   "padding": "{ref.spacing.6}",
-  "height": "{ref.spacing.10}",
+  "height": {
+    "sm": "{ref.spacing.8}",
+    "md": "{ref.spacing.10}",
+    "lg": "{ref.spacing.12}"
+  },
   "font": "{font.labelLarge}",
   "color": "{sys.palette.primary}",
   "background-color": "transparent",

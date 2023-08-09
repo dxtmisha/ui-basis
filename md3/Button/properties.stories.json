@@ -31,5 +31,11 @@
       "Adapts the size of the button by removing text when the screen width matches",
       "Адаптирует размер кнопки, убирая текст при соответствии ширины экрана"
     ]
+  },
+  "palette": {
+    "description": [
+      "In addition to using the default button colors, you can add custom ones, or disable any you don't need",
+      "Помимо использования цветов кнопок по умолчанию, вы можете добавить свои цвета или отключить те, которые вам не нужны"
+    ]
   }
 }

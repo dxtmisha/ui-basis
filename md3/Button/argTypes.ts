@@ -51,6 +51,15 @@ export const argTypes = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :arg-types
+    height: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+      table: {
+        category: 'Styles',
+        defaultValue: { summary: 'md' },
+        type: { summary: 'sm | md | lg' }
+      }
+    },
     filled: {
       control: 'boolean',
       description: 'Filled buttons have the most visual impact after the FAB, and should be used for important, final actions that complete a flow, like Save, Join now, or Confirm',
@@ -61,19 +70,21 @@ export const argTypes = {
       }
     },
     outlined: {
-      control: 'boolean',
+      control: 'select',
+      options: ['border-color', true],
       description: 'Outlined buttons are medium-emphasis buttons. They contain actions that are important, but aren’t the primary action in an app<br><br>Outlined buttons pair well with filled buttons to indicate an alternative, secondary action',
       table: {
         category: 'Styles',
-        type: { summary: 'boolean' }
+        type: { summary: 'border-color | true' }
       }
     },
     text: {
-      control: 'boolean',
+      control: 'select',
+      options: ['border-color', true],
       description: 'Text buttons are used for the lowest priority actions, especially when presenting multiple options<br><br>Text buttons can be placed on a variety of backgrounds. Until the button is interacted with, its container isn’t visible',
       table: {
         category: 'Styles',
-        type: { summary: 'boolean' }
+        type: { summary: 'border-color | true' }
       }
     },
     elevated: {
@@ -99,6 +110,15 @@ export const argTypes = {
       table: {
         category: 'Styles',
         type: { summary: 'sm | md | icon' }
+      }
+    },
+    palette: {
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary', 'error', 'neutral', 'neutral-variant'],
+      description: 'In addition to using the default button colors, you can add custom ones, or disable any you don\'t need<br><br>Помимо использования цветов кнопок по умолчанию, вы можете добавить свои цвета или отключить те, которые вам не нужны',
+      table: {
+        category: 'Styles',
+        type: { summary: 'primary | secondary | tertiary | error | neutral | neutral-variant' }
       }
     }
     // :arg-types

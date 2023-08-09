@@ -277,14 +277,15 @@ module.exports = class PropertiesLoader {
         }
 
         if (this.__isLinkClass(item)) {
-          const link = this.__getClassState(item?.[Keys.css] || item.value)
+          const value = item?.[Keys.css] || item.value
+          const link = this.__getClassState(value)
 
           if (link) {
             state.push({
               index,
               type: Type.linkClass,
               item: link,
-              className: this.__getClass(item.value),
+              className: this.__getClass(value),
               state: this.__getStateItem(link.value)
             })
           }

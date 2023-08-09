@@ -23,13 +23,15 @@ export type PropsType = PropsButtonBasicType & {
   // [!] System label, cannot be deleted
   // [!] Системная метка, нельзя удалять
   // :type
+  height?: 'sm' | 'md' | 'lg'
   selected?: boolean
   filled?: boolean
-  outlined?: boolean
-  text?: boolean
+  outlined?: boolean | 'border-color' | true
+  text?: boolean | 'border-color' | true
   elevated?: boolean
   tonal?: boolean
   adaptive?: 'sm' | 'md' | 'icon'
+  palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutral-variant'
   focus?: boolean
   disabled?: boolean
   // :type
@@ -44,6 +46,7 @@ export const defaults: PropsType = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :default
+    height: 'md',
     filled: true
     // :default
   }
@@ -57,16 +60,21 @@ export const propsInstruction = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :prop
+    height: {
+      type: String as PropType<PropsType['height']>,
+      default: defaults?.height
+    },
     selected: Boolean,
     filled: {
       type: Boolean,
       default: defaults?.filled
     },
-    outlined: Boolean,
-    text: Boolean,
+    outlined: [Boolean, String] as PropType<PropsType['outlined']>,
+    text: [Boolean, String] as PropType<PropsType['text']>,
     elevated: Boolean,
     tonal: Boolean,
     adaptive: String as PropType<PropsType['adaptive']>,
+    palette: String as PropType<PropsType['palette']>,
     focus: Boolean,
     disabled: Boolean
     // :prop

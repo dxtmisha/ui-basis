@@ -238,6 +238,24 @@ export const ButtonProgress: Story = {
   })
 }
 
+export const ButtonHeight: Story = {
+  name: 'height=<sm|md|lg>',
+  args: {
+    icon: icon.options[1]
+  },
+  render: (args) => ({
+    components: { Md3Button },
+    setup () {
+      return { args }
+    },
+    template: `
+      <md3-button v-bind="args" height="sm"/>
+      <md3-button v-bind="args" height="md"/>
+      <md3-button v-bind="args" height="lg"/>
+    `
+  })
+}
+
 export const ButtonAdaptive: Story = {
   name: 'adaptive=<icon|sm|md>',
   parameters: {
@@ -259,6 +277,33 @@ export const ButtonAdaptive: Story = {
       <md3-button v-bind="args" adaptive="icon" label="icon"/>
       <md3-button v-bind="args" adaptive="sm" label="sm"/>
       <md3-button v-bind="args" adaptive="md" label="md"/>
+    `
+  })
+}
+
+export const ButtonPalette: Story = {
+  name: 'palette=<string>',
+  parameters: {
+    docs: {
+      description: {
+        story: argTypes.palette.description
+      }
+    }
+  },
+  args: {
+    icon: icon.options[1]
+  },
+  render: (args) => ({
+    components: { Md3Button },
+    setup () {
+      return { args }
+    },
+    template: `
+      <md3-button v-bind="args" palette="secondary"/>
+      <md3-button v-bind="args" palette="tertiary" outlined/>
+      <md3-button v-bind="args" palette="error" text/>
+      <md3-button v-bind="args" palette="secondary" elevated/>
+      <md3-button v-bind="args" palette="tertiary" tonal/>
     `
   })
 }
