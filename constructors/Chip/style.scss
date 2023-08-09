@@ -1,0 +1,29 @@
+@import "../../styles/properties";
+@import "../Button/style";
+
+@mixin initChipDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinChip;
+    @include mixinChipLabel;
+    @include mixinChipIcon;
+    @include mixinChipProgress;
+
+    @content;
+  }
+}
+
+@mixin mixinChip {
+  @include mixinButton;
+}
+
+@mixin mixinChipLabel {
+  @include mixinButtonLabel;
+}
+
+@mixin mixinChipIcon {
+  @include mixinButtonIcon;
+}
+
+@mixin mixinChipProgress {
+  @include mixinButtonProgress;
+}

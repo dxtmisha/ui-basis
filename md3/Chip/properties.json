@@ -1,0 +1,37 @@
+{
+  "basic": "{d.chip}",
+  "height": {
+    "_default": "md"
+  },
+  "gradient": {
+    "_rename": "palette-gradient"
+  },
+  "selected": {
+    "_rename": "palette-background"
+  },
+  "outlined": {
+    "_category": "style"
+  },
+  "elevated": {
+    "_category": "style"
+  },
+  "input": {
+    "_category": "type"
+  },
+  "assist": {
+    "_category": "type"
+  },
+  "filter": {
+    "_category": "type"
+  },
+  "suggestion": {
+    "_category": "type"
+  },
+  "avatar": {
+    "=?icon-width": {
+      "value": "{ref.spacing.6}",
+      "_type": "var"
+    }
+  },
+  "@@palette": "{palette}"
+}

@@ -1,0 +1,281 @@
+.md3-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0;
+    min-width: var(--sys-height, 0);
+    text-decoration: none;
+    border-radius: 0;
+    border: none;
+    cursor: pointer;
+    --sys-palette-gradient: var(--md3-palette-dark-80, var(--md3-palette-basic-30, var(--md3-sys-palette-on-surface-variant)));
+    --sys-gradient: var(--sys-palette-gradient);
+    background-image: linear-gradient(0deg, rgba(var(--sys-gradient), var(--sys-gradient-opacity, 1)), rgba(var(--sys-gradient), var(--sys-gradient-opacity, 1)));
+    --md3-chip-padding: var(--md3-ref-spacing-3);
+    --sys-color: var(--md3-sys-palette-on-surface);
+    color: rgba(var(--sys-color), var(--sys-color-opacity, 1));
+    background-color: transparent;
+    --sys-gradient-opacity: 0;
+    border-radius: var(--md3-sys-rounded-standard);
+    box-shadow: none;
+    transition-property: border, box-shadow;
+    transition-duration: var(--d-sys-transition-duration-lg-close);
+    --md3-chip-transition-function: var(--d-sys-transition-function-standard);
+    font-family: var(--md3-ref-font-family-roboto);
+    font-weight: var(--md3-ref-font-weight-bold);
+    --sys-font-size: var(--md3-ref-font-size-md);
+    font-size: var(--sys-font-size);
+    --sys-line-height: var(--md3-ref-line-height-md);
+    line-height: var(--sys-line-height);
+    letter-spacing: var(--md3-ref-letter-spacing-xs);
+    text-transform: none
+}
+
+.md3-chip:disabled, .md3-chip.md3-chip--disabled, .md3-chip--disabled {
+    cursor: default
+}
+
+.md3-chip.md3-chip--readonly, .md3-chip--readonly {
+    cursor: default
+}
+
+.md3-chip__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--md3-chip-gap);
+    order: 4;
+    padding: 0 var(--md3-chip-padding);
+    transition: inherit
+}
+
+.md3-chip__icon, .md3-chip__trailing {
+    --md3-chip-margin: calc((var(--sys-height) - var(--md3-icon-_width)) / 2);
+    margin-inline-start: var(--md3-chip-margin);
+    margin-inline-end: var(--md3-chip-margin)
+}
+
+@supports not (margin-inline-start: var(--md3-chip-margin)) {
+    .md3-chip__icon, .md3-chip__trailing {
+        margin-left: var(--d-dir-margin-left);
+        margin-right: var(--d-dir-margin-right);
+        --sys-margin-left: var(--md3-chip-margin)
+    }
+}
+
+@supports not (margin-inline-end: var(--md3-chip-margin)) {
+    .md3-chip__icon, .md3-chip__trailing {
+        margin-left: var(--d-dir-margin-left);
+        margin-right: var(--d-dir-margin-right);
+        --sys-margin-right: var(--md3-chip-margin)
+    }
+}
+
+.md3-chip__label ~ .md3-chip__icon {
+    margin-inline-end: calc(var(--md3-chip-margin) - var(--md3-chip-padding))
+}
+
+@supports not (margin-inline-end: calc(var(--md3-chip-margin) - var(--md3-chip-padding))) {
+    .md3-chip__label ~ .md3-chip__icon {
+        margin-left: var(--d-dir-margin-left);
+        margin-right: var(--d-dir-margin-right);
+        --sys-margin-right: calc(var(--md3-chip-margin) - var(--md3-chip-padding))
+    }
+}
+
+.md3-chip__label ~ .md3-chip__trailing {
+    margin-inline-start: calc(var(--md3-chip-margin) - var(--md3-chip-padding))
+}
+
+@supports not (margin-inline-start: calc(var(--md3-chip-margin) - var(--md3-chip-padding))) {
+    .md3-chip__label ~ .md3-chip__trailing {
+        margin-left: var(--d-dir-margin-left);
+        margin-right: var(--d-dir-margin-right);
+        --sys-margin-left: calc(var(--md3-chip-margin) - var(--md3-chip-padding))
+    }
+}
+
+.md3-chip--icon {
+    --md3-chip-padding: calc(var(--sys-height) / 2)
+}
+
+.md3-chip--progress {
+    cursor: default
+}
+
+.md3-chip__progress.md3-progress--visible ~ * {
+    opacity: var(--md3-chip-color-opacity, 0)
+}
+
+.md3-chip--height--sm {
+    --sys-height: var(--md3-ref-spacing-7);
+    height: var(--sys-height)
+}
+
+.md3-chip--height--md {
+    --sys-height: var(--md3-ref-spacing-8);
+    height: var(--sys-height)
+}
+
+.md3-chip--height--lg {
+    --sys-height: var(--md3-ref-spacing-10);
+    height: var(--sys-height)
+}
+
+.md3-chip--selected {
+    --sys-background: var(--md3-sys-palette-secondary-container);
+    background-color: rgba(var(--sys-background), var(--sys-background-opacity, 1))
+}
+
+.md3-chip--outlined::before {
+    content: " ";
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    border-width: var(--md3-ref-spacing-px);
+    --sys-border: var(--md3-sys-palette-outline);
+    border-color: rgba(var(--sys-border), var(--sys-border-opacity, 1));
+    border-style: solid
+}
+
+@supports not (inset: 0px) {
+    .md3-chip--outlined::before {
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px
+    }
+}
+
+.md3-chip--outlined--selected::before {
+    content: " ";
+    --sys-border-opacity: 0
+}
+
+.md3-chip--outlined:disabled::before, .md3-chip--outlined.md3-chip--disabled::before, .md3-chip--outlined--disabled::before {
+    content: " ";
+    --sys-border: var(--md3-sys-palette-on-surface-variant);
+    border-color: rgba(var(--sys-border), var(--sys-border-opacity, 1));
+    --sys-border-opacity: var(--md3-sys-opacity-012)
+}
+
+.md3-chip--elevated {
+    --sys-background: var(--md3-sys-palette-surface-container-low);
+    background-color: rgba(var(--sys-background), var(--sys-background-opacity, 1));
+    box-shadow: var(--md3-ref-shadow-1)
+}
+
+.md3-chip--elevated--selected {
+    --sys-background: var(--md3-sys-palette-secondary-container);
+    background-color: rgba(var(--sys-background), var(--sys-background-opacity, 1))
+}
+
+.md3-chip--input--outlined--dragged {
+    box-shadow: var(--md3-ref-shadow-3)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--assist--elevated:active {
+    box-shadow: var(--md3-ref-shadow-2)
+}
+
+.md3-chip--assist--elevated--dragged {
+    box-shadow: var(--md3-ref-shadow-2)
+}
+
+.md3-chip--filter--selected .md3-chip__icon {
+    --sys-color: var(--md3-sys-palette-on-surface);
+    color: rgba(var(--sys-color), var(--sys-color-opacity, 1))
+}
+
+.md3-chip--filter--outlined--dragged {
+    box-shadow: var(--md3-ref-shadow-4)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--filter--outlined--selected:hover {
+    box-shadow: var(--md3-ref-shadow-1)
+}
+
+.md3-chip--filter--outlined--selected--dragged {
+    box-shadow: var(--md3-ref-shadow-4)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--filter--elevated:hover {
+    box-shadow: var(--md3-ref-shadow-2)
+}
+
+.md3-chip--filter--elevated--dragged {
+    box-shadow: var(--md3-ref-shadow-4)
+}
+
+.md3-chip--suggestion--outlined--dragged {
+    box-shadow: var(--md3-ref-shadow-3)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--suggestion--outlined--selected:hover {
+    box-shadow: var(--md3-ref-shadow-1)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--suggestion--outlined--selected:active {
+    box-shadow: var(--md3-ref-shadow-2)
+}
+
+.md3-chip--suggestion--outlined--selected--dragged {
+    box-shadow: var(--md3-ref-shadow-3)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--suggestion--elevated:active {
+    box-shadow: var(--md3-ref-shadow-2)
+}
+
+.md3-chip--suggestion--elevated--dragged {
+    box-shadow: var(--md3-ref-shadow-3)
+}
+
+.md3-chip--avatar {
+    --md3-icon-width: var(--md3-ref-spacing-6);
+    border-radius: var(--md3-sys-rounded-full)
+}
+
+.md3-chip__icon {
+    --sys-color: var(--md3-sys-palette-primary);
+    color: rgba(var(--sys-color), var(--sys-color-opacity, 1))
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress):hover {
+    --sys-gradient-opacity: var(--md3-sys-opacity-008);
+    transition-duration: var(--d-sys-transition-duration-sm)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress):focus, .md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress):focus-within, .md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress).md3-chip--focus {
+    --sys-gradient-opacity: var(--md3-sys-opacity-012)
+}
+
+.md3-chip:not(:disabled,.md3-chip--disabled,.md3-chip--readonly,.md3-chip--progress):active {
+    --sys-gradient-opacity: var(--md3-sys-opacity-012);
+    transition-duration: var(--d-sys-transition-duration-sm)
+}
+
+.md3-chip--dragged {
+    --sys-gradient-opacity: var(--md3-sys-opacity-016);
+    transition-duration: var(--d-sys-transition-duration-sm)
+}
+
+.md3-chip--disabled {
+    --sys-color: var(--md3-sys-palette-on-surface);
+    color: rgba(var(--sys-color), var(--sys-color-opacity, 1));
+    --sys-color-opacity: var(--md3-sys-opacity-disabled);
+    transition-duration: var(--d-sys-transition-duration-sm)
+}
+
+.md3-chip--adaptive--icon {
+    --md3-chip-padding: 0px
+}
+
+.md3-chip--adaptive--icon .md3-chip__label {
+    display: none;
+    padding-left: 0px;
+    padding-right: 0px
+}

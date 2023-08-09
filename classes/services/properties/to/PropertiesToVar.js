@@ -37,7 +37,14 @@ module.exports = class PropertiesToVar {
       if (isFilled(value) && typeof value === 'string') {
         const fullValue = item?.[Keys.css] || this.items.toFullLink(design, component, value)
 
-        item[Keys.name] = this.__getName(name, item, parents)
+        item[Keys.name] = this.__getName(
+          design,
+          component,
+          name,
+          item,
+          parents
+        )
+
         item[Keys.css] = this.__toValue(
           this.__toCalculator(fullValue), item?.[Keys.default]
         )
@@ -55,6 +62,8 @@ module.exports = class PropertiesToVar {
    * Name transformation for the var type
    *
    * Преобразование имени для типа var
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
    * @param {string} name base property name / базовое название свойства
    * @param {Object<string,*>} item current element / текущий элемент
    * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
@@ -62,9 +71,15 @@ module.exports = class PropertiesToVar {
    * @return {string}
    * @private
    */
-  __getName (name, item, parents) {
+  __getName (
+    design,
+    component,
+    name,
+    item,
+    parents
+  ) {
     if (item?.[Keys.fullName]) {
-      return `--${name}`
+      return `--${this.items.toFullLink(design, component, name, '-')}`
     } else {
       return `--${this.items.getParentsName(parents, [Type.var]).join('-')}-${name}`
     }

@@ -20,12 +20,12 @@
     "gradient-opacity": "{sys.opacity.008}",
     "transition-duration": "{d.sys.transitionDuration.sm}"
   },
+  "focus": {
+    "gradient-opacity": "{sys.opacity.012}"
+  },
   "active": {
     "gradient-opacity": "{sys.opacity.012}",
     "transition-duration": "{d.sys.transitionDuration.sm}"
-  },
-  "focus": {
-    "gradient-opacity": "{sys.opacity.012}"
   },
   "selected": {
     "color": "{sys.palette.primary-variant}",

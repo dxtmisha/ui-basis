@@ -180,7 +180,7 @@ class To {
       .trim()
       .replace(/^[A-Z]/g, all => all.toLowerCase())
       .replace(/(?<=\w)[A-Z]/g, all => `-${all.toLowerCase()}`)
-      .replace(/-+/g, '-')
+    // .replace(/-+/g, '-')
       .replace(/[A-Z]/g, all => all.toLowerCase())
   }
 

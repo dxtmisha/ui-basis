@@ -11,6 +11,8 @@ module.exports = class PropertiesToProperty extends ToVar {
    * Name transformation for the var type
    *
    * Преобразование имени для типа var
+   * @param {string} design design name / название дизайна
+   * @param {string} component component name / название компонента
    * @param {string} name base property name / базовое название свойства
    * @param {Object<string,*>} item current element / текущий элемент
    * @param {{name:string,item:Object<string,*>}[]} parents array of all ancestor properties
@@ -18,8 +20,14 @@ module.exports = class PropertiesToProperty extends ToVar {
    * @return {string}
    * @private
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  __getName (name, item, parents) {
+  __getName (
+    design,
+    component,
+    name,
+    item,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    parents
+  ) {
     return this.items.getItemReName(name, item)
   }
 }
