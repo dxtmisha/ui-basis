@@ -1,4 +1,4 @@
-import { ImageIcon } from '../../constructors/Image/ImageIcon'
+import { ImageIcon } from '../Image/ImageIcon'
 
 export const category = {
   event: 'Events',

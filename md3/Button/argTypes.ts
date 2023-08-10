@@ -11,7 +11,7 @@ import {
   tagForButton,
   turn,
   value
-} from '../stories/argTypes'
+} from '../../constructors/stories/argTypes'
 
 export const argTypes = {
   // [!] System label, cannot be deleted

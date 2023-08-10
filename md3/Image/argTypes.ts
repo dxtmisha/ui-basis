@@ -1,4 +1,4 @@
-import { disabled, hide, icon, turn } from '../stories/argTypes'
+import { disabled, hide, icon, turn } from '../../constructors/stories/argTypes'
 
 export const argTypes = {
   // [!] System label, cannot be deleted
@@ -104,8 +104,8 @@ export const argTypes = {
 }
 
 export const images = {
-  galaxy_s23: require('../stories/images/galaxy_s23.png'),
-  galaxy_s23p: require('../stories/images/galaxy_s23p.png'),
-  galaxy_z_flip5: require('../stories/images/galaxy_z_flip5.png'),
-  galaxy_z_fold5: require('../stories/images/galaxy_z_fold5.png')
+  galaxy_s23: require('../../constructors/stories/images/galaxy_s23.png'),
+  galaxy_s23p: require('../../constructors/stories/images/galaxy_s23p.png'),
+  galaxy_z_flip5: require('../../constructors/stories/images/galaxy_z_flip5.png'),
+  galaxy_z_fold5: require('../../constructors/stories/images/galaxy_z_fold5.png')
 }
