@@ -10,15 +10,7 @@ const meta = {
   component: Md2Ripple,
   tags: ['autodocs'],
   parameters: {
-    design: 'md2',
-    docs: {
-      description: {
-        component: [
-          '',
-          ''
-        ].join('<br><br>')
-      }
-    }
+    design: 'md2'
   },
   argTypes,
   args: {}
@@ -28,17 +20,4 @@ type Story = StoryObj<typeof meta>;
 
 export default meta
 
-export const Ripple: Story = {
-  // name: 'Ripple',
-  parameters: {
-    docs: {
-      description: {
-        story: [
-          '',
-          ''
-        ].join('<br><br>')
-      }
-    }
-  },
-  args: {}
-}
+export const Ripple: Story = {}

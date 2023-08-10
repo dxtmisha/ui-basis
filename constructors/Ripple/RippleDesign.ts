@@ -92,8 +92,8 @@ export class RippleDesign<
         item.onanimationend = () => item.classList.add(this.design?.getClassesByState(['end']) || 'is-end')
         item.ontransitionend = () => item.parentElement?.removeChild(item)
 
-        item.style.setProperty(this.design?.getCustomName('x') || '--x', `${x}px`)
-        item.style.setProperty(this.design?.getCustomName('y') || '--y', `${y}px`)
+        item.style.setProperty(this.design?.getCustomName('??x') || '--x', `${x}px`)
+        item.style.setProperty(this.design?.getCustomName('??y') || '--y', `${y}px`)
         item.classList.add(this.design?.getClassesBySubclass(['item']))
       })
     }

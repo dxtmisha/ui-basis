@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import Md3Chip from './Md3Chip.vue'
 
 import { argTypes } from './argTypes'
-import { icon, onClick } from '../stories/argTypes'
+import { icon, onClick } from '../../constructors/stories/argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 const meta = {

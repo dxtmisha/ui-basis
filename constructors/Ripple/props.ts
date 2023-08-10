@@ -5,6 +5,7 @@ export const subclassesRipple = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    item: 'item'
     // :subclass
   }
 }

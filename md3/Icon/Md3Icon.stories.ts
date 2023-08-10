@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 
 import Md3Icon from './Md3Icon.vue'
 
-import { icon } from '../stories/argTypes'
+import { icon } from '../../constructors/stories/argTypes'
 import { argTypes } from './argTypes'
 import { onMounted, onUnmounted, ref } from 'vue'
 

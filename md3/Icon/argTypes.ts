@@ -1,4 +1,4 @@
-import { active, disabled, hide, icon, turn } from '../stories/argTypes'
+import { active, disabled, hide, icon, turn } from '../../constructors/stories/argTypes'
 
 export const argTypes = {
   // [!] System label, cannot be deleted

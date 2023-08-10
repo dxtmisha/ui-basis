@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 import Md3Image from './Md3Image.vue'
 
-import { icon, onLoad } from '../stories/argTypes'
+import { icon, onLoad } from '../../constructors/stories/argTypes'
 import { argTypes, images } from './argTypes'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction

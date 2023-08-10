@@ -53,5 +53,12 @@
     },
     "_category": "class"
   },
+  "main": {
+    "font": "{font.body1}",
+    "color": "{sys.palette.onSurface}",
+    "color-opacity": "{sys.opacity.surface.high}",
+    "background": "{ref.background.0}",
+    "_category": "class"
+  },
   "file|components": "tokens/components"
 }

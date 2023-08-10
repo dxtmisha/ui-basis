@@ -4,15 +4,15 @@
   @keyframes #{n('??start')} {
     0% {
       @include gradientOpacity(0);
-      clip-path: circle(000% at v('??x') v('??y'));
+      clip-path: circle(000% at v('??sys.x') v('??sys.y'));
     }
     50% {
       @include gradientOpacity(v('??background-opacity'));
-      clip-path: circle(075% at v('??x') v('??y'));
+      clip-path: circle(075% at v('??sys.x') v('??sys.y'));
     }
     100% {
       @include gradientOpacity(v('??background-opacity'));
-      clip-path: circle(150% at v('??x') v('??y'));
+      clip-path: circle(150% at v('??sys.x') v('??sys.y'));
     }
   }
 }

@@ -268,8 +268,7 @@ export class DesignConstructor<
     if (
       this.props &&
       options &&
-      options?.map &&
-      isFilled(options.map)
+      options?.map
     ) {
       this.design = new Design(
         this.name,

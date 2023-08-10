@@ -8,6 +8,7 @@ export const subclasses = {
     // [!] System label, cannot be deleted
     // [!] Системная метка, нельзя удалять
     // :subclass
+    item: 'item'
     // :subclass
   }
 }
