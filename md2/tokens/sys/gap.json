@@ -1,0 +1,7 @@
+{
+  "xs": "{ref.gap.4}",
+  "sm": "{ref.gap.6}",
+  "md": "{ref.gap.6}",
+  "lg": "{ref.gap.8}",
+  "xl": "{ref.gap.8}"
+}

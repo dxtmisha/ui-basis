@@ -1,0 +1,11 @@
+{
+  "0": "0",
+  "1": "{ref.spacing.1}",
+  "2": "{ref.spacing.2}",
+  "4": "{ref.spacing.4}",
+  "6": "{ref.spacing.6}",
+  "8": "{ref.spacing.8}",
+  "12": "{ref.spacing.12}",
+  "16": "{ref.spacing.16}",
+  "full": "{ref.spacing.128}"
+}

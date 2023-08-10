@@ -1,0 +1,11 @@
+{
+  "auto": "auto",
+  "840": "840px",
+  "1040": "1040px",
+  "margin": {
+    "0": "0px",
+    "4": "{ref.spacing.4}",
+    "8": "{ref.spacing.8}",
+    "200": "{ref.spacing.px}*200"
+  }
+}

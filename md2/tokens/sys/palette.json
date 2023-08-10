@@ -1,0 +1,23 @@
+{
+  "primary": "{ref.palette.blue.{sys.shade.normal}}",
+  "primaryVariant": "{ref.palette.blue.{sys.shade.variant}}",
+  "secondary": "{ref.palette.amber.{sys.shade.secondary}}",
+  "secondaryVariant": "{ref.palette.amber.{sys.shade.variant}}",
+  "background": "{ref.palette.white}",
+  "surface": "{ref.palette.white}",
+  "success": "{ref.palette.green.{sys.shade.variant}}",
+  "warning": "{ref.palette.yellow.{sys.shade.variant}}",
+  "error": "{ref.palette.red.{sys.shade.variant}}",
+  "disabled": "{ref.palette.black}",
+  "onPrimary": "{ref.palette.white}",
+  "onSecondary": "{ref.palette.black}",
+  "onBackground": "{ref.palette.black}",
+  "onSurface": "{ref.palette.black}",
+  "onSuccess": "{ref.palette.white}",
+  "onWarning": "{ref.palette.white}",
+  "onError": "{ref.palette.white}",
+  "outline": "{ref.palette.black}",
+  "white": "{ref.palette.white}",
+  "black": "{ref.palette.black}",
+  "overlay": "{ref.palette.blackLight}"
+}

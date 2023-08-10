@@ -104,4 +104,14 @@ export class Design<S extends ClassesSubType> {
   getStylesRef () {
     return this.styles.styles
   }
+
+  /**
+   * Returns the name of the user-defined property
+   *
+   * Возвращает имя пользовательского свойства
+   * @param name property name / название свойства
+   */
+  getCustomName (name: string): string {
+    return this.styles.getCustomName(name)
+  }
 }

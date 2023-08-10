@@ -1,6 +1,0 @@
-{
-  "onDisabled": {
-    "color": "{sys.palette.onSurface}",
-    "color-opacity": "{sys.opacity.disabled}"
-  }
-}

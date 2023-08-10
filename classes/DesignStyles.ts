@@ -108,9 +108,8 @@ export class DesignStyles {
    *
    * Возвращает имя пользовательского свойства
    * @param name property name / название свойства
-   * @private
    */
-  private getCustomName (name: string): string {
+  getCustomName (name: string): string {
     if (name.match(/^\?\?/)) {
       return name.replace(/^\?\?/, `--${this.name}-sys-`)
     } else {

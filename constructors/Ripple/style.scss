@@ -1,0 +1,68 @@
+@import "../../styles/properties";
+@import "./styleFrames";
+
+@mixin initRippleDesign($component: 'design.component') {
+  @include initDesign($component) {
+    @include mixinRipple;
+    @include mixinRippleItem;
+
+    @include mixinRippleAnimation;
+
+    @include mixinRippleStartFrames;
+
+    @content;
+  }
+}
+
+@mixin mixinRipple {
+  overflow: hidden;
+  @include absolute;
+  z-index: 8;
+
+  border-radius: inherit;
+}
+
+@mixin mixinRippleItem {
+  &__item {
+    @include absolute;
+
+    @include background(
+                    v('??sys.color', var(--sys-color, v('??background-color'))),
+                    v('??background-opacity')
+    )
+  }
+}
+
+@mixin mixinRippleAnimation {
+  $subClass: 'item';
+  $stateEnd: 'end';
+
+  %ripple-end {
+    opacity: 0;
+
+    transition-delay: v('d.sys.transition-duration.fade.enter');
+    transition-duration: v('d.sys.transition-duration.fade.through');
+    transition-property: opacity;
+  }
+
+  &__#{$subClass} {
+    animation-duration: v('d.sys.transition-duration.fade.through');
+    animation-fill-mode: forwards;
+    animation-name: n('??start');
+    animation-timing-function: linear;
+
+    &:not(:last-child) {
+      @include state($stateEnd) {
+        @extend %ripple-end;
+      }
+    }
+  }
+
+  &:not(:active) {
+    @include subclass($subClass) {
+      @include state($stateEnd) {
+        @extend %ripple-end;
+      }
+    }
+  }
+}
