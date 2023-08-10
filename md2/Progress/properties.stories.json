@@ -1,0 +1,14 @@
+{
+  "dense": {
+    "description": [
+      "Remove the indents",
+      "Убрать отступы"
+    ]
+  },
+  "inverse": {
+    "description": [
+      "Make the color the same as the text color",
+      "Сделать цвет таким же, как у текста"
+    ]
+  }
+}
