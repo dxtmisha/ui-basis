@@ -2,9 +2,14 @@
   <div>
     <md3-mutation/>
     <md3-button label="label" icon-trailing="home" @click="onClick"/>
+    <md3-button label="label" icon-trailing="home" @click="onClick"/>
   </div>
   <div style="padding-top: 24px;">
     <span data-md3="button" data-label="Label" data-icon="home"/>
+  </div>
+  <div>
+    <md3-button label="label" :palette="'tertiary'" icon-trailing="home" @click="onClick"/>
+    <md3-button label="label" :palette="'tertiary'" outlined icon-trailing="home" @click="onClick"/>
   </div>
 </template>
 

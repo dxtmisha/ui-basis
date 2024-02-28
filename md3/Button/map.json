@@ -1,1 +1,265 @@
-[{"index":"height","name":"height","type":"property","value":["sm","md","lg"],"valueAll":["sm","md","lg"],"state":[],"style":false,"default":"md"},{"index":"selected","name":"selected","type":"property","value":[true],"valueAll":[true],"state":[],"style":false},{"index":"filled","name":"filled","type":"property","value":[true],"valueAll":[true],"state":[{"index":"selected","name":"selected","value":[true],"state":[]},{"index":"disabled","name":"disabled","value":[true],"state":[]}],"style":false,"default":true,"category":"style"},{"index":"outlined","name":"outlined","type":"property","value":["border-color",true],"valueAll":["border-color",true],"state":[{"index":"focus","name":"focus","value":[true],"state":[]},{"index":"selected","name":"selected","value":[true],"state":[]},{"index":"disabled","name":"disabled","value":[true],"state":[]}],"style":false,"category":"style"},{"index":"text","name":"text","type":"property","value":["border-color",true],"valueAll":["border-color",true],"state":[],"style":false,"category":"style"},{"index":"elevated","name":"elevated","type":"property","value":[true],"valueAll":[true],"state":[{"index":"selected","name":"selected","value":[true],"state":[]},{"index":"disabled","name":"disabled","value":[true],"state":[]}],"style":false,"category":"style"},{"index":"tonal","name":"tonal","type":"property","value":[true],"valueAll":[true],"state":[{"index":"selected","name":"selected","value":[true],"state":[]},{"index":"disabled","name":"disabled","value":[true],"state":[]}],"style":false,"category":"style"},{"index":"adaptive","name":"adaptive","type":"property","value":["sm","md","icon"],"valueAll":["sm","md","icon"],"state":[],"style":false},{"index":"palette","name":"palette","type":"link-class","className":"md3-palette","value":["primary","secondary","tertiary","error","neutral","neutral-variant"],"valueAll":["primary","secondary","tertiary","error","neutral","neutral-variant"],"state":[],"style":false,"category":"class"},{"index":"focus","name":"focus","type":"property","value":[true],"valueAll":[true],"state":[],"style":false},{"index":"disabled","name":"disabled","type":"property","value":[true],"valueAll":[true],"state":[],"style":false},{"index":"progress","name":"progress","type":"property","value":[true],"valueAll":[true],"state":[],"style":false}]
+[
+  {
+    "index": "height",
+    "name": "height",
+    "type": "property",
+    "value": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "valueAll": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "state": [],
+    "style": false,
+    "default": "md"
+  },
+  {
+    "index": "selected",
+    "name": "selected",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [],
+    "style": false
+  },
+  {
+    "index": "filled",
+    "name": "filled",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [
+      {
+        "index": "selected",
+        "name": "selected",
+        "value": [
+          true
+        ],
+        "state": []
+      },
+      {
+        "index": "disabled",
+        "name": "disabled",
+        "value": [
+          true
+        ],
+        "state": []
+      }
+    ],
+    "style": false,
+    "default": true,
+    "category": "style"
+  },
+  {
+    "index": "outlined",
+    "name": "outlined",
+    "type": "property",
+    "value": [
+      "border-color",
+      true
+    ],
+    "valueAll": [
+      "border-color",
+      true
+    ],
+    "state": [
+      {
+        "index": "focus",
+        "name": "focus",
+        "value": [
+          true
+        ],
+        "state": []
+      },
+      {
+        "index": "selected",
+        "name": "selected",
+        "value": [
+          true
+        ],
+        "state": []
+      },
+      {
+        "index": "disabled",
+        "name": "disabled",
+        "value": [
+          true
+        ],
+        "state": []
+      }
+    ],
+    "style": false,
+    "category": "style"
+  },
+  {
+    "index": "text",
+    "name": "text",
+    "type": "property",
+    "value": [
+      "border-color",
+      true
+    ],
+    "valueAll": [
+      "border-color",
+      true
+    ],
+    "state": [],
+    "style": false,
+    "category": "style"
+  },
+  {
+    "index": "elevated",
+    "name": "elevated",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [
+      {
+        "index": "selected",
+        "name": "selected",
+        "value": [
+          true
+        ],
+        "state": []
+      },
+      {
+        "index": "disabled",
+        "name": "disabled",
+        "value": [
+          true
+        ],
+        "state": []
+      }
+    ],
+    "style": false,
+    "category": "style"
+  },
+  {
+    "index": "tonal",
+    "name": "tonal",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [
+      {
+        "index": "selected",
+        "name": "selected",
+        "value": [
+          true
+        ],
+        "state": []
+      },
+      {
+        "index": "disabled",
+        "name": "disabled",
+        "value": [
+          true
+        ],
+        "state": []
+      }
+    ],
+    "style": false,
+    "category": "style"
+  },
+  {
+    "index": "adaptive",
+    "name": "adaptive",
+    "type": "property",
+    "value": [
+      "sm",
+      "md",
+      "icon"
+    ],
+    "valueAll": [
+      "sm",
+      "md",
+      "icon"
+    ],
+    "state": [],
+    "style": false
+  },
+  {
+    "index": "palette",
+    "name": "palette",
+    "type": "link-class",
+    "className": "md3-palette",
+    "value": [
+      "primary",
+      "secondary",
+      "tertiary",
+      "error",
+      "neutral",
+      "neutral-variant"
+    ],
+    "valueAll": [
+      "primary",
+      "secondary",
+      "tertiary",
+      "error",
+      "neutral",
+      "neutral-variant"
+    ],
+    "state": [],
+    "style": false,
+    "category": "class"
+  },
+  {
+    "index": "focus",
+    "name": "focus",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [],
+    "style": false
+  },
+  {
+    "index": "disabled",
+    "name": "disabled",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [],
+    "style": false
+  },
+  {
+    "index": "progress",
+    "name": "progress",
+    "type": "property",
+    "value": [
+      true
+    ],
+    "valueAll": [
+      true
+    ],
+    "state": [],
+    "style": false
+  }
+]
